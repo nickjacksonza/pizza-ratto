@@ -1,9 +1,13 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { MobileNavigation } from "../components/MobileNavigation";
 import { business } from "../data/business";
 import { menu, zar } from "../data/menu";
 
+export const dynamic = "force-static";
+
 const facts = ["Hand-stretched", "Wood-fired", "Proper ingredients", "Zero fuss"];
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const asset = (path: string) => `${basePath}${path}`;
 
 const pizzaPhotos: Record<string, { src: string; alt: string }> = {
   "Bianca & Dip": { src: "/images/pizza-bianca.webp", alt: "Bianca flatbread with rosemary and fresh dip" },
@@ -45,7 +49,7 @@ export default function Home() {
           <div className="checker-strip" aria-hidden="true" />
           <div className="hero-brand-block">
             <div className="hero-logo-art">
-              <Image src="/images/hero-logo-mascot.png" alt="Pizza Ratto hand-painted logo beside the rat mascot riding a Vespa" fill priority sizes="(max-width: 760px) 100vw, 72vw" />
+              <img src={asset("/images/hero-logo-mascot.png")} alt="Pizza Ratto hand-painted logo beside the rat mascot riding a Vespa" loading="eager" fetchPriority="high" />
             </div>
             <p className="hero-promise">Made fresh. Taken seriously by no one.</p>
           </div>
@@ -86,7 +90,7 @@ export default function Home() {
                 return (
                   <li className={photo ? "has-pizza-photo" : "has-placeholder-photo"} key={item.name}>
                     {photo
-                      ? <div className="pizza-cutout"><Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 760px) 52vw, 24vw" /></div>
+                      ? <div className="pizza-cutout"><img src={asset(photo.src)} alt={photo.alt} loading="lazy" /></div>
                       : <div className="pizza-cutout pizza-placeholder" role="img" aria-label={`${item.name} pizza photo placeholder`}><span>Pizza photo<br />coming hot</span></div>}
                     <div className="pizza-label">
                       <div><b>{item.name}</b><strong>{Array.isArray(item.price) ? item.price.map((p) => <span key={p.label}>{p.label} {zar(p.price)}</span>) : zar(item.price)}</strong></div>
@@ -115,30 +119,30 @@ export default function Home() {
             ))}
           </div>
           <div className="menu-source">
-            <Image src="/images/menu-pizza.webp" alt="The original in-store Pizza Ratto menu board" width={378} height={510} />
+            <img src={asset("/images/menu-pizza.webp")} alt="The original in-store Pizza Ratto menu board" width={378} height={510} loading="lazy" />
             <p className="menu-fineprint">Menu and prices are the current supplied version. Availability can change when Big Bertha says so.</p>
             <span>THE ORIGINAL BOARD</span>
           </div>
         </section>
 
         <section className="ingredients section-pad">
-          <div className="ingredient-photo"><Image src="/images/pizza-bianca.webp" alt="Bianca pizza with rosemary beside a bowl of fresh dip" fill sizes="(max-width: 760px) 100vw, 45vw" /></div>
+          <div className="ingredient-photo"><img src={asset("/images/pizza-bianca.webp")} alt="Bianca pizza with rosemary beside a bowl of fresh dip" loading="lazy" /></div>
           <div className="ingredient-copy"><p className="section-number">03 / BUILT DIFFERENT</p><h2>Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
         <section className="characters section-pad">
           <div className="remi-feature">
             <div className="character-card pink"><span className="sticker">RAT #01</span><h2>Meet Remi.</h2><p>Our resident rat and patron saint of good decisions made near a pizza oven. You’ll find him around the room, including a mural painted by local artist Buffy.</p></div>
-            <div className="logo-poster red-vespa-poster"><Image src="/images/ratto-vespa-red.png" alt="Hand-drawn rat riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} sizes="(max-width: 760px) 94vw, 46vw" /></div>
+            <div className="logo-poster red-vespa-poster"><img src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn rat riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="lazy" /></div>
           </div>
           <div className="character-card orange"><span className="sticker">FIRE #01</span><h2>Big Bertha.</h2><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
         </section>
 
         <section className="gallery section-pad" aria-labelledby="gallery-title">
           <div className="gallery-title"><p className="section-number">04 / INSIDE</p><h2 id="gallery-title">The rat hole.</h2><p>Pizza, scooters, old furniture and very good reasons to stay awhile.</p></div>
-          <figure className="gallery-interior"><Image src="/images/interior.webp" alt="Pizza Ratto interior with wooden tables, vintage furniture, exposed brick and a Vespa" fill sizes="(max-width: 760px) 100vw, 38vw" /></figure>
-          <figure className="gallery-pizza-one"><Image src="/images/pizza-arcobaleno.webp" alt="Arcobaleno pizza with salami, mushrooms, feta and rocket" fill sizes="(max-width: 760px) 56vw, 28vw" /></figure>
-          <figure className="gallery-pizza-two"><Image src="/images/pizza-rally.webp" alt="Rally pizza with smoked chicken, mushrooms and avocado" fill sizes="(max-width: 760px) 48vw, 24vw" /></figure>
+          <figure className="gallery-interior"><img src={asset("/images/interior.webp")} alt="Pizza Ratto interior with wooden tables, vintage furniture, exposed brick and a Vespa" loading="lazy" /></figure>
+          <figure className="gallery-pizza-one"><img src={asset("/images/pizza-arcobaleno.webp")} alt="Arcobaleno pizza with salami, mushrooms, feta and rocket" loading="lazy" /></figure>
+          <figure className="gallery-pizza-two"><img src={asset("/images/pizza-rally.webp")} alt="Rally pizza with smoked chicken, mushrooms, avocado" loading="lazy" /></figure>
           <p className="gallery-caption">Come hungry.<br />Leave slightly happier.</p>
         </section>
 
