@@ -105,14 +105,14 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--white); box-sha
 .checker-bottom { top: auto; bottom: 0; left: 0; right: 0; height: 42px; background-size: 42px 42px; }
 .hero-poster {
   --hero-paper: var(--paper);
-  min-height: 700px;
+  min-height: 620px;
   position: relative;
   overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
   gap: clamp(2rem, 3.5vw, 4.25rem);
   align-items: center;
-  padding: 4.5rem clamp(1rem, 3vw, 3rem) 5.5rem;
+  padding: 4.1rem clamp(1rem, 3vw, 3rem) 4.75rem;
   background-color: var(--hero-paper);
   background-image: url("/images/hero-paper-texture.png");
   background-position: center;
@@ -183,8 +183,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--white); box-sha
 .ticker div { width: max-content; animation: ticker 18s linear infinite; }
 @keyframes ticker { to { transform: translateX(-50%); } }
 
-.section-pad { padding: clamp(4rem, 8vw, 8rem) clamp(1.15rem, 5vw, 5rem); }
-.section-number { margin: 0 0 1.3rem !important; color: var(--wine); font-size: .7rem !important; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+.section-pad { padding: clamp(3.25rem, 6vw, 6rem) clamp(1.15rem, 5vw, 5rem); }
+.section-number { margin: 0 0 1.1rem !important; color: var(--wine); font-size: clamp(.84rem, .9vw, 1rem) !important; font-weight: 900; line-height: 1.2; letter-spacing: .11em; text-transform: uppercase; }
 h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-weight: 400; letter-spacing: .005em; line-height: .86; text-transform: uppercase; }
 .manifesto { display: grid; grid-template-columns: .5fr 1.3fr .75fr; gap: clamp(2rem, 5vw, 6rem); align-items: start; background: var(--paper-light); border-bottom: 2px solid var(--wine); }
 .manifesto h2, .menu-heading h2, .ingredient-copy h2, .gallery-title h2, .visit h2 { color: var(--wine); font-size: clamp(4rem, 8vw, 8rem); }
@@ -231,7 +231,7 @@ h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-w
 .pizza-label p { max-width: 250px; margin: .45rem 0 0; font-weight: 650; line-height: 1.12; }
 .pizza-label small { display: block; margin-top: .55rem; font-style: italic; font-weight: 700; transform: rotate(-2deg); }
 .sauce-note { width: max-content; max-width: 100%; margin: 3rem 0 0; padding: .65rem .85rem; color: var(--paper-light); background: var(--wine); font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 2.5rem); text-transform: uppercase; transform: rotate(-1.5deg); }
-.small-menu-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.35fr .65fr; gap: 2rem; margin-top: 4rem; }
+.small-menu-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.35fr .65fr; gap: 2rem; margin-top: 3rem; }
 .menu-category { border-top: 3px solid var(--wine); border-bottom: 2px solid var(--wine); }
 .menu-category header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; color: var(--wine); }
 .menu-category header h3 { font-size: clamp(3rem, 5vw, 5.6rem); }
@@ -245,21 +245,21 @@ h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-w
 .menu-category li small { display: block; max-width: 330px; margin-top: .3rem; color: var(--wine); }
 .menu-category li strong { color: var(--wine); white-space: nowrap; }
 .menu-category li strong span { display: block; font-size: .78rem; }
-.menu-source { position: relative; z-index: 2; width: min(100%, 720px); margin: 4rem auto 0; display: grid; grid-template-columns: 220px 1fr; gap: 2rem; align-items: center; }
+.menu-source { position: relative; z-index: 2; width: min(100%, 720px); margin: 3rem auto 0; display: grid; grid-template-columns: 220px 1fr; gap: 2rem; align-items: center; }
 .menu-source img { width: 100%; height: auto; border: 8px solid #9a684c; transform: rotate(-2deg); }
 .menu-source > span { position: absolute; left: 175px; bottom: 18px; padding: .45rem .65rem; color: var(--paper-light); background: var(--wine); font-size: .66rem; font-weight: 900; transform: rotate(2deg); }
 .menu-fineprint { margin: 0; font-size: .78rem; line-height: 1.45; }
 
-.ingredients { min-height: 700px; padding: 0; display: grid; grid-template-columns: 1fr 1.05fr; border-bottom: 2px solid var(--wine); }
-.ingredient-photo { position: relative; min-height: 620px; overflow: hidden; }
+.ingredients { min-height: 600px; padding: 0; display: grid; grid-template-columns: 1fr 1.05fr; border-bottom: 2px solid var(--wine); }
+.ingredient-photo { position: relative; min-height: 540px; overflow: hidden; }
 .ingredient-photo img { object-fit: cover; filter: saturate(.82); }
-.ingredient-copy { padding: clamp(4rem, 8vw, 8rem) clamp(1.2rem, 5vw, 5rem); display: flex; flex-direction: column; justify-content: center; background: var(--coral); }
+.ingredient-copy { padding: clamp(3.25rem, 6vw, 6rem) clamp(1.2rem, 5vw, 5rem); display: flex; flex-direction: column; justify-content: center; background: var(--coral); }
 .ingredient-copy h2 { color: var(--ink); }
 .ingredient-copy h2 em { color: var(--paper-light); font-style: normal; }
 .ingredient-copy > p:not(.section-number):not(.scribble) { max-width: 620px; font-size: clamp(1.05rem, 1.8vw, 1.35rem); font-weight: 650; line-height: 1.5; }
 .scribble { width: max-content; max-width: 100%; padding: .7rem .9rem; color: var(--wine); background: var(--paper-light); font-size: 1.15rem; font-weight: 900; transform: rotate(-2deg); }
 .characters { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(280px, .65fr); gap: clamp(1.5rem, 3vw, 3rem); align-items: stretch; background: var(--paper-light); border-bottom: 2px solid var(--wine); }
-.remi-feature { min-width: 0; min-height: 520px; display: grid; grid-template-columns: minmax(250px, .78fr) minmax(360px, 1.22fr); align-items: center; overflow: hidden; background: var(--paper); border: 2px solid var(--wine); }
+.remi-feature { min-width: 0; min-height: 460px; display: grid; grid-template-columns: minmax(250px, .78fr) minmax(360px, 1.22fr); align-items: center; overflow: hidden; background: var(--paper); border: 2px solid var(--wine); }
 .character-card { padding: 2rem; border: 2px solid var(--wine); }
 .character-card h2 { margin: 1.5rem 0; color: var(--wine); font-size: clamp(3.2rem, 6vw, 5.8rem); }
 .character-card p { font-weight: 650; line-height: 1.5; }
@@ -267,10 +267,10 @@ h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-w
 .pink { background: var(--paper); }
 .orange { align-self: center; background: var(--pink); transform: rotate(1.5deg); }
 .sticker { padding: .42rem .62rem; color: var(--paper-light); background: var(--wine); font-size: .67rem; font-weight: 900; }
-.logo-poster { position: relative; height: 520px; overflow: hidden; border: 0; transform: none; }
+.logo-poster { position: relative; height: 460px; overflow: hidden; border: 0; transform: none; }
 .red-vespa-poster { align-self: stretch; background: var(--paper); }
 .red-vespa-poster img { width: min(112%, 780px); max-width: none; height: auto; margin: -.5rem auto 0; mix-blend-mode: multiply; filter: saturate(.9) contrast(1.04); }
-.gallery { display: grid; grid-template-columns: 1.1fr .8fr .75fr; grid-template-rows: auto 260px 240px; gap: 1.5rem; background: var(--pink); border-bottom: 2px solid var(--wine); }
+.gallery { display: grid; grid-template-columns: 1.1fr .8fr .75fr; grid-template-rows: auto 220px 190px; gap: 1.5rem; background: var(--pink); border-bottom: 2px solid var(--wine); }
 .gallery figure { position: relative; overflow: hidden; margin: 0; border: 2px solid var(--wine); }
 .gallery figure img { object-fit: cover; filter: saturate(.84); }
 .gallery-title { grid-column: 1/3; padding: 2rem 0; }
@@ -297,7 +297,7 @@ footer p { margin: 0; font-size: .76rem; }
 .mobile-order-bar { display: none; }
 
 @media (max-width: 1000px) {
-  .hero-poster { min-height: 650px; grid-template-columns: minmax(0, 1fr) minmax(270px, 310px); }
+  .hero-poster { min-height: 580px; grid-template-columns: minmax(0, 1fr) minmax(270px, 310px); }
   .manifesto { grid-template-columns: 1fr 1.5fr; }
   .manifesto aside { grid-column: 2; }
   .characters { grid-template-columns: 1fr; }
@@ -316,7 +316,7 @@ footer p { margin: 0; font-size: .76rem; }
   .mobile-nav nav a { min-height: 50px; display: flex; align-items: center; border-bottom: 1px dashed rgba(255,255,255,.4); font-family: var(--font-display); font-size: 1.7rem; text-transform: uppercase; }
   .checker-strip { left: 0; right: 0; width: 100%; height: 36px; background-size: 36px 36px; }
   .checker-bottom { left: 0; right: 0; height: 32px; background-size: 32px 32px; }
-  .hero-poster { min-height: auto; grid-template-columns: 1fr; gap: 1.6rem; padding: 3.5rem 1rem 4.5rem; }
+  .hero-poster { min-height: auto; grid-template-columns: 1fr; gap: 1.25rem; padding: 3rem 1rem 4rem; }
   .hero-poster::before { width: 300px; height: 220px; left: -100px; bottom: 160px; border-width: 28px; }
   .hero-logo-art { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 1792 / 933; margin: 0 auto; }
   .hero-logo-art img { object-fit: contain; object-position: left top; }
@@ -331,12 +331,12 @@ footer p { margin: 0; font-size: .76rem; }
   .pizza-collage > li:nth-child(2), .pizza-collage > li:nth-child(5) { transform: translateY(1rem) rotate(1deg); }
   .small-menu-grid { grid-template-columns: 1fr; }
   .ingredients { min-height: auto; }
-  .ingredient-photo { min-height: 430px; }
+  .ingredient-photo { min-height: 360px; }
   .remi-feature { min-height: auto; grid-template-columns: 1fr; }
-  .logo-poster { height: min(118vw, 520px); order: -1; }
+  .logo-poster { height: min(105vw, 440px); order: -1; }
   .red-vespa-poster img { width: min(138%, 620px); margin-inline: auto; }
   .characters > .orange { width: 100%; justify-self: stretch; }
-  .gallery { grid-template-rows: auto 370px 250px; }
+  .gallery { grid-template-rows: auto 300px 210px; }
   .gallery-title { grid-column: auto; }
   .gallery-interior { grid-column: auto; grid-row: auto; }
   .gallery-pizza-one { grid-column: auto; grid-row: auto; width: 72%; margin-left: auto !important; margin-top: -2rem !important; }
@@ -356,7 +356,7 @@ footer p { margin: 0; font-size: .76rem; }
   .hero-details > p { margin-bottom: .7rem; }
   .poster-button { width: 100%; }
   .ticker { font-size: 1.4rem; }
-  .section-pad { padding: 4.2rem .9rem; }
+  .section-pad { padding: 3.4rem .9rem; }
   .manifesto h2, .menu-heading h2, .ingredient-copy h2, .gallery-title h2, .visit h2 { font-size: clamp(3.4rem, 17vw, 5rem); }
   .menu-heading { display: block; }
   .menu-heading h2 { margin: .8rem 0 1.2rem; }
