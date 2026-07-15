@@ -1,18 +1,53 @@
-# Pizza Ratto site plan
+# Pizza Ratto site plan and implemented scope
 
-## Release one
+This began as the release-one plan and now describes the shipped homepage.
 
-A focused, mobile-first homepage with announcement, accessible navigation, asymmetric hero, manifesto, structured HTML menu, ingredient story, Remi/Big Bertha story, editorial gallery, visit/order section, footer and mobile ordering bar.
+## Product goal
 
-## Technical decisions
+Create a focused, mobile-first storefront that turns the Pizza Ratto flyer aesthetic into a usable website. The visitor should be able to understand the personality, inspect the menu and reach an ordering channel without navigating through multiple pages.
 
-- Next.js-compatible vinext starter, TypeScript, App Router and Tailwind available.
-- Server-rendered page; client JavaScript is limited to the mobile menu.
-- Menu and business facts live in typed central data files.
-- Supplied imagery is copied unchanged into `public/images`; originals remain untouched.
-- No backend, database, CMS, cart or external UI/animation framework.
-- A future `/menu` route can reuse `data/menu.ts`.
+## Implemented homepage
 
-## Conversion path
+- Announcement strip and accessible navigation
+- Flyer-derived hero with separated logo/mascot artwork, live copy and integrated order CTA
+- Full-viewport checkerboard framing and poster footnote
+- Short manifesto and house rules
+- Structured HTML pizza, coffee and dolci menu
+- Real pizza photography with labelled placeholders where imagery is unavailable
+- Ingredient story
+- Meet Remi and Big Bertha section
+- Editorial interior/food gallery
+- Visit, WhatsApp, Uber Eats, telephone and Instagram actions
+- Mobile sticky order bar
 
-Menu and WhatsApp are primary. Phone is always available on mobile. Uber Eats and directions are intentionally withheld until real URLs are supplied.
+## Technical shape
+
+- React + TypeScript through the Next-compatible vinext App Router
+- Mostly server-rendered/static markup; client JavaScript is limited to the mobile menu
+- Business facts and menu items in typed central data files
+- No backend, database, CMS, cart or animation framework
+- Native image markup for compatibility with the GitHub Pages static target
+- A dual-build strategy for OpenAI Sites/Cloudflare and GitHub Pages
+
+See [`architecture.md`](architecture.md) for implementation boundaries and [`deployment.md`](deployment.md) for the two hosting paths.
+
+## Conversion hierarchy
+
+1. WhatsApp is the primary direct action.
+2. Menu browsing supports the decision.
+3. Telephone and Uber Eats are secondary ordering routes.
+4. Instagram is a social proof/discovery route.
+
+Directions are intentionally absent until the owner supplies an official destination URL.
+
+## Explicit non-goals for the current release
+
+- On-site checkout or payment
+- User accounts
+- Inventory or live menu availability
+- CMS editing
+- Table booking
+- Delivery radius calculation
+- Heavy animation or app-like navigation
+
+A future `/menu` route can reuse `data/menu.ts`, but it should only be introduced when the homepage menu becomes materially difficult to use or maintain.

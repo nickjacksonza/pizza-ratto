@@ -19,26 +19,31 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
   assert.match(html, /<title>Pizza Ratto \| Wood-Fired Pizza in Salt River, Cape Town<\/title>/i);
-  assert.match(html, /Pizza that/);
+  assert.match(html, /Made fresh\. Taken seriously by no one\./i);
   assert.match(html, /Pick your ride/);
   assert.match(html, /Bianca &amp; Dip/);
   assert.match(html, /R150/);
   assert.match(html, /https:\/\/wa\.me\/27825250380/);
   assert.match(html, /tel:\+27825250380/);
+  assert.match(html, /ubereats\.com\/za\/store\/pizza-ratto/);
   assert.match(html, /application\/ld\+json/);
   assert.doesNotMatch(html, /codex-preview|Starter Project|react-loading-skeleton/);
 });
 
-test("centralises verified content and keeps fake destination links out", async () => {
+test("centralises business and menu content and keeps fake links out", async () => {
   const [page, business, menu] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../data/business.ts", import.meta.url), "utf8"),
     readFile(new URL("../data/menu.ts", import.meta.url), "utf8"),
   ]);
   assert.match(page, /business\.whatsappUrl/);
-  assert.match(page, /menu\.map/);
+  assert.match(page, /pizzaMenu\.items\.map/);
+  assert.match(page, /sideMenu\.map/);
+  assert.match(page, /dynamic = "force-static"/);
+  assert.match(page, /asset\("\/images\//);
   assert.match(business, /\+27825250380/);
+  assert.match(business, /ubereats\.com\/za\/store\/pizza-ratto/);
   assert.match(menu, /Arcobaleno/);
   assert.doesNotMatch(page, /href=["']#["']/);
-  assert.doesNotMatch(page + business, /google\.com\/maps|ubereats\.com/);
+  assert.doesNotMatch(page + business, /google\.com\/maps/);
 });
