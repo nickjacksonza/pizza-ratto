@@ -43,8 +43,11 @@ export default function Home() {
         <section className="hero-poster" id="top">
           <h1 className="sr-only">Pizza Ratto — wood-fired pizza in Salt River, Cape Town</h1>
           <div className="checker-strip" aria-hidden="true" />
-          <div className="hero-logo-art">
-            <Image src="/og.png" alt="Pizza Ratto poster with the hand-painted logo and rat mascot riding a Vespa" fill priority sizes="100vw" />
+          <div className="hero-brand-block">
+            <div className="hero-logo-art">
+              <Image src="/images/hero-logo-mascot.png" alt="Pizza Ratto hand-painted logo beside the rat mascot riding a Vespa" fill priority sizes="(max-width: 760px) 100vw, 72vw" />
+            </div>
+            <p className="hero-promise">Made fresh. Taken seriously by no one.</p>
           </div>
           <aside className="hero-details" aria-label="Order and opening information">
             <a className="hero-phone" href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a>
