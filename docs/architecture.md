@@ -19,10 +19,11 @@ app/layout.tsx
   └── app/page.tsx
         ├── data/business.ts
         ├── data/menu.ts
-        └── components/MobileNavigation.tsx (client component)
+        ├── components/MobileNavigation.tsx (client component)
+        └── components/BrandIcon.tsx (presentational service icons)
 ```
 
-`app/page.tsx` is statically rendered. The only interactive client state is the open/closed mobile navigation menu.
+`app/page.tsx` is statically rendered. The only interactive client state is the open/closed mobile navigation menu. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
 
 ## Rendering model
 

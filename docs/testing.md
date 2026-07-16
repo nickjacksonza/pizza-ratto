@@ -89,6 +89,9 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - sticky bar does not cover footer content;
 - touch targets are at least 44px;
 - page has no horizontal scroll.
+- pizza images in each mobile row share the same top edge;
+- pizza labels start below their images with no overlap;
+- all mobile collage transforms resolve to `none`.
 
 ## Accessibility checklist
 
@@ -99,6 +102,9 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - Check image alt text after asset changes.
 - Confirm decorative checkerboards are `aria-hidden`.
 - Enable reduced motion and confirm the ticker stops.
+- At normal motion, confirm ticker copy covers the full banner and replacement text continuously enters from the right.
+- Confirm every WhatsApp link retains visible text and a decorative icon.
+- Confirm the icon-only Instagram footer link has an accessible name.
 - Maintain one semantic `h1` and logical section headings.
 
 ## Performance checklist

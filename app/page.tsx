@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { MobileNavigation } from "../components/MobileNavigation";
+import { BrandIcon } from "../components/BrandIcon";
 import { business } from "../data/business";
 import { menu, zar } from "../data/menu";
 
 export const dynamic = "force-static";
 
 const facts = ["Hand-stretched", "Wood-fired", "Proper ingredients", "Zero fuss"];
+const tickerCopy = "ITALIAN SOUL ★ STREET-CORNER ATTITUDE ★ PIZZA, DONE PROPERLY ★ ".repeat(4);
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const asset = (path: string) => `${basePath}${path}`;
 
@@ -39,7 +41,7 @@ export default function Home() {
         <nav className="desktop-nav" aria-label="Main navigation">
           <a href="#menu">Menu</a><a href="#story">Our story</a><a href="#visit">Visit</a>
         </nav>
-        <a className="button button-small" href={business.whatsappUrl}>Order pizza</a>
+        <a className="button button-small brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order pizza</a>
         <MobileNavigation />
       </header>
 
@@ -60,13 +62,18 @@ export default function Home() {
             <b>OPEN</b>
             <strong>{business.hours}</strong>
             <span>{business.location}</span>
-            <a className="button poster-button" href={business.whatsappUrl}>Order on WhatsApp ↗</a>
+            <a className="button poster-button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order on WhatsApp ↗</a>
           </aside>
           <p className="hero-footnote">Hand-stretched · proper ingredients · fired by Big Bertha</p>
           <div className="checker-strip checker-bottom" aria-hidden="true" />
         </section>
 
-        <div className="ticker" aria-hidden="true"><div>ITALIAN SOUL ★ STREET-CORNER ATTITUDE ★ PIZZA, DONE PROPERLY ★ </div></div>
+        <div className="ticker" aria-hidden="true">
+          <div className="ticker-track">
+            <span className="ticker-copy">{tickerCopy}</span>
+            <span className="ticker-copy">{tickerCopy}</span>
+          </div>
+        </div>
 
         <section className="manifesto section-pad" id="story">
           <p className="section-number">01 / WHAT WE’RE ABOUT</p>
@@ -149,12 +156,12 @@ export default function Home() {
         <section className="visit section-pad" id="visit">
           <div><p className="section-number">05 / FIND THE FIRE</p><h2>Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
-          <div className="visit-actions"><a className="button button-dark" href={business.whatsappUrl}>WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a><a className="text-link" href={business.instagramUrl} target="_blank" rel="noreferrer">Instagram {business.instagramHandle} ↗</a></div>
+          <div className="visit-actions"><a className="button button-dark brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a><a className="text-link" href={business.instagramUrl} target="_blank" rel="noreferrer">Instagram {business.instagramHandle} ↗</a></div>
         </section>
       </main>
 
-      <footer><div className="footer-mark">PIZZA RATTO</div><p>{business.tagline}</p><p>{business.location} · {business.hours}</p><p>© {new Date().getFullYear()} Pizza Ratto · Built with fire, not focus groups.</p></footer>
-      <nav className="mobile-order-bar" aria-label="Quick order actions"><a href={business.whatsappUrl}>WhatsApp</a><a href={`tel:${business.phoneInternational}`}>Call</a><a href="#menu">Menu</a></nav>
+      <footer><div className="footer-mark">PIZZA RATTO</div><p>{business.tagline}</p><p>{business.location} · {business.hours}</p><div className="footer-end"><p>© {new Date().getFullYear()} Pizza Ratto · Built with fire, not focus groups.</p><a className="footer-social" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Pizza Ratto on Instagram ${business.instagramHandle}`}><BrandIcon name="instagram" /></a></div></footer>
+      <nav className="mobile-order-bar" aria-label="Quick order actions"><a href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp</a><a href={`tel:${business.phoneInternational}`}>Call</a><a href="#menu">Menu</a></nav>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c") }} />
     </>
   );

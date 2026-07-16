@@ -126,6 +126,8 @@ If an item name changes in `data/menu.ts`, update the photo mapping in the same 
 - Decorative CSS shapes and checkerboards should remain hidden from assistive technology.
 - Intentional placeholders use `role="img"` with an accessible label.
 
+Brand service icons are code-native interface marks in `components/BrandIcon.tsx`, not content imagery. They inherit the surrounding text color. The icon-only Instagram footer link must retain its explicit accessible label.
+
 ## Asset-path rules
 
 GitHub Pages is hosted below `/pizza-ratto/`. JSX image paths must pass through the `asset()` helper. Do not reintroduce `next/image` unless the deployment architecture changes.

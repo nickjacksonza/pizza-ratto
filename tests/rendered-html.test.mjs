@@ -26,6 +26,7 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /https:\/\/wa\.me\/27825250380/);
   assert.match(html, /tel:\+27825250380/);
   assert.match(html, /ubereats\.com\/za\/store\/pizza-ratto/);
+  assert.match(html, /Pizza Ratto on Instagram/);
   assert.match(html, /application\/ld\+json/);
   assert.doesNotMatch(html, /codex-preview|Starter Project|react-loading-skeleton/);
 });
@@ -39,6 +40,10 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(page, /business\.whatsappUrl/);
   assert.match(page, /pizzaMenu\.items\.map/);
   assert.match(page, /sideMenu\.map/);
+  assert.match(page, /ticker-track/);
+  assert.match(page, /ticker-copy/);
+  assert.match(page, /BrandIcon name="whatsapp"/);
+  assert.match(page, /BrandIcon name="instagram"/);
   assert.match(page, /dynamic = "force-static"/);
   assert.match(page, /asset\("\/images\//);
   assert.match(business, /\+27825250380/);

@@ -147,6 +147,9 @@ Coffee and dolci use structured lists rather than photographed menu boards. The 
 - All interactive elements receive a high-contrast focus ring.
 - Buttons are at least 48px high; mobile menu is 46px; sticky actions are 64px.
 - Mobile safe-area insets are respected.
+- WhatsApp actions include a recognizable brand mark without replacing their visible text; the footer Instagram control is icon-only with an accessible label.
+- The ticker uses two identical long text runs so one enters from the right while the other exits left. Keep both runs identical: the `translateX(-50%)` loop depends on equal widths.
+- Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
 - The ticker stops under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.
 - The hidden `h1` supplies the page's semantic top-level heading while the visual logo remains an image.

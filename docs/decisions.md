@@ -81,3 +81,19 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Keep the main page static/server-rendered and use client behavior only where interaction requires it, currently the mobile menu. Respect reduced-motion preferences.
 
 **Consequence:** Prefer HTML/CSS solutions for presentation. New client dependencies need a concrete user benefit.
+
+## 011 — Make the ticker a duplicated continuous track
+
+**Context:** A single short text run translated by half its width. On wide screens this left most of the banner empty, appeared pinned to the left and reset before replacement text could enter from the right.
+
+**Decision:** Render two identical multi-phrase runs in a flex track and translate that track by exactly `-50%`. The 14-second loop is intentionally brisker than the original 18-second short-run animation.
+
+**Consequence:** The two `.ticker-copy` elements must stay byte-for-byte equivalent in visible content and remain adjacent. A different message or gap in only one copy will produce a visible jump at the loop boundary.
+
+## 012 — Keep mobile pizza art and labels in separate rows
+
+**Context:** Desktop collage offsets carried into narrow screens, causing labels to visually collide with circular images and leaving neighboring images on different baselines.
+
+**Decision:** At phone width, remove every collage rotation/vertical offset and give each pizza item an explicit image row followed by a label row with positive spacing.
+
+**Consequence:** Desktop keeps its loose flyer collage, while mobile prioritizes clean scanning. New positional `nth-child` rules must be reset inside the phone breakpoint.
