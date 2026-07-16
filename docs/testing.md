@@ -105,6 +105,8 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - At normal motion, confirm ticker copy covers the full banner and replacement text continuously enters from the right.
 - Confirm every WhatsApp link retains visible text and a decorative icon.
 - Confirm the icon-only Instagram footer link has an accessible name.
+- Confirm the redundant Instagram text action is absent from section 05 while the footer icon remains.
+- Confirm Remi's helmet and both Vespa wheels remain visible at desktop and phone widths.
 - Maintain one semantic `h1` and logical section headings.
 
 ## Performance checklist

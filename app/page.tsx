@@ -134,7 +134,7 @@ export default function Home() {
 
         <section className="ingredients section-pad">
           <div className="ingredient-photo"><img src={asset("/images/pizza-bianca.webp")} alt="Bianca pizza with rosemary beside a bowl of fresh dip" loading="lazy" /></div>
-          <div className="ingredient-copy"><p className="section-number">03 / BUILT DIFFERENT</p><h2>Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
+          <div className="ingredient-copy"><p className="section-number">03 / BUILT DIFFERENT</p><h2 className="spaced-heading">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
         <section className="characters section-pad">
@@ -154,9 +154,9 @@ export default function Home() {
         </section>
 
         <section className="visit section-pad" id="visit">
-          <div><p className="section-number">05 / FIND THE FIRE</p><h2>Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
+          <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
-          <div className="visit-actions"><a className="button button-dark brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a><a className="text-link" href={business.instagramUrl} target="_blank" rel="noreferrer">Instagram {business.instagramHandle} ↗</a></div>
+          <div className="visit-actions"><a className="button button-dark brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>
         </section>
       </main>
 

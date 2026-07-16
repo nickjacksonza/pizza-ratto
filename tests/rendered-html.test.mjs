@@ -44,6 +44,8 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(page, /ticker-copy/);
   assert.match(page, /BrandIcon name="whatsapp"/);
   assert.match(page, /BrandIcon name="instagram"/);
+  assert.match(page, /className="spaced-heading"/);
+  assert.doesNotMatch(page, /className="text-link" href=\{business\.instagramUrl\}/);
   assert.match(page, /dynamic = "force-static"/);
   assert.match(page, /asset\("\/images\//);
   assert.match(business, /\+27825250380/);

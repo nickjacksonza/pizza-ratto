@@ -193,6 +193,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--white); box-sha
 .section-pad { padding: clamp(3.25rem, 6vw, 6rem) clamp(1.15rem, 5vw, 5rem); }
 .section-number { margin: 0 0 1.1rem !important; color: var(--wine); font-size: clamp(.84rem, .9vw, 1rem) !important; font-weight: 900; line-height: 1.2; letter-spacing: .11em; text-transform: uppercase; }
 h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-weight: 400; letter-spacing: .005em; line-height: .86; text-transform: uppercase; }
+.spaced-heading { word-spacing: .08em; }
 .manifesto { display: grid; grid-template-columns: .5fr 1.3fr .75fr; gap: clamp(2rem, 5vw, 6rem); align-items: start; background: var(--paper-light); border-bottom: 2px solid var(--wine); }
 .manifesto h2, .menu-heading h2, .ingredient-copy h2, .gallery-title h2, .visit h2 { color: var(--wine); font-size: clamp(4rem, 8vw, 8rem); }
 .manifesto div > p { max-width: 650px; font-size: clamp(1.1rem, 2vw, 1.55rem); font-weight: 600; line-height: 1.45; }
@@ -276,7 +277,7 @@ h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-w
 .sticker { padding: .42rem .62rem; color: var(--paper-light); background: var(--wine); font-size: .67rem; font-weight: 900; }
 .logo-poster { position: relative; height: 460px; overflow: hidden; border: 0; transform: none; }
 .red-vespa-poster { align-self: stretch; background: var(--paper); }
-.red-vespa-poster img { width: min(112%, 780px); max-width: none; height: auto; margin: -.5rem auto 0; mix-blend-mode: multiply; filter: saturate(.9) contrast(1.04); }
+.red-vespa-poster img { position: absolute; top: -.5rem; left: 50%; width: min(128%, 660px); max-width: none; height: auto; transform: translateX(-56%); mix-blend-mode: multiply; filter: saturate(.9) contrast(1.04); }
 .gallery { display: grid; grid-template-columns: 1.1fr .8fr .75fr; grid-template-rows: auto 220px 190px; gap: 1.5rem; background: var(--pink); border-bottom: 2px solid var(--wine); }
 .gallery figure { position: relative; overflow: hidden; margin: 0; border: 2px solid var(--wine); }
 .gallery figure img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.84); }
@@ -345,7 +346,7 @@ footer p { margin: 0; font-size: .76rem; }
   .ingredient-photo { min-height: 360px; }
   .remi-feature { min-height: auto; grid-template-columns: 1fr; }
   .logo-poster { height: min(105vw, 440px); order: -1; }
-  .red-vespa-poster img { width: min(138%, 620px); margin-inline: auto; }
+  .red-vespa-poster img { top: -.5rem; left: 50%; width: min(138%, 620px); transform: translateX(-56%); }
   .characters > .orange { width: 100%; justify-self: stretch; }
   .gallery { grid-template-rows: auto 300px 210px; }
   .gallery-title { grid-column: auto; }
@@ -396,7 +397,6 @@ footer p { margin: 0; font-size: .76rem; }
   .character-card { padding: 1.4rem; }
   footer { padding-bottom: 3rem; }
   .footer-end { align-items: center; }
-  .visit-actions .text-link { min-height: 48px; display: flex; align-items: center; }
   .mobile-order-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 80; min-height: calc(64px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: 1.25fr .8fr .8fr; padding-bottom: env(safe-area-inset-bottom); color: var(--paper-light); background: var(--wine); border-top: 2px solid var(--ink); box-shadow: 0 -8px 20px rgba(51,44,43,.18); }
   .mobile-order-bar a { min-height: 64px; display: flex; align-items: center; justify-content: center; gap: .4rem; border-right: 1px solid var(--paper); font-size: .78rem; font-weight: 900; letter-spacing: .025em; text-transform: uppercase; }
   .mobile-order-bar a:first-child { color: var(--ink); background: var(--coral); }

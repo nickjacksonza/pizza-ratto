@@ -150,6 +150,8 @@ Coffee and dolci use structured lists rather than photographed menu boards. The 
 - WhatsApp actions include a recognizable brand mark without replacing their visible text; the footer Instagram control is icon-only with an accessible label.
 - The ticker uses two identical long text runs so one enters from the right while the other exits left. Keep both runs identical: the `translateX(-50%)` loop depends on equal widths.
 - Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
+- The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
+- Remi's portrait source has asymmetric blank canvas around the visible drawing. The crop therefore uses `translateX(-56%)` to center the visible mascot rather than the bitmap bounds. Desktop uses up to 128% of the art column with a 660px cap so the helmet and both wheels fit inside the 460px frame; mobile may scale wider but retains the optical centering correction.
 - The ticker stops under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.
 - The hidden `h1` supplies the page's semantic top-level heading while the visual logo remains an image.
