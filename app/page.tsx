@@ -8,14 +8,23 @@ export const dynamic = "force-static";
 
 const facts = ["Hand-stretched", "Wood-fired", "Proper ingredients", "Zero fuss"];
 const tickerCopy = "ITALIAN SOUL ★ STREET-CORNER ATTITUDE ★ PIZZA, DONE PROPERLY ★ ".repeat(4);
+const announcementCopy = <>Made fresh. Taken seriously by no one. <span className="announcement-diamond">◆</span> Wood-fired in Salt River <span className="announcement-diamond">◆</span> Monday–Saturday, 10:00–18:00</>;
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const asset = (path: string) => `${basePath}${path}`;
 
 const pizzaPhotos: Record<string, { src: string; alt: string }> = {
-  "Bianca & Dip": { src: "/images/pizza-bianca.webp", alt: "Bianca flatbread with rosemary and fresh dip" },
-  Primavera: { src: "/images/pizza-primavera.webp", alt: "Primavera pizza with tomato, mozzarella and basil" },
-  Arcobaleno: { src: "/images/pizza-arcobaleno.webp", alt: "Arcobaleno pizza with salami, mushrooms, feta and rocket" },
-  Rally: { src: "/images/pizza-rally.webp", alt: "Rally pizza with smoked chicken, mushrooms and avocado" },
+  "Bianca & Dip": { src: "/images/owner-2026/pizza-bianca.webp", alt: "Rosemary flatbread with bowls of fresh dip and olive oil" },
+  Primavera: { src: "/images/owner-2026/pizza-primavera.webp", alt: "Tomato and mozzarella pizza finished with fresh basil" },
+  Veloce: { src: "/images/owner-2026/pizza-veloce.webp", alt: "Pizza with roasted butternut, feta, onions and sunflower seeds" },
+  Sprint: { src: "/images/owner-2026/pizza-sprint.webp", alt: "Pizza with salami, caramelised onions, mozzarella and hot honey" },
+  Arcobaleno: { src: "/images/owner-2026/pizza-arcobaleno.webp", alt: "Pizza with salami, mushrooms, feta and fresh rocket" },
+  "Bianca Pollo": { src: "/images/owner-2026/pizza-bianca-pollo.webp", alt: "White-base pizza with smoked chicken, mushrooms and chives" },
+  Sole: { src: "/images/owner-2026/pizza-sole.webp", alt: "White-base pizza with yellow peppers, cherry tomatoes and mint" },
+  Rally: { src: "/images/owner-2026/pizza-rally.webp", alt: "Pizza with smoked chicken, mushrooms and avocado" },
+  Bosco: { src: "/images/owner-2026/pizza-bosco.webp", alt: "Wood-fired pizza with mushrooms, garlic, rosemary and rocket" },
+  Bandito: { src: "/images/owner-2026/pizza-bandito.webp", alt: "Wood-fired pizza with spicy salami, red onion, roasted peppers and chilli" },
+  Verde: { src: "/images/owner-2026/pizza-verde.webp", alt: "Pesto pizza with courgette, artichokes, feta and rocket" },
+  Tramonto: { src: "/images/owner-2026/pizza-tramonto.webp", alt: "Wood-fired pizza with roasted peppers, onions, feta, cherry tomatoes and basil" },
 };
 
 export default function Home() {
@@ -35,7 +44,12 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <div className="announcement">Made fresh. Taken seriously by no one. <span>◆</span> Wood-fired in Salt River <span>◆</span> {business.hours}</div>
+      <div className="announcement" role="note" aria-label="Made fresh. Taken seriously by no one. Wood-fired in Salt River. Monday to Saturday, 10:00 to 18:00.">
+        <div className="announcement-track" aria-hidden="true">
+          <span className="announcement-run">{announcementCopy}</span>
+          <span className="announcement-run">{announcementCopy}</span>
+        </div>
+      </div>
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="Pizza Ratto home">PIZZA <i>RATTO</i></a>
         <nav className="desktop-nav" aria-label="Main navigation">
@@ -102,6 +116,7 @@ export default function Home() {
                     <div className="pizza-label">
                       <div><b>{item.name}</b><strong>{Array.isArray(item.price) ? item.price.map((p) => <span key={p.label}>{p.label} {zar(p.price)}</span>) : zar(item.price)}</strong></div>
                       {item.description && <p>{item.description}</p>}
+                      {item.note && <small className="menu-note">{item.note}</small>}
                       {item.featured && <small>House favourite. No sensible reason required.</small>}
                     </div>
                   </li>
@@ -126,14 +141,14 @@ export default function Home() {
             ))}
           </div>
           <div className="menu-source">
-            <img src={asset("/images/menu-pizza.webp")} alt="The original in-store Pizza Ratto menu board" width={378} height={510} loading="lazy" />
-            <p className="menu-fineprint">Menu and prices are the current supplied version. Availability can change when Big Bertha says so.</p>
-            <span>THE ORIGINAL BOARD</span>
+            <img src={asset("/images/owner-2026/feast-collage.webp")} alt="Overhead spread of Pizza Ratto pizzas, desserts, avocado and hot honey" width={1402} height={1122} loading="lazy" />
+            <p className="menu-fineprint">Owner-supplied favourites plus two photo-led specials. Availability can change when Big Bertha says so.</p>
+            <span>THE OWNER’S TABLE</span>
           </div>
         </section>
 
         <section className="ingredients section-pad">
-          <div className="ingredient-photo"><img src={asset("/images/pizza-bianca.webp")} alt="Bianca pizza with rosemary beside a bowl of fresh dip" loading="lazy" /></div>
+          <div className="ingredient-photo"><img src={asset("/images/owner-2026/feast-landscape.webp")} alt="A full Pizza Ratto table spread with pizzas, desserts, hot honey and fresh ingredients" loading="lazy" /></div>
           <div className="ingredient-copy"><p className="section-number">03 / BUILT DIFFERENT</p><h2 className="spaced-heading">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
@@ -146,11 +161,13 @@ export default function Home() {
         </section>
 
         <section className="gallery section-pad" aria-labelledby="gallery-title">
-          <div className="gallery-title"><p className="section-number">04 / INSIDE</p><h2 id="gallery-title">The rat hole.</h2><p>Pizza, scooters, old furniture and very good reasons to stay awhile.</p></div>
-          <figure className="gallery-interior"><img src={asset("/images/interior.webp")} alt="Pizza Ratto interior with wooden tables, vintage furniture, exposed brick and a Vespa" loading="lazy" /></figure>
-          <figure className="gallery-pizza-one"><img src={asset("/images/pizza-arcobaleno.webp")} alt="Arcobaleno pizza with salami, mushrooms, feta and rocket" loading="lazy" /></figure>
-          <figure className="gallery-pizza-two"><img src={asset("/images/pizza-rally.webp")} alt="Rally pizza with smoked chicken, mushrooms, avocado" loading="lazy" /></figure>
-          <p className="gallery-caption">Come hungry.<br />Leave slightly happier.</p>
+          <div className="gallery-intro">
+            <div className="gallery-title"><p className="section-number">04 / INSIDE</p><h2 id="gallery-title">The rat hole.</h2><p>Pizza, scooters, old furniture and very good reasons to stay awhile.</p></div>
+            <p className="gallery-caption">Come hungry.<br />Leave slightly happier.</p>
+          </div>
+          <figure className="gallery-interior"><img src={asset("/images/owner-2026/venue-table.webp")} alt="Overhead Pizza Ratto table spread beside a blue Vespa inside the restaurant" loading="lazy" /></figure>
+          <figure className="gallery-pizza-one"><img src={asset("/images/owner-2026/dessert-brownie.webp")} alt="Chocolate brownie with nuts and chocolate drizzle on checkerboard paper" loading="lazy" /></figure>
+          <figure className="gallery-pizza-two"><img src={asset("/images/owner-2026/dessert-limone.webp")} alt="Two lemon-shaped creamy desserts with mint and fresh lemon leaves" loading="lazy" /></figure>
         </section>
 
         <section className="visit section-pad" id="visit">

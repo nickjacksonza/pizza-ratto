@@ -150,7 +150,7 @@ If the repository name changes, update all three of these places:
 - Current ordering priority: WhatsApp first, then phone, then Uber Eats.
 - Collection-only wording is intentional.
 - The safe halal wording is: “Our meat toppings are halal and sourced from Mubarak Food Emporium.” Do not claim the restaurant itself is halal certified.
-- Sprint and Veloce currently use intentional image placeholders.
+- The pizza grid intentionally contains twelve cards: eight use enhanced owner photography and four use generated concept photography. Bianca Pollo, Sole, Bosco, Bandito, Verde and Tramonto have provisional demo names or prices; do not remove their confirmation notes until the owner approves them.
 - Do not infer menu availability or new prices from generic pizza imagery.
 
 ## Deployment rules

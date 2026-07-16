@@ -28,6 +28,7 @@ npm run build:pages
 - HTTP success and HTML content type;
 - title and primary content;
 - menu output and price formatting;
+- all twelve pizza cards, their photographs, and provisional-item notes;
 - WhatsApp, phone, and Uber Eats destinations;
 - Restaurant JSON-LD;
 - absence of starter-preview remnants;
@@ -74,6 +75,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - footnote above lower checkerboard;
 - hero and later sections not excessively tall;
 - pizza labels align with photographs and prices;
+- all twelve pizza photographs load without fallback placeholders;
 - section labels are readable;
 - Remi art is not cropped;
 - visit buttons and footer are balanced.
@@ -81,6 +83,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 ### Mobile
 
 - menu button is easy to tap and menu closes after navigation;
+- announcement text loops continuously without a blank gap, clipping or compressed lettering;
 - hero art preserves its aspect ratio;
 - phone number does not overflow at 390px and below;
 - pizza names, prices, descriptions, and notes remain readable in two columns;
@@ -92,6 +95,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - pizza images in each mobile row share the same top edge;
 - pizza labels start below their images with no overlap;
 - all mobile collage transforms resolve to `none`.
+- all twelve pizza photographs load without broken-image indicators.
 
 ## Accessibility checklist
 
@@ -102,6 +106,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - Check image alt text after asset changes.
 - Confirm decorative checkerboards are `aria-hidden`.
 - Enable reduced motion and confirm the ticker stops.
+- At phone width with reduced motion enabled, confirm the announcement wraps and remains complete.
 - At normal motion, confirm ticker copy covers the full banner and replacement text continuously enters from the right.
 - Confirm every WhatsApp link retains visible text and a decorative icon.
 - Confirm the icon-only Instagram footer link has an accessible name.

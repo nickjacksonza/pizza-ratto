@@ -17,14 +17,20 @@ export const menu: MenuCategory[] = [
   {
     id: "pizza",
     name: "Pizza",
-    kicker: "Six rides. One very hot oven.",
+    kicker: "Twelve rides. One very hot oven.",
     items: [
       { name: "Bianca & Dip", description: "EVOO, rosemary, sea salt and fresh dip", price: 40, featured: true },
       { name: "Primavera", description: "Tomatoes, mozzarella and basil", price: 80 },
       { name: "Veloce", description: "Butternut, feta, onions and sunflower seeds", price: 100 },
       { name: "Sprint", description: "Salami, caramelised onions and hot honey", price: 120 },
       { name: "Arcobaleno", description: "Salami, feta, mushrooms and rocket", price: 140 },
+      { name: "Bianca Pollo", description: "White base, smoked chicken, mushrooms and chives", price: 135, note: "New special · confirm availability" },
+      { name: "Sole", description: "White base, yellow peppers, cherry tomatoes and mint", price: 110, note: "New special · confirm availability" },
       { name: "Rally", description: "BBQ glaze, smoked chicken, mushrooms and avocado", price: 150, featured: true },
+      { name: "Bosco", description: "Tomatoes, mozzarella, mushrooms, garlic, rosemary and rocket", price: 125, note: "Concept special · confirm availability" },
+      { name: "Bandito", description: "Spicy salami, red onion, roasted peppers, chilli and hot honey", price: 145, note: "Concept special · confirm availability" },
+      { name: "Verde", description: "Pesto, mozzarella, courgette, artichokes, feta and rocket", price: 130, note: "Concept special · confirm availability" },
+      { name: "Tramonto", description: "Roasted peppers, onions, feta, cherry tomatoes and basil", price: 125, note: "Concept special · confirm availability" },
     ],
   },
   {

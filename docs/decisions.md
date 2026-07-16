@@ -97,3 +97,35 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** At phone width, remove every collage rotation/vertical offset and give each pizza item an explicit image row followed by a label row with positive spacing.
 
 **Consequence:** Desktop keeps its loose flyer collage, while mobile prioritizes clean scanning. New positional `nth-child` rules must be reset inside the phone breakpoint.
+
+## 013 — Prefer the July 2026 owner photography batch
+
+**Context:** The first release relied on small flyer crops, four pizza photos and two placeholders. The owner later supplied thirteen stronger food and venue photographs.
+
+**Decision:** Enhance the owner batch into compressed WebP derivatives, map all six confirmed pizzas by visible ingredients, add two explicitly provisional photo-led specials, and replace every rendered non-hero/non-Remi photograph with the new batch.
+
+**Consequence:** `public/images/owner-2026/` is now the active photography source. Legacy photographs remain for provenance but are not rendered. Bianca Pollo and Sole must keep their confirmation notes until the owner approves their names, ingredients and prices.
+
+## 014 — Complete the pizza grid with explicit concept specials
+
+**Context:** Eight pizza cards left an incomplete final row in the three-column desktop composition, and the earlier collage offsets caused uneven image baselines and label overlap.
+
+**Decision:** Use twelve equal photo cards—four rows of three on desktop and six rows of two on mobile. Add Bosco, Bandito, Verde and Tramonto as visibly provisional generated concepts, remove positional card offsets, and keep a positive gap between every image and label.
+
+**Consequence:** The demo grid is balanced at both target layouts. The four concepts are not owner-confirmed products and must retain their confirmation labels until approved, renamed or removed.
+
+## 015 — Bound the Rat Hole editorial header
+
+**Context:** A tall photograph spanning all gallery rows was allowed to influence an automatic first row. The title and slogan consequently sat at opposite edges of a large empty rectangle, weakening proximity and visual hierarchy.
+
+**Decision:** Give the first two gallery columns a fixed-height editorial header containing both the section title and slogan, separated from the photographs by a shared rule. Keep the venue image isolated in the third column and let the two food images form the lower collage.
+
+**Consequence:** The layout retains deliberate asymmetry without accidental dead space. Mobile collapses the header and all three photographs into a full-width reading sequence.
+
+## 016 — Preserve the full announcement with a mobile-only loop
+
+**Context:** The full announcement line works as a strong desktop masthead but cannot fit a phone viewport. Hiding its latter phrases removed useful location and opening-hour context, while shrinking it further damaged legibility.
+
+**Decision:** Keep one static centered copy on larger screens and use two identical continuous runs below 520px. Expose one concise accessible label, hide the repeated visual text from assistive technology, and replace motion with a wrapped static copy under `prefers-reduced-motion`.
+
+**Consequence:** Desktop appearance is unchanged, mobile retains the full message, and users who disable animation receive a complete non-moving alternative.

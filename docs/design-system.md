@@ -101,11 +101,15 @@ Do not reintroduce large empty vertical bands unless the content requires them.
 
 ## Menu composition
 
-Pizza uses a three-column desktop collage and two-column mobile grid. Photography is circular with wine-coloured borders. Selected cards are slightly offset or rotated to preserve the flyer character.
+Pizza uses a strict three-column desktop grid and two-column mobile grid. Photography is circular with wine-coloured borders. Every image track has the same dimensions, and labels begin below the circles with positive spacing.
 
-Sprint and Veloce intentionally show designed placeholders until approved photographs exist. The placeholders should look deliberate, not broken.
+Eight cards use enhanced owner-supplied photography and four use generated concept photography. The placeholder component remains as a deliberate fallback for future menu additions without a photo.
 
-Coffee and dolci use structured lists rather than photographed menu boards. The original board remains visible as a supporting provenance image.
+Coffee and dolci use structured lists rather than photographed menu boards. The supporting menu image now uses an enhanced owner-supplied feast photograph rather than the legacy photographed board.
+
+The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones. Card transforms are disabled at every breakpoint to protect image baselines and label clearance. Provisional specials use a small wine-colored confirmation label beneath their ingredient descriptions.
+
+The Rat Hole gallery uses a bounded 220px editorial header across its first two columns. Title and slogan share that header with a common baseline and divider, preventing the tall venue photograph from inflating an invisible first row. The brownie and complete lemon dessert form the lower collage while the venue photograph anchors the right edge. On narrow screens, the header becomes one compact stack and every photograph uses the full content width; the venue and brownie figures retain explicit minimum heights because their percentage-height images cannot size an implicit grid row by themselves.
 
 ## Responsive behavior
 
@@ -132,6 +136,7 @@ Coffee and dolci use structured lists rather than photographed menu boards. The 
 - section padding tightens;
 - headings scale down and allow emergency wrapping;
 - pizza descriptions and prices stack for readability;
+- provisional menu badges wrap within their own grid track so they cannot widen neighbouring pizza cards;
 - menu lists become one column;
 - WhatsApp is highlighted as the primary quick action.
 
@@ -139,7 +144,7 @@ Coffee and dolci use structured lists rather than photographed menu boards. The 
 
 - hero phone size reduces;
 - pizza-grid gaps tighten;
-- original-board layout narrows.
+- owner-table editorial layout narrows.
 
 ## Interaction and accessibility
 
@@ -150,6 +155,7 @@ Coffee and dolci use structured lists rather than photographed menu boards. The 
 - WhatsApp actions include a recognizable brand mark without replacing their visible text; the footer Instagram control is icon-only with an accessible label.
 - The ticker uses two identical long text runs so one enters from the right while the other exits left. Keep both runs identical: the `translateX(-50%)` loop depends on equal widths.
 - Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
+- The top announcement remains static and centered when it fits. At phone widths it switches to two identical 18-second runs so the complete business message remains legible without compression or clipping. Reduced-motion mode disables that loop and wraps one copy instead.
 - The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
 - Remi's portrait source has asymmetric blank canvas around the visible drawing. The crop therefore uses `translateX(-56%)` to center the visible mascot rather than the bitmap bounds. Desktop uses up to 128% of the art column with a 660px cap so the helmet and both wheels fit inside the 460px frame; mobile may scale wider but retains the optical centering correction.
 - The ticker stops under `prefers-reduced-motion: reduce`.

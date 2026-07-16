@@ -8,7 +8,7 @@ This folder explains the current product, its design logic, implementation, and 
 - Publicly deployed to GitHub Pages at `https://zmaqutu.github.io/pizza-ratto/`.
 - OpenAI Sites project retained as an optional second deployment target.
 - Menu, business details, structured metadata, mobile navigation, and ordering links are implemented.
-- Sprint and Veloce still use intentional pizza-image placeholders.
+- The menu uses a deliberate twelve-card grid: eight enhanced owner photographs and four generated concept photographs. Six specials remain provisional pending owner approval.
 - No database, CMS, cart, analytics, user accounts, or custom domain.
 
 ## Documentation map

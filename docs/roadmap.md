@@ -11,8 +11,8 @@ The current homepage is a strong demo and a usable static storefront. The next w
 
 ## Priority 2 — Complete and optimize imagery
 
-- Replace Sprint and Veloce placeholders with real photos.
-- Request original food photos rather than enlarging flyer crops.
+- Confirm, replace or remove all six provisional specials: Bianca Pollo, Sole, Bosco, Bandito, Verde and Tramonto.
+- Retain the owner-supplied originals if cleaner unbranded exports become available later.
 - Compress the multi-megabyte hero PNGs, testing AVIF/WebP where transparency permits.
 - Preserve source artwork outside destructive optimization steps.
 

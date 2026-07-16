@@ -69,14 +69,45 @@ See `content-todo.md` for facts that remain unverified.
 | `public/images/hero-paper-texture.png` | 1698×926 | Full hero background | Generated background-only paper texture derived from the hero visual |
 | `public/images/ratto-vespa-red.png` | 1096×1435 | Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
-| `public/images/interior.webp` | 291×510 | Venue gallery | Supplied photo |
-| `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo |
+| `public/images/interior.webp` | 291×510 | Legacy venue gallery | Supplied photo, retained but no longer rendered |
+| `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |
 | `public/images/menu-coffee.webp` | 381×510 | Reference menu board | Supplied photo, currently not rendered |
 | `public/images/menu-dolci.webp` | 377×510 | Reference menu board | Supplied photo, currently not rendered |
-| `public/images/pizza-bianca.webp` | 528×510 | Bianca/menu and ingredient story | Supplied photo |
-| `public/images/pizza-primavera.webp` | 455×510 | Primavera menu item | Supplied photo |
-| `public/images/pizza-arcobaleno.webp` | 469×510 | Arcobaleno menu and gallery | Supplied photo |
-| `public/images/pizza-rally.webp` | 481×510 | Rally menu and gallery | Supplied photo |
+| `public/images/pizza-bianca.webp` | 528×510 | Legacy Bianca crop | Supplied photo, retained but no longer rendered |
+| `public/images/pizza-primavera.webp` | 455×510 | Legacy Primavera crop | Supplied photo, retained but no longer rendered |
+| `public/images/pizza-arcobaleno.webp` | 469×510 | Legacy Arcobaleno crop | Supplied photo, retained but no longer rendered |
+| `public/images/pizza-rally.webp` | 481×510 | Legacy Rally crop | Supplied photo, retained but no longer rendered |
+
+### July 2026 owner photography
+
+All files below live in `public/images/owner-2026/`. Twelve branded delivery-platform exports were restored with the built-in image-editing workflow at high fidelity, reconstructing only the obscured corner. The venue-table photograph had no overlay and received the same clarity, color and dynamic-range treatment. Website derivatives were encoded as WebP at quality 84; generated PNG masters remain in the session's Codex generated-image store.
+
+| Asset | Dimensions | Website role | Ingredient/subject inference |
+| --- | ---: | --- | --- |
+| `pizza-bianca.webp` | 1402×1122 | Bianca & Dip card | Rosemary flatbread, fresh dip, olive oil |
+| `pizza-primavera.webp` | 1402×1122 | Primavera card | Tomato, mozzarella, basil |
+| `pizza-veloce.webp` | 1402×1122 | Veloce card | Butternut, feta, onion, sunflower seeds |
+| `pizza-sprint.webp` | 1402×1122 | Sprint card | Salami, caramelised onion, hot honey |
+| `pizza-arcobaleno.webp` | 1402×1122 | Arcobaleno card | Salami, mushroom, feta, rocket |
+| `pizza-rally.webp` | 1402×1122 | Rally card | Smoked chicken, mushroom, avocado |
+| `pizza-bianca-pollo.webp` | 1402×1122 | Provisional Bianca Pollo card | White base, smoked chicken, mushroom, chives |
+| `pizza-sole.webp` | 1402×1122 | Provisional Sole card | White base, yellow pepper, cherry tomato, mint |
+| `feast-collage.webp` | 1402×1122 | Menu editorial card | Mixed pizza and dessert spread |
+| `feast-landscape.webp` | 1402×1122 | Ingredient-story photograph | Full table spread with ingredients and desserts |
+| `dessert-brownie.webp` | 1402×1122 | Gallery | Chocolate brownie, nuts, chocolate drizzle |
+| `dessert-limone.webp` | 1402×1122 | Gallery | Lemon-shaped creamy desserts and mint |
+| `venue-table.webp` | 1027×1531 | Venue gallery | Pizza table, desserts, blue Vespa and dining context |
+
+### Generated concept pizzas
+
+These four 1254×1254 WebP assets were generated with the built-in image tool using the owner photography as a visual reference. They intentionally complete the twelve-card demo grid and are not evidence of real products or availability.
+
+| Asset | Website role | Concept toppings |
+| --- | --- | --- |
+| `pizza-bosco.webp` | Provisional Bosco card | Tomato, mozzarella, mushroom, garlic, rosemary, rocket |
+| `pizza-bandito.webp` | Provisional Bandito card | Spicy salami, red onion, roasted pepper, chilli, hot honey |
+| `pizza-verde.webp` | Provisional Verde card | Pesto, mozzarella, courgette, artichoke, feta, rocket |
+| `pizza-tramonto.webp` | Provisional Tramonto card | Tomato, mozzarella, peppers, onion, feta, cherry tomato, basil |
 
 ## Generated-asset history
 
@@ -108,13 +139,18 @@ Currently mapped:
 
 - Bianca & Dip
 - Primavera
-- Arcobaleno
-- Rally
-
-Currently placeholders:
-
 - Veloce
 - Sprint
+- Arcobaleno
+- Bianca Pollo — provisional name and price
+- Sole — provisional name and price
+- Rally
+- Bosco — generated concept, provisional name and price
+- Bandito — generated concept, provisional name and price
+- Verde — generated concept, provisional name and price
+- Tramonto — generated concept, provisional name and price
+
+There are no rendered pizza placeholders in the current menu. The fallback placeholder markup remains available for future items that lack owner photography.
 
 If an item name changes in `data/menu.ts`, update the photo mapping in the same change.
 

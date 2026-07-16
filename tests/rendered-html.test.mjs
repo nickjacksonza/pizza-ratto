@@ -23,6 +23,14 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /Pick your ride/);
   assert.match(html, /Bianca &amp; Dip/);
   assert.match(html, /R150/);
+  assert.match(html, /Bianca Pollo/);
+  assert.match(html, /Sole/);
+  assert.match(html, /Bosco/);
+  assert.match(html, /Bandito/);
+  assert.match(html, /Verde/);
+  assert.match(html, /Tramonto/);
+  assert.match(html, /Twelve rides\. One very hot oven\./);
+  assert.doesNotMatch(html, /pizza-placeholder/);
   assert.match(html, /https:\/\/wa\.me\/27825250380/);
   assert.match(html, /tel:\+27825250380/);
   assert.match(html, /ubereats\.com\/za\/store\/pizza-ratto/);
@@ -51,6 +59,7 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(business, /\+27825250380/);
   assert.match(business, /ubereats\.com\/za\/store\/pizza-ratto/);
   assert.match(menu, /Arcobaleno/);
+  assert.match(menu, /New special · confirm availability/);
   assert.doesNotMatch(page, /href=["']#["']/);
   assert.doesNotMatch(page + business, /google\.com\/maps/);
 });

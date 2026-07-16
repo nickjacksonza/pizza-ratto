@@ -60,7 +60,7 @@ Use `npm run build:pages` when deployment paths, images, fonts, configuration, o
 1. Add the optimized asset to `public/images/`.
 2. Add its mapping and alt text in `pizzaPhotos`.
 3. Add it to the asset table in `docs/content-and-assets.md`.
-4. Confirm that placeholder styling disappears only for that item.
+4. Confirm that the new photograph replaces only the intended item and that every menu card still has a valid image mapping.
 5. Run both normal and Pages builds.
 
 ### Change styling

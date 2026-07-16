@@ -32,11 +32,12 @@ These values were derived from the supplied flyer and owner-provided links. Reco
 - Image credits and permission to use every supplied/generated image.
 - Privacy, analytics, cookie and website-credit requirements.
 
-## Menu imagery still needed
+## Provisional photo-led specials
 
-- Sprint currently uses a clearly labelled placeholder.
-- Veloce currently uses a clearly labelled placeholder.
-- Higher-resolution original photography would improve the menu and reduce reliance on flyer crops.
+- `Bianca Pollo` and its R135 price were created for the website demo from the photographed white-base smoked-chicken, mushroom and chive pizza.
+- `Sole` and its R110 price were created for the website demo from the photographed white-base yellow-pepper, cherry-tomato and mint pizza.
+- `Bosco` (R125), `Bandito` (R145), `Verde` (R130) and `Tramonto` (R125) are generated concept specials added to complete the twelve-card demo grid.
+- All six provisional items must be renamed, repriced, confirmed or removed by the owner before they are treated as official menu items.
 
 ## Safe claim guidance
 

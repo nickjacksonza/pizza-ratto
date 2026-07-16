@@ -13,7 +13,7 @@ Create a focused, mobile-first storefront that turns the Pizza Ratto flyer aesth
 - Full-viewport checkerboard framing and poster footnote
 - Short manifesto and house rules
 - Structured HTML pizza, coffee and dolci menu
-- Real pizza photography with labelled placeholders where imagery is unavailable
+- Enhanced owner-supplied pizza photography for every current menu card
 - Ingredient story
 - Meet Remi and Big Bertha section
 - Editorial interior/food gallery
