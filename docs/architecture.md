@@ -75,13 +75,14 @@ The page is composed in this order:
 6. Full-viewport `01 / WHAT WE’RE ABOUT` paper scene
 7. Full-viewport `02 / THE IMPORTANT BIT` iris scene
 8. Natural-flow pizza grid with alternating lateral row entrances, followed by a full-view coffee/dolci board
-9. Full-viewport `03 / BUILT DIFFERENT` split ingredient scene
-10. Full-viewport Remi and Big Bertha column scene
-11. Full-view `04 / RATTO SOCIAL CLUB` overlapping venue and food deck with scroll-drawn `Ratto` lettering
-12. Full-viewport `05 / FIND THE FIRE` visit and order shutter
-13. Footer
-14. Mobile fixed ordering bar
-15. Restaurant JSON-LD
+9. Natural-flow `FROM THE COUNTER` owner-media reel with seven muted video loops and two archive cards
+10. Full-viewport `03 / BUILT DIFFERENT` split ingredient scene
+11. Full-viewport Remi and Big Bertha column scene using the owner-supplied mural photograph
+12. Full-view `04 / RATTO SOCIAL CLUB` overlapping venue and food deck with scroll-drawn `Ratto` lettering
+13. Full-viewport `05 / FIND THE FIRE` visit and order shutter
+14. Footer
+15. Mobile fixed ordering bar
+16. Restaurant JSON-LD
 
 ## Metadata and discovery
 
@@ -112,7 +113,7 @@ Breakpoints:
 
 Native `<img>` elements are intentional. The previous `next/image` implementation produced `/_vinext/image` URLs, which GitHub Pages cannot serve. Public URLs are prefixed with the environment-aware `asset()` helper.
 
-The hero CSS texture uses a relative URL because it must work both at the root and beneath `/pizza-ratto/`.
+The hero CSS texture uses a relative URL because it must work both at the root and beneath `/pizza-ratto/`. Owner video derivatives and their reduced-motion poster frames live under `public/videos/owner-2026/` and `public/images/owner-2026/video-stills/`; all of their JSX URLs also pass through `asset()`.
 
 ## Build targets
 

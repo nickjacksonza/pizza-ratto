@@ -30,6 +30,15 @@ const pizzaPhotos: Record<string, { src: string; alt: string }> = {
 };
 
 const portalPizzas = ["Primavera", "Sprint", "Arcobaleno", "Rally", "Verde"];
+const counterTapes = [
+  { src: "/videos/owner-2026/oven-close.mp4", poster: "/images/owner-2026/video-stills/oven-close.webp", label: "Big Bertha, up close" },
+  { src: "/videos/owner-2026/oven-flames.mp4", poster: "/images/owner-2026/video-stills/oven-flames.webp", label: "The fire stays ready" },
+  { src: "/videos/owner-2026/pizza-pass.mp4", poster: "/images/owner-2026/video-stills/pizza-pass.webp", label: "From oven to pass" },
+  { src: "/videos/owner-2026/espresso-pull.mp4", poster: "/images/owner-2026/video-stills/espresso-pull.webp", label: "Espresso pulling" },
+  { src: "/videos/owner-2026/sugar-doughnuts.mp4", poster: "/images/owner-2026/video-stills/sugar-doughnuts.webp", label: "Sugar doughnuts" },
+  { src: "/videos/owner-2026/box-lettering.mp4", poster: "/images/owner-2026/video-stills/box-lettering.webp", label: "Boxes, signed by hand" },
+  { src: "/videos/owner-2026/counter-sweep.mp4", poster: "/images/owner-2026/video-stills/counter-sweep.webp", label: "Counter chaos" },
+];
 
 export default function Home() {
   const pizzaMenu = menu.find((category) => category.id === "pizza")!;
@@ -57,7 +66,7 @@ export default function Home() {
         </div>
 
         <header className="site-header">
-          <a className="wordmark" href="#top" aria-label="Pizza Ratto home">PIZZA <i>RATTO</i></a>
+          <a className="wordmark" href="#top" aria-label="Pizza Ratto home"><img src={asset("/images/brand/pizza-ratto-wordmark.svg")} alt="" width={862} height={712} /></a>
           <nav className="desktop-nav" aria-label="Main navigation">
             <a href="#story">About</a><a href="#menu">Menu</a><a href="#visit">Visit</a>
           </nav>
@@ -154,7 +163,7 @@ export default function Home() {
               <div className="menu-inner section-pad">
                 <header className="flyer-menu-title">
                   <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
-                  <span>Wood-fired<br />by Big Bertha</span>
+                  <span>Wood-fired<br />by Big Bertha<img className="menu-brand-icon" src={asset("/images/brand/red-pizza-slice.svg")} alt="" aria-hidden="true" /></span>
                 </header>
                 <div className="menu-rail-window">
                   <ul className="pizza-collage">
@@ -189,7 +198,7 @@ export default function Home() {
             <div className="small-menu-grid">
               {sideMenu.map((category) => (
                 <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
-                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</span></header>
+                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}<img className="category-icon" src={asset(category.id === "coffee" ? "/images/brand/red-cup.svg" : "/images/brand/chef-hat.webp")} alt="" aria-hidden="true" /></span></header>
                   <ul>
                     {category.items.map((item) => (
                       <li key={item.name}>
@@ -202,13 +211,39 @@ export default function Home() {
               ))}
             </div>
           </div>
+
+          <section className="counter-tapes section-pad" aria-labelledby="counter-tapes-title">
+            <header className="counter-tapes-header">
+              <div><p className="section-number">FROM THE COUNTER / 07 SHORTS</p><h2 id="counter-tapes-title">Fresh proof.<br /><em>No filters.</em></h2></div>
+              <div className="counter-tapes-note"><img src={asset("/images/brand/wordmark-banner.svg")} alt="" aria-hidden="true" /><p>A few seconds from Big Bertha, the pass and the counter. Swipe sideways for the full roll.</p></div>
+            </header>
+            <div className="counter-reel" aria-label="Short owner videos from Pizza Ratto">
+              {counterTapes.map((tape, index) => (
+                <figure className="counter-tape" key={tape.src}>
+                  <div className="counter-tape-media">
+                    <video autoPlay loop muted playsInline preload="metadata" poster={asset(tape.poster)} aria-hidden="true" disablePictureInPicture><source src={asset(tape.src)} type="video/mp4" /></video>
+                    <img className="counter-still" src={asset(tape.poster)} alt="" aria-hidden="true" loading="lazy" />
+                  </div>
+                  <figcaption><span>{String(index + 1).padStart(2, "0")}</span>{tape.label}</figcaption>
+                </figure>
+              ))}
+              <figure className="counter-tape counter-art-card">
+                <div className="counter-tape-media"><img src={asset("/images/brand/figma-poster.webp")} alt="Pizza Ratto Figma poster with Remi on a Vespa" loading="lazy" /></div>
+                <figcaption><span>08</span>From the Figma drawer</figcaption>
+              </figure>
+              <figure className="counter-tape counter-event-card">
+                <div className="counter-tape-media"><img src={asset("/images/owner-2026/backgammon-tournament.webp")} alt="Pizza Ratto backgammon tournament poster with August rounds and a September final" loading="lazy" /></div>
+                <figcaption><span>09</span>Owner archive / dates on artwork</figcaption>
+              </figure>
+            </div>
+          </section>
         </section>
 
         <section className="ingredients" aria-labelledby="ingredients-title" data-scene="ingredients" data-transition="split" data-lock-chapter="ingredients" data-lock-scroll="1.15">
           <span className="scene-curtain" aria-hidden="true" />
           <span className="chapter-progress" aria-hidden="true"><i /></span>
           <div className="ingredient-photo" data-parallax="22"><img src={asset("/images/owner-2026/feast-landscape.webp")} alt="A full Pizza Ratto table spread with pizzas, desserts, hot honey and fresh ingredients" loading="lazy" /></div>
-          <div className="ingredient-copy section-pad"><p className="section-number">03 / BUILT DIFFERENT</p><h2 id="ingredients-title" className="spaced-heading" data-split="scroll">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
+          <div className="ingredient-copy section-pad"><img className="ingredient-chef-hat" src={asset("/images/brand/chef-hat.webp")} alt="" aria-hidden="true" /><p className="section-number">03 / BUILT DIFFERENT</p><h2 id="ingredients-title" className="spaced-heading" data-split="scroll">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
         <section className="characters section-pad" data-scene="characters" data-transition="columns" data-lock-chapter="characters" data-lock-scroll="1.15">
@@ -219,7 +254,7 @@ export default function Home() {
             <h2 data-split="scroll">Meet Remi.</h2>
             <p>Our resident rat and patron saint of good decisions made near a pizza oven. You’ll find him around the room, including a mural painted by local artist Buffy.</p>
           </div>
-          <div className="character-art" data-parallax="34"><img src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn Remi riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="lazy" /></div>
+          <div className="character-art character-art-owner" data-parallax="34"><img src={asset("/images/owner-2026/remi-vespa-mural.webp")} alt="Owner-supplied mural of Remi riding a red Vespa while holding a slice of pizza" width={1400} height={1384} loading="lazy" /></div>
           <div className="bertha-note"><span className="sticker">FIRE #01</span><h3>Big Bertha.</h3><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
         </section>
 

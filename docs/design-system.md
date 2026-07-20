@@ -119,6 +119,17 @@ Pizza uses a strict twelve-card grid: three columns on desktop and two columns o
 
 Eight cards use enhanced owner-supplied photography and four use generated concept photography. The placeholder component remains as a deliberate fallback for future menu additions without a photo.
 
+## Counter tapes
+
+The coffee/dolci board now hands off to a compact horizontal owner-media reel rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. Two still cards close the reel: the supplied Figma poster composition and an owner-supplied backgammon poster retained as archive artwork, not as a newly written event claim.
+
+- Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
+- The reel is horizontally scrollable and snap-assisted, with each card remaining a native figure and caption.
+- Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
+- The reel must not become a pinned chapter or compete with menu comparison.
+
+Figma-derived red pizza and cup marks punctuate the menu headers. The supplied stacked wordmark is the primary header mark; the black pizza-slice outline and wide banner remain supporting brand assets.
+
 Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards. The board's curtain and label may enter together, but each category owns a separate `top 90%` ScrollTrigger for its header and rows. In the stacked layout this prevents Dolci from completing while only Coffee is on screen.
 
 The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones, in both enhanced and reduced-motion modes. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
@@ -172,7 +183,7 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 - Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
 - The top announcement remains static and centered when it fits. At phone widths it switches to two identical 18-second runs so the complete business message remains legible without compression or clipping. Reduced-motion mode disables that loop and wraps one copy instead.
 - The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
-- Remi's portrait source has asymmetric blank canvas around the visible drawing. The road scene uses a bounded overflow crop plus `mix-blend-mode: multiply`; the character scene optically centers the source with a slight left correction. Keep the helmet, pizza, complete scooter and both wheels inside the visible crop.
+- Remi's generated portrait source has asymmetric blank canvas around the visible drawing and remains active in the road scene, where a bounded overflow crop plus `mix-blend-mode: multiply` removes the white field. The character scene now uses the owner-supplied mural photograph with normal blending and a full-bleed crop. Keep the helmet, pizza, complete scooter and both wheels inside both visible crops.
 - The ticker stops under `prefers-reduced-motion: reduce`.
 - The road scene becomes static, every handwriting stroke is shown, section wipes are disabled, and marked parallax elements return to their natural position under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.

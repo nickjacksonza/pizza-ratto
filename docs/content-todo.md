@@ -29,6 +29,7 @@ These values were derived from the supplied flyer and owner-provided links. Reco
 - Whether imported mozzarella from Puglia remains accurate.
 - Whether Mubarak Food Emporium should be named publicly.
 - Approved story for Remi, Buffy, Big Bertha and Vestoration.
+- Whether the supplied backgammon tournament poster is for 2026 and whether its dates should be promoted outside the archive artwork.
 - Image credits and permission to use every supplied/generated image.
 - Privacy, analytics, cookie and website-credit requirements.
 

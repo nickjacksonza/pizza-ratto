@@ -209,3 +209,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Keep Vara as the glyph and path source, but reduce the signature's footprint, remove the duplicate shadow layer and render one approved-red ink. Build a DrawSVG timeline in Vara's DOM path order, weighting each stroke duration by its measured length so only one pen stroke is actively drawing at a time.
 
 **Consequence:** The lettering now reads as a deliberate signature instead of background noise, remains genuinely scroll-drawn and reversible, and supports the collage hierarchy without introducing a new font, asset or animation runtime.
+
+## 026 — Prefer the owner/Figma brand package over approximations
+
+**Context:** The owner supplied seven short shop videos, an original Remi/Vespa mural photograph and a set of Figma exports containing the stacked wordmark, pizza-slice marks, cup art, chef-hat artwork and two poster compositions. The existing site had strong derived assets but little authentic counter footage and still used a live-type approximation in the fixed header.
+
+**Decision:** Use the supplied stacked Figma wordmark in the header, add the pizza/cup/chef-hat marks as restrained menu punctuation, replace the generated character portrait with the owner mural photograph, and assemble every owner video into one native horizontal `FROM THE COUNTER` reel. Include the Figma hero composition and backgammon artwork as clearly labelled archive cards rather than turning them into new promotional claims. Keep the generated transparent Remi asset in the scroll-driving road scene because it remains the technically appropriate cutout there.
+
+**Consequence:** The page now carries recognisably owner-made marks and real shop motion without sacrificing the existing static-export architecture or scan-friendly menus. Video loops are muted, compressed and paired with poster frames; reduced-motion users see the stills. The backgammon year and promotional status remain an owner-confirmation item.

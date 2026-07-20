@@ -29,6 +29,7 @@ npm run build:pages
 - title and primary content;
 - menu output and price formatting;
 - all twelve pizza cards, their photographs, and provisional-item notes;
+- the owner-media reel, branded wordmark, owner Remi mural and archive poster;
 - WhatsApp, phone, and Uber Eats destinations;
 - Restaurant JSON-LD;
 - absence of starter-preview remnants;
@@ -111,6 +112,8 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - long headings wrap without horizontal scrolling;
 - sticky bar highlights WhatsApp and respects the bottom safe area;
 - sticky bar does not cover footer content;
+- counter-tape horizontal overflow stays inside its own reel rather than widening the page;
+- reduced motion swaps every moving counter tape for its poster frame;
 - touch targets are at least 44px;
 - page has no horizontal scroll.
 - `PIZZA` remains fully visible above and below at 390px without adding horizontal overflow.

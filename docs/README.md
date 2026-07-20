@@ -10,6 +10,7 @@ This folder explains the current product, its design logic, implementation, and 
 - OpenAI Sites project retained as an optional second deployment target.
 - Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.
 - The menu uses a deliberate twelve-card grid: eight enhanced owner photographs and four generated concept photographs. Six specials remain provisional pending owner approval.
+- The July owner/Figma handoff is integrated through the authentic header wordmark, menu illustrations, owner Remi mural, seven-video counter reel and two clearly labelled archive cards.
 - No database, CMS, cart, analytics, user accounts, or custom domain.
 
 ## Documentation map

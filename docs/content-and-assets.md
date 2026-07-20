@@ -99,6 +99,26 @@ All files below live in `public/images/owner-2026/`. Twelve branded delivery-pla
 | `dessert-limone.webp` | 1402×1122 | Ratto Social Club sweet card | Lemon-shaped creamy desserts and mint |
 | `venue-table.webp` | 1027×1531 | Remi pull-transition and Ratto Social Club table card | Pizza table, desserts, blue Vespa and dining context |
 
+### July 2026 owner/Figma brand package
+
+The second July handoff added one owner mural photograph, seven WhatsApp video clips and several Figma SVG exports. Originals remain in the owner's handoff locations; the repository stores web-ready derivatives and selected clean SVGs. The three supplied black pizza-slice SVG exports were byte-identical, so only one canonical copy is retained.
+
+| Asset | Website role | Origin/status |
+| --- | --- | --- |
+| `public/images/owner-2026/remi-vespa-mural.webp` | Meet Remi character scene | WebP derivative of the owner-supplied 1600×1582 mural photograph |
+| `public/images/brand/pizza-ratto-wordmark.svg` | Fixed-header wordmark | Supplied Figma vector; replaces the live-type approximation |
+| `public/images/brand/wordmark-banner.svg` | Counter-tapes masthead | Supplied wide Figma banner with its white background removed for transparent use |
+| `public/images/brand/pizza-slice-outline.svg` | Retained supporting mark | Canonical copy of three byte-identical supplied Figma exports |
+| `public/images/brand/red-pizza-slice.svg` | Pizza-menu header punctuation | Supplied inline SVG from the owner/Figma handoff |
+| `public/images/brand/red-cup.svg` | Coffee-menu header punctuation | Supplied inline SVG from the owner/Figma handoff |
+| `public/images/brand/chef-hat.webp` | Dolci and ingredient-section punctuation | WebP derivative of the embedded-image Figma SVG |
+| `public/images/brand/figma-poster.webp` | Counter-tapes archive card | WebP derivative of the supplied landscape Figma poster composition |
+| `public/images/owner-2026/backgammon-tournament.webp` | Counter-tapes archive card | WebP derivative of the owner-supplied poster; dates remain confined to the artwork pending confirmation |
+| `public/videos/owner-2026/*.mp4` | Seven-card counter reel | Muted H.264 derivatives of the supplied WhatsApp clips, resized to 480px wide and moved to fast-start layout |
+| `public/images/owner-2026/video-stills/*.webp` | Video poster and reduced-motion frames | WebP still extracted from each matching owner video |
+
+Counter video filenames are `oven-close`, `oven-flames`, `pizza-pass`, `espresso-pull`, `sugar-doughnuts`, `box-lettering` and `counter-sweep`. Their visible captions describe only what is shown and do not add menu availability or pricing claims.
+
 ### Generated concept pizzas
 
 These four 1254×1254 WebP assets were generated with the built-in image tool using the owner photography as a visual reference. They intentionally complete the twelve-card demo grid and are not evidence of real products or availability.
