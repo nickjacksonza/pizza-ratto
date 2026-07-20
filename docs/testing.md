@@ -74,8 +74,10 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - checkerboards full width;
 - footnote above lower checkerboard;
 - hero and later sections not excessively tall;
-- `Hot` draws as individual strokes rather than a rectangular reveal, `PIZZA` letters arrive separately, then Remi crosses the complete viewport before the section ends;
-- Remi's body visibly bobs and pitches while its shadow stays grounded;
+- `Hot` draws as individual, rounded heavy strokes rather than a rectangular reveal; `PIZZA` letters arrive separately and no glyph is clipped at its cap height or baseline; then Remi crosses the complete viewport before the section ends;
+- Remi's body visibly bobs and pitches, reacts subtly to scroll velocity, and compresses its shadow without detaching from the road;
+- the smooth wrapper is fixed only when normal motion is active, the road stage is pinned by ScrollTrigger, and no blank red gap replaces the orange stage mid-sequence;
+- About, Menu and Visit links animate to the correct section through ScrollToPlugin; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
 - major sections wipe in from alternating directions without exposing non-palette color flashes;
 - floating menu pizzas and gallery cards enter from different directions without exposing empty image edges;
@@ -98,6 +100,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - sticky bar does not cover footer content;
 - touch targets are at least 44px;
 - page has no horizontal scroll.
+- `PIZZA` remains fully visible above and below at 390px without adding horizontal overflow.
 - Remi enters from the left, remains fully recognizable mid-route, and exits to the right without creating horizontal scroll.
 - pizza images in each mobile row share the same top edge;
 - pizza labels start below their images with no overlap;

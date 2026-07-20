@@ -149,3 +149,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Inspect the reference site's public theme bundle and follow its verified animation model: GSAP timelines, ScrollTrigger scrubbing and SplitText character treatment. Use GSAP 3.13 with DrawSVG for Pizza Ratto, plus Vara 1.4 with local Satisfy stroke data to generate the actual handwritten word. Keep Remi as the supplied raster but animate its outer travel separately from an inner suspension timeline. Rebuild the Rat Hole as four overlapping cards entering from different directions. Do not add Swiper because the gallery is editorial rather than an interactive carousel, and do not fake a frame-by-frame Remi sprite without a real approved frame set.
 
 **Consequence:** Drawing, type, panels, parallax, vehicle motion and the gallery now share one timeline grammar. The page remains statically exportable, loads no animation assets from a CDN, and disables the entire choreography under reduced motion.
+
+## 019 — Use the complete GSAP scroll stack and transform-safe pinning
+
+**Context:** The second motion pass still used native CSS scrolling and a sticky road stage. Review requested the full GSAP smooth-scroll toolset, more directional scene movement and stronger physical response from Remi. The oversized `PIZZA` word was also clipped by its own overflow mask.
+
+**Decision:** Put `main` and `footer` inside the conventional ScrollSmoother wrapper/content pair while keeping fixed chrome outside it. Use ScrollTrigger for all scrubbed reveals and for the road-scene pin, ScrollToPlugin for internal navigation and Observer for direction-aware header behavior. Add velocity-derived elastic tilt/lift to Remi, alternate panel wipes and child entrances, and scroll-drive the menu marquee. Remove the `PIZZA` overflow mask and reserve masking for individual character entrances. Keep all four approved brand colors as the visible scene palette.
+
+**Consequence:** Smooth scrolling, navigation, pinned choreography and directional motion now share one native-scroll-backed GSAP runtime. The page remains a static export, the fixed header and order bar are not trapped in transformed content, `PIZZA` keeps its complete glyph bounds, and reduced-motion users retain the static fallback.

@@ -7,10 +7,13 @@
   --grey: #373737;
   --cream: #fff4df;
   --white: #fffaf2;
+  --announcement-height: 32px;
+  --header-height: 76px;
+  --chrome-height: calc(var(--announcement-height) + var(--header-height));
 }
 
 * { box-sizing: border-box; }
-html { overflow-x: clip; scroll-behavior: smooth; }
+html { overflow-x: clip; scroll-behavior: auto; }
 body {
   margin: 0;
   overflow-x: clip;
@@ -36,11 +39,21 @@ a { color: inherit; text-decoration: none; }
 img { display: block; }
 .motion-line { overflow: hidden; }
 .motion-char, .drive-title-letter { display: inline-block; will-change: transform, opacity; }
-.motion-ready [data-panel] { will-change: clip-path, transform; }
+.motion-ready [data-panel] { overflow: clip; will-change: clip-path, transform; }
+.motion-ready [data-scroll-marquee] { animation: none; will-change: transform; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .skip-link { position: fixed; left: 1rem; top: -5rem; z-index: 200; padding: .8rem 1rem; color: var(--white); background: var(--grey); }
 .skip-link:focus { top: 1rem; }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); box-shadow: 0 0 0 6px var(--grey); outline-offset: 2px; }
+
+.top-chrome {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  will-change: transform;
+}
+#smooth-wrapper { width: 100%; overflow: hidden; }
+#smooth-content { min-height: 100%; padding-top: var(--chrome-height); will-change: transform; }
 
 .announcement {
   overflow: hidden;
@@ -58,9 +71,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); box-shad
 .announcement-diamond { margin: 0 .8rem; color: var(--orange); }
 
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 60;
+  position: relative;
+  z-index: 1;
   min-height: 76px;
   padding: 0 clamp(1rem, 4vw, 4rem);
   display: flex;
@@ -122,7 +134,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); box-shad
 
 .hero-shell {
   position: relative;
-  min-height: calc(100svh - 76px);
+  min-height: calc(100svh - var(--chrome-height));
   overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(330px, .55fr);
@@ -212,6 +224,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); box-shad
   isolation: isolate;
   will-change: transform, clip-path;
 }
+.motion-ready .drive-stage { position: relative; top: auto; }
 .drive-stage::before {
   content: "";
   position: absolute;
@@ -230,16 +243,18 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--pink); box-shad
   overflow: visible;
 }
 .drive-script svg { width: 100% !important; height: 100% !important; overflow: visible; }
-.drive-script path { vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.drive-script path { vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(3px 3px 0 rgba(204,40,50,.2)); }
 .drive-title {
   display: flex;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
+  padding: .13em .04em .16em;
+  margin: -.13em 0 -.16em;
   color: var(--pink);
   font-family: var(--font-display), Impact, sans-serif;
   font-size: clamp(12rem, 34vw, 36rem);
   letter-spacing: -.025em;
-  line-height: .68;
+  line-height: .78;
   text-shadow: .035em .035em 0 var(--grey), -.012em -.012em 0 var(--grey), .012em -.012em 0 var(--grey), -.012em .012em 0 var(--grey);
   transform: scaleX(.96);
 }
@@ -470,6 +485,7 @@ footer p { margin: 0; font-size: .76rem; }
 }
 
 @media (max-width: 520px) {
+  :root { --announcement-height: 29px; --header-height: 70px; }
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .announcement { font-size: .59rem; }
   .announcement-track { justify-content: flex-start; width: max-content; will-change: transform; animation: announcement-ticker 18s linear infinite; }

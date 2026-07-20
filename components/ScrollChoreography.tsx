@@ -13,6 +13,15 @@ type SplitInstance = {
   revert: () => void;
 };
 
+type SmoothScroller = {
+  effects: (targets: Element[] | string, config: { speed: number; lag: number }) => unknown;
+  kill: () => void;
+  offset: (target: Element | string, position?: string) => number;
+  scrollTop: () => number;
+};
+
+type MotionObserver = { kill: () => void };
+
 export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const wordRef = useRef<HTMLDivElement>(null);
@@ -24,12 +33,18 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
 
     let disposed = false;
     let gsapContext: { revert: () => void } | undefined;
+    let smoothScroller: SmoothScroller | undefined;
+    let motionObserver: MotionObserver | undefined;
     const splitInstances: SplitInstance[] = [];
+    const anchorCleanups: Array<() => void> = [];
 
     const setupMotion = async () => {
-      const [gsapModule, scrollTriggerModule, splitTextModule, drawSvgModule, varaModule] = await Promise.all([
+      const [gsapModule, scrollTriggerModule, scrollSmootherModule, scrollToModule, observerModule, splitTextModule, drawSvgModule, varaModule] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
+        import("gsap/ScrollSmoother"),
+        import("gsap/ScrollToPlugin"),
+        import("gsap/Observer"),
         import("gsap/SplitText"),
         import("gsap/DrawSVGPlugin"),
         import("vara"),
@@ -38,13 +53,17 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
 
       const gsap = gsapModule.gsap;
       const { ScrollTrigger } = scrollTriggerModule;
+      const { ScrollSmoother } = scrollSmootherModule;
+      const { ScrollToPlugin } = scrollToModule;
+      const { Observer } = observerModule;
       const { SplitText } = splitTextModule;
       const { DrawSVGPlugin } = drawSvgModule;
       const Vara = varaModule.default;
 
-      gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
+      gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin, Observer, SplitText, DrawSVGPlugin);
 
       const hotFontSize = window.innerWidth < 600 ? 110 : 180;
+      const hotStrokeWidth = window.innerWidth < 600 ? 4.1 : 4.8;
       const vara = new Vara(
         "#hot-word-drawing",
         varaFontSrc,
@@ -60,7 +79,7 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
           autoAnimation: false,
           color: "#373737",
           fontSize: hotFontSize,
-          strokeWidth: 3.2,
+          strokeWidth: hotStrokeWidth,
           textAlign: "center",
         },
       );
@@ -83,7 +102,87 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
 
       document.documentElement.classList.add("motion-ready");
 
+      ScrollTrigger.config({ ignoreMobileResize: true });
+      smoothScroller = ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 1.15,
+        effects: true,
+        smoothTouch: 0.08,
+        normalizeScroll: true,
+        ignoreMobileResize: true,
+      }) as SmoothScroller;
+
+      const floaters = gsap.utils.toArray<Element>(".smooth-float");
+      if (floaters.length) smoothScroller.effects(floaters, { speed: 0.92, lag: 0.12 });
+
       gsapContext = gsap.context(() => {
+        const topChrome = document.querySelector<HTMLElement>("[data-top-chrome]");
+        const announcement = document.querySelector<HTMLElement>(".announcement");
+        const siteHeader = document.querySelector<HTMLElement>(".site-header");
+
+        if (topChrome && announcement && siteHeader) {
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: "#smooth-content",
+              start: "top top",
+              end: () => `+=${announcement.offsetHeight}`,
+              scrub: 0.45,
+              invalidateOnRefresh: true,
+            },
+          })
+            .to(announcement, { yPercent: -100, ease: "none" }, 0)
+            .to(siteHeader, { y: () => -announcement.offsetHeight, ease: "none" }, 0);
+
+          let chromeVisible = true;
+          const showChrome = (visible: boolean) => {
+            if (chromeVisible === visible) return;
+            chromeVisible = visible;
+            gsap.to(topChrome, {
+              y: visible ? 0 : -siteHeader.offsetHeight - 8,
+              duration: visible ? 0.48 : 0.36,
+              ease: visible ? "back.out(1.35)" : "power3.in",
+              overwrite: "auto",
+            });
+          };
+
+          motionObserver = Observer.create({
+            target: window,
+            type: "wheel,touch,scroll",
+            tolerance: 12,
+            lockAxis: true,
+            onDown: () => {
+              if ((smoothScroller?.scrollTop() ?? 0) > window.innerHeight * 0.55) showChrome(false);
+            },
+            onUp: () => showChrome(true),
+            onStop: () => {
+              if ((smoothScroller?.scrollTop() ?? 0) < window.innerHeight * 0.55) showChrome(true);
+            },
+          }) as MotionObserver;
+        }
+
+        document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]:not(.skip-link)').forEach((anchor) => {
+          const handleAnchorClick = (event: MouseEvent) => {
+            const href = anchor.getAttribute("href");
+            if (!href || href === "#") return;
+            const target = document.querySelector<HTMLElement>(href);
+            if (!target) return;
+            event.preventDefault();
+            gsap.to(window, {
+              scrollTo: {
+                y: target,
+                offsetY: (siteHeader?.offsetHeight ?? 76) + 10,
+                autoKill: true,
+              },
+              duration: 1.15,
+              ease: "power3.inOut",
+              overwrite: "auto",
+            });
+          };
+          anchor.addEventListener("click", handleAnchorClick);
+          anchorCleanups.push(() => anchor.removeEventListener("click", handleAnchorClick));
+        });
+
         const loadHeadings = gsap.utils.toArray<HTMLElement>("[data-split='load']");
         loadHeadings.forEach((heading) => {
           const split = SplitText.create(heading, {
@@ -137,21 +236,34 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
 
         gsap.utils.toArray<HTMLElement>("[data-panel]").forEach((panel) => {
           const direction = panel.dataset.panel ?? "left";
-          gsap.fromTo(
-            panel,
-            panelStarts[direction] ?? panelStarts.left,
-            {
-              clipPath: "inset(0 0 0 0)",
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: panel,
-                start: "top 96%",
-                end: "top 24%",
-                scrub: 1.05,
-                invalidateOnRefresh: true,
-              },
-            },
+          const horizontalStart = direction === "left" ? -18 : direction === "right" ? 18 : 0;
+          const verticalStart = direction === "up" ? 18 : direction === "iris" ? 12 : 0;
+          const panelChildren = Array.from(panel.children).filter((child) =>
+            !child.matches(".portal-pizza, [data-parallax], .smooth-float"),
           );
+          const panelTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: panel,
+              start: "top 96%",
+              end: "top 22%",
+              scrub: 1.12,
+              invalidateOnRefresh: true,
+            },
+          });
+          panelTimeline
+            .fromTo(panel, panelStarts[direction] ?? panelStarts.left, {
+              clipPath: "inset(0 0 0 0)",
+              duration: 1,
+              ease: "power3.inOut",
+            }, 0)
+            .from(panelChildren, {
+              xPercent: horizontalStart,
+              yPercent: verticalStart,
+              opacity: 0.25,
+              stagger: 0.06,
+              duration: 0.82,
+              ease: "power3.out",
+            }, 0.08);
         });
 
         const heroArt = document.querySelector<HTMLElement>("[data-hero-art]");
@@ -163,6 +275,32 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
             duration: 1.15,
             delay: 0.04,
             ease: "power3.out",
+          });
+        }
+
+        const heroCopy = document.querySelector<HTMLElement>("[data-hero-copy]");
+        if (heroCopy) {
+          gsap.from(heroCopy, {
+            xPercent: 28,
+            clipPath: "inset(0 0 0 100%)",
+            duration: 1.18,
+            delay: 0.02,
+            ease: "power3.out",
+          });
+        }
+
+        const menuMarquee = document.querySelector<HTMLElement>("[data-scroll-marquee]");
+        if (menuMarquee) {
+          gsap.fromTo(menuMarquee, { xPercent: 0 }, {
+            xPercent: -18,
+            ease: "none",
+            scrollTrigger: {
+              trigger: menuMarquee,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.1,
+              invalidateOnRefresh: true,
+            },
           });
         }
 
@@ -256,9 +394,11 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
         const driveTitle = section.querySelector<HTMLElement>(".drive-title");
         const remi = section.querySelector<HTMLElement>(".drive-remi");
         const remiBody = section.querySelector<HTMLElement>(".drive-remi-body");
+        const remiCrop = section.querySelector<HTMLElement>(".drive-remi-crop");
+        const remiShadow = section.querySelector<HTMLElement>(".drive-shadow");
         const speedLines = section.querySelectorAll<HTMLElement>(".speed-line");
         const stage = section.querySelector<HTMLElement>(".drive-stage");
-        if (!driveTitle || !remi || !remiBody || !stage) return;
+        if (!driveTitle || !remi || !remiBody || !remiCrop || !remiShadow || !stage) return;
 
         const titleSplit = SplitText.create(driveTitle, {
           type: "chars",
@@ -267,9 +407,16 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
         });
         splitInstances.push(titleSplit);
 
-        gsap.set(wordPaths, { drawSVG: "0%", opacity: 1 });
+        gsap.set(wordPaths, { drawSVG: "0%", opacity: 1, strokeWidth: hotStrokeWidth });
         gsap.set(remi, { x: () => -remi.offsetWidth * 1.08 });
         gsap.set(speedLines, { scaleX: 0, transformOrigin: "right center" });
+
+        const velocityTilt = gsap.quickTo(remiCrop, "rotation", { duration: 0.32, ease: "elastic.out(1, .42)" });
+        const velocityLift = gsap.quickTo(remiCrop, "yPercent", { duration: 0.26, ease: "power3.out" });
+        const settleVelocity = gsap.delayedCall(0.12, () => {
+          velocityTilt(0);
+          velocityLift(0);
+        }).pause();
 
         const driveTimeline = gsap.timeline({
           defaults: { ease: "none" },
@@ -277,8 +424,17 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
             trigger: section,
             start: "top top",
             end: "bottom bottom",
+            pin: stage,
+            pinSpacing: false,
+            anticipatePin: 1,
             scrub: 1.15,
             invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              const velocity = gsap.utils.clamp(-4.5, 4.5, self.getVelocity() / 950);
+              velocityTilt(velocity);
+              velocityLift(-Math.abs(velocity) * 0.7);
+              settleVelocity.restart(true);
+            },
           },
         });
 
@@ -304,12 +460,25 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
           }, 0.34)
           .to(remiBody, {
             keyframes: [
-              { yPercent: -4, rotation: -2.4, duration: 0.16, ease: "power2.out" },
-              { yPercent: 2.2, rotation: 1.4, duration: 0.12, ease: "power1.inOut" },
-              { yPercent: -2.8, rotation: -1.1, duration: 0.12, ease: "power1.inOut" },
-              { yPercent: 1.4, rotation: 0.7, duration: 0.1, ease: "power1.inOut" },
-              { yPercent: 0, rotation: 0, duration: 0.1, ease: "power2.out" },
+              { yPercent: -5.2, rotation: -3.2, duration: 0.12, ease: "power2.out" },
+              { yPercent: 2.8, rotation: 1.8, duration: 0.09, ease: "power1.inOut" },
+              { yPercent: -3.8, rotation: -1.5, duration: 0.09, ease: "power1.inOut" },
+              { yPercent: 2.1, rotation: 1.1, duration: 0.08, ease: "power1.inOut" },
+              { yPercent: -1.9, rotation: -.8, duration: 0.07, ease: "power1.inOut" },
+              { yPercent: 0, rotation: 0, duration: 0.08, ease: "power2.out" },
             ],
+            duration: 0.48,
+          }, 0.34)
+          .fromTo(remiShadow, {
+            scaleX: 0.72,
+            opacity: 0.16,
+          }, {
+            keyframes: [
+              { scaleX: 1.08, opacity: 0.34, duration: 0.16 },
+              { scaleX: 0.88, opacity: 0.22, duration: 0.14 },
+              { scaleX: 1.02, opacity: 0.3, duration: 0.18 },
+            ],
+            transformOrigin: "center",
             duration: 0.48,
           }, 0.34)
           .to(speedLines, {
@@ -337,8 +506,11 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
 
     return () => {
       disposed = true;
+      anchorCleanups.forEach((cleanup) => cleanup());
+      motionObserver?.kill();
       splitInstances.reverse().forEach((split) => split.revert());
       gsapContext?.revert();
+      smoothScroller?.kill();
       document.documentElement.classList.remove("motion-ready");
       word.replaceChildren();
     };

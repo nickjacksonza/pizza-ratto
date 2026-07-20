@@ -79,14 +79,16 @@ The full logo, helmet, pizza slice, Vespa, and both wheels must remain visible. 
 
 ## Scroll choreography
 
-The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its inner stage stays pinned while a GSAP/ScrollTrigger timeline drives four phases:
+The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its inner stage is pinned by ScrollTrigger while a scrubbed GSAP timeline drives four phases:
 
 1. Vara creates real handwriting strokes and DrawSVG progressively draws `Hot`;
 2. SplitText brings the oversized `PIZZA` letters in independently with back easing;
-3. Remi travels from off-screen left to off-screen right while a nested body timeline adds suspension bob, pitch and speed-line motion;
+3. Remi travels from off-screen left to off-screen right while a nested body timeline adds suspension bob, pitch, shadow compression and speed-line motion; scroll velocity adds a small elastic tilt and lift to the raster so fast and slow input feel different;
 4. the orange stage lifts to expose a red color wipe before the ticker.
 
-The same client component applies masked SplitText entrances to major headings, scroll-scrubbed clip-path wipes to marked sections, image parallax and staggered gallery/card motion. The reference implementation was verified to use GSAP, ScrollTrigger, SplitText, MorphSVG and Swiper; Pizza Ratto uses the matching GSAP timeline model but keeps its static-export-safe markup and local assets.
+The same client component applies masked SplitText entrances to major headings, scroll-scrubbed clip-path wipes and directional child entrances to marked sections, image parallax, a scrubbed menu marquee and staggered gallery/card motion. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
+
+The `PIZZA` title deliberately uses visible overflow plus top and bottom padding; do not reintroduce an overflow mask on the full word. Character masks belong on the individual SplitText entrance wrappers only. `Hot` is generated as real Vara paths with a heavier rounded stroke and a small red print-registration shadow.
 
 Reduced-motion mode turns the pinned sequence into a static composition, disables marquees, and removes parallax transforms.
 

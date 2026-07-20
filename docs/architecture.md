@@ -24,7 +24,9 @@ app/layout.tsx
         └── components/BrandIcon.tsx (presentational service icons)
 ```
 
-`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and the motion system in `ScrollChoreography.tsx`. That component dynamically loads GSAP 3.13, ScrollTrigger, SplitText and DrawSVG, then coordinates the pinned road scene, headline entrances, directional clip-path wipes, parallax and gallery stacking. Vara generates the actual `Hot` handwriting strokes from a local font-data file; no runtime CDN or third-party API is required. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
+`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and the motion system in `ScrollChoreography.tsx`. That component dynamically loads GSAP 3.13, ScrollSmoother, ScrollTrigger, ScrollToPlugin, Observer, SplitText and DrawSVG. ScrollSmoother owns the native-scroll-backed page wrapper; ScrollTrigger coordinates the pinned road scene, headline entrances, directional clip-path wipes, parallax and gallery stacking; ScrollToPlugin powers in-page navigation; and Observer makes the fixed header respond to scroll direction. Vara generates the actual `Hot` handwriting strokes from a local font-data file; no runtime CDN or third-party API is required. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
+
+The fixed announcement/header chrome and mobile order bar live outside `#smooth-wrapper`; `main` and `footer` live inside `#smooth-content`. This is required because fixed UI must not inherit the transform ScrollSmoother applies to the content layer. Likewise, the Remi stage uses ScrollTrigger pinning while motion is active instead of CSS sticky positioning.
 
 ## Rendering model
 

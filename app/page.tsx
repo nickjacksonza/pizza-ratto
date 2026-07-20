@@ -47,29 +47,33 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <div className="announcement" role="note" aria-label="Made fresh. Taken seriously by no one. Wood-fired in Salt River. Monday to Saturday, 10:00 to 18:00.">
-        <div className="announcement-track" aria-hidden="true">
-          <span className="announcement-run">{announcementCopy}</span>
-          <span className="announcement-run">{announcementCopy}</span>
+      <div className="top-chrome" data-top-chrome>
+        <div className="announcement" role="note" aria-label="Made fresh. Taken seriously by no one. Wood-fired in Salt River. Monday to Saturday, 10:00 to 18:00.">
+          <div className="announcement-track" aria-hidden="true">
+            <span className="announcement-run">{announcementCopy}</span>
+            <span className="announcement-run">{announcementCopy}</span>
+          </div>
         </div>
+
+        <header className="site-header">
+          <a className="wordmark" href="#top" aria-label="Pizza Ratto home">PIZZA <i>RATTO</i></a>
+          <nav className="desktop-nav" aria-label="Main navigation">
+            <a href="#story">About</a><a href="#menu">Menu</a><a href="#visit">Visit</a>
+          </nav>
+          <a className="button button-small brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order now</a>
+          <MobileNavigation />
+        </header>
       </div>
 
-      <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Pizza Ratto home">PIZZA <i>RATTO</i></a>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#story">About</a><a href="#menu">Menu</a><a href="#visit">Visit</a>
-        </nav>
-        <a className="button button-small brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order now</a>
-        <MobileNavigation />
-      </header>
-
-      <main id="main">
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <main id="main" tabIndex={-1}>
         <section className="hero-shell" id="top">
           <div className="checker-strip" aria-hidden="true" />
           <div className="hero-art" data-hero-art data-parallax="24">
             <img src={asset("/images/hero-logo-mascot.png")} alt="Pizza Ratto hand-painted logo beside Remi the rat riding a Vespa" loading="eager" fetchPriority="high" />
           </div>
-          <div className="hero-copy">
+          <div className="hero-copy" data-hero-copy>
             <p className="hero-eyebrow">Wood-fired · Salt River · Cape Town</p>
             <h1 data-split="load">Pizza with<br /><span className="hero-accent">street-corner attitude.</span></h1>
             <p>Hand-stretched, fired hot and ready for collection.</p>
@@ -78,7 +82,7 @@ export default function Home() {
               <a className="hero-phone" href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a>
             </div>
           </div>
-          <aside className="hero-stamp" aria-label="Opening hours">
+          <aside className="hero-stamp smooth-float" aria-label="Opening hours">
             <span>Open</span><strong>MON—SAT</strong><b>10—18</b>
           </aside>
           <p className="hero-footnote">Proper ingredients · questionable mascot · zero fuss</p>
@@ -104,7 +108,7 @@ export default function Home() {
             <h2 className="spaced-heading" data-split="scroll">Respect fire,<br />time &amp; tomatoes.</h2>
             <p>We’re not saving the world. We’re making it better one pizza at a time. Dough stretched by hand. Proper ingredients. Big Bertha running hot. No gimmicks.</p>
           </div>
-          <aside><b>HOUSE RULES</b>{facts.map((fact, index) => <span key={fact}>{String(index + 1).padStart(2, "0")} — {fact}</span>)}</aside>
+          <aside className="smooth-float"><b>HOUSE RULES</b>{facts.map((fact, index) => <span key={fact}>{String(index + 1).padStart(2, "0")} — {fact}</span>)}</aside>
         </section>
 
         <section className="menu-portal section-pad" aria-labelledby="menu-portal-title" data-panel="iris">
@@ -121,7 +125,7 @@ export default function Home() {
         </section>
 
         <section className="menu-section" id="menu" aria-labelledby="pizza-heading">
-          <div className="menu-marquee-title" aria-hidden="true"><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span></div>
+          <div className="menu-marquee-title" data-scroll-marquee aria-hidden="true"><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span></div>
           <div className="menu-inner section-pad">
             <header className="flyer-menu-title">
               <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
@@ -145,7 +149,7 @@ export default function Home() {
                 );
               })}
             </ul>
-            <p className="sauce-note">Hot honey &amp; rat sauce · R15 each</p>
+            <p className="sauce-note smooth-float">Hot honey &amp; rat sauce · R15 each</p>
 
             <div className="small-menu-grid">
               {sideMenu.map((category) => (
@@ -200,15 +204,17 @@ export default function Home() {
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
           <div className="visit-actions"><a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>
         </section>
-      </main>
+          </main>
 
-      <footer>
-        <div className="footer-checker" aria-hidden="true" />
-        <div className="footer-mark">PIZZA<br />RATTO</div>
-        <p>{business.tagline}</p>
-        <p>{business.location} · {business.hours}</p>
-        <div className="footer-end"><p>© {new Date().getFullYear()} Pizza Ratto · Built with fire, not focus groups.</p><a className="footer-social" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Pizza Ratto on Instagram ${business.instagramHandle}`}><BrandIcon name="instagram" /></a></div>
-      </footer>
+          <footer>
+            <div className="footer-checker" aria-hidden="true" />
+            <div className="footer-mark">PIZZA<br />RATTO</div>
+            <p>{business.tagline}</p>
+            <p>{business.location} · {business.hours}</p>
+            <div className="footer-end"><p>© {new Date().getFullYear()} Pizza Ratto · Built with fire, not focus groups.</p><a className="footer-social" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Pizza Ratto on Instagram ${business.instagramHandle}`}><BrandIcon name="instagram" /></a></div>
+          </footer>
+        </div>
+      </div>
       <nav className="mobile-order-bar" aria-label="Quick order actions"><a href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp</a><a href={`tel:${business.phoneInternational}`}>Call</a><a href="#menu">Menu</a></nav>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c") }} />
     </>
