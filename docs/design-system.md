@@ -88,9 +88,9 @@ The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its
 
 The pulled panel reuses the approved venue-table photograph with a red editorial composition, pink display copy, an orange `PULLING UP` badge, a checker road and a short tow line that expands as the scene catches Remi. It replaces the previously unused red tail of the pinned section; it is decorative and hidden in the reduced-motion fallback.
 
-The same client component treats every major story section as a viewport-scale scene. The manifesto uses a skewed paper slide, the menu portal an iris, ingredients a two-sided split, the character view a three-column assembly, the gallery a rising deck, and the visit view a right-hand shutter. Left and right scenes begin just beyond the viewport (`±102%`) so their arrival is unmistakable instead of reading as a local reveal. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
+The same client component treats every major story section as a viewport-scale scene. Palette-colored curtains bridge the chapters: they clear left or right, collapse as an iris, split from the centre, or skew like a paper shutter while the incoming composition assembles behind them. Ingredients still use a two-sided split and the character view a three-column assembly, but the gallery, coffee/dolci and visit chapters now enter laterally rather than rising with the document. Curtains travel just beyond the viewport (`±104%`) so their exit is unmistakable. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
 
-The desktop pizza menu is a second pinned view. Vertical scroll translates a twelve-card horizontal rail while the nested menu stage stays fixed. The rail distance is measured at refresh time and the pinned stage itself is never animated. Below `760px`, `gsap.matchMedia()` removes the pin and returns the cards to their two-column reading order.
+The pizza menu stays in natural reading order: four rows of three on desktop and six rows of two below `760px`. GSAP alternates whole rows from the left and right as they approach the viewport, while the oversized `PIZZA` marquee travels horizontally on its own scroll range. The menu never pins or becomes a horizontal carousel.
 
 The `PIZZA` title deliberately uses visible overflow plus top and bottom padding; do not reintroduce an overflow mask on the full word. Character masks belong on the individual SplitText entrance wrappers only. `Hot` is generated as real Vara paths with a heavier rounded stroke and a small red print-registration shadow.
 
@@ -103,7 +103,7 @@ The page uses a sequence of deliberate full-view scenes:
 - hero height: approximately one viewport on desktop, content-height on mobile;
 - road scene: `280svh` desktop and `235svh` below `760px`;
 - story, portal, coffee/dolci, ingredients, characters and visit: at least `100svh`;
-- pizza menu: one pinned desktop viewport with scroll length derived from the horizontal rail; natural document flow below `760px`;
+- pizza menu: natural document flow at every size, with four desktop rows of three and six mobile rows of two;
 - global section padding: up to `7.5rem` for major editorial pauses;
 - ingredients section: one viewport minimum on desktop;
 - character artwork: `620px` minimum on desktop;
@@ -113,13 +113,13 @@ Do not reintroduce large empty vertical bands unless the content requires them.
 
 ## Menu composition
 
-Pizza uses a horizontal twelve-card rail in the enhanced desktop view and a strict two-column mobile grid. Without motion JavaScript or under reduced motion, it falls back to the complete three-column desktop grid. The menu portal uses circular cutouts with grey outlines and red offset shadows; the full menu switches to equal rectangular photography with hard grey borders. Labels begin below the images with positive spacing.
+Pizza uses a strict twelve-card grid: three columns on desktop and two columns on mobile. Motion changes only how rows enter, never the final geometry or reading order. The menu portal uses circular cutouts with grey outlines and red offset shadows; the full menu switches to equal rectangular photography with hard grey borders. Labels begin below the images with positive spacing, and the hot-honey/rat-sauce badge sits after the grid with enough padding to keep its rotated border fully visible.
 
 Eight cards use enhanced owner-supplied photography and four use generated concept photography. The placeholder component remains as a deliberate fallback for future menu additions without a photo.
 
 Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards.
 
-The expanded pizza menu contains twelve photo cards. Normal/reduced-motion desktop uses four rows of three; enhanced desktop scrolls one rail; phones use six rows of two. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
+The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones, in both enhanced and reduced-motion modes. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
 
 The Rat Hole gallery uses a bounded editorial header followed by a four-card stack. The room, Vespa table, feast and lemon-dessert photographs enter from different sides and settle into a deliberately overlapping collage with hard borders, orange shadows and small rotations. Narrow screens preserve the overlap with controlled absolute positions instead of flattening the photographs into a generic vertical list.
 

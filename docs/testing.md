@@ -81,12 +81,13 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
 - About, Menu and Visit links animate to the correct section through ScrollToPlugin; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
-- the story, portal, coffee/dolci, ingredients, character, gallery and visit scenes each occupy a deliberate full view and use their documented paper, iris, rise, split, columns, deck and shutter transitions;
-- major sections travel in from alternating sides, with left-origin panels beginning fully outside the viewport rather than only clipping in place, and without exposing non-palette color flashes;
-- the desktop pizza stage pins without jumping; the pinned element itself has no animated transform; the rail begins with the first cards, reaches the last cards, and releases before coffee/dolci;
+- the story, portal, pizza, coffee/dolci, ingredients, character, gallery and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, columns and deck transitions;
+- palette-colored curtains fully cover incoming chapters, then clear left, right, centrally, or as an iris without exposing browser background or remaining over content at the end of their range;
+- the pizza menu remains a four-row, three-column grid; rows alternately enter from the left and right without changing DOM reading order, colliding, or creating horizontal overflow;
 - the hero illustration, surrounding surface and red copy panel share continuous paper grain without a pink strip or darker image rectangle;
 - floating menu pizzas and gallery cards enter from different directions without exposing empty image edges;
 - pizza labels align with photographs and prices;
+- the complete `Hot honey & rat sauce · R15 each` badge, including its rotated border, remains visible below the pizza grid;
 - all twelve pizza photographs load without fallback placeholders;
 - section labels are readable;
 - Remi art is not cropped;
@@ -100,7 +101,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - hero art preserves its aspect ratio;
 - phone number does not overflow at 390px and below;
 - pizza names, prices, descriptions, and notes remain readable in two columns;
-- the desktop menu pin is absent at `760px` and below, and all twelve cards return to normal two-column document flow;
+- all twelve menu cards remain in normal two-column document flow, with alternating row entrances that settle precisely onto the CSS grid;
 - long headings wrap without horizontal scrolling;
 - sticky bar highlights WhatsApp and respects the bottom safe area;
 - sticky bar does not cover footer content;
@@ -134,7 +135,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 
 ## Performance checklist
 
-- Preserve `loading="eager"` for the hero art, the pinned pull-transition photograph, and the first four cards needed in the initial pinned-menu viewport; lazy-load the remaining below-the-fold photographs.
+- Preserve `loading="eager"` for the hero art and the pinned pull-transition photograph; lazy-load the below-the-fold menu and venue photographs.
 - Keep photographs in WebP where practical.
 - Reassess the three multi-megabyte PNGs before a performance-focused release.
 - Do not reintroduce a runtime image endpoint while GitHub Pages remains a target.

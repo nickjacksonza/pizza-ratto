@@ -51,45 +51,36 @@ Scene identity is declared in `app/page.tsx` with `data-scene` and `data-transit
 | --- | --- | --- | --- |
 | Hero | `.hero-shell` | load entrance | Artwork and red copy arrive from opposite sides; both share `hero-paper-texture.png` so the paper surface is continuous. |
 | Hot Pizza | `.drive-sequence` | pinned Remi handoff | Vara/DrawSVG writes `Hot`; SplitText brings in `PIZZA`; Remi bounces across and tows a full red editorial scene from left to right. |
-| 01 / What we're about | `[data-scene="story"]` | `paper-left` | The complete cream poster travels in from off-screen left with a slight paper skew; its content follows. |
-| 02 / The important bit | `[data-scene="menu-portal"]` | `iris` | The pink view opens from a central circle while its copy and pizza cutouts assemble. |
-| Pizza menu | `[data-menu-sequence]` | pinned horizontal rail | On desktop, the nested stage pins for one viewport while vertical progress translates the twelve-card rail. Cards enter with alternating pitch. |
-| Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` | The complete cream view rises with rounded clipping; the orange and pink menu boards follow. |
-| 03 / Built different | `[data-scene="ingredients"]` | `split` | Photography enters from the left while the red copy panel enters from the right. |
-| Meet Remi / Big Bertha | `[data-scene="characters"]` | `columns` | The copy, Remi artwork, and oven note arrive from left, bottom, and right. |
-| 04 / Inside | `[data-scene="gallery"]` | `deck` | The pink poster tilts upward, then four venue cards deal into their overlapping stack. |
-| 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` | The entire red ordering view travels in from the right with a short shutter skew. |
+| 01 / What we're about | `[data-scene="story"]` | `paper-left` | A red paper curtain clears to the right while the cream story content follows from the left. |
+| 02 / The important bit | `[data-scene="menu-portal"]` | `iris` | A cream curtain collapses into a central circle while copy assembles laterally and pizza cutouts float independently. |
+| Pizza menu | `[data-scene="pizza-menu"]` | `shutter-left` | A pink shutter clears to the right, then the three-column menu rows alternately enter from the left and right. |
+| Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` | A red shutter clears right while the label and split menu board enter from opposite sides. |
+| 03 / Built different | `[data-scene="ingredients"]` | `split` | A cream curtain splits from its centre as photography enters from the left and the red copy panel enters from the right. |
+| Meet Remi / Big Bertha | `[data-scene="characters"]` | `columns` | A red curtain exits left while the copy, Remi artwork, and oven note arrive from left, bottom, and right. |
+| 04 / Inside | `[data-scene="gallery"]` | `deck` | A grey diagonal shutter exits right; the header and filmstrip arrive laterally before four venue cards deal into their overlapping stack. |
+| 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` | A pink shutter exits left while the red ordering content enters from the right. |
 
 Every scene uses only the approved orange, red, pink, grey, and established cream paper neutral. Avoid introducing transitional white or browser-background flashes.
 
-## Pinned menu architecture
+## Grid menu choreography
 
-The menu uses a nested structure:
+The pizza menu is deliberately a natural-flow grid at every breakpoint: three columns above `760px` and two columns at or below it. The earlier pinned horizontal rail was removed because it made prices and toppings slower to compare.
 
-```text
-.menu-pizza-sequence     ScrollTrigger trigger and pin-spacing owner
-  .menu-pizza-stage      pinned viewport; never animate this element
-    .menu-marquee-title  secondary horizontal motion
-    .menu-inner
-      .menu-rail-window
-        [data-menu-rail] translated horizontally
-```
+`gsap.matchMedia()` supplies the correct column count to one row-entrance helper. The helper calculates each card's row and alternates the starting direction by row: left, right, left, right. Each card scrubs into its final grid position over a short local range. The large red `PIZZA` marquee keeps an independent horizontal ScrollTrigger, so the chapter still has lateral energy without changing the menu's reading order.
 
-The desktop timeline is created inside `gsap.matchMedia("(min-width: 761px)")`. The stage uses `pin`, `anticipatePin: 1`, numeric `scrub`, and an `end` derived from the rail's real overflow width. The pinned element itself is not animated; only descendants are transformed. This follows ScrollTrigger's pinning guidance and avoids measurement drift.
-
-Below 761px, the responsive GSAP context removes the pin and the CSS returns the menu to a two-column document-flow grid. Do not force the long horizontal rail onto small touch screens: twelve cards would create an unnecessarily long pinned interaction and make menu scanning harder.
-
-The first four pizza photographs load eagerly so the first desktop menu viewport does not reveal undecoded images. Remaining cards stay lazy and load as the rail approaches them.
+All menu photographs are below the initial viewport and load lazily. The sauce badge remains after the complete grid in normal document flow; do not put it inside a fixed-height or pinned stage.
 
 ## Section entrance rules
 
 - Scenes have a minimum height of `100svh`; content may extend beyond one viewport when readability requires it.
-- Horizontal scenes begin beyond `±102%`, not at a shallow local offset.
-- The entrance window normally runs from `top 94%` to `top 34%` with scrubbed progress.
-- Split and column scenes animate their children rather than translating the scene container.
+- Every enhanced scene contains one direct-child `.scene-curtain`. It is absent visually until `.motion-ready` is applied and sits above the fully readable base layout.
+- Curtains move beyond `±104%`, collapse from the centre, or close to a `0%` circle; scene containers stay in normal document flow.
+- The entrance window normally runs from `top 98%` to `top 26%` with scrubbed progress.
+- Split and column scenes animate their children behind the clearing curtain rather than translating the scene container.
 - Scroll-scrubbed entrances remain reversible. Do not replace them with one-time intersection animations.
 - Heading SplitText is additional detail, not the section transition itself.
-- Do not animate a ScrollTrigger's pinned element. Add a nested stage or animate descendants.
+- Curtain colors intentionally echo the preceding chapter so the new view appears to be pulled or uncovered rather than simply faded in.
+- Do not animate a ScrollTrigger's pinned element. The Hot Pizza road stage remains the only pinned story stage.
 
 ## Hero paper seam
 
@@ -99,12 +90,12 @@ The hero image must use normal blending and no color filter. `mix-blend-mode: mu
 
 ## Responsive and reduced motion behavior
 
-- Desktop (`>760px`): ScrollSmoother plus all scene transitions and the pinned horizontal menu.
-- Tablet/phone (`<=760px`): short touch smoothing, scene entrances, natural-flow two-column pizza grid, and stacked layouts.
+- Desktop (`>760px`): ScrollSmoother, all scene transitions, and a natural-flow three-column pizza grid with alternating lateral row entrances.
+- Tablet/phone (`<=760px`): short touch smoothing, scene curtains, a natural-flow two-column pizza grid with alternating lateral row entrances, and stacked layouts.
 - Phone (`<=520px`): full-height portal, compact typography, sticky order bar, and normal-flow content long enough to remain legible.
 - Reduced motion: no ScrollSmoother, pinning, parallax, marquee, scene transforms, or pulled red Remi panel. The complete static content remains in DOM order.
 
-The `motion-ready` class is progressive enhancement. Base CSS must remain readable before JavaScript runs and when it fails. Desktop rail styles therefore live below `.motion-ready`; the unenhanced menu is the normal grid.
+The `motion-ready` class is progressive enhancement. Base CSS must remain readable before JavaScript runs and when it fails. Curtains are hidden in base and reduced-motion CSS; the menu is always a normal grid.
 
 ## GSAP choices
 
@@ -117,7 +108,7 @@ The current system intentionally uses:
 - ScrollToPlugin for accessible anchor navigation;
 - SplitText and DrawSVG for authored typography.
 
-Flip is not used because this page does not move the same semantic element between two DOM layouts. Snap is also not enabled: the menu and long mobile scenes need free scrolling, and forced snapping would compete with anchor navigation and touch intent.
+Flip is not used because this page does not move the same semantic element between two DOM layouts. Snap is also not enabled: the long scenes and scan-friendly menu need free scrolling, and forced snapping would compete with anchor navigation and touch intent.
 
 ## Editing checklist
 
@@ -136,6 +127,6 @@ When adding or changing a scene:
 ## Known constraints
 
 - The gallery collage and the mobile coffee/menu content may exceed one viewport because preserving readable text takes priority over forcing every pixel into a screen.
-- The desktop menu's scroll length is calculated at refresh time. Any card-width or menu-count change requires desktop pin-end QA.
 - ScrollSmoother and pinning both depend on correct wrapper structure. Do not move fixed controls inside `#smooth-content`.
+- Curtains temporarily cover each incoming scene, so new transition presets must always clear fully at progress `1` and stay above content without obscuring fixed chrome.
 - The opaque hero artwork cannot inherit a CSS background. Its seamless appearance depends on the matching paper texture and neutral image blending.

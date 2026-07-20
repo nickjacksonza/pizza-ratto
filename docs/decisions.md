@@ -168,8 +168,18 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 021 — Make the complete page a responsive scene sequence
 
+> Superseded for the pizza-menu layout and chapter-transition mechanism by decision 022; the scene identities and seamless hero treatment remain.
+
 **Context:** The Remi handoff had become an authored full-screen moment, but the following story and menu sections still read as conventional page blocks. Review requested every major section to feel like its own view and identified the opaque hero artwork's pink paper as a visible seam.
 
 **Decision:** Give each major story container a `data-scene` identity and a distinct scrubbed transition: paper-left, iris, cards-up, split, columns, deck or shutter-right. Use a nested ScrollTrigger pin for a horizontally translated twelve-card pizza rail on desktop, with `gsap.matchMedia()` restoring the normal two-column menu below `761px`. Keep the pinned stage static and animate only its descendants. Reuse the matching `hero-paper-texture.png` behind the hero shell, art and red copy layer, and remove image blending/filtering that darkens the baked paper background.
 
 **Consequence:** The homepage now reads as a connected series of poster views rather than one animated scene followed by normal sections. Desktop menu browsing becomes an immersive vertical-to-horizontal sequence, mobile and reduced-motion users retain a complete natural-flow menu, and the hero artwork sits on one continuous paper surface. The full selector inventory, cleanup order, responsive exception and QA requirements live in `docs/motion-system.md`.
+
+## 022 — Restore the menu grid and hand chapters between palette curtains
+
+**Context:** The pinned horizontal pizza rail made a practical restaurant menu slower to compare, its fixed viewport clipped the hot-honey/rat-sauce badge, and several chapter entrances still felt like variations of ordinary vertical scrolling. The handwritten `Hot` also remained visually lighter than the surrounding display type.
+
+**Decision:** Restore the twelve pizzas to a permanent three-column desktop and two-column mobile grid. Keep lateral energy by using `gsap.matchMedia()` to alternate grid-row entrances from the left and right, while the menu marquee keeps its own horizontal ScrollTrigger. Add a direct-child palette curtain to every enhanced chapter and clear it with distinct horizontal, centre-split, diagonal-shutter, column, or iris choreography while the semantic scene remains in normal document flow. Increase Vara's generated stroke width to `8.2` on larger screens and `6.8` below `600px`.
+
+**Consequence:** Prices, toppings and cards are immediately comparable at every size; the sauce badge is no longer trapped inside a pinned viewport; and chapters now feel pulled, uncovered or assembled rather than merely lifted by vertical scroll. Base and reduced-motion layouts hide the curtains and retain the complete grid, so the progressive enhancement and static-export guarantees remain intact.

@@ -70,7 +70,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin, Observer, SplitText, DrawSVGPlugin);
 
       const hotFontSize = window.innerWidth < 600 ? 110 : 180;
-      const hotStrokeWidth = window.innerWidth < 600 ? 4.1 : 4.8;
+      const hotStrokeWidth = window.innerWidth < 600 ? 6.8 : 8.2;
       const vara = new Vara(
         "#hot-word-drawing",
         varaFontSrc,
@@ -230,23 +230,25 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
 
         gsap.utils.toArray<HTMLElement>("[data-scene]").forEach((scene) => {
           const transition = scene.dataset.transition ?? "paper-left";
+          const curtain = scene.querySelector<HTMLElement>(":scope > .scene-curtain");
+          if (!curtain) return;
           const children = Array.from(scene.children).filter((child) =>
-            !child.matches(".portal-pizza, [data-parallax], .smooth-float, .gallery-stack"),
+            !child.matches(".scene-curtain, .portal-pizza, [data-parallax], .smooth-float, .gallery-stack"),
           );
           const sceneTimeline = gsap.timeline({
             scrollTrigger: {
               trigger: scene,
-              start: "top 94%",
-              end: "top 34%",
-              scrub: 0.82,
+              start: "top 98%",
+              end: "top 26%",
+              scrub: 0.86,
               invalidateOnRefresh: true,
             },
           });
 
           if (transition === "iris") {
             sceneTimeline
-              .fromTo(scene, { clipPath: "circle(0% at 50% 50%)", scale: .86 }, { clipPath: "circle(76% at 50% 50%)", scale: 1, duration: 1, ease: "power2.inOut" }, 0)
-              .from(children, { yPercent: 28, opacity: 0, stagger: .08, duration: .72, ease: "back.out(1.25)" }, .16);
+              .fromTo(curtain, { clipPath: "circle(150% at 50% 50%)" }, { clipPath: "circle(0% at 50% 50%)", duration: 1, ease: "power2.inOut" }, 0)
+              .from(children, { xPercent: (index: number) => index % 2 ? 24 : -24, scale: .92, opacity: 0, stagger: .08, duration: .72, ease: "back.out(1.25)" }, .14);
             return;
           }
 
@@ -255,45 +257,54 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
             const copy = scene.querySelector<HTMLElement>(".ingredient-copy");
             if (photo && copy) {
               sceneTimeline
-                .from(photo, { xPercent: -102, rotation: -2.5, duration: 1, ease: "power3.inOut" }, 0)
-                .from(copy, { xPercent: 102, duration: 1, ease: "power3.inOut" }, 0)
+                .to(curtain, { scaleX: 0, transformOrigin: "50% 50%", duration: .82, ease: "power3.inOut" }, 0)
+                .from(photo, { xPercent: -102, rotation: -2.5, duration: 1, ease: "power3.inOut" }, .02)
+                .from(copy, { xPercent: 102, duration: 1, ease: "power3.inOut" }, .02)
                 .from(Array.from(copy.children), { xPercent: 24, opacity: 0, stagger: .06, duration: .62, ease: "power3.out" }, .34);
             }
             return;
           }
 
           if (transition === "columns") {
-            const columns = Array.from(scene.children);
+            const columns = Array.from(scene.children).filter((child) => !child.matches(".scene-curtain"));
             sceneTimeline
-              .from(columns[0], { xPercent: -105, rotation: -2, duration: .92, ease: "power3.inOut" }, 0)
-              .from(columns[1], { yPercent: 105, scale: .9, duration: 1, ease: "power3.inOut" }, .04)
+              .to(curtain, { xPercent: -104, skewX: 5, duration: .9, ease: "power3.inOut" }, 0)
+              .from(columns[0], { xPercent: -105, rotation: -2, duration: .92, ease: "power3.inOut" }, .02)
+              .from(columns[1], { yPercent: 105, scale: .9, duration: 1, ease: "power3.inOut" }, .05)
               .from(columns[2], { xPercent: 105, rotation: 2, duration: .92, ease: "power3.inOut" }, .08);
             return;
           }
 
           if (transition === "deck") {
             sceneTimeline
-              .fromTo(scene, { yPercent: 42, rotation: 1.5, transformOrigin: "50% 100%" }, { yPercent: 0, rotation: 0, duration: 1, ease: "power3.inOut" }, 0)
-              .from(children, { yPercent: 32, opacity: 0, stagger: .08, duration: .72, ease: "power3.out" }, .18);
+              .to(curtain, { xPercent: 106, skewX: -5, rotation: -1.5, transformOrigin: "100% 50%", duration: 1, ease: "power3.inOut" }, 0)
+              .from(children, { xPercent: (index: number) => index % 2 ? 38 : -38, rotation: (index: number) => index % 2 ? 1.5 : -1.5, opacity: 0, stagger: .08, duration: .76, ease: "power3.out" }, .16);
             return;
           }
 
           if (transition === "cards-up") {
             sceneTimeline
-              .fromTo(scene, { yPercent: 48, clipPath: "inset(0 7% 0 7% round 40px)" }, { yPercent: 0, clipPath: "inset(0 0 0 0 round 0px)", duration: 1, ease: "power3.inOut" }, 0)
-              .from(children, { yPercent: 38, opacity: 0, stagger: .08, duration: .72, ease: "back.out(1.2)" }, .18);
+              .to(curtain, { xPercent: 106, skewX: -4, duration: .92, ease: "power3.inOut" }, 0)
+              .from(children, { xPercent: (index: number) => index % 2 ? 44 : -44, rotation: (index: number) => index % 2 ? 1.8 : -1.8, opacity: 0, stagger: .09, duration: .76, ease: "back.out(1.2)" }, .16);
             return;
           }
 
           if (transition === "shutter-right") {
             sceneTimeline
-              .fromTo(scene, { xPercent: 102, skewX: -4, transformOrigin: "100% 50%" }, { xPercent: 0, skewX: 0, duration: 1, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: -106, skewX: 4, transformOrigin: "0% 50%", duration: 1, ease: "power3.inOut" }, 0)
               .from(children, { xPercent: 34, opacity: 0, stagger: .07, duration: .72, ease: "back.out(1.18)" }, .22);
             return;
           }
 
+          if (transition === "shutter-left") {
+            sceneTimeline
+              .to(curtain, { xPercent: 106, skewX: -4, transformOrigin: "100% 50%", duration: 1, ease: "power3.inOut" }, 0)
+              .from(children, { xPercent: -34, opacity: 0, stagger: .07, duration: .72, ease: "back.out(1.18)" }, .2);
+            return;
+          }
+
           sceneTimeline
-            .fromTo(scene, { xPercent: -102, skewX: 3, transformOrigin: "0% 50%" }, { xPercent: 0, skewX: 0, duration: 1, ease: "power3.inOut" }, 0)
+            .to(curtain, { xPercent: 106, skewX: -3, transformOrigin: "100% 50%", duration: 1, ease: "power3.inOut" }, 0)
             .from(children, { xPercent: -32, opacity: 0, stagger: .07, duration: .72, ease: "power3.out" }, .16);
         });
 
@@ -321,41 +332,10 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         }
 
         const menuMarquee = document.querySelector<HTMLElement>("[data-scroll-marquee]");
-        const menuSequence = document.querySelector<HTMLElement>("[data-menu-sequence]");
-        const menuStage = document.querySelector<HTMLElement>("[data-menu-stage]");
-        const menuRail = document.querySelector<HTMLElement>("[data-menu-rail]");
+        const menuGrid = document.querySelector<HTMLElement>(".pizza-collage");
+        const menuCards = menuGrid ? gsap.utils.toArray<HTMLElement>(":scope > li", menuGrid) : [];
 
-        responsiveMotion = gsap.matchMedia();
-        responsiveMotion.add("(min-width: 761px)", () => {
-          if (!menuSequence || !menuStage || !menuRail) return;
-          const cards = gsap.utils.toArray<HTMLElement>(".pizza-collage > li", menuRail);
-          const railDistance = () => Math.max(0, menuRail.scrollWidth - window.innerWidth + window.innerWidth * .09);
-          const menuTimeline = gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: {
-              trigger: menuSequence,
-              start: "top top",
-              end: () => `+=${Math.max(window.innerWidth * 1.6, railDistance() * 1.08)}`,
-              pin: menuStage,
-              anticipatePin: 1,
-              scrub: .95,
-              invalidateOnRefresh: true,
-            },
-          });
-          menuTimeline
-            .from(cards, {
-              yPercent: (index: number) => index % 2 ? 18 : -14,
-              rotation: (index: number) => index % 2 ? 2.5 : -2.5,
-              opacity: .35,
-              stagger: .025,
-              duration: .2,
-              ease: "power2.out",
-            }, 0)
-            .to(menuRail, { x: () => -railDistance(), duration: 1 }, 0);
-          if (menuMarquee) menuTimeline.to(menuMarquee, { xPercent: -12, duration: 1 }, 0);
-        });
-        responsiveMotion.add("(max-width: 760px)", () => {
-          if (!menuMarquee) return;
+        if (menuMarquee) {
           gsap.fromTo(menuMarquee, { xPercent: 0 }, {
             xPercent: -18,
             ease: "none",
@@ -367,7 +347,34 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
               invalidateOnRefresh: true,
             },
           });
-        });
+        }
+
+        responsiveMotion = gsap.matchMedia();
+        const setupMenuRows = (columns: number) => {
+          menuCards.forEach((card, index) => {
+            const row = Math.floor(index / columns);
+            const direction = row % 2 === 0 ? -1 : 1;
+            gsap.fromTo(card, {
+              xPercent: direction * 48,
+              rotation: direction * 2.4,
+              opacity: .18,
+            }, {
+              xPercent: 0,
+              rotation: 0,
+              opacity: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 96%",
+                end: "top 61%",
+                scrub: .72,
+                invalidateOnRefresh: true,
+              },
+            });
+          });
+        };
+        responsiveMotion.add("(min-width: 761px)", () => setupMenuRows(3));
+        responsiveMotion.add("(max-width: 760px)", () => setupMenuRows(2));
 
         gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((element) => {
           const image = element.querySelector("img");

@@ -83,8 +83,8 @@ Before adding any server-dependent behavior, decide whether GitHub Pages remains
 2. Keep `ScrollChoreography.tsx` as the single motion coordinator.
 3. Preserve readable base CSS without `.motion-ready`.
 4. Use `data-scene` and `data-transition` for section-level behavior.
-5. Put desktop-only pins inside `gsap.matchMedia()` and animate descendants rather than the pinned element.
-6. Check forward and reverse entrances, desktop pin release, mobile natural flow, reduced motion, and horizontal overflow.
+5. Give every enhanced scene a direct-child `.scene-curtain`; keep it hidden in base and reduced-motion CSS.
+6. Check forward and reverse curtain clearance, menu grid reading order, mobile natural flow, reduced motion, and horizontal overflow.
 7. Run the full normal and Pages validation matrix.
 
 ## Asset handling
