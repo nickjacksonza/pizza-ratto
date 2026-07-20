@@ -5,12 +5,12 @@ This folder explains the current product, its design logic, implementation, and 
 ## Current status
 
 - One-page restaurant website implemented and responsive.
-- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, palette-curtain chapter handoffs, six desktop narrative locks with bespoke internal timelines, viewport-timed coffee/dolci entrances, covered long-distance navigation, true handwritten stroke drawing for both `Hot` and the social-club `Ratto`, split-letter entrances, a velocity-reactive Remi/Vespa sequence that tows the next red scene in from the left, and a `Never pizza solo.` social mural with an eased cursor-follow Instagram action.
+- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, palette-curtain chapter handoffs, seven desktop narrative locks with bespoke internal timelines, viewport-timed coffee/dolci entrances, covered long-distance navigation, true handwritten stroke drawing for both `Hot` and the social-club `Ratto`, split-letter entrances, a velocity-reactive Remi/Vespa sequence that tows the next red scene in from the left, and a `Never pizza solo.` social mural with an eased cursor-follow Instagram action.
 - Publicly deployed to GitHub Pages at `https://zmaqutu.github.io/pizza-ratto/`.
 - OpenAI Sites project retained as an optional second deployment target.
 - Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.
 - The menu uses a deliberate twelve-card grid: eight enhanced owner photographs and four generated concept photographs. Six specials remain provisional pending owner approval.
-- The July owner/Figma handoff is integrated through the authentic header wordmark, menu illustrations, owner Remi mural, seven-video counter reel and two clearly labelled archive cards.
+- The July owner/Figma handoff is integrated through the authentic header wordmark, menu illustrations, seven-video counter reel and two clearly labelled archive cards; the owner Remi mural remains archived while the earlier generated Remi art is restored in the character scene.
 - No database, CMS, cart, analytics, user accounts, or custom domain.
 
 ## Documentation map

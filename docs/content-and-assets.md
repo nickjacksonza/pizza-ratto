@@ -105,13 +105,14 @@ The second July handoff added one owner mural photograph, seven WhatsApp video c
 
 | Asset | Website role | Origin/status |
 | --- | --- | --- |
-| `public/images/owner-2026/remi-vespa-mural.webp` | Meet Remi character scene | WebP derivative of the owner-supplied 1600×1582 mural photograph |
+| `public/images/owner-2026/remi-vespa-mural.webp` | Retained owner-art archive | WebP derivative of the owner-supplied 1600×1582 mural photograph; no longer rendered after the original red-Vespa Remi art was restored |
 | `public/images/brand/pizza-ratto-wordmark.svg` | Fixed-header wordmark | Supplied Figma vector; replaces the live-type approximation |
 | `public/images/brand/wordmark-banner.svg` | Counter-tapes masthead | Supplied wide Figma banner with its white background removed for transparent use |
 | `public/images/brand/pizza-slice-outline.svg` | Retained supporting mark | Canonical copy of three byte-identical supplied Figma exports |
 | `public/images/brand/red-pizza-slice.svg` | Pizza-menu header punctuation | Supplied inline SVG from the owner/Figma handoff |
 | `public/images/brand/red-cup.svg` | Coffee-menu header punctuation | Supplied inline SVG from the owner/Figma handoff |
-| `public/images/brand/chef-hat.webp` | Dolci and ingredient-section punctuation | WebP derivative of the embedded-image Figma SVG |
+| `public/images/brand/chef-hat.webp` | Ingredient-section punctuation | WebP derivative of the embedded-image Figma SVG |
+| `public/images/brand/red-ice-cream.svg` | Dolci-menu header punctuation | Supplied inline SVG from the owner/Figma correction handoff |
 | `public/images/brand/figma-poster.webp` | Counter-tapes archive card | WebP derivative of the supplied landscape Figma poster composition |
 | `public/images/owner-2026/backgammon-tournament.webp` | Counter-tapes archive card | WebP derivative of the owner-supplied poster; dates remain confined to the artwork pending confirmation |
 | `public/videos/owner-2026/*.mp4` | Seven-card counter reel | Muted H.264 derivatives of the supplied WhatsApp clips, resized to 480px wide and moved to fast-start layout |

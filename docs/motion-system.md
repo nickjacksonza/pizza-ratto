@@ -55,7 +55,7 @@ Scene identity is declared in `app/page.tsx` with `data-scene` and `data-transit
 | 02 / The important bit | `[data-scene="menu-portal"]` | `iris` + locked orbit | A cream curtain collapses into a central circle; the desktop view pins while pizza cutouts fly in, the ring expands and the CTA kicks upward. |
 | Pizza menu | `[data-scene="pizza-menu"]` | `shutter-left` | A pink shutter clears to the right, then the three-column menu rows alternately enter from the left and right. |
 | Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` + local category triggers | A red shutter clears right with the label; Coffee and Dolci then reveal independently only when each category reaches the viewport. |
-| Counter tapes | `.counter-tapes` | Native horizontal reel | Seven short owner videos loop without joining GSAP; poster frames replace them under reduced motion. The reel remains natural flow and user-scrollable. |
+| Counter tapes | `[data-scene="counter-tapes"]` | `tape-deck` + locked reel pass | A pink paper shutter clears left and the cards deal in with alternating tilt. Large desktop then pins while the complete reel travels horizontally; smaller and reduced-motion layouts remain native and swipeable. |
 | 03 / Built different | `[data-scene="ingredients"]` | `split` + locked material change | A cream curtain splits from its centre; the desktop stage then pins while the photograph pushes in, the crop bends and the copy surface changes from red to grey. |
 | Meet Remi / Big Bertha | `[data-scene="characters"]` | `columns` + locked character beat | A red curtain exits left; the desktop stage pins while Remi leans into the frame, the two copy panels squeeze inward and the stickers snap into place. |
 | 04 / Ratto Social Club | `[data-scene="social"]` | `deck` + locked collage | A grey diagonal shutter exits right; red Vara paths draw the background `Ratto`, four venue/food cards deal in from four directions over an abstract brand mural, then drift while the Instagram badge becomes interactive. |
@@ -92,8 +92,8 @@ The reference recordings do not show ordinary long-section scrolling. They stop 
 - A lockable semantic section declares `data-lock-chapter="name"` and `data-lock-scroll="multiplier"` in `app/page.tsx`.
 - On viewports at least `1001px` wide and `720px` high, `gsap.matchMedia()` creates one ScrollTrigger per lockable section with `pin: chapter`, `start: "top top"`, and an end distance equal to `innerHeight × data-lock-scroll`.
 - Each stage owns a thin `.chapter-progress` rail so users can see how much internal scroll remains.
-- Story, menu portal, ingredients, characters, social and visit use different internal timelines. Do not collapse them into one generic stagger.
-- The pizza and coffee/dolci menus never pin. Their content density and comparison task require natural document flow. The counter-tapes reel is also never pinned or animated by GSAP; its native sideways scroll is deliberately independent of the document choreography.
+- Story, menu portal, counter tapes, ingredients, characters, social and visit use different internal timelines. Do not collapse them into one generic stagger.
+- The pizza and coffee/dolci menus never pin. Their content density and comparison task require natural document flow. Counter tapes is the only media reel that locks, and only at the established large-desktop threshold.
 - Viewports at or below `1000px`, heights below `720px`, touch layouts and reduced-motion mode do not create chapter pins. Portal and social cards retain shorter entrance timelines in normal flow.
 
 Keep the pin trigger on the stable section container and animate only descendants. Pin spacing is required so the following semantic section remains in correct document order.

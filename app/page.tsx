@@ -163,7 +163,7 @@ export default function Home() {
               <div className="menu-inner section-pad">
                 <header className="flyer-menu-title">
                   <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
-                  <span>Wood-fired<br />by Big Bertha<img className="menu-brand-icon" src={asset("/images/brand/red-pizza-slice.svg")} alt="" aria-hidden="true" /></span>
+                  <div className="menu-fire-mark"><img className="menu-brand-icon" src={asset("/images/brand/red-pizza-slice.svg")} alt="" aria-hidden="true" /><span>Wood-fired<br />by Big Bertha</span></div>
                 </header>
                 <div className="menu-rail-window">
                   <ul className="pizza-collage">
@@ -198,7 +198,7 @@ export default function Home() {
             <div className="small-menu-grid">
               {sideMenu.map((category) => (
                 <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
-                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}<img className="category-icon" src={asset(category.id === "coffee" ? "/images/brand/red-cup.svg" : "/images/brand/chef-hat.webp")} alt="" aria-hidden="true" /></span></header>
+                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span className="category-mark"><img className="category-icon" src={asset(category.id === "coffee" ? "/images/brand/red-cup.svg" : "/images/brand/red-ice-cream.svg")} alt="" aria-hidden="true" /><small>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</small></span></header>
                   <ul>
                     {category.items.map((item) => (
                       <li key={item.name}>
@@ -211,11 +211,14 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </section>
 
-          <section className="counter-tapes section-pad" aria-labelledby="counter-tapes-title">
+        <section className="counter-tapes section-pad" aria-labelledby="counter-tapes-title" data-scene="counter-tapes" data-transition="tape-deck" data-lock-chapter="counter-tapes" data-lock-scroll="2.35">
+            <span className="scene-curtain" aria-hidden="true" />
+            <span className="chapter-progress" aria-hidden="true"><i /></span>
             <header className="counter-tapes-header">
-              <div><p className="section-number">FROM THE COUNTER / 07 SHORTS</p><h2 id="counter-tapes-title">Fresh proof.<br /><em>No filters.</em></h2></div>
-              <div className="counter-tapes-note"><img src={asset("/images/brand/wordmark-banner.svg")} alt="" aria-hidden="true" /><p>A few seconds from Big Bertha, the pass and the counter. Swipe sideways for the full roll.</p></div>
+              <div><p className="section-number">FROM THE COUNTER / 07 SHORTS</p><h2 id="counter-tapes-title" data-split="scroll">Fresh proof.<br /><em>No filters.</em></h2></div>
+              <div className="counter-tapes-note"><span className="counter-brand-banner" style={{ "--counter-banner-image": `url("${asset("/images/brand/wordmark-banner.svg")}")` } as CSSProperties} aria-hidden="true" /><p>A few seconds from Big Bertha, the pass and the counter. Swipe sideways for the full roll.</p></div>
             </header>
             <div className="counter-reel" aria-label="Short owner videos from Pizza Ratto">
               {counterTapes.map((tape, index) => (
@@ -236,7 +239,6 @@ export default function Home() {
                 <figcaption><span>09</span>Owner archive / dates on artwork</figcaption>
               </figure>
             </div>
-          </section>
         </section>
 
         <section className="ingredients" aria-labelledby="ingredients-title" data-scene="ingredients" data-transition="split" data-lock-chapter="ingredients" data-lock-scroll="1.15">
@@ -254,7 +256,7 @@ export default function Home() {
             <h2 data-split="scroll">Meet Remi.</h2>
             <p>Our resident rat and patron saint of good decisions made near a pizza oven. You’ll find him around the room, including a mural painted by local artist Buffy.</p>
           </div>
-          <div className="character-art character-art-owner" data-parallax="34"><img src={asset("/images/owner-2026/remi-vespa-mural.webp")} alt="Owner-supplied mural of Remi riding a red Vespa while holding a slice of pizza" width={1400} height={1384} loading="lazy" /></div>
+          <div className="character-art" data-parallax="34"><img src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn Remi riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="lazy" /></div>
           <div className="bertha-note"><span className="sticker">FIRE #01</span><h3>Big Bertha.</h3><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
         </section>
 

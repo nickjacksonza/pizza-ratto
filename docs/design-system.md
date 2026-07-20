@@ -124,11 +124,11 @@ Eight cards use enhanced owner-supplied photography and four use generated conce
 The coffee/dolci board now hands off to a compact horizontal owner-media reel rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. Two still cards close the reel: the supplied Figma poster composition and an owner-supplied backgammon poster retained as archive artwork, not as a newly written event claim.
 
 - Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
-- The reel is horizontally scrollable and snap-assisted, with each card remaining a native figure and caption.
+- On large desktop screens the chapter locks and GSAP moves the complete reel horizontally while the cards change tilt and settle. On smaller or shorter screens it remains horizontally scrollable and snap-assisted.
 - Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
-- The reel must not become a pinned chapter or compete with menu comparison.
+- The counter lock is presentation-only; it must never spread to the pizza or coffee/dolci menus.
 
-Figma-derived red pizza and cup marks punctuate the menu headers. The supplied stacked wordmark is the primary header mark; the black pizza-slice outline and wide banner remain supporting brand assets.
+Figma-derived red pizza, cup and ice-cream marks punctuate the menu headers. Each mark occupies a dedicated header slot with its label beneath it rather than hanging outside a circular badge. The supplied stacked wordmark is the primary header mark; the black pizza-slice outline and wide banner remain supporting brand assets. The counter banner is rendered as a CSS mask filled with exact `--red`, preventing source colors or filters from shifting it green.
 
 Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards. The board's curtain and label may enter together, but each category owns a separate `top 90%` ScrollTrigger for its header and rows. In the stacked layout this prevents Dolci from completing while only Coffee is on screen.
 
@@ -183,7 +183,7 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 - Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
 - The top announcement remains static and centered when it fits. At phone widths it switches to two identical 18-second runs so the complete business message remains legible without compression or clipping. Reduced-motion mode disables that loop and wraps one copy instead.
 - The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
-- Remi's generated portrait source has asymmetric blank canvas around the visible drawing and remains active in the road scene, where a bounded overflow crop plus `mix-blend-mode: multiply` removes the white field. The character scene now uses the owner-supplied mural photograph with normal blending and a full-bleed crop. Keep the helmet, pizza, complete scooter and both wheels inside both visible crops.
+- Remi's generated portrait source has asymmetric blank canvas around the visible drawing and is active in both the road and character scenes. The road scene uses a bounded overflow crop plus `mix-blend-mode: multiply`; the character scene optically centres the same source with a slight left correction. Keep the helmet, pizza, complete scooter and both wheels inside both visible crops.
 - The ticker stops under `prefers-reduced-motion: reduce`.
 - The road scene becomes static, every handwriting stroke is shown, section wipes are disabled, and marked parallax elements return to their natural position under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.

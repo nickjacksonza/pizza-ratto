@@ -75,9 +75,9 @@ The page is composed in this order:
 6. Full-viewport `01 / WHAT WE’RE ABOUT` paper scene
 7. Full-viewport `02 / THE IMPORTANT BIT` iris scene
 8. Natural-flow pizza grid with alternating lateral row entrances, followed by a full-view coffee/dolci board
-9. Natural-flow `FROM THE COUNTER` owner-media reel with seven muted video loops and two archive cards
+9. Desktop-locked `FROM THE COUNTER` owner-media reel with a scroll-driven horizontal pass; natural swipeable flow on smaller and reduced-motion layouts
 10. Full-viewport `03 / BUILT DIFFERENT` split ingredient scene
-11. Full-viewport Remi and Big Bertha column scene using the owner-supplied mural photograph
+11. Full-viewport Remi and Big Bertha column scene using the generated red-Vespa Remi cutout
 12. Full-view `04 / RATTO SOCIAL CLUB` overlapping venue and food deck with scroll-drawn `Ratto` lettering
 13. Full-viewport `05 / FIND THE FIRE` visit and order shutter
 14. Footer

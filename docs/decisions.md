@@ -212,8 +212,18 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 026 — Prefer the owner/Figma brand package over approximations
 
+> Extended and partially superseded by decision 027: the Figma/owner package remains active, while the character scene restores the earlier generated Remi art and the counter reel becomes a desktop lock.
+
 **Context:** The owner supplied seven short shop videos, an original Remi/Vespa mural photograph and a set of Figma exports containing the stacked wordmark, pizza-slice marks, cup art, chef-hat artwork and two poster compositions. The existing site had strong derived assets but little authentic counter footage and still used a live-type approximation in the fixed header.
 
 **Decision:** Use the supplied stacked Figma wordmark in the header, add the pizza/cup/chef-hat marks as restrained menu punctuation, replace the generated character portrait with the owner mural photograph, and assemble every owner video into one native horizontal `FROM THE COUNTER` reel. Include the Figma hero composition and backgammon artwork as clearly labelled archive cards rather than turning them into new promotional claims. Keep the generated transparent Remi asset in the scroll-driving road scene because it remains the technically appropriate cutout there.
 
 **Consequence:** The page now carries recognisably owner-made marks and real shop motion without sacrificing the existing static-export architecture or scan-friendly menus. Video loops are muted, compressed and paired with poster frames; reduced-motion users see the stills. The backgammon year and promotional status remain an owner-confirmation item.
+
+## 027 — Lock the counter reel and give every menu mark a deliberate slot
+
+**Context:** Review found that the coffee, dolci and pizza marks looked appended rather than composed, the filtered counter banner shifted green, the owner mural was less effective in the established Meet Remi layout, and the new footage reel needed the same authored scroll pacing as the surrounding chapters.
+
+**Decision:** Replace Dolci's chef-hat badge with the supplied red ice-cream vector, place the coffee, dolci and pizza marks in dedicated header groups, and render the wide counter banner as an exact-red CSS mask. Restore `ratto-vespa-red.png` to the character scene. Promote `FROM THE COUNTER` to a top-level `tape-deck` scene and a `2.35 × viewport` large-desktop lock: cards deal in behind a pink shutter, settle with alternating tilt, then travel horizontally across the pinned view. Preserve the native snap-assisted reel below the lock breakpoint and the poster-only reduced-motion fallback.
+
+**Consequence:** Brand marks now read as part of their headers, the banner stays on-palette, and the owner footage gains a complete scroll narrative without pinning practical menus or compromising touch and reduced-motion layouts. The owner mural WebP remains documented but is no longer rendered.

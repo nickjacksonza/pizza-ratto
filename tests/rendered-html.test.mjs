@@ -34,7 +34,9 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /Big Bertha, up close/);
   assert.match(html, /\/videos\/owner-2026\/oven-close\.mp4/);
   assert.match(html, /\/images\/brand\/pizza-ratto-wordmark\.svg/);
-  assert.match(html, /\/images\/owner-2026\/remi-vespa-mural\.webp/);
+  assert.match(html, /\/images\/brand\/red-ice-cream\.svg/);
+  assert.match(html, /data-lock-chapter="counter-tapes"/);
+  assert.match(html, /data-transition="tape-deck"/);
   assert.match(html, /Owner archive \/ dates on artwork/);
   assert.doesNotMatch(html, /pizza-placeholder/);
   assert.match(html, /https:\/\/wa\.me\/27825250380/);
