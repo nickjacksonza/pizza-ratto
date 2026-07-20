@@ -38,8 +38,8 @@ The fixed announcement, header, and mobile order bar remain outside `#smooth-wra
 2. Check `prefers-reduced-motion`. In reduced motion, show the complete `Hot` paths and stop without creating ScrollSmoother or ScrollTriggers.
 3. Add `.motion-ready` and initialize ScrollSmoother immediately. General scene motion must not wait for Vara's JSON callback.
 4. Create section, heading, parallax, menu, locked-chapter, social, navigation, and Remi timelines inside one GSAP context.
-5. Await Vara separately, configure its generated SVG, and attach the independent DrawSVG ScrollTrigger.
-6. On cleanup, revert the handwriting context, responsive match-media context, main GSAP context, splits, Observer, and ScrollSmoother.
+5. Await both Vara instances separately, configure the generated `Hot` and `Ratto` SVG paths, and attach their independent responsive DrawSVG ScrollTriggers.
+6. On cleanup, revert both handwriting contexts, responsive match-media contexts, the main GSAP context, splits, Observer, and ScrollSmoother, then remove Vara's generated SVG children.
 
 The local Vara JSON is preloaded in `app/layout.tsx`. Keep that path routed through the shared `asset()` helper.
 
@@ -54,11 +54,11 @@ Scene identity is declared in `app/page.tsx` with `data-scene` and `data-transit
 | 01 / What we're about | `[data-scene="story"]` | `paper-left` + locked rules | A red paper curtain clears to the right; the desktop view then pins while house rules arrive one at a time and the poster shifts sideways. |
 | 02 / The important bit | `[data-scene="menu-portal"]` | `iris` + locked orbit | A cream curtain collapses into a central circle; the desktop view pins while pizza cutouts fly in, the ring expands and the CTA kicks upward. |
 | Pizza menu | `[data-scene="pizza-menu"]` | `shutter-left` | A pink shutter clears to the right, then the three-column menu rows alternately enter from the left and right. |
-| Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` | A red shutter clears right while the label and split menu board enter from opposite sides. |
+| Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` + local category triggers | A red shutter clears right with the label; Coffee and Dolci then reveal independently only when each category reaches the viewport. |
 | 03 / Built different | `[data-scene="ingredients"]` | `split` + locked material change | A cream curtain splits from its centre; the desktop stage then pins while the photograph pushes in, the crop bends and the copy surface changes from red to grey. |
 | Meet Remi / Big Bertha | `[data-scene="characters"]` | `columns` + locked character beat | A red curtain exits left; the desktop stage pins while Remi leans into the frame, the two copy panels squeeze inward and the stickers snap into place. |
-| 04 / Ratto Social Club | `[data-scene="social"]` | `deck` + locked collage | A grey diagonal shutter exits right; four venue/food cards deal in from four directions over an abstract brand mural, then drift while the Instagram badge becomes interactive. |
-| 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` + locked action reveal | A pink shutter exits left; the desktop stage pins while visit rows and order actions assemble in sequence. |
+| 04 / Ratto Social Club | `[data-scene="social"]` | `deck` + locked collage | A grey diagonal shutter exits right; red Vara paths draw the background `Ratto`, four venue/food cards deal in from four directions over an abstract brand mural, then drift while the Instagram badge becomes interactive. |
+| 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` + locked action reveal | A pink shutter exits left; the desktop stage pins while visit rows and order actions reveal laterally from one shared top-aligned grid row. |
 
 Every scene uses only the approved orange, red, pink, grey, and established cream paper neutral. Avoid introducing transitional white or browser-background flashes.
 
@@ -69,6 +69,8 @@ The pizza menu is deliberately a natural-flow grid at every breakpoint: three co
 `gsap.matchMedia()` supplies the correct column count to one row-entrance helper. The helper calculates each card's row and alternates the starting direction by row: left, right, left, right. Each card scrubs into its final grid position over a short local range. The large red `PIZZA` marquee keeps an independent horizontal ScrollTrigger, so the chapter still has lateral energy without changing the menu's reading order.
 
 All menu photographs are below the initial viewport and load lazily. The sauce badge remains after the complete grid in normal document flow; do not put it inside a fixed-height or pinned stage.
+
+Coffee and Dolci deliberately do not inherit the parent `cards-up` child animation. Each `.menu-category` owns a local scrubbed timeline from `top 90%` to `top 44%`, so the stacked Dolci list cannot animate before its own top edge reaches the viewport. Keep `.small-menu-grid` excluded from the central scene-child dispatcher if this area is refactored.
 
 ## Section entrance rules
 
@@ -101,6 +103,14 @@ The `Never pizza solo.` chapter reuses four documented Pizza Ratto photographs o
 
 The full collage is one Instagram link with a visible `.social-follow-badge`. On devices matching `min-width: 1001px`, `hover: hover` and `pointer: fine`, two `gsap.quickTo()` setters make that badge trail pointer movement with easing. It recentres on pointer leave or renewed page scrolling so stale pointer coordinates do not survive a chapter exit. On touch, narrow and reduced-motion layouts the badge stays fixed near the collage bottom and the link uses a normal pointer cursor. Preserve the accessible link label and visible `Follow @pizza_ratto` text.
 
+The background lettering is not CSS text. `#social-ratto-drawing` is populated by a second Vara instance using the same local Satisfy data as `Hot`, styled in `--red` with a grey drop-shadow registration layer, and drawn with DrawSVG. Large locked views draw it over the first `0.68 × viewport height` of the social pin; narrow or short views use a normal-flow `top 88%` to `top 34%` trigger. Reduced motion shows every path complete.
+
+## Anchor navigation handoff
+
+Nearby in-page links retain a short ScrollToPlugin tween. Jumps longer than `1.35 × viewport height` use `.nav-transition`, a fixed red route card outside `#smooth-wrapper`. GSAP wipes the cover fully across, calls `ScrollSmoother.scrollTop(targetY)` only while the screen is covered, updates ScrollTrigger, moves keyboard focus to the destination, updates the URL hash, and then wipes the card away. This is intentionally an instant covered state change: tweening the document across several pins makes every intermediate chapter look like it is being fast-forwarded.
+
+The destination sections use `tabIndex={-1}` so programmatic focus does not add them to normal tab order. The transition is decorative and `aria-hidden`; reduced-motion mode does not initialize it and leaves standard hash navigation intact.
+
 ## Hero paper seam
 
 `hero-logo-mascot.png` is an opaque RGB image with a peach paper background baked into it. The repository also contains `hero-paper-texture.png`, derived from the same surface. The hero passes that texture through the CSS custom property `--hero-paper-image` and uses it on `.hero-shell`, `.hero-art`, and beneath the translucent red layer on `.hero-copy`.
@@ -125,7 +135,7 @@ The current system intentionally uses:
 - [ScrollSmoother](https://gsap.com/docs/v3/Plugins/ScrollSmoother/) because it retains native document scrolling;
 - [gsap.matchMedia()](https://gsap.com/docs/v3/GSAP/gsap.matchMedia%28%29/) for automatic desktop/mobile setup and cleanup;
 - [Observer](https://gsap.com/docs/v3/Plugins/Observer/) only for direction-aware header intent, not for hijacking section navigation;
-- ScrollToPlugin for accessible anchor navigation;
+- ScrollToPlugin for nearby accessible anchor navigation, with a covered ScrollSmoother position change for long jumps;
 - SplitText and DrawSVG for authored typography.
 
 Flip is not used because this page does not move the same semantic element between two DOM layouts. Snap is also not enabled: the long scenes and scan-friendly menu need free scrolling, and forced snapping would compete with anchor navigation and touch intent.

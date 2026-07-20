@@ -66,12 +66,24 @@ export default function Home() {
         </header>
       </div>
 
+      <div className="nav-transition" data-nav-transition aria-hidden="true">
+        <span className="nav-transition-checker" />
+        <div className="nav-transition-copy">
+          <small>Next stop</small>
+          <strong data-nav-transition-label>Menu</strong>
+        </div>
+        <span className="nav-transition-wheel" />
+        <span className="nav-transition-speed nav-transition-speed-one" />
+        <span className="nav-transition-speed nav-transition-speed-two" />
+      </div>
+
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main id="main" tabIndex={-1}>
         <section
           className="hero-shell"
           id="top"
+          tabIndex={-1}
           style={{ "--hero-paper-image": `url("${asset("/images/hero-paper-texture.png")}")` } as CSSProperties}
         >
           <div className="checker-strip" aria-hidden="true" />
@@ -107,7 +119,7 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="manifesto section-pad" id="story" data-scene="story" data-transition="paper-left" data-lock-chapter="story" data-lock-scroll="1.1">
+        <section className="manifesto section-pad" id="story" tabIndex={-1} data-scene="story" data-transition="paper-left" data-lock-chapter="story" data-lock-scroll="1.1">
           <span className="scene-curtain" aria-hidden="true" />
           <span className="chapter-progress" aria-hidden="true"><i /></span>
           <p className="section-number">01 / WHAT WE’RE ABOUT</p>
@@ -134,7 +146,7 @@ export default function Home() {
           })}
         </section>
 
-        <section className="menu-section" id="menu" aria-labelledby="pizza-heading" data-scene-root="menu">
+        <section className="menu-section" id="menu" tabIndex={-1} aria-labelledby="pizza-heading" data-scene-root="menu">
           <div className="menu-pizza-sequence">
             <div className="menu-pizza-stage" data-scene="pizza-menu" data-transition="shutter-left">
               <span className="scene-curtain" aria-hidden="true" />
@@ -214,6 +226,7 @@ export default function Home() {
         <section className="social-showcase section-pad" aria-labelledby="social-title" data-social-showcase data-scene="social" data-transition="deck" data-lock-chapter="social" data-lock-scroll="1.75">
           <span className="scene-curtain" aria-hidden="true" />
           <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <div className="social-drawn-word" id="social-ratto-drawing" data-social-word-drawing aria-hidden="true" />
           <div className="social-mural" aria-hidden="true">
             <span className="social-mural-wheel" />
             <span className="social-mural-slice" />
@@ -236,7 +249,7 @@ export default function Home() {
           <div className="social-filmstrip" aria-hidden="true"><span>ROOM FOR ONE MORE</span><span>FOLLOW THE RAT</span><span>CAFFE · PIZZA · CHAOS</span><span>FOLLOW THE RAT</span></div>
         </section>
 
-        <section className="visit section-pad" id="visit" data-scene="visit" data-transition="shutter-right" data-lock-chapter="visit" data-lock-scroll="1.05">
+        <section className="visit section-pad" id="visit" tabIndex={-1} data-scene="visit" data-transition="shutter-right" data-lock-chapter="visit" data-lock-scroll="1.05">
           <span className="scene-curtain" aria-hidden="true" />
           <span className="chapter-progress" aria-hidden="true"><i /></span>
           <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading" data-split="scroll">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>

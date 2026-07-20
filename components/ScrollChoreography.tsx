@@ -18,7 +18,7 @@ type SmoothScroller = {
   effects: (targets: Element[] | string, config: { speed: number; lag: number }) => unknown;
   kill: () => void;
   offset: (target: Element | string, position?: string) => number;
-  scrollTop: () => number;
+  scrollTop: (position?: number) => number;
 };
 
 type MotionObserver = { kill: () => void };
@@ -34,11 +34,13 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
   useEffect(() => {
     const section = sectionRef.current;
     const word = wordRef.current;
+    const socialWord = document.querySelector<HTMLElement>("[data-social-word-drawing]");
     if (!section || !word) return;
 
     let disposed = false;
     let gsapContext: { revert: () => void } | undefined;
     let wordContext: { revert: () => void } | undefined;
+    let socialWordMotion: ResponsiveMotion | undefined;
     let responsiveMotion: ResponsiveMotion | undefined;
     let smoothScroller: SmoothScroller | undefined;
     let motionObserver: MotionObserver | undefined;
@@ -92,12 +94,34 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       );
 
       const varaReady = new Promise<void>((resolve) => vara.ready(resolve));
+      const socialVara = socialWord ? new Vara(
+        "#social-ratto-drawing",
+        varaFontSrc,
+        [{
+          text: "Ratto",
+          id: "social-ratto-word",
+          duration: 1,
+          autoAnimation: false,
+          textAlign: "center",
+          y: 2,
+        }],
+        {
+          autoAnimation: false,
+          color: "#cc2832",
+          fontSize: window.innerWidth < 760 ? 190 : window.innerWidth < 1200 ? 285 : 390,
+          strokeWidth: window.innerWidth < 760 ? 5.8 : 7.4,
+          textAlign: "center",
+        },
+      ) : undefined;
+      const socialVaraReady = new Promise<void>((resolve) => socialVara ? socialVara.ready(resolve) : resolve());
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reducedMotion) {
-        await varaReady;
+        await Promise.all([varaReady, socialVaraReady]);
         if (disposed) return;
         const wordPaths = Array.from(word.querySelectorAll<SVGPathElement>("path"));
         gsap.set(wordPaths, { drawSVG: "100%", opacity: 1 });
+        const socialWordPaths = Array.from(socialWord?.querySelectorAll<SVGPathElement>("path") ?? []);
+        gsap.set(socialWordPaths, { drawSVG: "100%", opacity: 1 });
         return;
       }
 
@@ -162,22 +186,64 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
           }) as MotionObserver;
         }
 
+        const navigationTransition = document.querySelector<HTMLElement>("[data-nav-transition]");
+        const navigationLabel = document.querySelector<HTMLElement>("[data-nav-transition-label]");
+        const navigationCopy = document.querySelector<HTMLElement>(".nav-transition-copy");
+        const navigationWheel = document.querySelector<HTMLElement>(".nav-transition-wheel");
+        const navigationSpeeds = document.querySelectorAll<HTMLElement>(".nav-transition-speed");
+        let navigationActive = false;
+        const navigationLabels: Record<string, string> = { top: "Home", story: "About", menu: "Menu", visit: "Visit" };
+
         document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]:not(.skip-link)').forEach((anchor) => {
           const handleAnchorClick = (event: MouseEvent) => {
             const href = anchor.getAttribute("href");
             if (!href || href === "#") return;
             const target = document.querySelector<HTMLElement>(href);
-            if (!target) return;
+            if (!target || navigationActive) return;
             event.preventDefault();
+            const targetY = Math.max(0, (smoothScroller?.offset(target, "top top") ?? target.offsetTop) - ((siteHeader?.offsetHeight ?? 76) + 10));
+            const currentY = smoothScroller?.scrollTop() ?? window.scrollY;
+            const completeNavigation = () => {
+              target.focus({ preventScroll: true });
+              window.history.pushState(null, "", href);
+            };
+
+            if (navigationTransition && navigationCopy && navigationWheel && Math.abs(targetY - currentY) > window.innerHeight * 1.35) {
+              navigationActive = true;
+              if (navigationLabel) navigationLabel.textContent = navigationLabels[target.id] ?? "Next";
+              gsap.killTweensOf(window);
+              gsap.timeline({
+                defaults: { overwrite: "auto" },
+                onComplete: () => {
+                  gsap.set(navigationTransition, { visibility: "hidden", clipPath: "inset(0 100% 0 0)" });
+                  navigationActive = false;
+                },
+              })
+                .set(navigationTransition, { visibility: "visible", clipPath: "inset(0 100% 0 0)" })
+                .to(navigationTransition, { clipPath: "inset(0 0% 0 0)", duration: .42, ease: "power4.inOut" })
+                .fromTo(navigationCopy, { yPercent: 38, rotation: -5, opacity: 0 }, { yPercent: 0, rotation: 0, opacity: 1, duration: .28, ease: "back.out(1.35)" }, .18)
+                .fromTo(navigationWheel, { xPercent: 80, rotation: -45, opacity: 0 }, { xPercent: 0, rotation: 35, opacity: 1, duration: .36, ease: "power3.out" }, .14)
+                .fromTo(navigationSpeeds, { scaleX: 0, transformOrigin: "left center" }, { scaleX: 1, duration: .24, stagger: .05, ease: "power2.out" }, .18)
+                .call(() => {
+                  if (smoothScroller) smoothScroller.scrollTop(targetY);
+                  else window.scrollTo({ top: targetY, behavior: "auto" });
+                  ScrollTrigger.update();
+                  completeNavigation();
+                }, [], .44)
+                .to(navigationCopy, { yPercent: -34, opacity: 0, duration: .22, ease: "power2.in" }, .58)
+                .to(navigationTransition, { clipPath: "inset(0 0 0 100%)", duration: .46, ease: "power4.inOut" }, .62);
+              return;
+            }
+
             gsap.to(window, {
               scrollTo: {
-                y: target,
-                offsetY: (siteHeader?.offsetHeight ?? 76) + 10,
+                y: targetY,
                 autoKill: true,
               },
               duration: 1.15,
               ease: "power3.inOut",
               overwrite: "auto",
+              onComplete: completeNavigation,
             });
           };
           anchor.addEventListener("click", handleAnchorClick);
@@ -233,7 +299,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
           const curtain = scene.querySelector<HTMLElement>(":scope > .scene-curtain");
           if (!curtain) return;
           const children = Array.from(scene.children).filter((child) =>
-            !child.matches(".scene-curtain, .chapter-progress, .portal-pizza, [data-parallax], .smooth-float, .social-collage, .social-heading, .social-mural, .social-filmstrip"),
+            !child.matches(".scene-curtain, .chapter-progress, .portal-pizza, [data-parallax], .smooth-float, .small-menu-grid, .social-collage, .social-heading, .social-drawn-word, .social-mural, .social-filmstrip"),
           );
           const sceneTimeline = gsap.timeline({
             scrollTrigger: {
@@ -383,6 +449,31 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         };
         responsiveMotion.add("(min-width: 761px)", () => setupMenuRows(3));
         responsiveMotion.add("(max-width: 760px)", () => setupMenuRows(2));
+
+        gsap.utils.toArray<HTMLElement>(".menu-category").forEach((category, index) => {
+          const categoryHeader = category.querySelector<HTMLElement>("header");
+          const categoryRows = gsap.utils.toArray<HTMLElement>("li", category);
+          const direction = index % 2 ? 1 : -1;
+          const categoryTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: category,
+              start: "top 90%",
+              end: "top 44%",
+              scrub: .82,
+              invalidateOnRefresh: true,
+            },
+          });
+          if (categoryHeader) {
+            categoryTimeline.from(categoryHeader, { xPercent: direction * 38, rotation: direction * 1.6, opacity: 0, duration: .48, ease: "power3.out" }, 0);
+          }
+          categoryTimeline.from(categoryRows, {
+            xPercent: direction * 24,
+            opacity: 0,
+            stagger: .035,
+            duration: .62,
+            ease: "power2.out",
+          }, .16);
+        });
 
         gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((element) => {
           const image = element.querySelector("img");
@@ -572,7 +663,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 const actions = chapter.querySelectorAll<HTMLElement>(".visit-actions .button");
                 timeline
                   .from(rows, { xPercent: 65, opacity: 0, stagger: .12, duration: .38, ease: "power3.out" }, .08)
-                  .from(actions, { yPercent: 85, rotation: 3, opacity: 0, stagger: .1, duration: .35, ease: "back.out(1.4)" }, .36)
+                  .fromTo(actions, { clipPath: "inset(0 100% 0 0)", opacity: 0 }, { clipPath: "inset(0 0% 0 0)", opacity: 1, stagger: .075, duration: .32, ease: "power2.out" }, .34)
                   .to(chapter.querySelector("h2"), { scale: 1.04, xPercent: 2, duration: .35, ease: "power1.inOut" }, .63);
                 break;
               }
@@ -766,14 +857,20 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
 
       ScrollTrigger.refresh();
 
-      await varaReady;
+      await Promise.all([varaReady, socialVaraReady]);
       if (disposed) return;
 
       const wordSvg = word.querySelector("svg");
       const wordPaths = Array.from(word.querySelectorAll<SVGPathElement>("path"));
+      const socialWordSvg = socialWord?.querySelector("svg");
+      const socialWordPaths = Array.from(socialWord?.querySelectorAll<SVGPathElement>("path") ?? []);
       if (wordSvg) {
         wordSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
         wordSvg.setAttribute("aria-hidden", "true");
+      }
+      if (socialWordSvg) {
+        socialWordSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+        socialWordSvg.setAttribute("aria-hidden", "true");
       }
 
       wordContext = gsap.context(() => {
@@ -792,6 +889,39 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         });
       }, section);
 
+      if (socialWord && socialWordPaths.length) {
+        gsap.set(socialWordPaths, { drawSVG: "0%", opacity: 1 });
+        socialWordMotion = gsap.matchMedia();
+        socialWordMotion.add("(min-width: 1001px) and (min-height: 720px)", () => {
+          gsap.to(socialWordPaths, {
+            drawSVG: "100%",
+            stagger: .045,
+            ease: "power1.inOut",
+            scrollTrigger: {
+              trigger: socialWord.closest("[data-social-showcase]"),
+              start: "top top",
+              end: () => `+=${window.innerHeight * .68}`,
+              scrub: .9,
+              invalidateOnRefresh: true,
+            },
+          });
+        });
+        socialWordMotion.add("(max-width: 1000px), (max-height: 719px)", () => {
+          gsap.to(socialWordPaths, {
+            drawSVG: "100%",
+            stagger: .045,
+            ease: "power1.inOut",
+            scrollTrigger: {
+              trigger: socialWord,
+              start: "top 88%",
+              end: "top 34%",
+              scrub: .9,
+              invalidateOnRefresh: true,
+            },
+          });
+        });
+      }
+
       ScrollTrigger.refresh();
     };
 
@@ -803,11 +933,13 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       motionObserver?.kill();
       splitInstances.reverse().forEach((split) => split.revert());
       wordContext?.revert();
+      socialWordMotion?.revert();
       responsiveMotion?.revert();
       gsapContext?.revert();
       smoothScroller?.kill();
       document.documentElement.classList.remove("motion-ready");
       word.replaceChildren();
+      socialWord?.replaceChildren();
     };
   }, [varaFontSrc]);
 

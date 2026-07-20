@@ -79,7 +79,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the smooth wrapper is fixed only when normal motion is active and the road stage is pinned by ScrollTrigger;
 - as Remi crosses the road, the red editorial scene enters from completely off-screen left, follows the scooter across the viewport, and fills the stage without leaving the former blank red tail;
 - the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
-- About, Menu and Visit links animate to the correct section through ScrollToPlugin; scrolling down hides the header and scrolling up restores it;
+- nearby About, Menu and Visit links animate to the correct section through ScrollToPlugin; long jumps show the fixed red route card, change position only while fully covered, land with the correct hash and focus, and never visibly fast-forward intermediate pins; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
 - the story, portal, pizza, coffee/dolci, ingredients, character, social and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, columns and deck transitions;
 - at widths of at least `1001px` and heights of at least `720px`, story, portal, ingredients, character, social and visit pin at `top top`, spend scroll on their internal choreography, then release without a document jump;
@@ -87,9 +87,10 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - at `1000px` wide, below `720px` high, and under reduced motion, no narrative pin spacers are created and all content stays in semantic natural flow;
 - palette-colored curtains fully cover incoming chapters, then clear left, right, centrally, or as an iris without exposing browser background or remaining over content at the end of their range;
 - the pizza menu remains a four-row, three-column grid; rows alternately enter from the left and right without changing DOM reading order, colliding, or creating horizontal overflow;
+- Coffee and Dolci headers and rows begin only when their own category top reaches the viewport; in the stacked layout Dolci must still be at its untouched start state while Coffee occupies the screen;
 - the hero illustration, surrounding surface and red copy panel share continuous paper grain without a pink strip or darker image rectangle;
 - floating menu pizzas and social cards enter from different directions without exposing empty image edges;
-- the `Never pizza solo.` mural uses only the approved palette, all four cards settle into a deliberate collage, and the Instagram badge trails a precise desktop pointer before returning to centre on pointer leave;
+- the `Never pizza solo.` mural uses only the approved palette, the red-and-grey `Ratto` paths visibly draw during the chapter instead of appearing complete early, all four cards settle into a deliberate collage, and the Instagram badge trails a precise desktop pointer before returning to centre on pointer leave;
 - keyboard focus on the full social collage exposes a visible focus ring around the follow badge and the link opens the documented Instagram URL;
 - pizza labels align with photographs and prices;
 - the complete `Hot honey & rat sauce · R15 each` badge, including its rotated border, remains visible below the pizza grid;
@@ -97,7 +98,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - section labels are readable;
 - Remi art is not cropped;
 - the moving Remi asset blends into the orange background without a visible white rectangle;
-- visit buttons and footer are balanced.
+- the visit title, address block and action stack share one aligned top edge after the entrance completes; the WhatsApp, Uber Eats and call buttons retain their DOM order and equal spacing;
 
 ### Mobile
 
