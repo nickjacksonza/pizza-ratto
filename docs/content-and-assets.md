@@ -66,8 +66,8 @@ See `content-todo.md` for facts that remain unverified.
 | --- | ---: | --- | --- |
 | `public/og.png` | 1731×909 | Social card and original visual reference | Supplied/generated poster composition |
 | `public/images/hero-logo-mascot.png` | 1698×926 | Hero wordmark and complete rat/Vespa illustration | Generated extraction from the flyer visual; project-critical |
-| `public/images/hero-paper-texture.png` | 1698×926 | Full hero background | Generated background-only paper texture derived from the hero visual |
-| `public/images/ratto-vespa-red.png` | 1096×1435 | Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza |
+| `public/images/hero-paper-texture.png` | 1698×926 | Archived hero background, not currently rendered | Generated background-only paper texture derived from the hero visual |
+| `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza; white canvas is visually blended with section colors in CSS |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
 | `public/images/interior.webp` | 291×510 | Legacy venue gallery | Supplied photo, retained but no longer rendered |
 | `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |
@@ -129,7 +129,7 @@ A background-only raster was generated from the flyer paper aesthetic. Its promp
 
 ### Meet Remi artwork
 
-The rat/Vespa drawing was edited for the character section. The scooter is bright red, the helmet is white, and the pizza is pepperoni. It intentionally retains a printed illustration character rather than photorealistic rendering.
+The rat/Vespa drawing was edited for the character section and is now also reused in the pinned road sequence. The scooter is bright red, the helmet is white, and the pizza is pepperoni. CSS cropping and multiply blending preserve the complete illustration while removing the visual white rectangle against orange and pink fields. It intentionally retains a printed illustration character rather than photorealistic rendering.
 
 ## Image mapping
 

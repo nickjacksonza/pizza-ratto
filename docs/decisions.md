@@ -129,3 +129,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Keep one static centered copy on larger screens and use two identical continuous runs below 520px. Expose one concise accessible label, hide the repeated visual text from assistive technology, and replace motion with a wrapped static copy under `prefers-reduced-motion`.
 
 **Consequence:** Desktop appearance is unchanged, mobile retains the full message, and users who disable animation receive a complete non-moving alternative.
+
+## 017 — Concentrate motion in a scroll-driven Remi road scene
+
+**Context:** The site needed the section pacing, word-reveal drama and horizontal vehicle movement of the supplied food-site reference without losing Pizza Ratto's flyer identity or static-export compatibility.
+
+**Decision:** Use the approved `#FF8513`, `#CC2832`, `#FFC0C1` and `#373737` palette; reorganize the homepage into strong full-bleed color scenes; and add one native, dependency-free client component that turns scroll progress into CSS variables for a pinned `Hot / PIZZA` reveal and Remi's Vespa travel. Use the same component to apply small parallax offsets to selected photography.
+
+**Consequence:** Motion has a clear focal point, works on GitHub Pages, and retains a complete reduced-motion fallback. Future animation should extend this progress system rather than introduce a second competing motion runtime.

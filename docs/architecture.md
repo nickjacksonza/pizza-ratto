@@ -2,7 +2,7 @@
 
 ## Overview
 
-Pizza Ratto is intentionally a small, static-first web application. It uses a Next.js-compatible App Router API through vinext, but the product itself is a single server-rendered page with one client component.
+Pizza Ratto is intentionally a small, static-first web application. It uses a Next.js-compatible App Router API through vinext, but the product itself is a single server-rendered page with two small client components.
 
 The current architecture favors:
 
@@ -20,10 +20,11 @@ app/layout.tsx
         ├── data/business.ts
         ├── data/menu.ts
         ├── components/MobileNavigation.tsx (client component)
+        ├── components/ScrollChoreography.tsx (client component)
         └── components/BrandIcon.tsx (presentational service icons)
 ```
 
-`app/page.tsx` is statically rendered. The only interactive client state is the open/closed mobile navigation menu. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
+`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and a requestAnimationFrame-throttled scroll choreography. `ScrollChoreography.tsx` writes CSS custom properties for the pinned word/title/Remi sequence and for marked parallax images; it introduces no application state, network calls, or dependency. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
 
 ## Rendering model
 
@@ -66,17 +67,18 @@ The page is composed in this order:
 
 1. Skip link and announcement bar
 2. Header and navigation
-3. Hero poster with ordering details
-4. Moving brand ticker
-5. `01 / WHAT WE’RE ABOUT` manifesto
-6. `02 / THE IMPORTANT BIT` menu
-7. `03 / BUILT DIFFERENT` ingredient story
-8. Remi and Big Bertha character section
-9. `04 / INSIDE` gallery
-10. `05 / FIND THE FIRE` visit and order section
-11. Footer
-12. Mobile fixed ordering bar
-13. Restaurant JSON-LD
+3. Full-height split hero poster with ordering details
+4. Pinned `Hot / PIZZA` road scene with scroll-driven Remi travel
+5. Moving brand ticker
+6. `01 / WHAT WE’RE ABOUT` manifesto
+7. `02 / THE IMPORTANT BIT` floating-photo menu portal and full menu
+8. `03 / BUILT DIFFERENT` split ingredient story
+9. Remi and Big Bertha character section
+10. `04 / INSIDE` parallax gallery
+11. `05 / FIND THE FIRE` visit and order section
+12. Footer
+13. Mobile fixed ordering bar
+14. Restaurant JSON-LD
 
 ## Metadata and discovery
 
@@ -94,7 +96,7 @@ The page is composed in this order:
 
 ## Styling architecture
 
-All visual behavior lives in `app/globals.css`. Tailwind is imported but no utility-first component architecture is in use. This is intentional: the poster composition relies on named, section-specific classes and tightly coordinated media queries.
+All visual behavior lives in `app/globals.css`. Tailwind is imported but no utility-first component architecture is in use. This is intentional: the poster composition relies on named, section-specific classes, CSS custom properties, and tightly coordinated media queries.
 
 Breakpoints:
 

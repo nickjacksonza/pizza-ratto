@@ -2,7 +2,7 @@
 
 ## Design origin
 
-The visual direction comes from a photographed Pizza Ratto flyer. The website is not intended to reproduce the flyer literally; it translates the flyer into a responsive editorial poster system.
+The visual direction comes from a photographed Pizza Ratto flyer, now arranged with the bold section changes and pinned scroll pacing of a contemporary food-brand editorial site. The website does not reproduce either reference literally; it translates them into a responsive Pizza Ratto poster system.
 
 The most important source characteristics are:
 
@@ -25,17 +25,14 @@ The canonical tokens are defined in `:root` in `app/globals.css`:
 
 | Token | Value | Role |
 | --- | --- | --- |
-| `--paper` | `#f1d9d1` | Main blush paper surface |
-| `--paper-light` | `#f8e8df` | Lighter panels and readable contrast |
-| `--pink` | `#dfa2a3` | Gallery and character accents |
-| `--rose` | `#c87578` | Secondary warm accent |
-| `--wine` | `#8e4f57` | Primary brand ink, borders, checkerboards |
-| `--coral` | `#d46f5d` | CTA and slogan accent |
-| `--ink` | `#332c2b` | Main text and hard outlines |
-| `--sage` | `#71806b` | Reserved secondary accent |
-| `--white` | `#fff8ee` | Warm near-white text |
+| `--orange` | `#FF8513` | Heat, CTA, road scene, and high-energy panels |
+| `--red` | `#CC2832` | Primary brand field and Pizza Ratto emphasis |
+| `--pink` | `#FFC0C1` | Main playful paper field and headline fill |
+| `--grey` | `#373737` | Ink, outlines, footer, and checkerboards |
+| `--cream` | `#FFF4DF` | Supporting warm reading surface |
+| `--white` | `#FFFAF2` | High-contrast light text |
 
-Do not replace these with pure white, pure black, or bright primary red without a deliberate redesign.
+The first four values are the user-approved core palette. Cream and warm white support legibility but should not displace the core colors. Avoid pure black and pure white.
 
 ## Typography
 
@@ -55,12 +52,7 @@ Typography principles:
 
 ## Texture and imperfection
 
-There are two texture layers:
-
-1. A subtle fixed CSS noise layer on `body::before`.
-2. `public/images/hero-paper-texture.png` behind the hero.
-
-The hero texture was generated from the visual character of the extracted flyer paper. It contains only paper grain and no text or objects.
+The active texture is a subtle fixed CSS paper/noise layer on `body::before`. The original `public/images/hero-paper-texture.png` remains in the asset archive but is not rendered by the current split hero.
 
 Imperfection is created through:
 
@@ -75,41 +67,53 @@ Do not add arbitrary rotation to every element. Readability and hierarchy take p
 
 ## Hero composition
 
-The hero deliberately separates concerns:
+The hero deliberately separates concerns in a full-height split composition:
 
 - `hero-logo-mascot.png` contains the Pizza Ratto wordmark and complete mascot/scooter illustration.
-- The slogan is live HTML so it remains responsive and accessible.
-- Phone, hours, location, and WhatsApp CTA are live HTML.
-- The paper texture covers the full hero.
+- The main promise is live HTML in a red editorial panel so it remains responsive and accessible.
+- Phone, hours, location, opening stamp, and WhatsApp CTA are live HTML.
+- Pink paper, checkerboards, and the original artwork occupy one shared full-height poster.
 - Checkerboard bands span the full viewport width.
 
-The CTA is integrated using a transparent background and a simple divider. It must not regain the floating-card border and drop shadow used in an earlier iteration.
+The full logo, helmet, pizza slice, Vespa, and both wheels must remain visible. The CTA uses the rounded, hard-shadow button language shared across the redesign.
 
-The lower footnote is positioned above the checkerboard using `bottom: calc(42px + 1rem)` on desktop. This spacing is intentional.
+## Scroll choreography
+
+The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its inner stage stays pinned while vertical scroll drives four phases:
+
+1. the italic `Hot` word is revealed left-to-right;
+2. the oversized `PIZZA` title rises into place;
+3. Remi travels from off-screen left to off-screen right;
+4. the orange stage lifts to expose a red color wipe before the ticker.
+
+`components/ScrollChoreography.tsx` computes one normalized progress value and writes CSS custom properties. It also supplies restrained, viewport-relative offsets to elements marked with `data-parallax`. Do not replace this with an animation dependency unless there is a measurable need.
+
+Reduced-motion mode turns the pinned sequence into a static composition, disables marquees, and removes parallax transforms.
 
 ## Section rhythm
 
-The first version felt too tall. The current system was compacted deliberately:
+The regular content sections remain compact; the road scene is the one deliberate long-scroll exception:
 
-- hero minimum height: `620px`;
-- global section padding: up to `6rem` rather than `8rem`;
-- ingredients section: `600px` minimum;
-- Remi artwork: `460px`;
-- gallery fixed rows: `220px` and `190px` on desktop.
+- hero height: approximately one viewport on desktop, content-height on mobile;
+- road scene: `280svh` desktop and `235svh` below `760px`;
+- global section padding: up to `7.5rem` for major editorial pauses;
+- ingredients section: `720px` minimum on desktop;
+- character artwork: `620px` minimum on desktop;
+- gallery fixed rows: `230px`, `240px`, and `220px` on desktop.
 
 Do not reintroduce large empty vertical bands unless the content requires them.
 
 ## Menu composition
 
-Pizza uses a strict three-column desktop grid and two-column mobile grid. Photography is circular with wine-coloured borders. Every image track has the same dimensions, and labels begin below the circles with positive spacing.
+Pizza uses a strict three-column desktop grid and two-column mobile grid. The menu portal uses circular cutouts with grey outlines and red offset shadows; the full menu switches to equal rectangular photography with hard grey borders. Labels begin below the images with positive spacing.
 
 Eight cards use enhanced owner-supplied photography and four use generated concept photography. The placeholder component remains as a deliberate fallback for future menu additions without a photo.
 
-Coffee and dolci use structured lists rather than photographed menu boards. The supporting menu image now uses an enhanced owner-supplied feast photograph rather than the legacy photographed board.
+Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards.
 
-The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones. Card transforms are disabled at every breakpoint to protect image baselines and label clearance. Provisional specials use a small wine-colored confirmation label beneath their ingredient descriptions.
+The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones. Card transforms are disabled at every breakpoint to protect image baselines and label clearance. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
 
-The Rat Hole gallery uses a bounded 220px editorial header across its first two columns. Title and slogan share that header with a common baseline and divider, preventing the tall venue photograph from inflating an invisible first row. The brownie and complete lemon dessert form the lower collage while the venue photograph anchors the right edge. On narrow screens, the header becomes one compact stack and every photograph uses the full content width; the venue and brownie figures retain explicit minimum heights because their percentage-height images cannot size an implicit grid row by themselves.
+The Rat Hole gallery uses a bounded 230px editorial header across its first two columns. The title and short description share a common baseline and divider, while the brownie and complete lemon dessert form the lower collage and the venue photograph anchors the right edge. On narrow screens, the header becomes one compact stack and every photograph uses the full content width with explicit minimum heights.
 
 ## Responsive behavior
 
@@ -124,10 +128,10 @@ The Rat Hole gallery uses a bounded 220px editorial header across its first two 
 - main content grids collapse to one column;
 - desktop navigation hides;
 - mobile navigation appears;
-- hero CTA becomes left-aligned with a top divider;
+- hero artwork and CTA panel become one vertical reading sequence;
 - pizza grid becomes two columns;
 - gallery removes secondary decorative content;
-- Remi artwork moves above its text.
+- the character panels become a single-column sequence.
 
 ### At or below 520px
 
@@ -157,10 +161,11 @@ The Rat Hole gallery uses a bounded 220px editorial header across its first two 
 - Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
 - The top announcement remains static and centered when it fits. At phone widths it switches to two identical 18-second runs so the complete business message remains legible without compression or clipping. Reduced-motion mode disables that loop and wraps one copy instead.
 - The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
-- Remi's portrait source has asymmetric blank canvas around the visible drawing. The crop therefore uses `translateX(-56%)` to center the visible mascot rather than the bitmap bounds. Desktop uses up to 128% of the art column with a 660px cap so the helmet and both wheels fit inside the 460px frame; mobile may scale wider but retains the optical centering correction.
+- Remi's portrait source has asymmetric blank canvas around the visible drawing. The road scene uses a bounded overflow crop plus `mix-blend-mode: multiply`; the character scene optically centers the source with a slight left correction. Keep the helmet, pizza, complete scooter and both wheels inside the visible crop.
 - The ticker stops under `prefers-reduced-motion: reduce`.
+- The road scene becomes static and all marked parallax elements return to their natural position under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.
-- The hidden `h1` supplies the page's semantic top-level heading while the visual logo remains an image.
+- The live hero promise supplies the single visible semantic `h1`; the artwork remains a descriptive image.
 
 ## Common visual regressions
 
@@ -170,8 +175,8 @@ Before approving a visual change, check for:
 - checkerboards that stop before the viewport edge;
 - phone number overflow;
 - footnote text inside the lower checkerboard;
-- CTA background that looks like a separate card;
-- mismatched hero texture and artwork background;
+- hero CTA panel losing its deliberate red full-height field;
+- a visible white rectangle around Remi in the orange road scene;
 - excessively tall sections;
 - section labels becoming too small;
 - mobile pizza text below roughly 13px;

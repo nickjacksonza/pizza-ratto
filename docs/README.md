@@ -5,9 +5,10 @@ This folder explains the current product, its design logic, implementation, and 
 ## Current status
 
 - One-page restaurant website implemented and responsive.
+- Scroll-led editorial redesign implemented with a pinned Remi/Vespa sequence, staged word reveal, and lightweight photography parallax.
 - Publicly deployed to GitHub Pages at `https://zmaqutu.github.io/pizza-ratto/`.
 - OpenAI Sites project retained as an optional second deployment target.
-- Menu, business details, structured metadata, mobile navigation, and ordering links are implemented.
+- Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.
 - The menu uses a deliberate twelve-card grid: eight enhanced owner photographs and four generated concept photographs. Six specials remain provisional pending owner approval.
 - No database, CMS, cart, analytics, user accounts, or custom domain.
 
