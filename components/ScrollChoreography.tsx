@@ -108,8 +108,8 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         {
           autoAnimation: false,
           color: "#cc2832",
-          fontSize: window.innerWidth < 760 ? 190 : window.innerWidth < 1200 ? 285 : 390,
-          strokeWidth: window.innerWidth < 760 ? 5.8 : 7.4,
+          fontSize: window.innerWidth < 760 ? 150 : window.innerWidth < 1200 ? 220 : 300,
+          strokeWidth: window.innerWidth < 760 ? 5.2 : 6.4,
           textAlign: "center",
         },
       ) : undefined;
@@ -891,34 +891,34 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
 
       if (socialWord && socialWordPaths.length) {
         gsap.set(socialWordPaths, { drawSVG: "0%", opacity: 1 });
+        const socialStrokeLengths = socialWordPaths.map((path) => Math.max(path.getTotalLength(), 1));
+        const totalSocialStrokeLength = socialStrokeLengths.reduce((total, length) => total + length, 0);
+        const createSocialDrawTimeline = (trigger: Element, start: string, end: string | (() => string)) => {
+          const drawTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger,
+              start,
+              end,
+              scrub: .82,
+              invalidateOnRefresh: true,
+            },
+          });
+          socialWordPaths.forEach((path, index) => {
+            drawTimeline.to(path, {
+              drawSVG: "100%",
+              duration: Math.max(.16, socialStrokeLengths[index] / totalSocialStrokeLength * 3.4),
+              ease: "none",
+            });
+          });
+          return drawTimeline;
+        };
         socialWordMotion = gsap.matchMedia();
         socialWordMotion.add("(min-width: 1001px) and (min-height: 720px)", () => {
-          gsap.to(socialWordPaths, {
-            drawSVG: "100%",
-            stagger: .045,
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: socialWord.closest("[data-social-showcase]"),
-              start: "top top",
-              end: () => `+=${window.innerHeight * .68}`,
-              scrub: .9,
-              invalidateOnRefresh: true,
-            },
-          });
+          const socialScene = socialWord.closest("[data-social-showcase]");
+          if (socialScene) createSocialDrawTimeline(socialScene, "top top", () => `+=${window.innerHeight * .72}`);
         });
         socialWordMotion.add("(max-width: 1000px), (max-height: 719px)", () => {
-          gsap.to(socialWordPaths, {
-            drawSVG: "100%",
-            stagger: .045,
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: socialWord,
-              start: "top 88%",
-              end: "top 34%",
-              scrub: .9,
-              invalidateOnRefresh: true,
-            },
-          });
+          createSocialDrawTimeline(socialWord, "top 88%", "top 34%");
         });
       }
 

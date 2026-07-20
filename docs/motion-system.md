@@ -103,7 +103,7 @@ The `Never pizza solo.` chapter reuses four documented Pizza Ratto photographs o
 
 The full collage is one Instagram link with a visible `.social-follow-badge`. On devices matching `min-width: 1001px`, `hover: hover` and `pointer: fine`, two `gsap.quickTo()` setters make that badge trail pointer movement with easing. It recentres on pointer leave or renewed page scrolling so stale pointer coordinates do not survive a chapter exit. On touch, narrow and reduced-motion layouts the badge stays fixed near the collage bottom and the link uses a normal pointer cursor. Preserve the accessible link label and visible `Follow @pizza_ratto` text.
 
-The background lettering is not CSS text. `#social-ratto-drawing` is populated by a second Vara instance using the same local Satisfy data as `Hot`, styled in `--red` with a grey drop-shadow registration layer, and drawn with DrawSVG. Large locked views draw it over the first `0.68 × viewport height` of the social pin; narrow or short views use a normal-flow `top 88%` to `top 34%` trigger. Reduced motion shows every path complete.
+The background lettering is not CSS text. `#social-ratto-drawing` is populated by a second Vara instance using the same local Satisfy data as `Hot` and styled as one clean `--red` ink layer. DrawSVG animates the generated paths sequentially in their Vara/DOM pen order, with duration weighted by each path's measured length; do not reintroduce a collection tween that draws all paths concurrently or an offset text shadow. Large locked views draw it over the first `0.72 × viewport height` of the social pin; narrow or short views use a normal-flow `top 88%` to `top 34%` trigger. Reduced motion shows every path complete.
 
 ## Anchor navigation handoff
 

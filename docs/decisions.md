@@ -201,3 +201,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Remove the coffee/dolci grid from the parent scene-child entrance and give each category its own viewport-relative scrub range. Replace the faint CSS `RATTO` pseudo-element with a second Vara/DrawSVG word in approved red with a grey registration shadow. Align the three desktop visit columns from a shared top edge and reveal actions laterally without vertical displacement. For anchor distances above `1.35 × viewport height`, place a fixed red route card outside ScrollSmoother, change the smoothed scroll position only after the card fully covers the viewport, update focus and hash, then reveal the destination; retain ScrollToPlugin for nearby links.
 
 **Consequence:** Dolci motion now occurs while Dolci is visible, the social background becomes a legible authored drawing beat, and the visit layout remains aligned both during and after its pin. Navigation no longer presents intermediate scenes as a fast-forward montage, while keyboard focus, reduced-motion fallback, static export compatibility and the single GSAP runtime are preserved.
+
+## 025 — Treat the social Vara word as one signature
+
+**Context:** The first scroll-drawn `Ratto` treatment was oversized, drew all Vara paths concurrently and used a strong grey offset shadow. Mid-animation it read as dotted fragments and two tangled words, competing with `Never pizza solo.` and the incoming photographs.
+
+**Decision:** Keep Vara as the glyph and path source, but reduce the signature's footprint, remove the duplicate shadow layer and render one approved-red ink. Build a DrawSVG timeline in Vara's DOM path order, weighting each stroke duration by its measured length so only one pen stroke is actively drawing at a time.
+
+**Consequence:** The lettering now reads as a deliberate signature instead of background noise, remains genuinely scroll-drawn and reversible, and supports the collage hierarchy without introducing a new font, asset or animation runtime.

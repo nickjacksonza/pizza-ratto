@@ -90,7 +90,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - Coffee and Dolci headers and rows begin only when their own category top reaches the viewport; in the stacked layout Dolci must still be at its untouched start state while Coffee occupies the screen;
 - the hero illustration, surrounding surface and red copy panel share continuous paper grain without a pink strip or darker image rectangle;
 - floating menu pizzas and social cards enter from different directions without exposing empty image edges;
-- the `Never pizza solo.` mural uses only the approved palette, the red-and-grey `Ratto` paths visibly draw during the chapter instead of appearing complete early, all four cards settle into a deliberate collage, and the Instagram badge trails a precise desktop pointer before returning to centre on pointer leave;
+- the `Never pizza solo.` mural uses only the approved palette, the single-red-ink `Ratto` paths draw one clean pen stroke at a time without dotted concurrent fragments or a duplicate shadow word, all four cards settle into a deliberate collage, and the Instagram badge trails a precise desktop pointer before returning to centre on pointer leave;
 - keyboard focus on the full social collage exposes a visible focus ring around the follow badge and the link opens the documented Instagram URL;
 - pizza labels align with photographs and prices;
 - the complete `Hot honey & rat sauce · R15 each` badge, including its rotated border, remains visible below the pizza grid;

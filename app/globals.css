@@ -485,9 +485,9 @@ h2, h3 { margin: 0; font-family: var(--font-display), Impact, sans-serif; font-w
 .bertha-note h3 { margin: 1.5rem 0; color: var(--red); font-size: clamp(3.2rem, 5vw, 5.4rem); }
 
 .social-showcase { position: relative; min-height: 100svh; overflow: hidden; color: var(--grey); background: var(--orange); border-bottom: 3px solid var(--grey); }
-.social-drawn-word { position: absolute; left: 2%; top: 22%; z-index: 2; width: 96%; height: 40%; overflow: visible; opacity: .82; transform: rotate(-3deg); pointer-events: none; }
+.social-drawn-word { position: absolute; left: 12%; top: 29%; z-index: 2; width: 76%; height: 27%; overflow: visible; opacity: .94; transform: rotate(-2deg); pointer-events: none; }
 .social-drawn-word svg { width: 100% !important; height: 100% !important; overflow: visible; }
-.social-drawn-word path { vector-effect: non-scaling-stroke; stroke: var(--red) !important; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(5px 7px 0 rgba(55,55,55,.72)); }
+.social-drawn-word path { vector-effect: non-scaling-stroke; stroke: var(--red) !important; stroke-linecap: round; stroke-linejoin: round; }
 .social-heading { position: absolute; inset: clamp(6rem, 11vh, 8rem) clamp(1rem, 5vw, 5rem) auto; z-index: 8; display: grid; grid-template-columns: 1fr 1fr; gap: .35rem 2rem; align-items: start; }
 .social-heading > div { grid-column: 1; grid-row: 2; }
 .social-heading > p { grid-column: 2; grid-row: 2; max-width: 290px; justify-self: end; margin: 0; font-weight: 750; line-height: 1.35; }
@@ -555,7 +555,7 @@ footer p { margin: 0; font-size: .76rem; }
   .visit { grid-template-columns: 1fr 1fr; }
   .visit-actions { grid-column: 2; }
   .social-showcase { min-height: 1160px; padding: 4rem .9rem; }
-  .social-drawn-word { left: -4%; top: 25%; width: 108%; height: 34%; opacity: .72; }
+  .social-drawn-word { left: 4%; top: 29%; width: 92%; height: 24%; opacity: .9; }
   .social-heading { position: relative; inset: auto; z-index: 8; display: block; }
   .social-heading > div, .social-heading > p { padding-top: 0; }
   .social-heading h2 { margin-top: 1.1rem; font-size: clamp(5.2rem, 15vw, 9rem); text-align: left; white-space: normal; }
