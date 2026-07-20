@@ -81,11 +81,16 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
 - About, Menu and Visit links animate to the correct section through ScrollToPlugin; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
-- the story, portal, pizza, coffee/dolci, ingredients, character, gallery and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, columns and deck transitions;
+- the story, portal, pizza, coffee/dolci, ingredients, character, social and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, columns and deck transitions;
+- at widths of at least `1001px` and heights of at least `720px`, story, portal, ingredients, character, social and visit pin at `top top`, spend scroll on their internal choreography, then release without a document jump;
+- each pinned narrative stage fills its progress rail from top to bottom, remains reversible when scrolling upward, and never animates the pin container itself;
+- at `1000px` wide, below `720px` high, and under reduced motion, no narrative pin spacers are created and all content stays in semantic natural flow;
 - palette-colored curtains fully cover incoming chapters, then clear left, right, centrally, or as an iris without exposing browser background or remaining over content at the end of their range;
 - the pizza menu remains a four-row, three-column grid; rows alternately enter from the left and right without changing DOM reading order, colliding, or creating horizontal overflow;
 - the hero illustration, surrounding surface and red copy panel share continuous paper grain without a pink strip or darker image rectangle;
-- floating menu pizzas and gallery cards enter from different directions without exposing empty image edges;
+- floating menu pizzas and social cards enter from different directions without exposing empty image edges;
+- the `Never pizza solo.` mural uses only the approved palette, all four cards settle into a deliberate collage, and the Instagram badge trails a precise desktop pointer before returning to centre on pointer leave;
+- keyboard focus on the full social collage exposes a visible focus ring around the follow badge and the link opens the documented Instagram URL;
 - pizza labels align with photographs and prices;
 - the complete `Hot honey & rat sauce · R15 each` badge, including its rotated border, remains visible below the pizza grid;
 - all twelve pizza photographs load without fallback placeholders;
@@ -112,7 +117,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the red pulled scene remains visually connected to Remi during the handoff, settles edge-to-edge, and does not hide behind the mobile order bar;
 - pizza images in each mobile row share the same top edge;
 - pizza labels start below their images with no overlap;
-- the mobile gallery keeps its intended overlap without horizontal scroll or unreadable cropping.
+- the mobile social collage keeps its intended overlap without horizontal scroll or unreadable cropping, and its follow button stays fixed rather than chasing touch input.
 - all twelve pizza photographs load without broken-image indicators.
 
 ## Accessibility checklist
@@ -128,6 +133,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - At normal motion, confirm ticker copy covers the full banner and replacement text continuously enters from the right.
 - Confirm every WhatsApp link retains visible text and a decorative icon.
 - Confirm the icon-only Instagram footer link has an accessible name.
+- Confirm the Ratto Social Club Instagram overlay has a descriptive accessible name and visible `Follow @pizza_ratto` text.
 - Confirm the redundant Instagram text action is absent from section 05 while the footer icon remains.
 - Confirm Remi's helmet and both Vespa wheels remain visible at desktop and phone widths.
 - Confirm reduced motion converts the road scene to a static composition, shows the complete `Hot` lettering, and removes parallax, wipe, split-text and marquee motion.

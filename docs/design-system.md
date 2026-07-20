@@ -88,13 +88,13 @@ The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its
 
 The pulled panel reuses the approved venue-table photograph with a red editorial composition, pink display copy, an orange `PULLING UP` badge, a checker road and a short tow line that expands as the scene catches Remi. It replaces the previously unused red tail of the pinned section; it is decorative and hidden in the reduced-motion fallback.
 
-The same client component treats every major story section as a viewport-scale scene. Palette-colored curtains bridge the chapters: they clear left or right, collapse as an iris, split from the centre, or skew like a paper shutter while the incoming composition assembles behind them. Ingredients still use a two-sided split and the character view a three-column assembly, but the gallery, coffee/dolci and visit chapters now enter laterally rather than rising with the document. Curtains travel just beyond the viewport (`±104%`) so their exit is unmistakable. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
+The same client component treats every major story section as a viewport-scale scene. Palette-colored curtains bridge the chapters: they clear left or right, collapse as an iris, split from the centre, or skew like a paper shutter while the incoming composition assembles behind them. On large desktop viewports the story, menu portal, ingredients, character, social and visit chapters then lock at the top of the viewport and spend scroll progress on a bespoke internal sequence before releasing the next chapter. Ingredients change crop and color, the character panels squeeze around Remi, the portal pizzas orbit, the social cards deal into a mural, and the visit actions assemble in order. Shutters straighten and finish at `±120%`, which prevents a diagonal wedge lingering beside tall scenes. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
 
 The pizza menu stays in natural reading order: four rows of three on desktop and six rows of two below `760px`. GSAP alternates whole rows from the left and right as they approach the viewport, while the oversized `PIZZA` marquee travels horizontally on its own scroll range. The menu never pins or becomes a horizontal carousel.
 
 The `PIZZA` title deliberately uses visible overflow plus top and bottom padding; do not reintroduce an overflow mask on the full word. Character masks belong on the individual SplitText entrance wrappers only. `Hot` is generated as real Vara paths with a heavier rounded stroke and a small red print-registration shadow.
 
-Core motion initializes before the optional Vara font fetch completes. The font data is also preloaded from `app/layout.tsx`; only the handwritten stroke timeline waits for its path data. Reduced-motion mode turns the pinned sequence into a static composition, hides the pulled editorial panel, disables marquees, and removes parallax transforms.
+Core motion initializes before the optional Vara font fetch completes. The font data is also preloaded from `app/layout.tsx`; only the handwritten stroke timeline waits for its path data. Chapter locks activate only at `1001px` and wider with at least `720px` of viewport height. Smaller or shorter screens retain natural document flow. Reduced-motion mode turns every pinned sequence into a static composition, hides the pulled editorial panel, disables marquees, and removes parallax transforms.
 
 ## Section rhythm
 
@@ -102,12 +102,14 @@ The page uses a sequence of deliberate full-view scenes:
 
 - hero height: approximately one viewport on desktop, content-height on mobile;
 - road scene: `280svh` desktop and `235svh` below `760px`;
-- story, portal, coffee/dolci, ingredients, characters and visit: at least `100svh`;
+- story, portal, ingredients, characters, social and visit: exactly one stage-height while desktop motion is active, with pin spacing supplying their internal scroll budget;
+- the same chapters: content-height or at least `100svh` when pins are not active;
+- coffee/dolci: natural document flow at every size;
 - pizza menu: natural document flow at every size, with four desktop rows of three and six mobile rows of two;
 - global section padding: up to `7.5rem` for major editorial pauses;
 - ingredients section: one viewport minimum on desktop;
 - character artwork: `620px` minimum on desktop;
-- gallery stack: fluid `560px`–`760px` stage on desktop and `710px`–`850px` on narrow screens.
+- social collage: one pinned desktop poster; `780px`–`870px` of controlled collage space below `1001px`.
 
 Do not reintroduce large empty vertical bands unless the content requires them.
 
@@ -121,7 +123,7 @@ Coffee and dolci use structured lists in orange and pink split panels rather tha
 
 The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones, in both enhanced and reduced-motion modes. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
 
-The Rat Hole gallery uses a bounded editorial header followed by a four-card stack. The room, Vespa table, feast and lemon-dessert photographs enter from different sides and settle into a deliberately overlapping collage with hard borders, orange shadows and small rotations. Narrow screens preserve the overlap with controlled absolute positions instead of flattening the photographs into a generic vertical list.
+The `Never pizza solo.` Ratto Social Club view uses a large editorial heading followed by four irregular venue/food cards. The room, Vespa table, feast and lemon-dessert photographs arrive from four directions and settle over a code-native abstract mural made from the approved palette, checker stripes, a Vespa-like wheel, pizza slice and curling rat tail. Hard grey borders, red shadows and restrained rotations keep the collage in the flyer language. A red `Follow @pizza_ratto` badge trails the cursor on precise desktop pointers; it becomes a fixed, ordinary Instagram action on touch and narrow layouts. This is a social poster, not an image carousel.
 
 ## Responsive behavior
 
@@ -130,6 +132,7 @@ The Rat Hole gallery uses a bounded editorial header followed by a four-card sta
 - hero CTA column narrows;
 - manifesto becomes two columns;
 - characters and visit sections simplify.
+- narrative chapter locks turn off and the social collage becomes a tall natural-flow composition.
 
 ### At or below 760px
 
@@ -138,7 +141,7 @@ The Rat Hole gallery uses a bounded editorial header followed by a four-card sta
 - mobile navigation appears;
 - hero artwork and CTA panel become one vertical reading sequence;
 - pizza grid becomes two columns;
-- gallery keeps a compact, controlled collage with smaller overlaps;
+- social cards keep a compact, controlled collage with smaller overlaps and a fixed follow action;
 - the character panels become a single-column sequence.
 
 ### At or below 520px

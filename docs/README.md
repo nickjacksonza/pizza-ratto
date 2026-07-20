@@ -5,7 +5,7 @@ This folder explains the current product, its design logic, implementation, and 
 ## Current status
 
 - One-page restaurant website implemented and responsive.
-- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, palette-curtain chapter handoffs, a responsive pizza grid with alternating lateral row entrances, true handwritten stroke drawing, split-letter entrances, a velocity-reactive Remi/Vespa sequence that tows the next red scene in from the left, and an overlapping venue collage.
+- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, palette-curtain chapter handoffs, six desktop narrative locks with bespoke internal timelines, a responsive pizza grid with alternating lateral row entrances, true handwritten stroke drawing, split-letter entrances, a velocity-reactive Remi/Vespa sequence that tows the next red scene in from the left, and a `Never pizza solo.` social mural with an eased cursor-follow Instagram action.
 - Publicly deployed to GitHub Pages at `https://zmaqutu.github.io/pizza-ratto/`.
 - OpenAI Sites project retained as an optional second deployment target.
 - Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.

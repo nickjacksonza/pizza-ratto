@@ -107,8 +107,9 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="manifesto section-pad" id="story" data-scene="story" data-transition="paper-left">
+        <section className="manifesto section-pad" id="story" data-scene="story" data-transition="paper-left" data-lock-chapter="story" data-lock-scroll="1.1">
           <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
           <p className="section-number">01 / WHAT WE’RE ABOUT</p>
           <div>
             <p className="manifesto-kicker">A little about Pizza Ratto</p>
@@ -118,8 +119,9 @@ export default function Home() {
           <aside className="smooth-float"><b>HOUSE RULES</b>{facts.map((fact, index) => <span key={fact}>{String(index + 1).padStart(2, "0")} — {fact}</span>)}</aside>
         </section>
 
-        <section className="menu-portal section-pad" aria-labelledby="menu-portal-title" data-scene="menu-portal" data-transition="iris">
+        <section className="menu-portal section-pad" aria-labelledby="menu-portal-title" data-scene="menu-portal" data-transition="iris" data-lock-chapter="menu-portal" data-lock-scroll="1.35">
           <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
           <p className="section-number">02 / THE IMPORTANT BIT</p>
           <div className="menu-portal-copy">
             <p>Twelve rides. One very hot oven.</p>
@@ -190,14 +192,16 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="ingredients" aria-labelledby="ingredients-title" data-scene="ingredients" data-transition="split">
+        <section className="ingredients" aria-labelledby="ingredients-title" data-scene="ingredients" data-transition="split" data-lock-chapter="ingredients" data-lock-scroll="1.15">
           <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
           <div className="ingredient-photo" data-parallax="22"><img src={asset("/images/owner-2026/feast-landscape.webp")} alt="A full Pizza Ratto table spread with pizzas, desserts, hot honey and fresh ingredients" loading="lazy" /></div>
           <div className="ingredient-copy section-pad"><p className="section-number">03 / BUILT DIFFERENT</p><h2 id="ingredients-title" className="spaced-heading" data-split="scroll">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
-        <section className="characters section-pad" data-scene="characters" data-transition="columns">
+        <section className="characters section-pad" data-scene="characters" data-transition="columns" data-lock-chapter="characters" data-lock-scroll="1.15">
           <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
           <div className="character-copy">
             <span className="sticker">RAT #01</span>
             <h2 data-split="scroll">Meet Remi.</h2>
@@ -207,24 +211,34 @@ export default function Home() {
           <div className="bertha-note"><span className="sticker">FIRE #01</span><h3>Big Bertha.</h3><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
         </section>
 
-        <section className="gallery section-pad" aria-labelledby="gallery-title" data-gallery data-scene="gallery" data-transition="deck">
+        <section className="social-showcase section-pad" aria-labelledby="social-title" data-social-showcase data-scene="social" data-transition="deck" data-lock-chapter="social" data-lock-scroll="1.75">
           <span className="scene-curtain" aria-hidden="true" />
-          <div className="gallery-intro">
-            <div><p className="section-number">04 / INSIDE</p><h2 id="gallery-title" data-split="scroll">The rat hole.</h2></div>
-            <p>Pizza, scooters, old furniture and very good reasons to stay awhile.</p>
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <div className="social-mural" aria-hidden="true">
+            <span className="social-mural-wheel" />
+            <span className="social-mural-slice" />
+            <span className="social-mural-tail" />
           </div>
-          <div className="gallery-stack">
-            <figure className="gallery-card gallery-card-room" data-stack-card="room"><img src={asset("/images/interior.webp")} alt="Pizza Ratto dining room with brick walls, vintage furniture and a Vespa" loading="lazy" /></figure>
-            <figure className="gallery-card gallery-card-table" data-stack-card="table"><img src={asset("/images/owner-2026/venue-table.webp")} alt="Overhead Pizza Ratto table spread beside a blue Vespa inside the restaurant" loading="lazy" /></figure>
-            <figure className="gallery-card gallery-card-feast" data-stack-card="feast"><img src={asset("/images/owner-2026/feast-collage.webp")} alt="A colourful Pizza Ratto feast of wood-fired pizzas, dips and desserts" loading="lazy" /></figure>
-            <figure className="gallery-card gallery-card-sweet" data-stack-card="sweet"><img src={asset("/images/owner-2026/dessert-limone.webp")} alt="Two lemon-shaped creamy desserts with mint and fresh lemon leaves" loading="lazy" /></figure>
-            <p className="gallery-caption">Come hungry.<br />Leave slightly happier.</p>
+          <header className="social-heading">
+            <div><p className="section-number">04 / RATTO SOCIAL CLUB</p><p className="social-kicker">Inside the rat hole. Out in the wild.</p></div>
+            <h2 id="social-title" data-split="scroll">Never pizza solo.</h2>
+            <p>Follow the daily damage, fresh pies and questionable decisions.</p>
+          </header>
+          <div className="social-collage" data-social-collage>
+            <figure className="social-card social-card-room" data-social-card="room"><img src={asset("/images/interior.webp")} alt="Pizza Ratto dining room with brick walls, vintage furniture and a Vespa" loading="lazy" /></figure>
+            <figure className="social-card social-card-table" data-social-card="table"><img src={asset("/images/owner-2026/venue-table.webp")} alt="Overhead Pizza Ratto table spread beside a blue Vespa inside the restaurant" loading="lazy" /></figure>
+            <figure className="social-card social-card-feast" data-social-card="feast"><img src={asset("/images/owner-2026/feast-collage.webp")} alt="A colourful Pizza Ratto feast of wood-fired pizzas, dips and desserts" loading="lazy" /></figure>
+            <figure className="social-card social-card-sweet" data-social-card="sweet"><img src={asset("/images/owner-2026/dessert-limone.webp")} alt="Two lemon-shaped creamy desserts with mint and fresh lemon leaves" loading="lazy" /></figure>
+            <a className="social-follow-link" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Follow Pizza Ratto on Instagram ${business.instagramHandle}`}>
+              <span className="social-follow-badge" data-social-follow-cursor><BrandIcon name="instagram" />Follow {business.instagramHandle}</span>
+            </a>
           </div>
-          <div className="gallery-filmstrip" aria-hidden="true"><span>ROOM FOR ONE MORE</span><span>CAFFE · PIZZA · CHAOS</span><span>ROOM FOR ONE MORE</span></div>
+          <div className="social-filmstrip" aria-hidden="true"><span>ROOM FOR ONE MORE</span><span>FOLLOW THE RAT</span><span>CAFFE · PIZZA · CHAOS</span><span>FOLLOW THE RAT</span></div>
         </section>
 
-        <section className="visit section-pad" id="visit" data-scene="visit" data-transition="shutter-right">
+        <section className="visit section-pad" id="visit" data-scene="visit" data-transition="shutter-right" data-lock-chapter="visit" data-lock-scroll="1.05">
           <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
           <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading" data-split="scroll">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
           <div className="visit-actions"><a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>

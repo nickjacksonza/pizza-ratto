@@ -69,7 +69,7 @@ See `content-todo.md` for facts that remain unverified.
 | `public/images/hero-paper-texture.png` | 1698×926 | Continuous hero paper surface | Generated background-only paper texture derived from the hero visual; rendered behind the opaque hero composite and beneath the red copy panel to remove visible seams |
 | `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza; white canvas is visually blended with section colors in CSS |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
-| `public/images/interior.webp` | 291×510 | Rat Hole room card | Supplied venue photo, actively rendered in the animated gallery stack |
+| `public/images/interior.webp` | 291×510 | Ratto Social Club room card | Supplied venue photo, actively rendered in the `Never pizza solo.` collage |
 | `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |
 | `public/images/menu-coffee.webp` | 381×510 | Reference menu board | Supplied photo, currently not rendered |
 | `public/images/menu-dolci.webp` | 377×510 | Reference menu board | Supplied photo, currently not rendered |
@@ -93,11 +93,11 @@ All files below live in `public/images/owner-2026/`. Twelve branded delivery-pla
 | `pizza-rally.webp` | 1402×1122 | Rally card | Smoked chicken, mushroom, avocado |
 | `pizza-bianca-pollo.webp` | 1402×1122 | Provisional Bianca Pollo card | White base, smoked chicken, mushroom, chives |
 | `pizza-sole.webp` | 1402×1122 | Provisional Sole card | White base, yellow pepper, cherry tomato, mint |
-| `feast-collage.webp` | 1402×1122 | Menu editorial card | Mixed pizza and dessert spread |
+| `feast-collage.webp` | 1402×1122 | Ratto Social Club feast card | Mixed pizza and dessert spread |
 | `feast-landscape.webp` | 1402×1122 | Ingredient-story photograph | Full table spread with ingredients and desserts |
 | `dessert-brownie.webp` | 1402×1122 | Gallery | Chocolate brownie, nuts, chocolate drizzle |
-| `dessert-limone.webp` | 1402×1122 | Gallery | Lemon-shaped creamy desserts and mint |
-| `venue-table.webp` | 1027×1531 | Remi pull-transition and venue gallery | Pizza table, desserts, blue Vespa and dining context |
+| `dessert-limone.webp` | 1402×1122 | Ratto Social Club sweet card | Lemon-shaped creamy desserts and mint |
+| `venue-table.webp` | 1027×1531 | Remi pull-transition and Ratto Social Club table card | Pizza table, desserts, blue Vespa and dining context |
 
 ### Generated concept pizzas
 

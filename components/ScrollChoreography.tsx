@@ -23,7 +23,7 @@ type SmoothScroller = {
 
 type MotionObserver = { kill: () => void };
 type ResponsiveMotion = {
-  add: (query: string, setup: () => void) => unknown;
+  add: (query: string, setup: () => void | (() => void)) => unknown;
   revert: () => void;
 };
 
@@ -233,7 +233,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
           const curtain = scene.querySelector<HTMLElement>(":scope > .scene-curtain");
           if (!curtain) return;
           const children = Array.from(scene.children).filter((child) =>
-            !child.matches(".scene-curtain, .portal-pizza, [data-parallax], .smooth-float, .gallery-stack"),
+            !child.matches(".scene-curtain, .chapter-progress, .portal-pizza, [data-parallax], .smooth-float, .social-collage, .social-heading, .social-mural, .social-filmstrip"),
           );
           const sceneTimeline = gsap.timeline({
             scrollTrigger: {
@@ -266,9 +266,10 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
           }
 
           if (transition === "columns") {
-            const columns = Array.from(scene.children).filter((child) => !child.matches(".scene-curtain"));
+            const columns = Array.from(scene.children).filter((child) => !child.matches(".scene-curtain, .chapter-progress"));
             sceneTimeline
-              .to(curtain, { xPercent: -104, skewX: 5, duration: .9, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: -88, skewX: 5, duration: .76, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: -120, skewX: 0, duration: .24, ease: "power2.out" }, .76)
               .from(columns[0], { xPercent: -105, rotation: -2, duration: .92, ease: "power3.inOut" }, .02)
               .from(columns[1], { yPercent: 105, scale: .9, duration: 1, ease: "power3.inOut" }, .05)
               .from(columns[2], { xPercent: 105, rotation: 2, duration: .92, ease: "power3.inOut" }, .08);
@@ -277,34 +278,41 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
 
           if (transition === "deck") {
             sceneTimeline
-              .to(curtain, { xPercent: 106, skewX: -5, rotation: -1.5, transformOrigin: "100% 50%", duration: 1, ease: "power3.inOut" }, 0)
-              .from(children, { xPercent: (index: number) => index % 2 ? 38 : -38, rotation: (index: number) => index % 2 ? 1.5 : -1.5, opacity: 0, stagger: .08, duration: .76, ease: "power3.out" }, .16);
+              .to(curtain, { xPercent: 88, skewX: -5, rotation: -1.5, transformOrigin: "100% 50%", duration: .76, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: 120, skewX: 0, rotation: 0, duration: .24, ease: "power2.out" }, .76);
+            if (children.length) {
+              sceneTimeline.from(children, { xPercent: (index: number) => index % 2 ? 38 : -38, rotation: (index: number) => index % 2 ? 1.5 : -1.5, opacity: 0, stagger: .08, duration: .76, ease: "power3.out" }, .16);
+            }
             return;
           }
 
           if (transition === "cards-up") {
             sceneTimeline
-              .to(curtain, { xPercent: 106, skewX: -4, duration: .92, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: 88, skewX: -4, duration: .72, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: 120, skewX: 0, duration: .2, ease: "power2.out" }, .72)
               .from(children, { xPercent: (index: number) => index % 2 ? 44 : -44, rotation: (index: number) => index % 2 ? 1.8 : -1.8, opacity: 0, stagger: .09, duration: .76, ease: "back.out(1.2)" }, .16);
             return;
           }
 
           if (transition === "shutter-right") {
             sceneTimeline
-              .to(curtain, { xPercent: -106, skewX: 4, transformOrigin: "0% 50%", duration: 1, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: -88, skewX: 4, transformOrigin: "0% 50%", duration: .76, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: -120, skewX: 0, duration: .24, ease: "power2.out" }, .76)
               .from(children, { xPercent: 34, opacity: 0, stagger: .07, duration: .72, ease: "back.out(1.18)" }, .22);
             return;
           }
 
           if (transition === "shutter-left") {
             sceneTimeline
-              .to(curtain, { xPercent: 106, skewX: -4, transformOrigin: "100% 50%", duration: 1, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: 88, skewX: -4, transformOrigin: "100% 50%", duration: .76, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: 120, skewX: 0, duration: .24, ease: "power2.out" }, .76)
               .from(children, { xPercent: -34, opacity: 0, stagger: .07, duration: .72, ease: "back.out(1.18)" }, .2);
             return;
           }
 
           sceneTimeline
-            .to(curtain, { xPercent: 106, skewX: -3, transformOrigin: "100% 50%", duration: 1, ease: "power3.inOut" }, 0)
+            .to(curtain, { xPercent: 88, skewX: -3, transformOrigin: "100% 50%", duration: .76, ease: "power3.inOut" }, 0)
+            .to(curtain, { xPercent: 120, skewX: 0, duration: .24, ease: "power2.out" }, .76)
             .from(children, { xPercent: -32, opacity: 0, stagger: .07, duration: .72, ease: "power3.out" }, .16);
         });
 
@@ -398,70 +406,205 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         });
 
         const portal = document.querySelector<HTMLElement>(".menu-portal");
-        if (portal) {
-          const portalCards = gsap.utils.toArray<HTMLElement>(".portal-pizza", portal);
-          const starts = [
-            { xPercent: -125, yPercent: -45, rotation: -24 },
-            { xPercent: 120, yPercent: -70, rotation: 28 },
-            { xPercent: -115, yPercent: 95, rotation: 36 },
-            { xPercent: 120, yPercent: 75, rotation: -30 },
-            { xPercent: 20, yPercent: 145, rotation: 42 },
-          ];
-          const portalTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: portal,
-              start: "top 78%",
-              end: "center 38%",
-              scrub: 1.2,
-              invalidateOnRefresh: true,
-            },
-          });
-          portalCards.forEach((card, index) => {
-            portalTimeline.from(card, {
-              ...starts[index % starts.length],
-              scale: 0.45,
-              opacity: 0,
-              ease: "back.out(1.2)",
-              duration: 1,
-            }, index * 0.11);
-          });
-        }
+        const social = document.querySelector<HTMLElement>("[data-social-showcase]");
+        const portalStarts = [
+          { xPercent: -125, yPercent: -45, rotation: -24 },
+          { xPercent: 120, yPercent: -70, rotation: 28 },
+          { xPercent: -115, yPercent: 95, rotation: 36 },
+          { xPercent: 120, yPercent: 75, rotation: -30 },
+          { xPercent: 20, yPercent: 145, rotation: 42 },
+        ];
+        const socialStarts = [
+          { xPercent: -140, yPercent: 18, rotation: -22 },
+          { xPercent: -20, yPercent: 135, rotation: 17 },
+          { xPercent: 135, yPercent: 16, rotation: 24 },
+          { xPercent: 32, yPercent: -140, rotation: -18 },
+        ];
 
-        const gallery = document.querySelector<HTMLElement>("[data-gallery]");
-        if (gallery) {
-          const cards = gsap.utils.toArray<HTMLElement>("[data-stack-card]", gallery);
-          const stackStarts = [
-            { xPercent: -125, yPercent: 10, rotation: -22 },
-            { xPercent: 8, yPercent: 120, rotation: 18 },
-            { xPercent: 128, yPercent: 15, rotation: 24 },
-            { xPercent: -35, yPercent: -125, rotation: -17 },
-          ];
-          const galleryTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: gallery,
-              start: "top 82%",
-              end: "center 44%",
-              scrub: 1.15,
-              invalidateOnRefresh: true,
-            },
+        responsiveMotion.add("(max-width: 1000px), (max-height: 719px)", () => {
+          if (portal) {
+            const portalCards = gsap.utils.toArray<HTMLElement>(".portal-pizza", portal);
+            const portalTimeline = gsap.timeline({
+              scrollTrigger: {
+                trigger: portal,
+                start: "top 78%",
+                end: "center 38%",
+                scrub: 1.2,
+                invalidateOnRefresh: true,
+              },
+            });
+            portalCards.forEach((card, index) => {
+              portalTimeline.from(card, {
+                ...portalStarts[index % portalStarts.length],
+                scale: 0.45,
+                opacity: 0,
+                ease: "back.out(1.2)",
+                duration: 1,
+              }, index * 0.11);
+            });
+          }
+
+          if (social) {
+            const socialCards = gsap.utils.toArray<HTMLElement>("[data-social-card]", social);
+            const badge = social.querySelector<HTMLElement>("[data-social-follow-cursor]");
+            const socialTimeline = gsap.timeline({
+              scrollTrigger: {
+                trigger: social,
+                start: "top 84%",
+                end: "center 44%",
+                scrub: 1.15,
+                invalidateOnRefresh: true,
+              },
+            });
+            socialCards.forEach((card, index) => {
+              socialTimeline.from(card, {
+                ...socialStarts[index % socialStarts.length],
+                scale: 0.62,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out",
+              }, index * 0.12);
+            });
+            if (badge) socialTimeline.from(badge, { scale: 0, rotation: -14, duration: .55, ease: "back.out(1.8)" }, .58);
+          }
+        });
+
+        responsiveMotion.add("(min-width: 1001px) and (min-height: 720px)", () => {
+          const lockedChapters = gsap.utils.toArray<HTMLElement>("[data-lock-chapter]");
+          lockedChapters.forEach((chapter) => {
+            const duration = Number(chapter.dataset.lockScroll ?? 1.1);
+            const progress = chapter.querySelector<HTMLElement>(".chapter-progress i");
+            const timeline = gsap.timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: chapter,
+                start: "top top",
+                end: () => `+=${window.innerHeight * duration}`,
+                pin: chapter,
+                pinSpacing: true,
+                scrub: .85,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+              },
+            });
+            if (progress) timeline.to(progress, { scaleY: 1, duration: 1 }, 0);
+
+            switch (chapter.dataset.lockChapter) {
+              case "story": {
+                const houseRules = chapter.querySelectorAll<HTMLElement>("aside span");
+                const storyCopy = chapter.querySelector<HTMLElement>(":scope > div");
+                timeline
+                  .from(houseRules, { xPercent: 80, opacity: 0, stagger: .08, duration: .45, ease: "back.out(1.35)" }, .05)
+                  .to(storyCopy, { xPercent: -4, rotation: -.35, duration: .55, ease: "power2.inOut" }, .4)
+                  .to(chapter.querySelector("aside"), { xPercent: -5, rotation: 1.5, duration: .45, ease: "power2.inOut" }, .52);
+                break;
+              }
+              case "menu-portal": {
+                const cards = gsap.utils.toArray<HTMLElement>(".portal-pizza", chapter);
+                const portalCopy = chapter.querySelector<HTMLElement>(".menu-portal-copy");
+                const portalButton = chapter.querySelector<HTMLElement>(".menu-portal-copy .button");
+                cards.forEach((card, index) => {
+                  timeline.from(card, {
+                    ...portalStarts[index % portalStarts.length],
+                    scale: .35,
+                    opacity: 0,
+                    duration: .48,
+                    ease: "back.out(1.55)",
+                  }, .04 + index * .07);
+                });
+                timeline.to(chapter, { "--portal-ring-scale": 1.7, duration: .55, ease: "power2.inOut" }, .38);
+                if (portalCopy) timeline.to(portalCopy, { scale: 1.06, yPercent: -3, duration: .34, ease: "power2.out" }, .48);
+                if (portalButton) timeline.to(portalButton, { yPercent: -18, rotation: -2, duration: .28, ease: "back.out(1.4)" }, .65);
+                break;
+              }
+              case "ingredients": {
+                const photo = chapter.querySelector<HTMLElement>(".ingredient-photo");
+                const image = chapter.querySelector<HTMLElement>(".ingredient-photo img");
+                const copy = chapter.querySelector<HTMLElement>(".ingredient-copy");
+                const scribble = chapter.querySelector<HTMLElement>(".scribble");
+                timeline
+                  .to(image, { scale: 1.12, xPercent: 4, duration: .8, ease: "power1.inOut" }, .04)
+                  .to(photo, { clipPath: "polygon(4% 4%, 100% 0, 96% 96%, 0 100%)", rotation: -.8, duration: .6, ease: "power2.inOut" }, .18)
+                  .to(copy, { backgroundColor: "#373737", color: "#fff4df", duration: .42, ease: "power2.inOut" }, .5)
+                  .fromTo(scribble, { scale: .45, rotation: -12, opacity: 0 }, { scale: 1, rotation: -2, opacity: 1, duration: .3, ease: "back.out(1.8)" }, .58);
+                break;
+              }
+              case "characters": {
+                const art = chapter.querySelector<HTMLElement>(".character-art img");
+                const left = chapter.querySelector<HTMLElement>(".character-copy");
+                const right = chapter.querySelector<HTMLElement>(".bertha-note");
+                timeline
+                  .to(art, { xPercent: 5, rotation: 2.5, scale: 1.08, duration: .75, ease: "power1.inOut" }, .06)
+                  .to(left, { xPercent: 5, duration: .45, ease: "power2.inOut" }, .28)
+                  .to(right, { xPercent: -6, rotation: -.6, duration: .45, ease: "power2.inOut" }, .34)
+                  .to(chapter.querySelectorAll(".sticker"), { rotation: (index: number) => index ? 7 : -7, scale: 1.12, stagger: .08, duration: .28, ease: "back.out(1.6)" }, .55);
+                break;
+              }
+              case "social": {
+                const cards = gsap.utils.toArray<HTMLElement>("[data-social-card]", chapter);
+                const badge = chapter.querySelector<HTMLElement>("[data-social-follow-cursor]");
+                const heading = chapter.querySelector<HTMLElement>(".social-heading");
+                const mural = chapter.querySelector<HTMLElement>(".social-mural");
+                timeline
+                  .fromTo(heading, { yPercent: -70, scale: .82, opacity: 0 }, { yPercent: 0, scale: 1, opacity: 1, duration: .3, ease: "power3.out" }, .02)
+                  .fromTo(mural, { yPercent: 62 }, { yPercent: 0, duration: .55, ease: "power3.out" }, .08);
+                cards.forEach((card, index) => {
+                  timeline.from(card, {
+                    ...socialStarts[index % socialStarts.length],
+                    scale: .55,
+                    opacity: 0,
+                    duration: .42,
+                    ease: "back.out(1.25)",
+                  }, .12 + index * .095);
+                });
+                if (badge) timeline.from(badge, { scale: 0, rotation: -18, duration: .28, ease: "back.out(2)" }, .5);
+                if (cards.length >= 4) {
+                  timeline
+                    .to(cards[0], { xPercent: 7, yPercent: -5, rotation: -2, duration: .35, ease: "power1.inOut" }, .66)
+                    .to(cards[1], { xPercent: -5, yPercent: 4, rotation: 1, duration: .35, ease: "power1.inOut" }, .66)
+                    .to(cards[2], { xPercent: 4, yPercent: -3, rotation: 2, duration: .35, ease: "power1.inOut" }, .66)
+                    .to(cards[3], { xPercent: -6, yPercent: 5, rotation: -3, duration: .35, ease: "power1.inOut" }, .66);
+                }
+                break;
+              }
+              case "visit": {
+                const rows = chapter.querySelectorAll<HTMLElement>("dl > div");
+                const actions = chapter.querySelectorAll<HTMLElement>(".visit-actions .button");
+                timeline
+                  .from(rows, { xPercent: 65, opacity: 0, stagger: .12, duration: .38, ease: "power3.out" }, .08)
+                  .from(actions, { yPercent: 85, rotation: 3, opacity: 0, stagger: .1, duration: .35, ease: "back.out(1.4)" }, .36)
+                  .to(chapter.querySelector("h2"), { scale: 1.04, xPercent: 2, duration: .35, ease: "power1.inOut" }, .63);
+                break;
+              }
+            }
           });
-          cards.forEach((card, index) => {
-            galleryTimeline.from(card, {
-              ...stackStarts[index % stackStarts.length],
-              scale: 0.62,
-              opacity: 0,
-              duration: 1,
-              ease: "power2.out",
-            }, index * 0.12);
-          });
-          galleryTimeline.from(".gallery-caption", {
-            yPercent: 70,
-            rotation: 8,
-            opacity: 0,
-            duration: 0.65,
-            ease: "back.out(1.6)",
-          }, 0.65);
-        }
+        });
+
+        responsiveMotion.add("(min-width: 1001px) and (hover: hover) and (pointer: fine)", () => {
+          if (!social) return;
+          const follower = social.querySelector<HTMLElement>("[data-social-follow-cursor]");
+          const collage = social.querySelector<HTMLElement>("[data-social-collage]");
+          if (!follower) return;
+          const moveX = gsap.quickTo(follower, "x", { duration: .34, ease: "power3.out" });
+          const moveY = gsap.quickTo(follower, "y", { duration: .34, ease: "power3.out" });
+          const handlePointerMove = (event: PointerEvent) => {
+            const bounds = (collage ?? social).getBoundingClientRect();
+            moveX(event.clientX - bounds.left - bounds.width / 2);
+            moveY(event.clientY - bounds.top - bounds.height * .57);
+          };
+          const handlePointerLeave = () => {
+            moveX(0);
+            moveY(0);
+          };
+          social.addEventListener("pointermove", handlePointerMove);
+          social.addEventListener("pointerleave", handlePointerLeave);
+          window.addEventListener("scroll", handlePointerLeave, { passive: true });
+          return () => {
+            social.removeEventListener("pointermove", handlePointerMove);
+            social.removeEventListener("pointerleave", handlePointerLeave);
+            window.removeEventListener("scroll", handlePointerLeave);
+          };
+        });
 
         const driveTitle = section.querySelector<HTMLElement>(".drive-title");
         const driveHeading = section.querySelector<HTMLElement>(".drive-heading");

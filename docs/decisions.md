@@ -178,8 +178,18 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 022 — Restore the menu grid and hand chapters between palette curtains
 
+> Extended by decision 023: the grid remains natural flow, while large-screen narrative chapters now lock after their curtain entrance.
+
 **Context:** The pinned horizontal pizza rail made a practical restaurant menu slower to compare, its fixed viewport clipped the hot-honey/rat-sauce badge, and several chapter entrances still felt like variations of ordinary vertical scrolling. The handwritten `Hot` also remained visually lighter than the surrounding display type.
 
 **Decision:** Restore the twelve pizzas to a permanent three-column desktop and two-column mobile grid. Keep lateral energy by using `gsap.matchMedia()` to alternate grid-row entrances from the left and right, while the menu marquee keeps its own horizontal ScrollTrigger. Add a direct-child palette curtain to every enhanced chapter and clear it with distinct horizontal, centre-split, diagonal-shutter, column, or iris choreography while the semantic scene remains in normal document flow. Increase Vara's generated stroke width to `8.2` on larger screens and `6.8` below `600px`.
 
 **Consequence:** Prices, toppings and cards are immediately comparable at every size; the sauce badge is no longer trapped inside a pinned viewport; and chapters now feel pulled, uncovered or assembled rather than merely lifted by vertical scroll. Base and reduced-motion layouts hide the curtains and retain the complete grid, so the progressive enhancement and static-export guarantees remain intact.
+
+## 023 — Lock narrative chapters and turn social proof into a Ratto poster
+
+**Context:** The reference recordings showed a stronger pacing device than a curtain alone: document movement stops when a chapter reaches the viewport, scroll is spent on an internal composition, and only then does the page release. Review also called out the reference's social collage and cursor-following action as a particularly effective blend of brand color, photography and interaction.
+
+**Decision:** Add `data-lock-chapter` and per-stage `data-lock-scroll` budgets to the story, menu portal, ingredients, character, Ratto Social Club and visit sections. At `min-width: 1001px` and `min-height: 720px`, create an independent ScrollTrigger pin and bespoke descendant timeline for each; keep the menu grids permanently unpinned. Replace the older Rat Hole stack with `Never pizza solo.`, a four-image Instagram poster over a code-native mural made from the approved palette. On precise desktop pointers, move the visible follow badge with eased `gsap.quickTo()` setters; keep it static on touch, narrow and reduced-motion layouts.
+
+**Consequence:** Desktop scrolling now has clear chapters with authored pauses instead of one continuous vertical cadence, while menus remain quick to scan. Short screens, phones and reduced-motion users keep complete semantic natural flow without pin spacers. The social view provides an explicit discovery route without adding a carousel dependency, new imagery or a second animation runtime.

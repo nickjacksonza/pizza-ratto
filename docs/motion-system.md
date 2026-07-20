@@ -37,7 +37,7 @@ The fixed announcement, header, and mobile order bar remain outside `#smooth-wra
 1. Load the animation modules and construct Vara.
 2. Check `prefers-reduced-motion`. In reduced motion, show the complete `Hot` paths and stop without creating ScrollSmoother or ScrollTriggers.
 3. Add `.motion-ready` and initialize ScrollSmoother immediately. General scene motion must not wait for Vara's JSON callback.
-4. Create section, heading, parallax, menu, gallery, navigation, and Remi timelines inside one GSAP context.
+4. Create section, heading, parallax, menu, locked-chapter, social, navigation, and Remi timelines inside one GSAP context.
 5. Await Vara separately, configure its generated SVG, and attach the independent DrawSVG ScrollTrigger.
 6. On cleanup, revert the handwriting context, responsive match-media context, main GSAP context, splits, Observer, and ScrollSmoother.
 
@@ -51,14 +51,14 @@ Scene identity is declared in `app/page.tsx` with `data-scene` and `data-transit
 | --- | --- | --- | --- |
 | Hero | `.hero-shell` | load entrance | Artwork and red copy arrive from opposite sides; both share `hero-paper-texture.png` so the paper surface is continuous. |
 | Hot Pizza | `.drive-sequence` | pinned Remi handoff | Vara/DrawSVG writes `Hot`; SplitText brings in `PIZZA`; Remi bounces across and tows a full red editorial scene from left to right. |
-| 01 / What we're about | `[data-scene="story"]` | `paper-left` | A red paper curtain clears to the right while the cream story content follows from the left. |
-| 02 / The important bit | `[data-scene="menu-portal"]` | `iris` | A cream curtain collapses into a central circle while copy assembles laterally and pizza cutouts float independently. |
+| 01 / What we're about | `[data-scene="story"]` | `paper-left` + locked rules | A red paper curtain clears to the right; the desktop view then pins while house rules arrive one at a time and the poster shifts sideways. |
+| 02 / The important bit | `[data-scene="menu-portal"]` | `iris` + locked orbit | A cream curtain collapses into a central circle; the desktop view pins while pizza cutouts fly in, the ring expands and the CTA kicks upward. |
 | Pizza menu | `[data-scene="pizza-menu"]` | `shutter-left` | A pink shutter clears to the right, then the three-column menu rows alternately enter from the left and right. |
 | Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` | A red shutter clears right while the label and split menu board enter from opposite sides. |
-| 03 / Built different | `[data-scene="ingredients"]` | `split` | A cream curtain splits from its centre as photography enters from the left and the red copy panel enters from the right. |
-| Meet Remi / Big Bertha | `[data-scene="characters"]` | `columns` | A red curtain exits left while the copy, Remi artwork, and oven note arrive from left, bottom, and right. |
-| 04 / Inside | `[data-scene="gallery"]` | `deck` | A grey diagonal shutter exits right; the header and filmstrip arrive laterally before four venue cards deal into their overlapping stack. |
-| 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` | A pink shutter exits left while the red ordering content enters from the right. |
+| 03 / Built different | `[data-scene="ingredients"]` | `split` + locked material change | A cream curtain splits from its centre; the desktop stage then pins while the photograph pushes in, the crop bends and the copy surface changes from red to grey. |
+| Meet Remi / Big Bertha | `[data-scene="characters"]` | `columns` + locked character beat | A red curtain exits left; the desktop stage pins while Remi leans into the frame, the two copy panels squeeze inward and the stickers snap into place. |
+| 04 / Ratto Social Club | `[data-scene="social"]` | `deck` + locked collage | A grey diagonal shutter exits right; four venue/food cards deal in from four directions over an abstract brand mural, then drift while the Instagram badge becomes interactive. |
+| 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` + locked action reveal | A pink shutter exits left; the desktop stage pins while visit rows and order actions assemble in sequence. |
 
 Every scene uses only the approved orange, red, pink, grey, and established cream paper neutral. Avoid introducing transitional white or browser-background flashes.
 
@@ -74,13 +74,32 @@ All menu photographs are below the initial viewport and load lazily. The sauce b
 
 - Scenes have a minimum height of `100svh`; content may extend beyond one viewport when readability requires it.
 - Every enhanced scene contains one direct-child `.scene-curtain`. It is absent visually until `.motion-ready` is applied and sits above the fully readable base layout.
-- Curtains move beyond `±104%`, collapse from the centre, or close to a `0%` circle; scene containers stay in normal document flow.
+- Shutter curtains skew while travelling to `±88%`, then straighten and finish at `±120%`; centre-split curtains collapse to zero and iris curtains close to a `0%` circle. Scene containers stay in normal document flow until a desktop-only chapter lock takes over at `top top`.
 - The entrance window normally runs from `top 98%` to `top 26%` with scrubbed progress.
 - Split and column scenes animate their children behind the clearing curtain rather than translating the scene container.
 - Scroll-scrubbed entrances remain reversible. Do not replace them with one-time intersection animations.
 - Heading SplitText is additional detail, not the section transition itself.
 - Curtain colors intentionally echo the preceding chapter so the new view appears to be pulled or uncovered rather than simply faded in.
-- Do not animate a ScrollTrigger's pinned element. The Hot Pizza road stage remains the only pinned story stage.
+- Do not translate or rotate a ScrollTrigger's pinned element. Locked chapter timelines animate descendants and CSS custom properties while the chapter container itself remains the pin target.
+
+## Locked chapter architecture
+
+The reference recordings do not show ordinary long-section scrolling. They stop document travel at a composed viewport, spend wheel/touch progress on an internal timeline, and only release the next chapter after that composition has finished. Pizza Ratto mirrors that pacing on sufficiently large screens.
+
+- A lockable semantic section declares `data-lock-chapter="name"` and `data-lock-scroll="multiplier"` in `app/page.tsx`.
+- On viewports at least `1001px` wide and `720px` high, `gsap.matchMedia()` creates one ScrollTrigger per lockable section with `pin: chapter`, `start: "top top"`, and an end distance equal to `innerHeight × data-lock-scroll`.
+- Each stage owns a thin `.chapter-progress` rail so users can see how much internal scroll remains.
+- Story, menu portal, ingredients, characters, social and visit use different internal timelines. Do not collapse them into one generic stagger.
+- The pizza and coffee/dolci menus never pin. Their content density and comparison task require natural document flow.
+- Viewports at or below `1000px`, heights below `720px`, touch layouts and reduced-motion mode do not create chapter pins. Portal and social cards retain shorter entrance timelines in normal flow.
+
+Keep the pin trigger on the stable section container and animate only descendants. Pin spacing is required so the following semantic section remains in correct document order.
+
+## Social-club cursor interaction
+
+The `Never pizza solo.` chapter reuses four documented Pizza Ratto photographs over a code-native mural made only from orange, red, pink, grey and cream. The collage is not a carousel: all four images are visible together and deal into one poster composition while the section is locked.
+
+The full collage is one Instagram link with a visible `.social-follow-badge`. On devices matching `min-width: 1001px`, `hover: hover` and `pointer: fine`, two `gsap.quickTo()` setters make that badge trail pointer movement with easing. It recentres on pointer leave or renewed page scrolling so stale pointer coordinates do not survive a chapter exit. On touch, narrow and reduced-motion layouts the badge stays fixed near the collage bottom and the link uses a normal pointer cursor. Preserve the accessible link label and visible `Follow @pizza_ratto` text.
 
 ## Hero paper seam
 
@@ -90,7 +109,8 @@ The hero image must use normal blending and no color filter. `mix-blend-mode: mu
 
 ## Responsive and reduced motion behavior
 
-- Desktop (`>760px`): ScrollSmoother, all scene transitions, and a natural-flow three-column pizza grid with alternating lateral row entrances.
+- Large desktop (`>=1001px` and `>=720px` high): ScrollSmoother, scene curtains, pinned narrative chapters with internal scrubbed timelines, cursor-follow social CTA, and a natural-flow three-column pizza grid.
+- Tablet/short desktop (`<=1000px` wide or `<720px` high): no narrative pins; short normal-flow portal/social entrances preserve the story without trapping readable content.
 - Tablet/phone (`<=760px`): short touch smoothing, scene curtains, a natural-flow two-column pizza grid with alternating lateral row entrances, and stacked layouts.
 - Phone (`<=520px`): full-height portal, compact typography, sticky order bar, and normal-flow content long enough to remain legible.
 - Reduced motion: no ScrollSmoother, pinning, parallax, marquee, scene transforms, or pulled red Remi panel. The complete static content remains in DOM order.
@@ -117,16 +137,17 @@ When adding or changing a scene:
 1. Give the semantic container `data-scene` and a supported `data-transition`.
 2. Ensure its default CSS is complete without `.motion-ready`.
 3. Add a specific transition branch only when the existing presets cannot express the idea.
-4. Keep scene backgrounds in the approved palette and ensure no body-color gap appears while transformed.
-5. Test the entrance forward and backward at 2560×1318 and 390×844.
-6. Verify `document.documentElement.scrollWidth === window.innerWidth` throughout the transition.
-7. Confirm fixed chrome and the mobile order bar do not cover essential copy or actions.
-8. Test reduced motion and cleanup after responsive resizing.
-9. Run lint, typecheck, tests, the normal build, and the Pages build.
+4. Add `data-lock-chapter` only for a true single-screen narrative beat; never use it on dense menus or long-form reading content.
+5. Keep scene backgrounds in the approved palette and ensure no body-color gap appears while transformed.
+6. Test the entrance and lock forward and backward at 2560×1318, a desktop shorter than 720px, and 390×844.
+7. Verify `document.documentElement.scrollWidth === window.innerWidth` throughout the transition.
+8. Confirm fixed chrome and the mobile order bar do not cover essential copy or actions.
+9. Test reduced motion and cleanup after responsive resizing.
+10. Run lint, typecheck, tests, the normal build, and the Pages build.
 
 ## Known constraints
 
-- The gallery collage and the mobile coffee/menu content may exceed one viewport because preserving readable text takes priority over forcing every pixel into a screen.
+- The mobile social collage and coffee/menu content may exceed one viewport because preserving readable text takes priority over forcing every pixel into a screen.
 - ScrollSmoother and pinning both depend on correct wrapper structure. Do not move fixed controls inside `#smooth-content`.
-- Curtains temporarily cover each incoming scene, so new transition presets must always clear fully at progress `1` and stay above content without obscuring fixed chrome.
+- Curtains temporarily cover each incoming scene, so new transition presets must straighten and clear fully at progress `1`; a final skew on a tall scene can leave a colored wedge inside the viewport.
 - The opaque hero artwork cannot inherit a CSS background. Its seamless appearance depends on the matching paper texture and neutral image blending.
