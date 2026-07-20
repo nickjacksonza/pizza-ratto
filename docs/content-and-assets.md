@@ -97,7 +97,7 @@ All files below live in `public/images/owner-2026/`. Twelve branded delivery-pla
 | `feast-landscape.webp` | 1402×1122 | Ingredient-story photograph | Full table spread with ingredients and desserts |
 | `dessert-brownie.webp` | 1402×1122 | Gallery | Chocolate brownie, nuts, chocolate drizzle |
 | `dessert-limone.webp` | 1402×1122 | Gallery | Lemon-shaped creamy desserts and mint |
-| `venue-table.webp` | 1027×1531 | Venue gallery | Pizza table, desserts, blue Vespa and dining context |
+| `venue-table.webp` | 1027×1531 | Remi pull-transition and venue gallery | Pizza table, desserts, blue Vespa and dining context |
 
 ### Generated concept pizzas
 

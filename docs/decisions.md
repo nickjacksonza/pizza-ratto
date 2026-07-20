@@ -157,3 +157,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Put `main` and `footer` inside the conventional ScrollSmoother wrapper/content pair while keeping fixed chrome outside it. Use ScrollTrigger for all scrubbed reveals and for the road-scene pin, ScrollToPlugin for internal navigation and Observer for direction-aware header behavior. Add velocity-derived elastic tilt/lift to Remi, alternate panel wipes and child entrances, and scroll-drive the menu marquee. Remove the `PIZZA` overflow mask and reserve masking for individual character entrances. Keep all four approved brand colors as the visible scene palette.
 
 **Consequence:** Smooth scrolling, navigation, pinned choreography and directional motion now share one native-scroll-backed GSAP runtime. The page remains a static export, the fixed header and order bar are not trapped in transformed content, `PIZZA` keeps its complete glyph bounds, and reduced-motion users retain the static fallback.
+
+## 020 — Make Remi pull the next scene and unblock motion startup
+
+**Context:** Review found that some choreography appeared late or snapped into place, section entrances did not visibly originate from the left, and the red tail of the pinned road sequence read as unused space. The reference vehicle is effective because it acts as the transition mechanism: the next view follows it across the viewport.
+
+**Decision:** Initialize the GSAP/ScrollSmoother runtime before waiting for Vara font data, preload the local Vara JSON, and give the handwriting its own ScrollTrigger once its paths are ready. Replace shallow directional wipes with full off-canvas panel translations. During Remi's crossing, move a complete red editorial scene from `-100%` to `0%` behind the scooter and animate a short tow line, while the orange title composition exits.
+
+**Consequence:** General motion no longer depends on handwriting-data readiness, left/right entrances have clear physical travel, and the road scene ends on finished editorial content instead of an empty color band. The handoff stays inside the approved palette, uses an already documented owner photograph, remains statically exportable, and disappears in the reduced-motion fallback.

@@ -91,6 +91,7 @@ export default function Home() {
 
         <ScrollChoreography
           remiSrc={asset("/images/ratto-vespa-red.png")}
+          pullImageSrc={asset("/images/owner-2026/venue-table.webp")}
           varaFontSrc={asset("/fonts/vara/satisfy.json")}
         />
 

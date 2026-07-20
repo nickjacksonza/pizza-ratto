@@ -84,13 +84,15 @@ The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its
 1. Vara creates real handwriting strokes and DrawSVG progressively draws `Hot`;
 2. SplitText brings the oversized `PIZZA` letters in independently with back easing;
 3. Remi travels from off-screen left to off-screen right while a nested body timeline adds suspension bob, pitch, shadow compression and speed-line motion; scroll velocity adds a small elastic tilt and lift to the raster so fast and slow input feel different;
-4. the orange stage lifts to expose a red color wipe before the ticker.
+4. a full red editorial panel travels in from the left behind Remi, visually tethered to the scooter, until it replaces the orange scene before the ticker.
 
-The same client component applies masked SplitText entrances to major headings, scroll-scrubbed clip-path wipes and directional child entrances to marked sections, image parallax, a scrubbed menu marquee and staggered gallery/card motion. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
+The pulled panel reuses the approved venue-table photograph with a red editorial composition, pink display copy, an orange `PULLING UP` badge, a checker road and a short tow line that expands as the scene catches Remi. It replaces the previously unused red tail of the pinned section; it is decorative and hidden in the reduced-motion fallback.
+
+The same client component applies masked SplitText entrances to major headings, scroll-scrubbed full-viewport translations and directional child entrances to marked sections, image parallax, a scrubbed menu marquee and staggered gallery/card motion. Left and right panels begin just beyond the viewport (`±102%`) so their directional arrival is unmistakable instead of reading as a local reveal. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
 
 The `PIZZA` title deliberately uses visible overflow plus top and bottom padding; do not reintroduce an overflow mask on the full word. Character masks belong on the individual SplitText entrance wrappers only. `Hot` is generated as real Vara paths with a heavier rounded stroke and a small red print-registration shadow.
 
-Reduced-motion mode turns the pinned sequence into a static composition, disables marquees, and removes parallax transforms.
+Core motion initializes before the optional Vara font fetch completes. The font data is also preloaded from `app/layout.tsx`; only the handwritten stroke timeline waits for its path data. Reduced-motion mode turns the pinned sequence into a static composition, hides the pulled editorial panel, disables marquees, and removes parallax transforms.
 
 ## Section rhythm
 

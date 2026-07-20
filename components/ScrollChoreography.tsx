@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 
 type ScrollChoreographyProps = {
   remiSrc: string;
+  pullImageSrc: string;
   varaFontSrc: string;
 };
 
@@ -22,7 +23,7 @@ type SmoothScroller = {
 
 type MotionObserver = { kill: () => void };
 
-export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyProps) {
+export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: ScrollChoreographyProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const wordRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +34,7 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
 
     let disposed = false;
     let gsapContext: { revert: () => void } | undefined;
+    let wordContext: { revert: () => void } | undefined;
     let smoothScroller: SmoothScroller | undefined;
     let motionObserver: MotionObserver | undefined;
     const splitInstances: SplitInstance[] = [];
@@ -84,18 +86,12 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
         },
       );
 
-      await new Promise<void>((resolve) => vara.ready(resolve));
-      if (disposed) return;
-
-      const wordSvg = word.querySelector("svg");
-      const wordPaths = Array.from(word.querySelectorAll<SVGPathElement>("path"));
-      if (wordSvg) {
-        wordSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-        wordSvg.setAttribute("aria-hidden", "true");
-      }
-
+      const varaReady = new Promise<void>((resolve) => vara.ready(resolve));
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reducedMotion) {
+        await varaReady;
+        if (disposed) return;
+        const wordPaths = Array.from(word.querySelectorAll<SVGPathElement>("path"));
         gsap.set(wordPaths, { drawSVG: "100%", opacity: 1 });
         return;
       }
@@ -227,16 +223,16 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
           });
         });
 
-        const panelStarts: Record<string, { clipPath: string }> = {
-          left: { clipPath: "inset(0 100% 0 0)" },
-          right: { clipPath: "inset(0 0 0 100%)" },
-          up: { clipPath: "inset(100% 0 0 0)" },
-          iris: { clipPath: "circle(0% at 50% 50%)" },
+        const panelStarts: Record<string, { clipPath: string; xPercent?: number; yPercent?: number; scale?: number }> = {
+          left: { clipPath: "inset(0 0 0 0)", xPercent: -102 },
+          right: { clipPath: "inset(0 0 0 0)", xPercent: 102 },
+          up: { clipPath: "inset(0 0 0 0)", yPercent: 38 },
+          iris: { clipPath: "circle(0% at 50% 50%)", scale: .88 },
         };
 
         gsap.utils.toArray<HTMLElement>("[data-panel]").forEach((panel) => {
           const direction = panel.dataset.panel ?? "left";
-          const horizontalStart = direction === "left" ? -18 : direction === "right" ? 18 : 0;
+          const horizontalStart = direction === "left" ? -28 : direction === "right" ? 28 : 0;
           const verticalStart = direction === "up" ? 18 : direction === "iris" ? 12 : 0;
           const panelChildren = Array.from(panel.children).filter((child) =>
             !child.matches(".portal-pizza, [data-parallax], .smooth-float"),
@@ -244,17 +240,20 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
           const panelTimeline = gsap.timeline({
             scrollTrigger: {
               trigger: panel,
-              start: "top 96%",
-              end: "top 22%",
-              scrub: 1.12,
+              start: "top 92%",
+              end: "top 40%",
+              scrub: 0.78,
               invalidateOnRefresh: true,
             },
           });
           panelTimeline
             .fromTo(panel, panelStarts[direction] ?? panelStarts.left, {
               clipPath: "inset(0 0 0 0)",
+              xPercent: 0,
+              yPercent: 0,
+              scale: 1,
               duration: 1,
-              ease: "power3.inOut",
+              ease: "power2.inOut",
             }, 0)
             .from(panelChildren, {
               xPercent: horizontalStart,
@@ -392,13 +391,21 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
         }
 
         const driveTitle = section.querySelector<HTMLElement>(".drive-title");
+        const driveHeading = section.querySelector<HTMLElement>(".drive-heading");
+        const driveKicker = section.querySelector<HTMLElement>(".drive-kicker");
+        const driveNote = section.querySelector<HTMLElement>(".drive-note");
         const remi = section.querySelector<HTMLElement>(".drive-remi");
         const remiBody = section.querySelector<HTMLElement>(".drive-remi-body");
         const remiCrop = section.querySelector<HTMLElement>(".drive-remi-crop");
         const remiShadow = section.querySelector<HTMLElement>(".drive-shadow");
         const speedLines = section.querySelectorAll<HTMLElement>(".speed-line");
         const stage = section.querySelector<HTMLElement>(".drive-stage");
-        if (!driveTitle || !remi || !remiBody || !remiCrop || !remiShadow || !stage) return;
+        const pullScene = section.querySelector<HTMLElement>(".drive-pull-scene");
+        const pullPhoto = section.querySelector<HTMLElement>(".drive-pull-photo");
+        const pullCopy = section.querySelector<HTMLElement>(".drive-pull-copy");
+        const pullBadge = section.querySelector<HTMLElement>(".drive-pull-badge");
+        const towLine = section.querySelector<HTMLElement>(".drive-tow-line");
+        if (!driveTitle || !driveHeading || !driveKicker || !driveNote || !remi || !remiBody || !remiCrop || !remiShadow || !stage || !pullScene || !pullPhoto || !pullCopy || !pullBadge || !towLine) return;
 
         const titleSplit = SplitText.create(driveTitle, {
           type: "chars",
@@ -407,8 +414,9 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
         });
         splitInstances.push(titleSplit);
 
-        gsap.set(wordPaths, { drawSVG: "0%", opacity: 1, strokeWidth: hotStrokeWidth });
         gsap.set(remi, { x: () => -remi.offsetWidth * 1.08 });
+        gsap.set(pullScene, { xPercent: -100 });
+        gsap.set(towLine, { scaleX: 0, transformOrigin: "left center" });
         gsap.set(speedLines, { scaleX: 0, transformOrigin: "right center" });
 
         const velocityTilt = gsap.quickTo(remiCrop, "rotation", { duration: 0.32, ease: "elastic.out(1, .42)" });
@@ -439,12 +447,6 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
         });
 
         driveTimeline
-          .to(wordPaths, {
-            drawSVG: "100%",
-            duration: 0.22,
-            stagger: 0.035,
-            ease: "power1.inOut",
-          }, 0)
           .from(titleSplit.chars, {
             yPercent: 145,
             rotation: (index: number) => [-9, 5, -4, 8, -6][index] ?? 0,
@@ -456,8 +458,8 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
           }, 0.09)
           .to(remi, {
             x: () => window.innerWidth + remi.offsetWidth * 0.16,
-            duration: 0.48,
-          }, 0.34)
+            duration: 0.58,
+          }, 0.27)
           .to(remiBody, {
             keyframes: [
               { yPercent: -5.2, rotation: -3.2, duration: 0.12, ease: "power2.out" },
@@ -467,8 +469,8 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
               { yPercent: -1.9, rotation: -.8, duration: 0.07, ease: "power1.inOut" },
               { yPercent: 0, rotation: 0, duration: 0.08, ease: "power2.out" },
             ],
-            duration: 0.48,
-          }, 0.34)
+            duration: 0.58,
+          }, 0.27)
           .fromTo(remiShadow, {
             scaleX: 0.72,
             opacity: 0.16,
@@ -479,25 +481,100 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
               { scaleX: 1.02, opacity: 0.3, duration: 0.18 },
             ],
             transformOrigin: "center",
-            duration: 0.48,
-          }, 0.34)
+            duration: 0.58,
+          }, 0.27)
+          .to(towLine, {
+            scaleX: 1,
+            duration: 0.15,
+            ease: "power2.out",
+          }, 0.29)
+          .to(pullScene, {
+            xPercent: 0,
+            duration: 0.54,
+            ease: "power2.inOut",
+          }, 0.35)
+          .to([driveHeading, driveKicker, driveNote], {
+            xPercent: 18,
+            opacity: 0,
+            duration: 0.23,
+            stagger: 0.018,
+            ease: "power2.in",
+          }, 0.39)
+          .from(pullPhoto, {
+            xPercent: -48,
+            rotation: -10,
+            scale: .84,
+            opacity: 0,
+            duration: 0.34,
+            ease: "back.out(1.25)",
+          }, 0.49)
+          .from(Array.from(pullCopy.children), {
+            xPercent: -42,
+            opacity: 0,
+            duration: 0.28,
+            stagger: 0.035,
+            ease: "power3.out",
+          }, 0.55)
+          .from(pullBadge, {
+            scale: 0,
+            rotation: -28,
+            duration: 0.2,
+            ease: "back.out(1.8)",
+          }, 0.66)
           .to(speedLines, {
             scaleX: 1,
             duration: 0.08,
             stagger: 0.025,
             ease: "power2.out",
-          }, 0.38)
+          }, 0.31)
+          .to(speedLines, {
+            backgroundColor: "#ffc0c1",
+            duration: 0.08,
+          }, 0.51)
           .to(speedLines, {
             scaleX: 0,
             duration: 0.08,
             stagger: 0.02,
-          }, 0.73)
-          .to(stage, {
-            yPercent: -16,
-            clipPath: "inset(0 0 16% 0)",
-            duration: 0.12,
-          }, 0.88);
+          }, 0.78)
+          .to(towLine, {
+            scaleX: 0,
+            transformOrigin: "right center",
+            duration: 0.1,
+            ease: "power2.in",
+          }, 0.82)
+          .to(pullScene, {
+            xPercent: 0,
+            duration: 0.15,
+          }, 0.93);
       });
+
+      ScrollTrigger.refresh();
+
+      await varaReady;
+      if (disposed) return;
+
+      const wordSvg = word.querySelector("svg");
+      const wordPaths = Array.from(word.querySelectorAll<SVGPathElement>("path"));
+      if (wordSvg) {
+        wordSvg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+        wordSvg.setAttribute("aria-hidden", "true");
+      }
+
+      wordContext = gsap.context(() => {
+        gsap.set(wordPaths, { drawSVG: "0%", opacity: 1, strokeWidth: hotStrokeWidth });
+        gsap.to(wordPaths, {
+          drawSVG: "100%",
+          stagger: 0.035,
+          ease: "power1.inOut",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${section.offsetHeight * 0.24}`,
+            scrub: 1.05,
+            invalidateOnRefresh: true,
+          },
+        });
+      }, section);
 
       ScrollTrigger.refresh();
     };
@@ -509,6 +586,7 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
       anchorCleanups.forEach((cleanup) => cleanup());
       motionObserver?.kill();
       splitInstances.reverse().forEach((split) => split.revert());
+      wordContext?.revert();
       gsapContext?.revert();
       smoothScroller?.kill();
       document.documentElement.classList.remove("motion-ready");
@@ -524,6 +602,19 @@ export function ScrollChoreography({ remiSrc, varaFontSrc }: ScrollChoreographyP
           <span className="drive-script" id="hot-word-drawing" aria-hidden="true" ref={wordRef} />
           <span className="drive-title" aria-hidden="true">PIZZA</span>
         </h2>
+        <div className="drive-pull-scene" aria-hidden="true">
+          <figure className="drive-pull-photo">
+            <img src={pullImageSrc} alt="" width={1027} height={1531} loading="eager" decoding="async" />
+          </figure>
+          <div className="drive-pull-copy">
+            <span>01 / Remi’s next stop</span>
+            <strong>Fire.<br /><em>Time.</em><br />Tomatoes.</strong>
+            <p>Hand-stretched. Wood-fired. Pulled into view by one deeply unqualified delivery rat.</p>
+          </div>
+          <span className="drive-pull-badge">Pulling up</span>
+          <span className="drive-tow-line" />
+          <div className="drive-pull-road" />
+        </div>
         <div className="drive-remi" aria-hidden="true">
           <div className="drive-remi-body">
             <div className="drive-remi-crop">

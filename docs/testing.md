@@ -76,10 +76,12 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - hero and later sections not excessively tall;
 - `Hot` draws as individual, rounded heavy strokes rather than a rectangular reveal; `PIZZA` letters arrive separately and no glyph is clipped at its cap height or baseline; then Remi crosses the complete viewport before the section ends;
 - Remi's body visibly bobs and pitches, reacts subtly to scroll velocity, and compresses its shadow without detaching from the road;
-- the smooth wrapper is fixed only when normal motion is active, the road stage is pinned by ScrollTrigger, and no blank red gap replaces the orange stage mid-sequence;
+- the smooth wrapper is fixed only when normal motion is active and the road stage is pinned by ScrollTrigger;
+- as Remi crosses the road, the red editorial scene enters from completely off-screen left, follows the scooter across the viewport, and fills the stage without leaving the former blank red tail;
+- the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
 - About, Menu and Visit links animate to the correct section through ScrollToPlugin; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
-- major sections wipe in from alternating directions without exposing non-palette color flashes;
+- major sections travel in from alternating sides, with left-origin panels beginning fully outside the viewport rather than only clipping in place, and without exposing non-palette color flashes;
 - floating menu pizzas and gallery cards enter from different directions without exposing empty image edges;
 - pizza labels align with photographs and prices;
 - all twelve pizza photographs load without fallback placeholders;
@@ -102,6 +104,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - page has no horizontal scroll.
 - `PIZZA` remains fully visible above and below at 390px without adding horizontal overflow.
 - Remi enters from the left, remains fully recognizable mid-route, and exits to the right without creating horizontal scroll.
+- the red pulled scene remains visually connected to Remi during the handoff, settles edge-to-edge, and does not hide behind the mobile order bar;
 - pizza images in each mobile row share the same top edge;
 - pizza labels start below their images with no overlap;
 - the mobile gallery keeps its intended overlap without horizontal scroll or unreadable cropping.
@@ -127,7 +130,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 
 ## Performance checklist
 
-- Preserve `loading="eager"` only for the hero art.
+- Preserve `loading="eager"` for the hero art and the pinned pull-transition photograph; lazy-load the remaining below-the-fold photographs.
 - Lazy-load below-the-fold photographs.
 - Keep photographs in WebP where practical.
 - Reassess the three multi-megabyte PNGs before a performance-focused release.
