@@ -16,12 +16,12 @@ Representative lines already used by the brand include “Made fresh. Taken seri
 
 ## Visual character
 
-- A faded, warm paper base with wine, rose and coral inks.
+- Warm paper support with approved orange, red, pink and charcoal-grey inks.
 - Oversized condensed poster typography, paired with a practical geometric sans-serif for reading.
 - Checkerboard bands, thin rules, imperfect borders, slight rotation and overlapping editorial compositions.
 - The rat-on-Vespa illustration and hand-painted Pizza Ratto wordmark are primary brand assets.
 - Food photography should feel tangible and cut out, not polished into generic delivery-app cards.
-- Motion is restrained. The identity comes from composition, texture and type rather than animation.
+- Motion is concentrated in one memorable scroll-led Remi/Vespa sequence, with quieter photography parallax elsewhere. The identity still comes primarily from composition, texture and type.
 
 The implemented palette and component rules are documented in [`design-system.md`](design-system.md). That file is authoritative for code changes; the flyer remains the creative reference.
 

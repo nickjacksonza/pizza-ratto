@@ -66,10 +66,10 @@ See `content-todo.md` for facts that remain unverified.
 | --- | ---: | --- | --- |
 | `public/og.png` | 1731×909 | Social card and original visual reference | Supplied/generated poster composition |
 | `public/images/hero-logo-mascot.png` | 1698×926 | Hero wordmark and complete rat/Vespa illustration | Generated extraction from the flyer visual; project-critical |
-| `public/images/hero-paper-texture.png` | 1698×926 | Full hero background | Generated background-only paper texture derived from the hero visual |
-| `public/images/ratto-vespa-red.png` | 1096×1435 | Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza |
+| `public/images/hero-paper-texture.png` | 1698×926 | Continuous hero paper surface | Generated background-only paper texture derived from the hero visual; rendered behind the opaque hero composite and beneath the red copy panel to remove visible seams |
+| `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza; white canvas is visually blended with section colors in CSS |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
-| `public/images/interior.webp` | 291×510 | Legacy venue gallery | Supplied photo, retained but no longer rendered |
+| `public/images/interior.webp` | 291×510 | Ratto Social Club room card | Supplied venue photo, actively rendered in the `Never pizza solo.` collage |
 | `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |
 | `public/images/menu-coffee.webp` | 381×510 | Reference menu board | Supplied photo, currently not rendered |
 | `public/images/menu-dolci.webp` | 377×510 | Reference menu board | Supplied photo, currently not rendered |
@@ -77,6 +77,7 @@ See `content-todo.md` for facts that remain unverified.
 | `public/images/pizza-primavera.webp` | 455×510 | Legacy Primavera crop | Supplied photo, retained but no longer rendered |
 | `public/images/pizza-arcobaleno.webp` | 469×510 | Legacy Arcobaleno crop | Supplied photo, retained but no longer rendered |
 | `public/images/pizza-rally.webp` | 481×510 | Legacy Rally crop | Supplied photo, retained but no longer rendered |
+| `public/fonts/vara/satisfy.json` | 27KB | Stroke geometry for the animated `Hot` word | Bundled from Vara 1.4.0's Satisfy font data; upstream license reference is documented in the Vara package |
 
 ### July 2026 owner photography
 
@@ -92,11 +93,11 @@ All files below live in `public/images/owner-2026/`. Twelve branded delivery-pla
 | `pizza-rally.webp` | 1402×1122 | Rally card | Smoked chicken, mushroom, avocado |
 | `pizza-bianca-pollo.webp` | 1402×1122 | Provisional Bianca Pollo card | White base, smoked chicken, mushroom, chives |
 | `pizza-sole.webp` | 1402×1122 | Provisional Sole card | White base, yellow pepper, cherry tomato, mint |
-| `feast-collage.webp` | 1402×1122 | Menu editorial card | Mixed pizza and dessert spread |
+| `feast-collage.webp` | 1402×1122 | Ratto Social Club feast card | Mixed pizza and dessert spread |
 | `feast-landscape.webp` | 1402×1122 | Ingredient-story photograph | Full table spread with ingredients and desserts |
 | `dessert-brownie.webp` | 1402×1122 | Gallery | Chocolate brownie, nuts, chocolate drizzle |
-| `dessert-limone.webp` | 1402×1122 | Gallery | Lemon-shaped creamy desserts and mint |
-| `venue-table.webp` | 1027×1531 | Venue gallery | Pizza table, desserts, blue Vespa and dining context |
+| `dessert-limone.webp` | 1402×1122 | Ratto Social Club sweet card | Lemon-shaped creamy desserts and mint |
+| `venue-table.webp` | 1027×1531 | Remi pull-transition and Ratto Social Club table card | Pizza table, desserts, blue Vespa and dining context |
 
 ### Generated concept pizzas
 
@@ -127,9 +128,13 @@ Surrounding menu text, checkerboards, pizza photography, phone number, and order
 
 A background-only raster was generated from the flyer paper aesthetic. Its prompt requested a warm dusty blush vintage paper with quiet fibres, mottling, light speckle, no focal point, and no text, mascot, food, checkerboard, or shapes.
 
+### Handwritten `Hot` font data
+
+`public/fonts/vara/satisfy.json` is a repository-local copy of the Satisfy single-line data shipped with Vara 1.4.0. It allows the static export to generate real letter strokes without a CDN request. The source package points to the Google Fonts Satisfy license record. Do not replace this file without updating both the dependency and this provenance note.
+
 ### Meet Remi artwork
 
-The rat/Vespa drawing was edited for the character section. The scooter is bright red, the helmet is white, and the pizza is pepperoni. It intentionally retains a printed illustration character rather than photorealistic rendering.
+The rat/Vespa drawing was edited for the character section and is now also reused in the pinned road sequence. The scooter is bright red, the helmet is white, and the pizza is pepperoni. CSS cropping and multiply blending preserve the complete illustration while removing the visual white rectangle against orange and pink fields. It intentionally retains a printed illustration character rather than photorealistic rendering.
 
 ## Image mapping
 
@@ -168,10 +173,10 @@ Brand service icons are code-native interface marks in `components/BrandIcon.tsx
 
 GitHub Pages is hosted below `/pizza-ratto/`. JSX image paths must pass through the `asset()` helper. Do not reintroduce `next/image` unless the deployment architecture changes.
 
-CSS public assets should use repository-safe relative paths. The hero texture currently uses:
+CSS public assets should use repository-safe relative paths. When a CSS background depends on the deployment prefix, pass an asset-prefixed custom property from JSX. The hero currently uses:
 
-```css
-background-image: url("../images/hero-paper-texture.png");
+```tsx
+style={{ "--hero-paper-image": `url("${asset("/images/hero-paper-texture.png")}")` }}
 ```
 
 ## Performance notes

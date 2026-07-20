@@ -18,6 +18,7 @@ An OpenAI Sites project also exists, but it is not the default deployment target
 - `docs/README.md` — documentation map and current status
 - `docs/architecture.md` — application structure and runtime model
 - `docs/design-system.md` — visual language, layout rules, and responsive decisions
+- `docs/motion-system.md` — GSAP scene architecture, transition inventory, responsive fallbacks, and editing guardrails
 - `docs/content-and-assets.md` — content sources, asset provenance, and image mapping
 - `docs/development.md` — local workflows and editing guidance
 - `docs/deployment.md` — GitHub Pages and OpenAI Sites strategies

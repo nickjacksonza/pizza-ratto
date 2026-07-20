@@ -5,9 +5,10 @@ This folder explains the current product, its design logic, implementation, and 
 ## Current status
 
 - One-page restaurant website implemented and responsive.
+- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, palette-curtain chapter handoffs, six desktop narrative locks with bespoke internal timelines, viewport-timed coffee/dolci entrances, covered long-distance navigation, true handwritten stroke drawing for both `Hot` and the social-club `Ratto`, split-letter entrances, a velocity-reactive Remi/Vespa sequence that tows the next red scene in from the left, and a `Never pizza solo.` social mural with an eased cursor-follow Instagram action.
 - Publicly deployed to GitHub Pages at `https://zmaqutu.github.io/pizza-ratto/`.
 - OpenAI Sites project retained as an optional second deployment target.
-- Menu, business details, structured metadata, mobile navigation, and ordering links are implemented.
+- Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.
 - The menu uses a deliberate twelve-card grid: eight enhanced owner photographs and four generated concept photographs. Six specials remain provisional pending owner approval.
 - No database, CMS, cart, analytics, user accounts, or custom domain.
 
@@ -17,6 +18,7 @@ This folder explains the current product, its design logic, implementation, and 
 | --- | --- |
 | `architecture.md` | Application shape, routing, data flow, rendering, and optional starter surfaces |
 | `design-system.md` | Brand translation, tokens, typography, layout, responsive behavior, and accessibility |
+| `motion-system.md` | GSAP runtime, scene curtains, grid-menu choreography, reduced-motion behavior, and future-agent handoff |
 | `content-and-assets.md` | Business content, menu ownership, image inventory, generation history, and alt-text rules |
 | `development.md` | Local setup, commands, common editing workflows, and static-export caveats |
 | `deployment.md` | GitHub Pages and OpenAI Sites deployment strategies and troubleshooting |

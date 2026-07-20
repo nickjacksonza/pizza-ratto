@@ -2,13 +2,13 @@
 
 ## Overview
 
-Pizza Ratto is intentionally a small, static-first web application. It uses a Next.js-compatible App Router API through vinext, but the product itself is a single server-rendered page with one client component.
+Pizza Ratto is intentionally a small, static-first web application. It uses a Next.js-compatible App Router API through vinext, but the product itself is a single server-rendered page with two small client components.
 
 The current architecture favors:
 
 - static output;
 - centralized content;
-- minimal client JavaScript;
+- focused client JavaScript for navigation and authored motion;
 - no backend dependency;
 - dual build compatibility for GitHub Pages and OpenAI Sites.
 
@@ -20,10 +20,13 @@ app/layout.tsx
         ├── data/business.ts
         ├── data/menu.ts
         ├── components/MobileNavigation.tsx (client component)
+        ├── components/ScrollChoreography.tsx (client component)
         └── components/BrandIcon.tsx (presentational service icons)
 ```
 
-`app/page.tsx` is statically rendered. The only interactive client state is the open/closed mobile navigation menu. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
+`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and the motion system in `ScrollChoreography.tsx`. That component dynamically loads GSAP 3.13, ScrollSmoother, ScrollTrigger, ScrollToPlugin, Observer, SplitText and DrawSVG. ScrollSmoother owns the native-scroll-backed page wrapper; ScrollTrigger coordinates the pinned road scene, palette-curtain entrances, large-screen locked narrative chapters, menu-row and independently timed coffee/dolci entrances, parallax and social-card assembly; ScrollToPlugin powers short in-page navigation; and Observer makes the fixed header respond to scroll direction. Long-distance anchor navigation uses a fixed palette cover outside the transformed wrapper, updates ScrollSmoother while fully covered, and reveals the destination without visibly scrubbing every intermediate pin. Vara generates the actual `Hot` and social-club `Ratto` handwriting strokes from one preloaded local font-data file; no runtime CDN or third-party API is required. Core GSAP setup does not wait for Vara, so panels, parallax and the Remi timeline become ready independently while the handwriting paths initialize. `gsap.matchMedia()` owns both menu column awareness and the lock/no-lock breakpoint: narrative pins exist only at `min-width: 1001px` and `min-height: 720px`, while smaller/shorter layouts keep semantic natural flow. The same responsive context owns the precise-pointer Instagram follower cleanup. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state. See `docs/motion-system.md` before changing this runtime.
+
+The fixed announcement/header chrome, covered-navigation route card, and mobile order bar live outside `#smooth-wrapper`; `main` and `footer` live inside `#smooth-content`. This is required because fixed UI must not inherit the transform ScrollSmoother applies to the content layer. The Remi stage and eligible narrative chapters use ScrollTrigger pinning while motion is active instead of CSS sticky positioning. Pin targets remain transform-stable; their descendants carry all choreography.
 
 ## Rendering model
 
@@ -66,17 +69,19 @@ The page is composed in this order:
 
 1. Skip link and announcement bar
 2. Header and navigation
-3. Hero poster with ordering details
-4. Moving brand ticker
-5. `01 / WHAT WE’RE ABOUT` manifesto
-6. `02 / THE IMPORTANT BIT` menu
-7. `03 / BUILT DIFFERENT` ingredient story
-8. Remi and Big Bertha character section
-9. `04 / INSIDE` gallery
-10. `05 / FIND THE FIRE` visit and order section
-11. Footer
-12. Mobile fixed ordering bar
-13. Restaurant JSON-LD
+3. Full-height split hero poster with ordering details
+4. Pinned `Hot / PIZZA` road scene where scroll-driven Remi tows a red editorial scene in from the left
+5. Moving brand ticker
+6. Full-viewport `01 / WHAT WE’RE ABOUT` paper scene
+7. Full-viewport `02 / THE IMPORTANT BIT` iris scene
+8. Natural-flow pizza grid with alternating lateral row entrances, followed by a full-view coffee/dolci board
+9. Full-viewport `03 / BUILT DIFFERENT` split ingredient scene
+10. Full-viewport Remi and Big Bertha column scene
+11. Full-view `04 / RATTO SOCIAL CLUB` overlapping venue and food deck with scroll-drawn `Ratto` lettering
+12. Full-viewport `05 / FIND THE FIRE` visit and order shutter
+13. Footer
+14. Mobile fixed ordering bar
+15. Restaurant JSON-LD
 
 ## Metadata and discovery
 
@@ -94,7 +99,7 @@ The page is composed in this order:
 
 ## Styling architecture
 
-All visual behavior lives in `app/globals.css`. Tailwind is imported but no utility-first component architecture is in use. This is intentional: the poster composition relies on named, section-specific classes and tightly coordinated media queries.
+All visual behavior lives in `app/globals.css`. Tailwind is imported but no utility-first component architecture is in use. This is intentional: the poster composition relies on named, section-specific classes, CSS custom properties, and tightly coordinated media queries.
 
 Breakpoints:
 

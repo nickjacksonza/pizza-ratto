@@ -18,5 +18,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${display.variable} ${body.variable}`}>{children}</body></html>;
+  return <html lang="en"><head><link rel="preload" href={asset("/fonts/vara/satisfy.json")} as="fetch" crossOrigin="anonymous" /></head><body className={`${display.variable} ${body.variable}`}>{children}</body></html>;
 }

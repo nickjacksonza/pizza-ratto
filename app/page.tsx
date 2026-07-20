@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { MobileNavigation } from "../components/MobileNavigation";
+import type { CSSProperties } from "react";
 import { BrandIcon } from "../components/BrandIcon";
+import { MobileNavigation } from "../components/MobileNavigation";
+import { ScrollChoreography } from "../components/ScrollChoreography";
 import { business } from "../data/business";
 import { menu, zar } from "../data/menu";
 
@@ -27,6 +29,8 @@ const pizzaPhotos: Record<string, { src: string; alt: string }> = {
   Tramonto: { src: "/images/owner-2026/pizza-tramonto.webp", alt: "Wood-fired pizza with roasted peppers, onions, feta, cherry tomatoes and basil" },
 };
 
+const portalPizzas = ["Primavera", "Sprint", "Arcobaleno", "Rally", "Verde"];
+
 export default function Home() {
   const pizzaMenu = menu.find((category) => category.id === "pizza")!;
   const sideMenu = menu.filter((category) => category.id !== "pizza");
@@ -44,43 +48,69 @@ export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
-      <div className="announcement" role="note" aria-label="Made fresh. Taken seriously by no one. Wood-fired in Salt River. Monday to Saturday, 10:00 to 18:00.">
-        <div className="announcement-track" aria-hidden="true">
-          <span className="announcement-run">{announcementCopy}</span>
-          <span className="announcement-run">{announcementCopy}</span>
-        </div>
-      </div>
-      <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="Pizza Ratto home">PIZZA <i>RATTO</i></a>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#menu">Menu</a><a href="#story">Our story</a><a href="#visit">Visit</a>
-        </nav>
-        <a className="button button-small brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order pizza</a>
-        <MobileNavigation />
-      </header>
-
-      <main id="main">
-        <section className="hero-poster" id="top">
-          <h1 className="sr-only">Pizza Ratto — wood-fired pizza in Salt River, Cape Town</h1>
-          <div className="checker-strip" aria-hidden="true" />
-          <div className="hero-brand-block">
-            <div className="hero-logo-art">
-              <img src={asset("/images/hero-logo-mascot.png")} alt="Pizza Ratto hand-painted logo beside the rat mascot riding a Vespa" loading="eager" fetchPriority="high" />
-            </div>
-            <p className="hero-promise">Made fresh. Taken seriously by no one.</p>
+      <div className="top-chrome" data-top-chrome>
+        <div className="announcement" role="note" aria-label="Made fresh. Taken seriously by no one. Wood-fired in Salt River. Monday to Saturday, 10:00 to 18:00.">
+          <div className="announcement-track" aria-hidden="true">
+            <span className="announcement-run">{announcementCopy}</span>
+            <span className="announcement-run">{announcementCopy}</span>
           </div>
-          <aside className="hero-details" aria-label="Order and opening information">
-            <a className="hero-phone" href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a>
-            <p>WhatsApp &amp; calls</p>
-            <div className="hero-detail-rule" />
-            <b>OPEN</b>
-            <strong>{business.hours}</strong>
-            <span>{business.location}</span>
-            <a className="button poster-button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order on WhatsApp ↗</a>
+        </div>
+
+        <header className="site-header">
+          <a className="wordmark" href="#top" aria-label="Pizza Ratto home">PIZZA <i>RATTO</i></a>
+          <nav className="desktop-nav" aria-label="Main navigation">
+            <a href="#story">About</a><a href="#menu">Menu</a><a href="#visit">Visit</a>
+          </nav>
+          <a className="button button-small brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order now</a>
+          <MobileNavigation />
+        </header>
+      </div>
+
+      <div className="nav-transition" data-nav-transition aria-hidden="true">
+        <span className="nav-transition-checker" />
+        <div className="nav-transition-copy">
+          <small>Next stop</small>
+          <strong data-nav-transition-label>Menu</strong>
+        </div>
+        <span className="nav-transition-wheel" />
+        <span className="nav-transition-speed nav-transition-speed-one" />
+        <span className="nav-transition-speed nav-transition-speed-two" />
+      </div>
+
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <main id="main" tabIndex={-1}>
+        <section
+          className="hero-shell"
+          id="top"
+          tabIndex={-1}
+          style={{ "--hero-paper-image": `url("${asset("/images/hero-paper-texture.png")}")` } as CSSProperties}
+        >
+          <div className="checker-strip" aria-hidden="true" />
+          <div className="hero-art" data-hero-art data-parallax="24">
+            <img src={asset("/images/hero-logo-mascot.png")} alt="Pizza Ratto hand-painted logo beside Remi the rat riding a Vespa" loading="eager" fetchPriority="high" />
+          </div>
+          <div className="hero-copy" data-hero-copy>
+            <p className="hero-eyebrow">Wood-fired · Salt River · Cape Town</p>
+            <h1 data-split="load">Pizza with<br /><span className="hero-accent">street-corner attitude.</span></h1>
+            <p>Hand-stretched, fired hot and ready for collection.</p>
+            <div className="hero-actions">
+              <a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order on WhatsApp</a>
+              <a className="hero-phone" href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a>
+            </div>
+          </div>
+          <aside className="hero-stamp smooth-float" aria-label="Opening hours">
+            <span>Open</span><strong>MON—SAT</strong><b>10—18</b>
           </aside>
-          <p className="hero-footnote">Hand-stretched · proper ingredients · fired by Big Bertha</p>
+          <p className="hero-footnote">Proper ingredients · questionable mascot · zero fuss</p>
           <div className="checker-strip checker-bottom" aria-hidden="true" />
         </section>
+
+        <ScrollChoreography
+          remiSrc={asset("/images/ratto-vespa-red.png")}
+          pullImageSrc={asset("/images/owner-2026/venue-table.webp")}
+          varaFontSrc={asset("/fonts/vara/satisfy.json")}
+        />
 
         <div className="ticker" aria-hidden="true">
           <div className="ticker-track">
@@ -89,95 +119,154 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="manifesto section-pad" id="story">
+        <section className="manifesto section-pad" id="story" tabIndex={-1} data-scene="story" data-transition="paper-left" data-lock-chapter="story" data-lock-scroll="1.1">
+          <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
           <p className="section-number">01 / WHAT WE’RE ABOUT</p>
           <div>
-            <h2>Respect fire,<br />time & tomatoes.</h2>
+            <p className="manifesto-kicker">A little about Pizza Ratto</p>
+            <h2 className="spaced-heading" data-split="scroll">Respect fire,<br />time &amp; tomatoes.</h2>
             <p>We’re not saving the world. We’re making it better one pizza at a time. Dough stretched by hand. Proper ingredients. Big Bertha running hot. No gimmicks.</p>
           </div>
-          <aside><b>HOUSE RULES</b>{facts.map((fact, index) => <span key={fact}>{String(index + 1).padStart(2, "0")} — {fact}</span>)}</aside>
+          <aside className="smooth-float"><b>HOUSE RULES</b>{facts.map((fact, index) => <span key={fact}>{String(index + 1).padStart(2, "0")} — {fact}</span>)}</aside>
         </section>
 
-        <section className="menu-section section-pad" id="menu">
-          <div className="menu-heading"><p className="section-number">02 / THE IMPORTANT BIT</p><h2>Pick your ride.</h2><p>Pizza, coffee, dolci. Sorted.</p></div>
-          <div className="flyer-menu" aria-labelledby="pizza-heading">
-            <header className="flyer-menu-title">
-              <div><p>{pizzaMenu.kicker}</p><h3 id="pizza-heading">Pizza</h3></div>
-              <span>Wood-fired<br />by Big Bertha</span>
-            </header>
-            <ul className="pizza-collage">
-              {pizzaMenu.items.map((item) => {
-                const photo = pizzaPhotos[item.name];
-                return (
-                  <li className={photo ? "has-pizza-photo" : "has-placeholder-photo"} key={item.name}>
-                    {photo
-                      ? <div className="pizza-cutout"><img src={asset(photo.src)} alt={photo.alt} loading="lazy" /></div>
-                      : <div className="pizza-cutout pizza-placeholder" role="img" aria-label={`${item.name} pizza photo placeholder`}><span>Pizza photo<br />coming hot</span></div>}
-                    <div className="pizza-label">
-                      <div><b>{item.name}</b><strong>{Array.isArray(item.price) ? item.price.map((p) => <span key={p.label}>{p.label} {zar(p.price)}</span>) : zar(item.price)}</strong></div>
-                      {item.description && <p>{item.description}</p>}
-                      {item.note && <small className="menu-note">{item.note}</small>}
-                      {item.featured && <small>House favourite. No sensible reason required.</small>}
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="sauce-note">Hot honey &amp; rat sauce · R15 each</p>
+        <section className="menu-portal section-pad" aria-labelledby="menu-portal-title" data-scene="menu-portal" data-transition="iris" data-lock-chapter="menu-portal" data-lock-scroll="1.35">
+          <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <p className="section-number">02 / THE IMPORTANT BIT</p>
+          <div className="menu-portal-copy">
+            <p>Twelve rides. One very hot oven.</p>
+            <h2 id="menu-portal-title" aria-label="Pick your ride" data-split="scroll">Pick your<br /><span className="portal-accent" aria-hidden="true">ride.</span></h2>
+            <a className="button button-dark" href="#menu">Explore the menu ↓</a>
           </div>
-          <div className="small-menu-grid">
-            {sideMenu.map((category) => (
-              <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
-                <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</span></header>
-                <ul>
-                  {category.items.map((item) => (
-                    <li key={item.name}>
-                      <div><b>{item.name}</b>{item.description && <p>{item.description}</p>}{item.note && <small>{item.note}</small>}</div>
-                      <strong>{Array.isArray(item.price) ? item.price.map((p) => <span key={p.label}>{p.label} {zar(p.price)}</span>) : zar(item.price)}</strong>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            ))}
+          {portalPizzas.map((name, index) => {
+            const photo = pizzaPhotos[name];
+            return <figure className={`portal-pizza portal-pizza-${index + 1}`} data-parallax={18 + index * 8} key={name}><img src={asset(photo.src)} alt={photo.alt} loading="lazy" /></figure>;
+          })}
+        </section>
+
+        <section className="menu-section" id="menu" tabIndex={-1} aria-labelledby="pizza-heading" data-scene-root="menu">
+          <div className="menu-pizza-sequence">
+            <div className="menu-pizza-stage" data-scene="pizza-menu" data-transition="shutter-left">
+              <span className="scene-curtain" aria-hidden="true" />
+              <div className="menu-marquee-title" data-scroll-marquee aria-hidden="true"><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span></div>
+              <div className="menu-inner section-pad">
+                <header className="flyer-menu-title">
+                  <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
+                  <span>Wood-fired<br />by Big Bertha</span>
+                </header>
+                <div className="menu-rail-window">
+                  <ul className="pizza-collage">
+                    {pizzaMenu.items.map((item) => {
+                      const photo = pizzaPhotos[item.name];
+                      return (
+                        <li className={photo ? "has-pizza-photo" : "has-placeholder-photo"} key={item.name}>
+                          {photo
+                            ? <div className="pizza-cutout"><img src={asset(photo.src)} alt={photo.alt} loading="lazy" decoding="async" /></div>
+                            : <div className="pizza-cutout pizza-placeholder" role="img" aria-label={`${item.name} pizza photo placeholder`}><span>Pizza photo<br />coming hot</span></div>}
+                          <div className="pizza-label">
+                            <div><b>{item.name}</b><strong>{Array.isArray(item.price) ? item.price.map((price) => <span key={price.label}>{price.label} {zar(price.price)}</span>) : zar(item.price)}</strong></div>
+                            {item.description && <p>{item.description}</p>}
+                            {item.note && <small className="menu-note">{item.note}</small>}
+                            {item.featured && <small>House favourite. No sensible reason required.</small>}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="menu-stage-footer">
+                  <p className="sauce-note smooth-float">Hot honey &amp; rat sauce · R15 each</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="menu-source">
-            <img src={asset("/images/owner-2026/feast-collage.webp")} alt="Overhead spread of Pizza Ratto pizzas, desserts, avocado and hot honey" width={1402} height={1122} loading="lazy" />
-            <p className="menu-fineprint">Owner-supplied favourites plus two photo-led specials. Availability can change when Big Bertha says so.</p>
-            <span>THE OWNER’S TABLE</span>
+
+          <div className="small-menu-view section-pad" data-scene="small-menu" data-transition="cards-up">
+            <span className="scene-curtain" aria-hidden="true" />
+            <p className="section-number">02 / COFFEE &amp; DOLCI</p>
+            <div className="small-menu-grid">
+              {sideMenu.map((category) => (
+                <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
+                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</span></header>
+                  <ul>
+                    {category.items.map((item) => (
+                      <li key={item.name}>
+                        <div><b>{item.name}</b>{item.description && <p>{item.description}</p>}{item.note && <small>{item.note}</small>}</div>
+                        <strong>{Array.isArray(item.price) ? item.price.map((price) => <span key={price.label}>{price.label} {zar(price.price)}</span>) : zar(item.price)}</strong>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="ingredients section-pad">
-          <div className="ingredient-photo"><img src={asset("/images/owner-2026/feast-landscape.webp")} alt="A full Pizza Ratto table spread with pizzas, desserts, hot honey and fresh ingredients" loading="lazy" /></div>
-          <div className="ingredient-copy"><p className="section-number">03 / BUILT DIFFERENT</p><h2 className="spaced-heading">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
+        <section className="ingredients" aria-labelledby="ingredients-title" data-scene="ingredients" data-transition="split" data-lock-chapter="ingredients" data-lock-scroll="1.15">
+          <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <div className="ingredient-photo" data-parallax="22"><img src={asset("/images/owner-2026/feast-landscape.webp")} alt="A full Pizza Ratto table spread with pizzas, desserts, hot honey and fresh ingredients" loading="lazy" /></div>
+          <div className="ingredient-copy section-pad"><p className="section-number">03 / BUILT DIFFERENT</p><h2 id="ingredients-title" className="spaced-heading" data-split="scroll">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
-        <section className="characters section-pad">
-          <div className="remi-feature">
-            <div className="character-card pink"><span className="sticker">RAT #01</span><h2>Meet Remi.</h2><p>Our resident rat and patron saint of good decisions made near a pizza oven. You’ll find him around the room, including a mural painted by local artist Buffy.</p></div>
-            <div className="logo-poster red-vespa-poster"><img src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn rat riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="lazy" /></div>
+        <section className="characters section-pad" data-scene="characters" data-transition="columns" data-lock-chapter="characters" data-lock-scroll="1.15">
+          <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <div className="character-copy">
+            <span className="sticker">RAT #01</span>
+            <h2 data-split="scroll">Meet Remi.</h2>
+            <p>Our resident rat and patron saint of good decisions made near a pizza oven. You’ll find him around the room, including a mural painted by local artist Buffy.</p>
           </div>
-          <div className="character-card orange"><span className="sticker">FIRE #01</span><h2>Big Bertha.</h2><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
+          <div className="character-art" data-parallax="34"><img src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn Remi riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="lazy" /></div>
+          <div className="bertha-note"><span className="sticker">FIRE #01</span><h3>Big Bertha.</h3><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
         </section>
 
-        <section className="gallery section-pad" aria-labelledby="gallery-title">
-          <div className="gallery-intro">
-            <div className="gallery-title"><p className="section-number">04 / INSIDE</p><h2 id="gallery-title">The rat hole.</h2><p>Pizza, scooters, old furniture and very good reasons to stay awhile.</p></div>
-            <p className="gallery-caption">Come hungry.<br />Leave slightly happier.</p>
+        <section className="social-showcase section-pad" aria-labelledby="social-title" data-social-showcase data-scene="social" data-transition="deck" data-lock-chapter="social" data-lock-scroll="1.75">
+          <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <div className="social-drawn-word" id="social-ratto-drawing" data-social-word-drawing aria-hidden="true" />
+          <div className="social-mural" aria-hidden="true">
+            <span className="social-mural-wheel" />
+            <span className="social-mural-slice" />
+            <span className="social-mural-tail" />
           </div>
-          <figure className="gallery-interior"><img src={asset("/images/owner-2026/venue-table.webp")} alt="Overhead Pizza Ratto table spread beside a blue Vespa inside the restaurant" loading="lazy" /></figure>
-          <figure className="gallery-pizza-one"><img src={asset("/images/owner-2026/dessert-brownie.webp")} alt="Chocolate brownie with nuts and chocolate drizzle on checkerboard paper" loading="lazy" /></figure>
-          <figure className="gallery-pizza-two"><img src={asset("/images/owner-2026/dessert-limone.webp")} alt="Two lemon-shaped creamy desserts with mint and fresh lemon leaves" loading="lazy" /></figure>
+          <header className="social-heading">
+            <div><p className="section-number">04 / RATTO SOCIAL CLUB</p><p className="social-kicker">Inside the rat hole. Out in the wild.</p></div>
+            <h2 id="social-title" data-split="scroll">Never pizza solo.</h2>
+            <p>Follow the daily damage, fresh pies and questionable decisions.</p>
+          </header>
+          <div className="social-collage" data-social-collage>
+            <figure className="social-card social-card-room" data-social-card="room"><img src={asset("/images/interior.webp")} alt="Pizza Ratto dining room with brick walls, vintage furniture and a Vespa" loading="lazy" /></figure>
+            <figure className="social-card social-card-table" data-social-card="table"><img src={asset("/images/owner-2026/venue-table.webp")} alt="Overhead Pizza Ratto table spread beside a blue Vespa inside the restaurant" loading="lazy" /></figure>
+            <figure className="social-card social-card-feast" data-social-card="feast"><img src={asset("/images/owner-2026/feast-collage.webp")} alt="A colourful Pizza Ratto feast of wood-fired pizzas, dips and desserts" loading="lazy" /></figure>
+            <figure className="social-card social-card-sweet" data-social-card="sweet"><img src={asset("/images/owner-2026/dessert-limone.webp")} alt="Two lemon-shaped creamy desserts with mint and fresh lemon leaves" loading="lazy" /></figure>
+            <a className="social-follow-link" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Follow Pizza Ratto on Instagram ${business.instagramHandle}`}>
+              <span className="social-follow-badge" data-social-follow-cursor><BrandIcon name="instagram" />Follow {business.instagramHandle}</span>
+            </a>
+          </div>
+          <div className="social-filmstrip" aria-hidden="true"><span>ROOM FOR ONE MORE</span><span>FOLLOW THE RAT</span><span>CAFFE · PIZZA · CHAOS</span><span>FOLLOW THE RAT</span></div>
         </section>
 
-        <section className="visit section-pad" id="visit">
-          <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
+        <section className="visit section-pad" id="visit" tabIndex={-1} data-scene="visit" data-transition="shutter-right" data-lock-chapter="visit" data-lock-scroll="1.05">
+          <span className="scene-curtain" aria-hidden="true" />
+          <span className="chapter-progress" aria-hidden="true"><i /></span>
+          <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading" data-split="scroll">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
-          <div className="visit-actions"><a className="button button-dark brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>
+          <div className="visit-actions"><a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>
         </section>
-      </main>
+          </main>
 
-      <footer><div className="footer-mark">PIZZA RATTO</div><p>{business.tagline}</p><p>{business.location} · {business.hours}</p><div className="footer-end"><p>© {new Date().getFullYear()} Pizza Ratto · Built with fire, not focus groups.</p><a className="footer-social" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Pizza Ratto on Instagram ${business.instagramHandle}`}><BrandIcon name="instagram" /></a></div></footer>
+          <footer>
+            <div className="footer-checker" aria-hidden="true" />
+            <div className="footer-mark">PIZZA<br />RATTO</div>
+            <p>{business.tagline}</p>
+            <p>{business.location} · {business.hours}</p>
+            <div className="footer-end"><p>© {new Date().getFullYear()} Pizza Ratto · Built with fire, not focus groups.</p><a className="footer-social" href={business.instagramUrl} target="_blank" rel="noreferrer" aria-label={`Pizza Ratto on Instagram ${business.instagramHandle}`}><BrandIcon name="instagram" /></a></div>
+          </footer>
+        </div>
+      </div>
       <nav className="mobile-order-bar" aria-label="Quick order actions"><a href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp</a><a href={`tel:${business.phoneInternational}`}>Call</a><a href="#menu">Menu</a></nav>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c") }} />
     </>

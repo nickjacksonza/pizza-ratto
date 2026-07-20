@@ -78,9 +78,9 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 **Context:** This is a content and ordering site, not an application dashboard. The identity is already visually dense.
 
-**Decision:** Keep the main page static/server-rendered and use client behavior only where interaction requires it, currently the mobile menu. Respect reduced-motion preferences.
+**Decision:** Keep the main page static/server-rendered and confine client behavior to the mobile menu and one coordinated motion component. Respect reduced-motion preferences.
 
-**Consequence:** Prefer HTML/CSS solutions for presentation. New client dependencies need a concrete user benefit.
+**Consequence:** Prefer HTML/CSS for static presentation. Motion dependencies are acceptable only when they provide a concrete authored effect and retain a complete reduced-motion fallback.
 
 ## 011 — Make the ticker a duplicated continuous track
 
@@ -116,6 +116,8 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 015 — Bound the Rat Hole editorial header
 
+> Superseded for the photograph layout by decision 018; the compact header and shared divider remain.
+
 **Context:** A tall photograph spanning all gallery rows was allowed to influence an automatic first row. The title and slogan consequently sat at opposite edges of a large empty rectangle, weakening proximity and visual hierarchy.
 
 **Decision:** Give the first two gallery columns a fixed-height editorial header containing both the section title and slogan, separated from the photographs by a shared rule. Keep the venue image isolated in the third column and let the two food images form the lower collage.
@@ -129,3 +131,81 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Keep one static centered copy on larger screens and use two identical continuous runs below 520px. Expose one concise accessible label, hide the repeated visual text from assistive technology, and replace motion with a wrapped static copy under `prefers-reduced-motion`.
 
 **Consequence:** Desktop appearance is unchanged, mobile retains the full message, and users who disable animation receive a complete non-moving alternative.
+
+## 017 — Concentrate motion in a scroll-driven Remi road scene
+
+> Superseded for the animation runtime by decision 018; the palette, pacing and single focal road scene remain.
+
+**Context:** The site needed the section pacing, word-reveal drama and horizontal vehicle movement of the supplied food-site reference without losing Pizza Ratto's flyer identity or static-export compatibility.
+
+**Decision:** Use the approved `#FF8513`, `#CC2832`, `#FFC0C1` and `#373737` palette; reorganize the homepage into strong full-bleed color scenes; and add one native, dependency-free client component that turns scroll progress into CSS variables for a pinned `Hot / PIZZA` reveal and Remi's Vespa travel. Use the same component to apply small parallax offsets to selected photography.
+
+**Consequence:** Motion has a clear focal point, works on GitHub Pages, and retains a complete reduced-motion fallback. Future animation should extend this progress system rather than introduce a second competing motion runtime.
+
+## 018 — Match the reference with one GSAP motion system
+
+**Context:** The first road scene used native scroll math and clip-path reveals. Review showed that the `Hot` word looked uncovered rather than written, headings lacked the reference's character-level entrances, Remi moved too mechanically, and the gallery did not have the layered store-photo choreography seen in the supplied recording.
+
+**Decision:** Inspect the reference site's public theme bundle and follow its verified animation model: GSAP timelines, ScrollTrigger scrubbing and SplitText character treatment. Use GSAP 3.13 with DrawSVG for Pizza Ratto, plus Vara 1.4 with local Satisfy stroke data to generate the actual handwritten word. Keep Remi as the supplied raster but animate its outer travel separately from an inner suspension timeline. Rebuild the Rat Hole as four overlapping cards entering from different directions. Do not add Swiper because the gallery is editorial rather than an interactive carousel, and do not fake a frame-by-frame Remi sprite without a real approved frame set.
+
+**Consequence:** Drawing, type, panels, parallax, vehicle motion and the gallery now share one timeline grammar. The page remains statically exportable, loads no animation assets from a CDN, and disables the entire choreography under reduced motion.
+
+## 019 — Use the complete GSAP scroll stack and transform-safe pinning
+
+**Context:** The second motion pass still used native CSS scrolling and a sticky road stage. Review requested the full GSAP smooth-scroll toolset, more directional scene movement and stronger physical response from Remi. The oversized `PIZZA` word was also clipped by its own overflow mask.
+
+**Decision:** Put `main` and `footer` inside the conventional ScrollSmoother wrapper/content pair while keeping fixed chrome outside it. Use ScrollTrigger for all scrubbed reveals and for the road-scene pin, ScrollToPlugin for internal navigation and Observer for direction-aware header behavior. Add velocity-derived elastic tilt/lift to Remi, alternate panel wipes and child entrances, and scroll-drive the menu marquee. Remove the `PIZZA` overflow mask and reserve masking for individual character entrances. Keep all four approved brand colors as the visible scene palette.
+
+**Consequence:** Smooth scrolling, navigation, pinned choreography and directional motion now share one native-scroll-backed GSAP runtime. The page remains a static export, the fixed header and order bar are not trapped in transformed content, `PIZZA` keeps its complete glyph bounds, and reduced-motion users retain the static fallback.
+
+## 020 — Make Remi pull the next scene and unblock motion startup
+
+**Context:** Review found that some choreography appeared late or snapped into place, section entrances did not visibly originate from the left, and the red tail of the pinned road sequence read as unused space. The reference vehicle is effective because it acts as the transition mechanism: the next view follows it across the viewport.
+
+**Decision:** Initialize the GSAP/ScrollSmoother runtime before waiting for Vara font data, preload the local Vara JSON, and give the handwriting its own ScrollTrigger once its paths are ready. Replace shallow directional wipes with full off-canvas panel translations. During Remi's crossing, move a complete red editorial scene from `-100%` to `0%` behind the scooter and animate a short tow line, while the orange title composition exits.
+
+**Consequence:** General motion no longer depends on handwriting-data readiness, left/right entrances have clear physical travel, and the road scene ends on finished editorial content instead of an empty color band. The handoff stays inside the approved palette, uses an already documented owner photograph, remains statically exportable, and disappears in the reduced-motion fallback.
+
+## 021 — Make the complete page a responsive scene sequence
+
+> Superseded for the pizza-menu layout and chapter-transition mechanism by decision 022; the scene identities and seamless hero treatment remain.
+
+**Context:** The Remi handoff had become an authored full-screen moment, but the following story and menu sections still read as conventional page blocks. Review requested every major section to feel like its own view and identified the opaque hero artwork's pink paper as a visible seam.
+
+**Decision:** Give each major story container a `data-scene` identity and a distinct scrubbed transition: paper-left, iris, cards-up, split, columns, deck or shutter-right. Use a nested ScrollTrigger pin for a horizontally translated twelve-card pizza rail on desktop, with `gsap.matchMedia()` restoring the normal two-column menu below `761px`. Keep the pinned stage static and animate only its descendants. Reuse the matching `hero-paper-texture.png` behind the hero shell, art and red copy layer, and remove image blending/filtering that darkens the baked paper background.
+
+**Consequence:** The homepage now reads as a connected series of poster views rather than one animated scene followed by normal sections. Desktop menu browsing becomes an immersive vertical-to-horizontal sequence, mobile and reduced-motion users retain a complete natural-flow menu, and the hero artwork sits on one continuous paper surface. The full selector inventory, cleanup order, responsive exception and QA requirements live in `docs/motion-system.md`.
+
+## 022 — Restore the menu grid and hand chapters between palette curtains
+
+> Extended by decision 023: the grid remains natural flow, while large-screen narrative chapters now lock after their curtain entrance.
+
+**Context:** The pinned horizontal pizza rail made a practical restaurant menu slower to compare, its fixed viewport clipped the hot-honey/rat-sauce badge, and several chapter entrances still felt like variations of ordinary vertical scrolling. The handwritten `Hot` also remained visually lighter than the surrounding display type.
+
+**Decision:** Restore the twelve pizzas to a permanent three-column desktop and two-column mobile grid. Keep lateral energy by using `gsap.matchMedia()` to alternate grid-row entrances from the left and right, while the menu marquee keeps its own horizontal ScrollTrigger. Add a direct-child palette curtain to every enhanced chapter and clear it with distinct horizontal, centre-split, diagonal-shutter, column, or iris choreography while the semantic scene remains in normal document flow. Increase Vara's generated stroke width to `8.2` on larger screens and `6.8` below `600px`.
+
+**Consequence:** Prices, toppings and cards are immediately comparable at every size; the sauce badge is no longer trapped inside a pinned viewport; and chapters now feel pulled, uncovered or assembled rather than merely lifted by vertical scroll. Base and reduced-motion layouts hide the curtains and retain the complete grid, so the progressive enhancement and static-export guarantees remain intact.
+
+## 023 — Lock narrative chapters and turn social proof into a Ratto poster
+
+**Context:** The reference recordings showed a stronger pacing device than a curtain alone: document movement stops when a chapter reaches the viewport, scroll is spent on an internal composition, and only then does the page release. Review also called out the reference's social collage and cursor-following action as a particularly effective blend of brand color, photography and interaction.
+
+**Decision:** Add `data-lock-chapter` and per-stage `data-lock-scroll` budgets to the story, menu portal, ingredients, character, Ratto Social Club and visit sections. At `min-width: 1001px` and `min-height: 720px`, create an independent ScrollTrigger pin and bespoke descendant timeline for each; keep the menu grids permanently unpinned. Replace the older Rat Hole stack with `Never pizza solo.`, a four-image Instagram poster over a code-native mural made from the approved palette. On precise desktop pointers, move the visible follow badge with eased `gsap.quickTo()` setters; keep it static on touch, narrow and reduced-motion layouts.
+
+**Consequence:** Desktop scrolling now has clear chapters with authored pauses instead of one continuous vertical cadence, while menus remain quick to scan. Short screens, phones and reduced-motion users keep complete semantic natural flow without pin spacers. The social view provides an explicit discovery route without adding a carousel dependency, new imagery or a second animation runtime.
+
+## 024 — Cover long jumps and localize late-chapter reveals
+
+**Context:** Review found that the stacked Dolci list completed its animation before reaching the viewport, the social `RATTO` outline was too faint and static, the visit information and actions did not share a stable visual top edge, and clicking Menu visibly accelerated through every intervening pinned timeline.
+
+**Decision:** Remove the coffee/dolci grid from the parent scene-child entrance and give each category its own viewport-relative scrub range. Replace the faint CSS `RATTO` pseudo-element with a second Vara/DrawSVG word in approved red with a grey registration shadow. Align the three desktop visit columns from a shared top edge and reveal actions laterally without vertical displacement. For anchor distances above `1.35 × viewport height`, place a fixed red route card outside ScrollSmoother, change the smoothed scroll position only after the card fully covers the viewport, update focus and hash, then reveal the destination; retain ScrollToPlugin for nearby links.
+
+**Consequence:** Dolci motion now occurs while Dolci is visible, the social background becomes a legible authored drawing beat, and the visit layout remains aligned both during and after its pin. Navigation no longer presents intermediate scenes as a fast-forward montage, while keyboard focus, reduced-motion fallback, static export compatibility and the single GSAP runtime are preserved.
+
+## 025 — Treat the social Vara word as one signature
+
+**Context:** The first scroll-drawn `Ratto` treatment was oversized, drew all Vara paths concurrently and used a strong grey offset shadow. Mid-animation it read as dotted fragments and two tangled words, competing with `Never pizza solo.` and the incoming photographs.
+
+**Decision:** Keep Vara as the glyph and path source, but reduce the signature's footprint, remove the duplicate shadow layer and render one approved-red ink. Build a DrawSVG timeline in Vara's DOM path order, weighting each stroke duration by its measured length so only one pen stroke is actively drawing at a time.
+
+**Consequence:** The lettering now reads as a deliberate signature instead of background noise, remains genuinely scroll-drawn and reversible, and supports the collage hierarchy without introducing a new font, asset or animation runtime.
