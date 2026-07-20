@@ -36,8 +36,11 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /\/images\/brand\/pizza-ratto-wordmark\.svg/);
   assert.match(html, /\/images\/brand\/red-ice-cream\.svg/);
   assert.match(html, /data-lock-chapter="counter-tapes"/);
-  assert.match(html, /data-transition="tape-deck"/);
-  assert.match(html, /Owner archive \/ dates on artwork/);
+  assert.match(html, /data-transition="counter-static"/);
+  assert.match(html, /id="counter-gooey-filter"/);
+  assert.match(html, /NEXT \/ BUILT DIFFERENT/);
+  assert.doesNotMatch(html, /\/images\/owner-2026\/dessert-brownie\.webp/);
+  assert.doesNotMatch(html, /From the Figma drawer|Owner archive \/ dates on artwork/);
   assert.doesNotMatch(html, /pizza-placeholder/);
   assert.match(html, /https:\/\/wa\.me\/27825250380/);
   assert.match(html, /tel:\+27825250380/);
@@ -61,6 +64,13 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(page, /BrandIcon name="whatsapp"/);
   assert.match(page, /BrandIcon name="instagram"/);
   assert.match(page, /className="spaced-heading"/);
+  assert.match(page, /data-morph-icon/);
+  assert.match(page, /MorphBrandMark name="pizza"/);
+  assert.match(page, /red-cup\.svg/);
+  assert.match(page, /red-ice-cream\.svg/);
+  const motion = await readFile(new URL("../components/ScrollChoreography.tsx", import.meta.url), "utf8");
+  assert.match(motion, /gsap\/MorphSVGPlugin/);
+  assert.match(motion, /morphSVG:/);
   assert.doesNotMatch(page, /className="text-link" href=\{business\.instagramUrl\}/);
   assert.match(page, /dynamic = "force-static"/);
   assert.match(page, /asset\("\/images\//);

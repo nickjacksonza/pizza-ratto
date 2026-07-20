@@ -29,7 +29,7 @@ npm run build:pages
 - title and primary content;
 - menu output and price formatting;
 - all twelve pizza cards, their photographs, and provisional-item notes;
-- the owner-media reel, branded wordmark, ice-cream mark, restored generated Remi art and archive poster;
+- the static seven-video owner-media strip, branded wordmark, inline pizza/cup/ice-cream morph marks, gooey red transition and restored generated Remi art;
 - WhatsApp, phone, and Uber Eats destinations;
 - Restaurant JSON-LD;
 - absence of starter-preview remnants;

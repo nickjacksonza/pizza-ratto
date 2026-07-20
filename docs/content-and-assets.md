@@ -113,8 +113,9 @@ The second July handoff added one owner mural photograph, seven WhatsApp video c
 | `public/images/brand/red-cup.svg` | Coffee-menu header punctuation | Supplied inline SVG from the owner/Figma handoff |
 | `public/images/brand/chef-hat.webp` | Ingredient-section punctuation | WebP derivative of the embedded-image Figma SVG |
 | `public/images/brand/red-ice-cream.svg` | Dolci-menu header punctuation | Supplied inline SVG from the owner/Figma correction handoff |
-| `public/images/brand/figma-poster.webp` | Counter-tapes archive card | WebP derivative of the supplied landscape Figma poster composition |
-| `public/images/owner-2026/backgammon-tournament.webp` | Counter-tapes archive card | WebP derivative of the owner-supplied poster; dates remain confined to the artwork pending confirmation |
+| `public/images/brand/figma-poster.webp` | Retained, unrendered Figma archive | WebP derivative of the supplied landscape Figma poster composition; removed from the counter reel after review |
+| `public/images/owner-2026/backgammon-tournament.webp` | Retained, unrendered owner archive | WebP derivative of the owner-supplied poster; removed from the counter reel after review |
+| `public/images/owner-2026/dessert-brownie.webp` | Retained owner dessert photography | Owner-supplied chocolate-cake photograph; no longer rendered in the counter section after the static-strip revision |
 | `public/videos/owner-2026/*.mp4` | Seven-card counter reel | Muted H.264 derivatives of the supplied WhatsApp clips, resized to 480px wide and moved to fast-start layout |
 | `public/images/owner-2026/video-stills/*.webp` | Video poster and reduced-motion frames | WebP still extracted from each matching owner video |
 

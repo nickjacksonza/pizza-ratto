@@ -222,8 +222,36 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 027 — Lock the counter reel and give every menu mark a deliberate slot
 
+> Extended and partially superseded by decision 028: the counter lock remains, but its banner treatment, background, card set and motion language have been revised.
+
 **Context:** Review found that the coffee, dolci and pizza marks looked appended rather than composed, the filtered counter banner shifted green, the owner mural was less effective in the established Meet Remi layout, and the new footage reel needed the same authored scroll pacing as the surrounding chapters.
 
 **Decision:** Replace Dolci's chef-hat badge with the supplied red ice-cream vector, place the coffee, dolci and pizza marks in dedicated header groups, and render the wide counter banner as an exact-red CSS mask. Restore `ratto-vespa-red.png` to the character scene. Promote `FROM THE COUNTER` to a top-level `tape-deck` scene and a `2.35 × viewport` large-desktop lock: cards deal in behind a pink shutter, settle with alternating tilt, then travel horizontally across the pinned view. Preserve the native snap-assisted reel below the lock breakpoint and the poster-only reduced-motion fallback.
 
 **Consequence:** Brand marks now read as part of their headers, the banner stays on-palette, and the owner footage gains a complete scroll narrative without pinning practical menus or compromising touch and reduced-motion layouts. The owner mural WebP remains documented but is no longer rendered.
+
+## 028 — Turn the counter reel into a seven-clip film gate
+
+> Superseded by decision 030: the seven clips remain, but the film-gate focus sequence and cake backdrop have been removed.
+
+**Context:** Follow-up review found that masking the counter banner removed the interior holes from its characters, the two archive cards distracted from the real shop footage, and a uniform horizontal conveyor did not give each clip enough presence. The character-and-scooter imagery also competed with the reel's subject.
+
+**Decision:** Recolour the supplied banner at the SVG path level so its counters remain visible, remove the Figma-drawer and dated owner-archive cards from the rendered reel, and retain exactly the seven owner videos. Use the owner chocolate-cake photograph as a red-washed background. On large desktop, keep the scroll lock but advance clips through a central film-gate frame: the active video scales up and brightens while adjacent cards dim and tilt away. Keep native snap scrolling and poster-frame fallbacks for smaller or reduced-motion layouts.
+
+**Consequence:** The mark remains legible and on-palette, the section is focused entirely on authentic moving footage, and the locked scroll has a clear visual beat for every clip without changing the accessible fallback or static-export model.
+
+## 029 — Morph supplied menu marks from ink into artwork
+
+**Context:** The new pizza, cup and ice-cream vectors were well positioned but remained static inside a motion-led page. Review requested GSAP MorphSVG treatment to give those owner-supplied marks a more premium entrance.
+
+**Decision:** Render exact inline copies of the three supplied vectors while retaining their canonical files and provenance. Give each icon a viewBox-matched compact start path, morph its dominant silhouette into the final owner path with MorphSVG, then reveal the secondary toppings, steam, cup details or cone with a short stagger. Scrub each animation over its own local header range so it reverses naturally. Do not initialize morph states under reduced motion.
+
+**Consequence:** The new marks now participate in the page's scroll language without becoming decorative loops or delaying content. Their static final forms remain available to reduced-motion users and in the server-rendered export.
+
+## 030 — Keep the counter footage static and spend motion on the exit
+
+**Context:** Review found that the film-gate focus sequence added too much movement inside `Fresh proof. No filters.` The requested reference was Ksenia Kondrashova's “On-Scroll Gooey Overlay (WebGL + GSAP ScrollTrigger),” whose defining behavior is an irregular liquid-colour boundary controlled by scroll.
+
+**Decision:** Remove the cake backdrop, focus frame, card spotlighting and reel travel. On large desktop, present all seven videos as one static line. Preserve the section lock, but hold the composition still through its first phase; during the exit phase, use GSAP to pull a field of exact `--red` drops over the viewport. Merge the drops into a continuous sheet with an SVG blur-and-threshold filter, then reveal `NEXT / BUILT DIFFERENT` before releasing the pin. Keep the smaller-screen swipe strip and reduced-motion layout free of the gooey overlay.
+
+**Consequence:** The footage becomes easier to scan, and the premium movement is concentrated at the chapter boundary. The effect evokes the referenced gooey overlay without adding a WebGL runtime or compromising the static export and motion fallback.

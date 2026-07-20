@@ -48,7 +48,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
     const anchorCleanups: Array<() => void> = [];
 
     const setupMotion = async () => {
-      const [gsapModule, scrollTriggerModule, scrollSmootherModule, scrollToModule, observerModule, splitTextModule, drawSvgModule, varaModule] = await Promise.all([
+      const [gsapModule, scrollTriggerModule, scrollSmootherModule, scrollToModule, observerModule, splitTextModule, drawSvgModule, morphSvgModule, varaModule] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
         import("gsap/ScrollSmoother"),
@@ -56,6 +56,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         import("gsap/Observer"),
         import("gsap/SplitText"),
         import("gsap/DrawSVGPlugin"),
+        import("gsap/MorphSVGPlugin"),
         import("vara"),
       ]);
       if (disposed) return;
@@ -67,9 +68,10 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       const { Observer } = observerModule;
       const { SplitText } = splitTextModule;
       const { DrawSVGPlugin } = drawSvgModule;
+      const MorphSVGPlugin = morphSvgModule.default;
       const Vara = varaModule.default;
 
-      gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin, Observer, SplitText, DrawSVGPlugin);
+      gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin, Observer, SplitText, DrawSVGPlugin, MorphSVGPlugin);
 
       const hotFontSize = window.innerWidth < 600 ? 110 : 180;
       const hotStrokeWidth = window.innerWidth < 600 ? 6.8 : 8.2;
@@ -352,25 +354,10 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
             return;
           }
 
-          if (transition === "tape-deck") {
-            const header = scene.querySelector<HTMLElement>(".counter-tapes-header");
-            const cards = gsap.utils.toArray<HTMLElement>(".counter-tape", scene);
+          if (transition === "counter-static") {
             sceneTimeline
               .to(curtain, { xPercent: -88, skewX: 5, rotation: 1.25, transformOrigin: "0% 50%", duration: .76, ease: "power3.inOut" }, 0)
               .to(curtain, { xPercent: -120, skewX: 0, rotation: 0, duration: .24, ease: "power2.out" }, .76);
-            if (header) sceneTimeline.from(header, { yPercent: -34, opacity: 0, duration: .62, ease: "power3.out" }, .14);
-            if (cards.length) {
-              sceneTimeline.from(cards, {
-                xPercent: (index: number) => 52 + index * 9,
-                yPercent: (index: number) => index % 2 ? 18 : -12,
-                rotation: (index: number) => index % 2 ? 8 : -7,
-                scale: .78,
-                opacity: 0,
-                stagger: .045,
-                duration: .78,
-                ease: "back.out(1.2)",
-              }, .22);
-            }
             return;
           }
 
@@ -471,6 +458,46 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         };
         responsiveMotion.add("(min-width: 761px)", () => setupMenuRows(3));
         responsiveMotion.add("(max-width: 760px)", () => setupMenuRows(2));
+
+        gsap.utils.toArray<SVGSVGElement>("[data-morph-icon]").forEach((icon) => {
+          const main = icon.querySelector<SVGPathElement>("[data-morph-main]");
+          const start = icon.querySelector<SVGPathElement>("[data-morph-start]");
+          const details = gsap.utils.toArray<SVGGraphicsElement>("[data-morph-details] > *, [data-morph-details]:not(g)", icon);
+          const trigger = icon.closest<HTMLElement>("header") ?? icon;
+          if (!main || !start) return;
+          const finalShape = main.getAttribute("d");
+          if (!finalShape) return;
+          const morphTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger,
+              start: "top 92%",
+              end: "top 58%",
+              scrub: .76,
+              invalidateOnRefresh: true,
+            },
+          });
+          morphTimeline
+            .fromTo(main, {
+              morphSVG: { shape: start, shapeIndex: "auto" },
+              rotation: -14,
+              scale: .72,
+            }, {
+              morphSVG: { shape: finalShape, shapeIndex: "auto" },
+              rotation: 0,
+              scale: 1,
+              duration: .7,
+              ease: "power3.inOut",
+            }, 0)
+            .from(details, {
+              opacity: 0,
+              scale: .2,
+              rotation: 16,
+              stagger: .055,
+              duration: .38,
+              ease: "back.out(1.8)",
+            }, .48)
+            .fromTo(icon, { yPercent: 14 }, { yPercent: 0, duration: .75, ease: "power2.out" }, 0);
+        });
 
         gsap.utils.toArray<HTMLElement>(".menu-category").forEach((category, index) => {
           const categoryHeader = category.querySelector<HTMLElement>("header");
@@ -631,24 +658,28 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 break;
               }
               case "counter-tapes": {
-                const header = chapter.querySelector<HTMLElement>(".counter-tapes-header");
-                const note = chapter.querySelector<HTMLElement>(".counter-tapes-note");
-                const reel = chapter.querySelector<HTMLElement>(".counter-reel");
                 const cards = gsap.utils.toArray<HTMLElement>(".counter-tape", chapter);
-                if (!reel || !cards.length) break;
-                const travel = () => Math.max(0, reel.scrollWidth - reel.clientWidth + window.innerWidth * .04);
-                if (header) timeline.to(header, { yPercent: -4, scale: .985, duration: .18, ease: "power2.inOut" }, .02);
-                if (note) timeline.to(note, { rotation: 1.2, xPercent: -3, duration: .2, ease: "back.out(1.25)" }, .08);
-                timeline
-                  .to(cards, {
-                    yPercent: (index: number) => index % 2 ? -3 : 3,
-                    rotation: (index: number) => index % 3 === 0 ? -2 : index % 3 === 1 ? 2 : 0,
-                    stagger: .025,
-                    duration: .2,
-                    ease: "power2.inOut",
-                  }, .08)
-                  .to(reel, { x: () => -travel(), duration: .72, ease: "power1.inOut" }, .18)
-                  .to(cards, { scale: .96, stagger: .018, duration: .18, ease: "power2.inOut" }, .7);
+                const gooeySurface = chapter.querySelector<HTMLElement>(".counter-gooey-surface");
+                const gooeyDrops = gsap.utils.toArray<HTMLElement>(".counter-gooey-drop", chapter);
+                const gooeyCopy = chapter.querySelector<HTMLElement>(".counter-gooey-copy");
+                if (!gooeySurface) break;
+                timeline.set(gooeySurface, { yPercent: -155 }, 0);
+                timeline.to(cards, { opacity: .72, scale: .985, duration: .16, ease: "power2.in" }, .44);
+                timeline.to(gooeySurface, { yPercent: 0, duration: .48, ease: "power1.inOut" }, .46);
+                gooeyDrops.forEach((drop, index) => {
+                  timeline.fromTo(drop, {
+                    scaleX: index % 2 ? .68 : 1.14,
+                    scaleY: index % 3 === 0 ? .62 : 1.22,
+                    xPercent: index % 2 ? -18 : 14,
+                  }, {
+                    scaleX: index % 2 ? 1.16 : .82,
+                    scaleY: index % 3 === 0 ? 1.28 : .76,
+                    xPercent: index % 2 ? 12 : -16,
+                    duration: .48,
+                    ease: "sine.inOut",
+                  }, .46 + index * .008);
+                });
+                if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .16, ease: "power2.out" }, .8);
                 break;
               }
               case "ingredients": {

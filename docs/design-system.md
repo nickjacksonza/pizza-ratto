@@ -121,14 +121,14 @@ Eight cards use enhanced owner-supplied photography and four use generated conce
 
 ## Counter tapes
 
-The coffee/dolci board now hands off to a compact horizontal owner-media reel rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. Two still cards close the reel: the supplied Figma poster composition and an owner-supplied backgammon poster retained as archive artwork, not as a newly written event claim.
+The coffee/dolci board now hands off to a compact horizontal owner-media strip rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. The Figma and dated owner archive cards are intentionally not rendered.
 
 - Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
-- On large desktop screens the chapter locks and GSAP moves the complete reel horizontally while the cards change tilt and settle. On smaller or shorter screens it remains horizontally scrollable and snap-assisted.
+- On large desktop screens all seven videos remain in one static line while the chapter is visible. The chapter locks only to perform its exit: a blurred, thresholded field of exact-red drops descends over the strip, merges into a liquid sheet and briefly introduces the next chapter before the pin releases. On smaller or shorter screens the videos remain horizontally scrollable and snap-assisted and the gooey overlay is omitted.
 - Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
 - The counter lock is presentation-only; it must never spread to the pizza or coffee/dolci menus.
 
-Figma-derived red pizza, cup and ice-cream marks punctuate the menu headers. Each mark occupies a dedicated header slot with its label beneath it rather than hanging outside a circular badge. The supplied stacked wordmark is the primary header mark; the black pizza-slice outline and wide banner remain supporting brand assets. The counter banner is rendered as a CSS mask filled with exact `--red`, preventing source colors or filters from shifting it green.
+Figma-derived red pizza, cup and ice-cream marks punctuate the menu headers. Each mark occupies a dedicated header slot with its label beneath it rather than hanging outside a circular badge. Their exact supplied paths are rendered inline so MorphSVG can scrub each main silhouette from a compact ink shape into the finished mark; toppings, steam, cup details and cone arrive in a short secondary beat. Reduced motion renders the completed vectors without an intermediate state. The supplied stacked wordmark is the primary header mark; the black pizza-slice outline and wide banner remain supporting brand assets. The counter banner is recoloured directly in its SVG paths: red letterforms keep contrasting interior counters, avoiding both the earlier green filter and the solid silhouettes produced by a CSS mask.
 
 Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards. The board's curtain and label may enter together, but each category owns a separate `top 90%` ScrollTrigger for its header and rows. In the stacked layout this prevents Dolci from completing while only Coffee is on screen.
 

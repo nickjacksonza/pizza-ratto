@@ -40,6 +40,48 @@ const counterTapes = [
   { src: "/videos/owner-2026/counter-sweep.mp4", poster: "/images/owner-2026/video-stills/counter-sweep.webp", label: "Counter chaos" },
 ];
 
+function MorphBrandMark({ name, className }: { name: "pizza" | "coffee" | "dolci"; className: string }) {
+  if (name === "pizza") {
+    return (
+      <svg className={`${className} morph-brand-icon`} viewBox="0 0 394 437" fill="none" aria-hidden="true" data-morph-icon="pizza" data-brand-source={asset("/images/brand/red-pizza-slice.svg")}>
+        <path data-morph-start d="M275 218.5C275 261.578 240.078 296.5 197 296.5C153.922 296.5 119 261.578 119 218.5C119 175.422 153.922 140.5 197 140.5C240.078 140.5 275 175.422 275 218.5Z" />
+        <path data-morph-main d="M346.846 250.21L38.8834 422.856C23.3305 432.189 3.11074 439.966 0 435.3C0 435.3 3.11074 419.746 4.6661 410.414L57.5486 54.2344C53.9192 51.642 45.1049 44.9018 38.8834 38.6807C31.1066 30.9042 26.4405 13.7944 52.8817 4.46219C79.323 -4.87002 158.647 -3.31465 253.524 46.4571C348.402 96.2289 377.954 173.997 390.397 209.771C402.84 245.544 379.509 250.21 367.066 250.21H346.846Z" fill="#CC2832" />
+        <g data-morph-details>
+          <circle cx="113.542" cy="163.104" r="46.6611" fill="white" />
+          <circle cx="157.094" cy="262.655" r="31.1074" fill="white" />
+          <circle cx="250.399" cy="234.658" r="40.4396" fill="white" />
+          <circle cx="60.6359" cy="352.866" r="24.8859" fill="white" />
+          <path d="M150.434 316.506L110.892 327.017M85.6118 235.512L76.5511 275.411M203.246 137.127L213.706 176.683" stroke="white" strokeWidth="12.8908" strokeLinecap="round" />
+          <path d="M28.0068 55.7924C47.1897 49.5709 88.3551 38.9944 99.5538 46.4601C113.552 55.7924 88.6662 74.4559 113.552 74.4559C138.438 74.4559 166.435 49.57 177.322 65.1237C188.21 80.6774 167.99 94.6757 186.654 96.2311C205.319 97.7865 219.317 88.4543 230.205 102.453C241.092 116.451 241.092 124.228 253.535 142.892C265.978 161.557 290.864 149.114 297.086 164.667C303.307 180.221 278.421 194.219 306.418 203.552C334.414 212.884 346.857 215.994 346.857 220.661" stroke="white" strokeWidth="12.8908" strokeLinecap="round" />
+        </g>
+      </svg>
+    );
+  }
+
+  if (name === "coffee") {
+    return (
+      <svg className={`${className} morph-brand-icon`} viewBox="0 0 294 341" fill="none" aria-hidden="true" data-morph-icon="coffee" data-brand-source={asset("/images/brand/red-cup.svg")}>
+        <path data-morph-start d="M219 201C219 240.765 186.765 273 147 273C107.235 273 75 240.765 75 201C75 161.235 107.235 129 147 129C186.765 129 219 161.235 219 201Z" />
+        <path data-morph-main d="M214.834 298.648C188.932 330.766 164.067 340.089 120.554 340.089C61.4987 340.089 30.4185 309.009 11.7698 272.748C-6.87895 236.486 -0.662707 189.864 11.7698 167.072C24.2023 144.279 72.8961 140.134 112.266 138.062C151.635 135.99 195.149 143.243 214.834 152.567C230.581 160.026 236.59 176.395 237.627 183.647C266.636 175.359 302.897 202.296 291.501 246.846C282.383 282.486 236.59 296.23 214.834 298.648Z" fill="#CC2832" />
+        <g data-morph-details>
+          <path d="M119.531 33.4213C119.531 36.7366 115.041 36.8749 113.314 35.4935C105.026 28.8636 103.99 25.1331 95.7012 25.1331C82.5954 25.1331 76.0174 33.4213 73.9453 49.998C71.7569 67.5048 92.5954 70.7187 110.207 83.1512C127.819 95.5837 118.496 126.665 117.459 121.485C115.386 111.125 102.932 92.4755 81.1863 86.2593C65.5943 81.8022 48.0434 68.6468 55.2956 40.6737C62.5479 12.7006 79.3295 7.25209 92.5931 9.59252C110.207 12.7005 119.531 29.2772 119.531 33.4213Z" fill="#CC2832" />
+          <path d="M232.442 264.456C238.244 257.825 239.694 227.158 239.694 212.654C254.199 204.366 271.811 218.87 266.631 237.519C261.451 256.168 225.19 272.744 232.442 264.456Z" fill="white" />
+          <path d="M30.4209 171.216C35.3939 160.441 92.5833 156.366 120.556 155.675C141.278 154.762 215.872 160.855 211.728 174.324C207.583 187.792 136.097 189.864 120.556 189.864C105.016 189.864 24.2046 184.684 30.4209 171.216Z" fill="white" />
+          <path d="M138.259 104.696L138.174 104.907C129.887 97.6544 131.957 75.8974 152.678 63.4649C173.399 51.0324 172.95 38.9348 169.255 30.3117C163.039 15.807 152.678 12.6992 142.318 15.807C129.379 19.6883 126.772 25.1317 123.67 22.0233C117.769 16.1114 135.058 2.33918 149.571 0.266489C161.265 -1.40359 187.904 4.41088 192.048 28.2398C196.192 52.0687 181.687 68.6451 167.183 74.8613C146.671 83.6523 141.05 97.7131 138.259 104.696Z" fill="#CC2832" />
+        </g>
+      </svg>
+    );
+  }
+
+  return (
+    <svg className={`${className} morph-brand-icon`} viewBox="0 0 213 356" fill="none" aria-hidden="true" data-morph-icon="dolci" data-brand-source={asset("/images/brand/red-ice-cream.svg")}>
+      <path data-morph-start d="M166.5 150C166.5 183.137 139.637 210 106.5 210C73.363 210 46.5 183.137 46.5 150C46.5 116.863 73.363 90 106.5 90C139.637 90 166.5 116.863 166.5 150Z" />
+      <path data-morph-main d="M120.607 4.76264C100.321 -7.58536 70.9946 6.96763 58.8671 15.7876C62.1743 13.5821 76.5074 25.7106 83.1224 45.5556C89.7374 65.4006 55.5599 68.7081 36.8171 84.1431C21.8229 96.4911 26.1595 119.423 30.2021 129.346C38.1398 122.29 68.7897 119.791 83.1224 119.423C61.0724 122.069 39.7574 128.611 32.4074 135.961C25.7923 133.021 9.49163 131.11 1.55363 151.396C-6.38436 171.682 18.0746 185.941 30.2021 185.573C31.6721 193.291 35.0531 211.151 36.8171 220.853C38.5811 230.555 46.3721 231.51 50.0471 230.775H158.092C166.03 230.775 170.955 224.16 172.425 220.853L176.835 194.393L190.065 185.573C193.74 182.633 202.854 172.784 209.91 156.908C218.73 137.063 204.397 110.603 174.63 108.398C150.816 106.634 117.667 126.038 104.07 135.961C120.828 114.793 158.092 102.886 174.63 99.5781C174.997 91.1256 172.204 72.6771 158.092 66.5031C143.98 60.3291 106.642 72.0156 89.7371 78.6306C98.5571 68.0466 132.367 60.2556 148.17 57.6831C158.092 46.6581 145.965 20.1976 120.607 4.76264Z" fill="#CC2832" />
+      <path data-morph-details d="M55.585 236.284H155.912L136.067 347.637C133.862 349.842 124.601 354.472 105.197 355.354C85.7934 356.236 77.2674 350.577 75.4299 347.637L55.585 236.284Z" fill="#CC2832" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const pizzaMenu = menu.find((category) => category.id === "pizza")!;
   const sideMenu = menu.filter((category) => category.id !== "pizza");
@@ -163,7 +205,7 @@ export default function Home() {
               <div className="menu-inner section-pad">
                 <header className="flyer-menu-title">
                   <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
-                  <div className="menu-fire-mark"><img className="menu-brand-icon" src={asset("/images/brand/red-pizza-slice.svg")} alt="" aria-hidden="true" /><span>Wood-fired<br />by Big Bertha</span></div>
+                  <div className="menu-fire-mark"><MorphBrandMark name="pizza" className="menu-brand-icon" /><span>Wood-fired<br />by Big Bertha</span></div>
                 </header>
                 <div className="menu-rail-window">
                   <ul className="pizza-collage">
@@ -198,7 +240,7 @@ export default function Home() {
             <div className="small-menu-grid">
               {sideMenu.map((category) => (
                 <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
-                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span className="category-mark"><img className="category-icon" src={asset(category.id === "coffee" ? "/images/brand/red-cup.svg" : "/images/brand/red-ice-cream.svg")} alt="" aria-hidden="true" /><small>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</small></span></header>
+                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span className="category-mark"><MorphBrandMark name={category.id === "coffee" ? "coffee" : "dolci"} className="category-icon" /><small>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</small></span></header>
                   <ul>
                     {category.items.map((item) => (
                       <li key={item.name}>
@@ -213,12 +255,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="counter-tapes section-pad" aria-labelledby="counter-tapes-title" data-scene="counter-tapes" data-transition="tape-deck" data-lock-chapter="counter-tapes" data-lock-scroll="2.35">
+        <section className="counter-tapes section-pad" aria-labelledby="counter-tapes-title" data-scene="counter-tapes" data-transition="counter-static" data-lock-chapter="counter-tapes" data-lock-scroll="1.8">
             <span className="scene-curtain" aria-hidden="true" />
             <span className="chapter-progress" aria-hidden="true"><i /></span>
             <header className="counter-tapes-header">
               <div><p className="section-number">FROM THE COUNTER / 07 SHORTS</p><h2 id="counter-tapes-title" data-split="scroll">Fresh proof.<br /><em>No filters.</em></h2></div>
-              <div className="counter-tapes-note"><span className="counter-brand-banner" style={{ "--counter-banner-image": `url("${asset("/images/brand/wordmark-banner.svg")}")` } as CSSProperties} aria-hidden="true" /><p>A few seconds from Big Bertha, the pass and the counter. Swipe sideways for the full roll.</p></div>
+              <div className="counter-tapes-note"><img className="counter-brand-banner" src={asset("/images/brand/wordmark-banner.svg")} alt="" aria-hidden="true" /><p>A few seconds from Big Bertha, the pass and the counter. Swipe sideways for the full roll.</p></div>
             </header>
             <div className="counter-reel" aria-label="Short owner videos from Pizza Ratto">
               {counterTapes.map((tape, index) => (
@@ -230,14 +272,27 @@ export default function Home() {
                   <figcaption><span>{String(index + 1).padStart(2, "0")}</span>{tape.label}</figcaption>
                 </figure>
               ))}
-              <figure className="counter-tape counter-art-card">
-                <div className="counter-tape-media"><img src={asset("/images/brand/figma-poster.webp")} alt="Pizza Ratto Figma poster with Remi on a Vespa" loading="lazy" /></div>
-                <figcaption><span>08</span>From the Figma drawer</figcaption>
-              </figure>
-              <figure className="counter-tape counter-event-card">
-                <div className="counter-tape-media"><img src={asset("/images/owner-2026/backgammon-tournament.webp")} alt="Pizza Ratto backgammon tournament poster with August rounds and a September final" loading="lazy" /></div>
-                <figcaption><span>09</span>Owner archive / dates on artwork</figcaption>
-              </figure>
+            </div>
+            <div className="counter-gooey-transition" aria-hidden="true">
+              <svg className="counter-gooey-defs" width="0" height="0" focusable="false">
+                <defs>
+                  <filter id="counter-gooey-filter" x="-20%" y="-20%" width="140%" height="170%" colorInterpolationFilters="sRGB">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -12" result="goo" />
+                  </filter>
+                </defs>
+              </svg>
+              <div className="counter-gooey-surface">
+                <span className="counter-gooey-sheet" />
+                <span className="counter-gooey-drop counter-gooey-drop-1" />
+                <span className="counter-gooey-drop counter-gooey-drop-2" />
+                <span className="counter-gooey-drop counter-gooey-drop-3" />
+                <span className="counter-gooey-drop counter-gooey-drop-4" />
+                <span className="counter-gooey-drop counter-gooey-drop-5" />
+                <span className="counter-gooey-drop counter-gooey-drop-6" />
+                <span className="counter-gooey-drop counter-gooey-drop-7" />
+              </div>
+              <strong className="counter-gooey-copy">NEXT / BUILT DIFFERENT</strong>
             </div>
         </section>
 
