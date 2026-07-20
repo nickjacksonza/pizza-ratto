@@ -24,7 +24,7 @@ app/layout.tsx
         └── components/BrandIcon.tsx (presentational service icons)
 ```
 
-`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and the motion system in `ScrollChoreography.tsx`. That component dynamically loads GSAP 3.13, ScrollSmoother, ScrollTrigger, ScrollToPlugin, Observer, SplitText and DrawSVG. ScrollSmoother owns the native-scroll-backed page wrapper; ScrollTrigger coordinates the pinned road scene, headline entrances, full off-canvas panel translations, parallax and gallery stacking; ScrollToPlugin powers in-page navigation; and Observer makes the fixed header respond to scroll direction. Vara generates the actual `Hot` handwriting strokes from a preloaded local font-data file; no runtime CDN or third-party API is required. Core GSAP setup does not wait for Vara, so panels, parallax and the Remi timeline become ready independently while the handwriting paths initialize. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
+`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and the motion system in `ScrollChoreography.tsx`. That component dynamically loads GSAP 3.13, ScrollSmoother, ScrollTrigger, ScrollToPlugin, Observer, SplitText and DrawSVG. ScrollSmoother owns the native-scroll-backed page wrapper; ScrollTrigger coordinates the pinned road scene, viewport-scene entrances, the pinned horizontal desktop menu, parallax and gallery stacking; ScrollToPlugin powers in-page navigation; and Observer makes the fixed header respond to scroll direction. Vara generates the actual `Hot` handwriting strokes from a preloaded local font-data file; no runtime CDN or third-party API is required. Core GSAP setup does not wait for Vara, so panels, parallax and the Remi timeline become ready independently while the handwriting paths initialize. `gsap.matchMedia()` owns the desktop menu pin and restores the normal mobile grid automatically. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state. See `docs/motion-system.md` before changing this runtime.
 
 The fixed announcement/header chrome and mobile order bar live outside `#smooth-wrapper`; `main` and `footer` live inside `#smooth-content`. This is required because fixed UI must not inherit the transform ScrollSmoother applies to the content layer. Likewise, the Remi stage uses ScrollTrigger pinning while motion is active instead of CSS sticky positioning.
 
@@ -72,15 +72,16 @@ The page is composed in this order:
 3. Full-height split hero poster with ordering details
 4. Pinned `Hot / PIZZA` road scene where scroll-driven Remi tows a red editorial scene in from the left
 5. Moving brand ticker
-6. `01 / WHAT WE’RE ABOUT` manifesto
-7. `02 / THE IMPORTANT BIT` floating-photo menu portal and full menu
-8. `03 / BUILT DIFFERENT` split ingredient story
-9. Remi and Big Bertha character section
-10. `04 / INSIDE` overlapping venue and food collage
-11. `05 / FIND THE FIRE` visit and order section
-12. Footer
-13. Mobile fixed ordering bar
-14. Restaurant JSON-LD
+6. Full-viewport `01 / WHAT WE’RE ABOUT` paper scene
+7. Full-viewport `02 / THE IMPORTANT BIT` iris scene
+8. Pinned horizontal pizza menu followed by a full-view coffee/dolci board
+9. Full-viewport `03 / BUILT DIFFERENT` split ingredient scene
+10. Full-viewport Remi and Big Bertha column scene
+11. Full-view `04 / INSIDE` overlapping venue and food deck
+12. Full-viewport `05 / FIND THE FIRE` visit and order shutter
+13. Footer
+14. Mobile fixed ordering bar
+15. Restaurant JSON-LD
 
 ## Metadata and discovery
 

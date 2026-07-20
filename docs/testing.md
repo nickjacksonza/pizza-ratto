@@ -81,7 +81,10 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
 - About, Menu and Visit links animate to the correct section through ScrollToPlugin; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
+- the story, portal, coffee/dolci, ingredients, character, gallery and visit scenes each occupy a deliberate full view and use their documented paper, iris, rise, split, columns, deck and shutter transitions;
 - major sections travel in from alternating sides, with left-origin panels beginning fully outside the viewport rather than only clipping in place, and without exposing non-palette color flashes;
+- the desktop pizza stage pins without jumping; the pinned element itself has no animated transform; the rail begins with the first cards, reaches the last cards, and releases before coffee/dolci;
+- the hero illustration, surrounding surface and red copy panel share continuous paper grain without a pink strip or darker image rectangle;
 - floating menu pizzas and gallery cards enter from different directions without exposing empty image edges;
 - pizza labels align with photographs and prices;
 - all twelve pizza photographs load without fallback placeholders;
@@ -97,6 +100,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - hero art preserves its aspect ratio;
 - phone number does not overflow at 390px and below;
 - pizza names, prices, descriptions, and notes remain readable in two columns;
+- the desktop menu pin is absent at `760px` and below, and all twelve cards return to normal two-column document flow;
 - long headings wrap without horizontal scrolling;
 - sticky bar highlights WhatsApp and respects the bottom safe area;
 - sticky bar does not cover footer content;
@@ -130,8 +134,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 
 ## Performance checklist
 
-- Preserve `loading="eager"` for the hero art and the pinned pull-transition photograph; lazy-load the remaining below-the-fold photographs.
-- Lazy-load below-the-fold photographs.
+- Preserve `loading="eager"` for the hero art, the pinned pull-transition photograph, and the first four cards needed in the initial pinned-menu viewport; lazy-load the remaining below-the-fold photographs.
 - Keep photographs in WebP where practical.
 - Reassess the three multi-megabyte PNGs before a performance-focused release.
 - Do not reintroduce a runtime image endpoint while GitHub Pages remains a target.

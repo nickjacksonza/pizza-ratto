@@ -49,5 +49,6 @@ Each would change the present static, low-maintenance architecture and should ge
 - The build stack uses a young vinext release; upgrades can affect static rendering and asset paths.
 - GitHub Pages is hosted below `/pizza-ratto/`, so root-relative asset regressions are easy to introduce.
 - Hero source files are large and may affect slower mobile connections.
+- The desktop pizza rail calculates its pin duration from rendered card width; menu-count and card-width changes require a ScrollTrigger refresh and pin-release QA.
 - Brand story details are intentionally sparse because owner approval is outstanding.
 - The repository still carries optional starter database/auth infrastructure that the homepage does not use. Remove it only after confirming the Sites target will not need it.

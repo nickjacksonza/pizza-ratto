@@ -5,7 +5,7 @@ This folder explains the current product, its design logic, implementation, and 
 ## Current status
 
 - One-page restaurant website implemented and responsive.
-- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, true handwritten stroke drawing, split-letter entrances, a velocity-reactive pinned Remi/Vespa sequence that tows the next red scene in from the left, full off-canvas panel arrivals, and an overlapping venue collage.
+- Scroll-led editorial redesign implemented with the GSAP smooth-scroll stack, viewport-scale story scenes, a pinned horizontal desktop menu, true handwritten stroke drawing, split-letter entrances, a velocity-reactive Remi/Vespa sequence that tows the next red scene in from the left, and an overlapping venue collage.
 - Publicly deployed to GitHub Pages at `https://zmaqutu.github.io/pizza-ratto/`.
 - OpenAI Sites project retained as an optional second deployment target.
 - Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.
@@ -18,6 +18,7 @@ This folder explains the current product, its design logic, implementation, and 
 | --- | --- |
 | `architecture.md` | Application shape, routing, data flow, rendering, and optional starter surfaces |
 | `design-system.md` | Brand translation, tokens, typography, layout, responsive behavior, and accessibility |
+| `motion-system.md` | GSAP runtime, scene transitions, pinned-menu architecture, reduced-motion behavior, and future-agent handoff |
 | `content-and-assets.md` | Business content, menu ownership, image inventory, generation history, and alt-text rules |
 | `development.md` | Local setup, commands, common editing workflows, and static-export caveats |
 | `deployment.md` | GitHub Pages and OpenAI Sites deployment strategies and troubleshooting |

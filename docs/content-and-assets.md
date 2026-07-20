@@ -66,7 +66,7 @@ See `content-todo.md` for facts that remain unverified.
 | --- | ---: | --- | --- |
 | `public/og.png` | 1731×909 | Social card and original visual reference | Supplied/generated poster composition |
 | `public/images/hero-logo-mascot.png` | 1698×926 | Hero wordmark and complete rat/Vespa illustration | Generated extraction from the flyer visual; project-critical |
-| `public/images/hero-paper-texture.png` | 1698×926 | Archived hero background, not currently rendered | Generated background-only paper texture derived from the hero visual |
+| `public/images/hero-paper-texture.png` | 1698×926 | Continuous hero paper surface | Generated background-only paper texture derived from the hero visual; rendered behind the opaque hero composite and beneath the red copy panel to remove visible seams |
 | `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza; white canvas is visually blended with section colors in CSS |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
 | `public/images/interior.webp` | 291×510 | Rat Hole room card | Supplied venue photo, actively rendered in the animated gallery stack |
@@ -173,10 +173,10 @@ Brand service icons are code-native interface marks in `components/BrandIcon.tsx
 
 GitHub Pages is hosted below `/pizza-ratto/`. JSX image paths must pass through the `asset()` helper. Do not reintroduce `next/image` unless the deployment architecture changes.
 
-CSS public assets should use repository-safe relative paths. The hero texture currently uses:
+CSS public assets should use repository-safe relative paths. When a CSS background depends on the deployment prefix, pass an asset-prefixed custom property from JSX. The hero currently uses:
 
-```css
-background-image: url("../images/hero-paper-texture.png");
+```tsx
+style={{ "--hero-paper-image": `url("${asset("/images/hero-paper-texture.png")}")` }}
 ```
 
 ## Performance notes

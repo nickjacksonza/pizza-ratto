@@ -22,6 +22,10 @@ type SmoothScroller = {
 };
 
 type MotionObserver = { kill: () => void };
+type ResponsiveMotion = {
+  add: (query: string, setup: () => void) => unknown;
+  revert: () => void;
+};
 
 export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: ScrollChoreographyProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -35,6 +39,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
     let disposed = false;
     let gsapContext: { revert: () => void } | undefined;
     let wordContext: { revert: () => void } | undefined;
+    let responsiveMotion: ResponsiveMotion | undefined;
     let smoothScroller: SmoothScroller | undefined;
     let motionObserver: MotionObserver | undefined;
     const splitInstances: SplitInstance[] = [];
@@ -223,46 +228,73 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
           });
         });
 
-        const panelStarts: Record<string, { clipPath: string; xPercent?: number; yPercent?: number; scale?: number }> = {
-          left: { clipPath: "inset(0 0 0 0)", xPercent: -102 },
-          right: { clipPath: "inset(0 0 0 0)", xPercent: 102 },
-          up: { clipPath: "inset(0 0 0 0)", yPercent: 38 },
-          iris: { clipPath: "circle(0% at 50% 50%)", scale: .88 },
-        };
-
-        gsap.utils.toArray<HTMLElement>("[data-panel]").forEach((panel) => {
-          const direction = panel.dataset.panel ?? "left";
-          const horizontalStart = direction === "left" ? -28 : direction === "right" ? 28 : 0;
-          const verticalStart = direction === "up" ? 18 : direction === "iris" ? 12 : 0;
-          const panelChildren = Array.from(panel.children).filter((child) =>
-            !child.matches(".portal-pizza, [data-parallax], .smooth-float"),
+        gsap.utils.toArray<HTMLElement>("[data-scene]").forEach((scene) => {
+          const transition = scene.dataset.transition ?? "paper-left";
+          const children = Array.from(scene.children).filter((child) =>
+            !child.matches(".portal-pizza, [data-parallax], .smooth-float, .gallery-stack"),
           );
-          const panelTimeline = gsap.timeline({
+          const sceneTimeline = gsap.timeline({
             scrollTrigger: {
-              trigger: panel,
-              start: "top 92%",
-              end: "top 40%",
-              scrub: 0.78,
+              trigger: scene,
+              start: "top 94%",
+              end: "top 34%",
+              scrub: 0.82,
               invalidateOnRefresh: true,
             },
           });
-          panelTimeline
-            .fromTo(panel, panelStarts[direction] ?? panelStarts.left, {
-              clipPath: "inset(0 0 0 0)",
-              xPercent: 0,
-              yPercent: 0,
-              scale: 1,
-              duration: 1,
-              ease: "power2.inOut",
-            }, 0)
-            .from(panelChildren, {
-              xPercent: horizontalStart,
-              yPercent: verticalStart,
-              opacity: 0.25,
-              stagger: 0.06,
-              duration: 0.82,
-              ease: "power3.out",
-            }, 0.08);
+
+          if (transition === "iris") {
+            sceneTimeline
+              .fromTo(scene, { clipPath: "circle(0% at 50% 50%)", scale: .86 }, { clipPath: "circle(76% at 50% 50%)", scale: 1, duration: 1, ease: "power2.inOut" }, 0)
+              .from(children, { yPercent: 28, opacity: 0, stagger: .08, duration: .72, ease: "back.out(1.25)" }, .16);
+            return;
+          }
+
+          if (transition === "split") {
+            const photo = scene.querySelector<HTMLElement>(".ingredient-photo");
+            const copy = scene.querySelector<HTMLElement>(".ingredient-copy");
+            if (photo && copy) {
+              sceneTimeline
+                .from(photo, { xPercent: -102, rotation: -2.5, duration: 1, ease: "power3.inOut" }, 0)
+                .from(copy, { xPercent: 102, duration: 1, ease: "power3.inOut" }, 0)
+                .from(Array.from(copy.children), { xPercent: 24, opacity: 0, stagger: .06, duration: .62, ease: "power3.out" }, .34);
+            }
+            return;
+          }
+
+          if (transition === "columns") {
+            const columns = Array.from(scene.children);
+            sceneTimeline
+              .from(columns[0], { xPercent: -105, rotation: -2, duration: .92, ease: "power3.inOut" }, 0)
+              .from(columns[1], { yPercent: 105, scale: .9, duration: 1, ease: "power3.inOut" }, .04)
+              .from(columns[2], { xPercent: 105, rotation: 2, duration: .92, ease: "power3.inOut" }, .08);
+            return;
+          }
+
+          if (transition === "deck") {
+            sceneTimeline
+              .fromTo(scene, { yPercent: 42, rotation: 1.5, transformOrigin: "50% 100%" }, { yPercent: 0, rotation: 0, duration: 1, ease: "power3.inOut" }, 0)
+              .from(children, { yPercent: 32, opacity: 0, stagger: .08, duration: .72, ease: "power3.out" }, .18);
+            return;
+          }
+
+          if (transition === "cards-up") {
+            sceneTimeline
+              .fromTo(scene, { yPercent: 48, clipPath: "inset(0 7% 0 7% round 40px)" }, { yPercent: 0, clipPath: "inset(0 0 0 0 round 0px)", duration: 1, ease: "power3.inOut" }, 0)
+              .from(children, { yPercent: 38, opacity: 0, stagger: .08, duration: .72, ease: "back.out(1.2)" }, .18);
+            return;
+          }
+
+          if (transition === "shutter-right") {
+            sceneTimeline
+              .fromTo(scene, { xPercent: 102, skewX: -4, transformOrigin: "100% 50%" }, { xPercent: 0, skewX: 0, duration: 1, ease: "power3.inOut" }, 0)
+              .from(children, { xPercent: 34, opacity: 0, stagger: .07, duration: .72, ease: "back.out(1.18)" }, .22);
+            return;
+          }
+
+          sceneTimeline
+            .fromTo(scene, { xPercent: -102, skewX: 3, transformOrigin: "0% 50%" }, { xPercent: 0, skewX: 0, duration: 1, ease: "power3.inOut" }, 0)
+            .from(children, { xPercent: -32, opacity: 0, stagger: .07, duration: .72, ease: "power3.out" }, .16);
         });
 
         const heroArt = document.querySelector<HTMLElement>("[data-hero-art]");
@@ -289,7 +321,41 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
         }
 
         const menuMarquee = document.querySelector<HTMLElement>("[data-scroll-marquee]");
-        if (menuMarquee) {
+        const menuSequence = document.querySelector<HTMLElement>("[data-menu-sequence]");
+        const menuStage = document.querySelector<HTMLElement>("[data-menu-stage]");
+        const menuRail = document.querySelector<HTMLElement>("[data-menu-rail]");
+
+        responsiveMotion = gsap.matchMedia();
+        responsiveMotion.add("(min-width: 761px)", () => {
+          if (!menuSequence || !menuStage || !menuRail) return;
+          const cards = gsap.utils.toArray<HTMLElement>(".pizza-collage > li", menuRail);
+          const railDistance = () => Math.max(0, menuRail.scrollWidth - window.innerWidth + window.innerWidth * .09);
+          const menuTimeline = gsap.timeline({
+            defaults: { ease: "none" },
+            scrollTrigger: {
+              trigger: menuSequence,
+              start: "top top",
+              end: () => `+=${Math.max(window.innerWidth * 1.6, railDistance() * 1.08)}`,
+              pin: menuStage,
+              anticipatePin: 1,
+              scrub: .95,
+              invalidateOnRefresh: true,
+            },
+          });
+          menuTimeline
+            .from(cards, {
+              yPercent: (index: number) => index % 2 ? 18 : -14,
+              rotation: (index: number) => index % 2 ? 2.5 : -2.5,
+              opacity: .35,
+              stagger: .025,
+              duration: .2,
+              ease: "power2.out",
+            }, 0)
+            .to(menuRail, { x: () => -railDistance(), duration: 1 }, 0);
+          if (menuMarquee) menuTimeline.to(menuMarquee, { xPercent: -12, duration: 1 }, 0);
+        });
+        responsiveMotion.add("(max-width: 760px)", () => {
+          if (!menuMarquee) return;
           gsap.fromTo(menuMarquee, { xPercent: 0 }, {
             xPercent: -18,
             ease: "none",
@@ -301,7 +367,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
               invalidateOnRefresh: true,
             },
           });
-        }
+        });
 
         gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((element) => {
           const image = element.querySelector("img");
@@ -587,6 +653,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       motionObserver?.kill();
       splitInstances.reverse().forEach((split) => split.revert());
       wordContext?.revert();
+      responsiveMotion?.revert();
       gsapContext?.revert();
       smoothScroller?.kill();
       document.documentElement.classList.remove("motion-ready");

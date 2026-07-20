@@ -165,3 +165,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Initialize the GSAP/ScrollSmoother runtime before waiting for Vara font data, preload the local Vara JSON, and give the handwriting its own ScrollTrigger once its paths are ready. Replace shallow directional wipes with full off-canvas panel translations. During Remi's crossing, move a complete red editorial scene from `-100%` to `0%` behind the scooter and animate a short tow line, while the orange title composition exits.
 
 **Consequence:** General motion no longer depends on handwriting-data readiness, left/right entrances have clear physical travel, and the road scene ends on finished editorial content instead of an empty color band. The handoff stays inside the approved palette, uses an already documented owner photograph, remains statically exportable, and disappears in the reduced-motion fallback.
+
+## 021 — Make the complete page a responsive scene sequence
+
+**Context:** The Remi handoff had become an authored full-screen moment, but the following story and menu sections still read as conventional page blocks. Review requested every major section to feel like its own view and identified the opaque hero artwork's pink paper as a visible seam.
+
+**Decision:** Give each major story container a `data-scene` identity and a distinct scrubbed transition: paper-left, iris, cards-up, split, columns, deck or shutter-right. Use a nested ScrollTrigger pin for a horizontally translated twelve-card pizza rail on desktop, with `gsap.matchMedia()` restoring the normal two-column menu below `761px`. Keep the pinned stage static and animate only its descendants. Reuse the matching `hero-paper-texture.png` behind the hero shell, art and red copy layer, and remove image blending/filtering that darkens the baked paper background.
+
+**Consequence:** The homepage now reads as a connected series of poster views rather than one animated scene followed by normal sections. Desktop menu browsing becomes an immersive vertical-to-horizontal sequence, mobile and reduced-motion users retain a complete natural-flow menu, and the hero artwork sits on one continuous paper surface. The full selector inventory, cleanup order, responsive exception and QA requirements live in `docs/motion-system.md`.

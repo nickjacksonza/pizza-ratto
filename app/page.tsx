@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import type { CSSProperties } from "react";
 import { BrandIcon } from "../components/BrandIcon";
 import { MobileNavigation } from "../components/MobileNavigation";
 import { ScrollChoreography } from "../components/ScrollChoreography";
@@ -68,7 +69,11 @@ export default function Home() {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main id="main" tabIndex={-1}>
-        <section className="hero-shell" id="top">
+        <section
+          className="hero-shell"
+          id="top"
+          style={{ "--hero-paper-image": `url("${asset("/images/hero-paper-texture.png")}")` } as CSSProperties}
+        >
           <div className="checker-strip" aria-hidden="true" />
           <div className="hero-art" data-hero-art data-parallax="24">
             <img src={asset("/images/hero-logo-mascot.png")} alt="Pizza Ratto hand-painted logo beside Remi the rat riding a Vespa" loading="eager" fetchPriority="high" />
@@ -102,7 +107,7 @@ export default function Home() {
           </div>
         </div>
 
-        <section className="manifesto section-pad" id="story" data-panel="left">
+        <section className="manifesto section-pad" id="story" data-scene="story" data-transition="paper-left">
           <p className="section-number">01 / WHAT WE’RE ABOUT</p>
           <div>
             <p className="manifesto-kicker">A little about Pizza Ratto</p>
@@ -112,7 +117,7 @@ export default function Home() {
           <aside className="smooth-float"><b>HOUSE RULES</b>{facts.map((fact, index) => <span key={fact}>{String(index + 1).padStart(2, "0")} — {fact}</span>)}</aside>
         </section>
 
-        <section className="menu-portal section-pad" aria-labelledby="menu-portal-title" data-panel="iris">
+        <section className="menu-portal section-pad" aria-labelledby="menu-portal-title" data-scene="menu-portal" data-transition="iris">
           <p className="section-number">02 / THE IMPORTANT BIT</p>
           <div className="menu-portal-copy">
             <p>Twelve rides. One very hot oven.</p>
@@ -125,33 +130,45 @@ export default function Home() {
           })}
         </section>
 
-        <section className="menu-section" id="menu" aria-labelledby="pizza-heading">
-          <div className="menu-marquee-title" data-scroll-marquee aria-hidden="true"><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span></div>
-          <div className="menu-inner section-pad">
-            <header className="flyer-menu-title">
-              <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
-              <span>Wood-fired<br />by Big Bertha</span>
-            </header>
-            <ul className="pizza-collage">
-              {pizzaMenu.items.map((item) => {
-                const photo = pizzaPhotos[item.name];
-                return (
-                  <li className={photo ? "has-pizza-photo" : "has-placeholder-photo"} key={item.name}>
-                    {photo
-                      ? <div className="pizza-cutout"><img src={asset(photo.src)} alt={photo.alt} loading="lazy" /></div>
-                      : <div className="pizza-cutout pizza-placeholder" role="img" aria-label={`${item.name} pizza photo placeholder`}><span>Pizza photo<br />coming hot</span></div>}
-                    <div className="pizza-label">
-                      <div><b>{item.name}</b><strong>{Array.isArray(item.price) ? item.price.map((price) => <span key={price.label}>{price.label} {zar(price.price)}</span>) : zar(item.price)}</strong></div>
-                      {item.description && <p>{item.description}</p>}
-                      {item.note && <small className="menu-note">{item.note}</small>}
-                      {item.featured && <small>House favourite. No sensible reason required.</small>}
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-            <p className="sauce-note smooth-float">Hot honey &amp; rat sauce · R15 each</p>
+        <section className="menu-section" id="menu" aria-labelledby="pizza-heading" data-scene-root="menu">
+          <div className="menu-pizza-sequence" data-menu-sequence>
+            <div className="menu-pizza-stage" data-menu-stage>
+              <div className="menu-marquee-title" data-scroll-marquee aria-hidden="true"><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span><span>PIZZA</span></div>
+              <div className="menu-inner section-pad">
+                <header className="flyer-menu-title">
+                  <div><p>{pizzaMenu.kicker}</p><h2 id="pizza-heading" data-split="scroll">Pizza</h2></div>
+                  <span>Scroll the line-up<br />Big Bertha approved</span>
+                </header>
+                <div className="menu-rail-window">
+                  <ul className="pizza-collage" data-menu-rail>
+                    {pizzaMenu.items.map((item, index) => {
+                      const photo = pizzaPhotos[item.name];
+                      return (
+                        <li className={photo ? "has-pizza-photo" : "has-placeholder-photo"} key={item.name}>
+                          {photo
+                            ? <div className="pizza-cutout"><img src={asset(photo.src)} alt={photo.alt} loading={index < 4 ? "eager" : "lazy"} decoding="async" /></div>
+                            : <div className="pizza-cutout pizza-placeholder" role="img" aria-label={`${item.name} pizza photo placeholder`}><span>Pizza photo<br />coming hot</span></div>}
+                          <div className="pizza-label">
+                            <div><b>{item.name}</b><strong>{Array.isArray(item.price) ? item.price.map((price) => <span key={price.label}>{price.label} {zar(price.price)}</span>) : zar(item.price)}</strong></div>
+                            {item.description && <p>{item.description}</p>}
+                            {item.note && <small className="menu-note">{item.note}</small>}
+                            {item.featured && <small>House favourite. No sensible reason required.</small>}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="menu-stage-footer">
+                  <p className="sauce-note smooth-float">Hot honey &amp; rat sauce · R15 each</p>
+                  <p className="menu-scroll-note" aria-hidden="true">Scroll to ride the menu →</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div className="small-menu-view section-pad" data-scene="small-menu" data-transition="cards-up">
+            <p className="section-number">02 / COFFEE &amp; DOLCI</p>
             <div className="small-menu-grid">
               {sideMenu.map((category) => (
                 <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
@@ -170,12 +187,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="ingredients" aria-labelledby="ingredients-title" data-panel="right">
+        <section className="ingredients" aria-labelledby="ingredients-title" data-scene="ingredients" data-transition="split">
           <div className="ingredient-photo" data-parallax="22"><img src={asset("/images/owner-2026/feast-landscape.webp")} alt="A full Pizza Ratto table spread with pizzas, desserts, hot honey and fresh ingredients" loading="lazy" /></div>
           <div className="ingredient-copy section-pad"><p className="section-number">03 / BUILT DIFFERENT</p><h2 id="ingredients-title" className="spaced-heading" data-split="scroll">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
-        <section className="characters section-pad" data-panel="left">
+        <section className="characters section-pad" data-scene="characters" data-transition="columns">
           <div className="character-copy">
             <span className="sticker">RAT #01</span>
             <h2 data-split="scroll">Meet Remi.</h2>
@@ -185,7 +202,7 @@ export default function Home() {
           <div className="bertha-note"><span className="sticker">FIRE #01</span><h3>Big Bertha.</h3><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
         </section>
 
-        <section className="gallery section-pad" aria-labelledby="gallery-title" data-gallery data-panel="up">
+        <section className="gallery section-pad" aria-labelledby="gallery-title" data-gallery data-scene="gallery" data-transition="deck">
           <div className="gallery-intro">
             <div><p className="section-number">04 / INSIDE</p><h2 id="gallery-title" data-split="scroll">The rat hole.</h2></div>
             <p>Pizza, scooters, old furniture and very good reasons to stay awhile.</p>
@@ -200,7 +217,7 @@ export default function Home() {
           <div className="gallery-filmstrip" aria-hidden="true"><span>ROOM FOR ONE MORE</span><span>CAFFE · PIZZA · CHAOS</span><span>ROOM FOR ONE MORE</span></div>
         </section>
 
-        <section className="visit section-pad" id="visit" data-panel="right">
+        <section className="visit section-pad" id="visit" data-scene="visit" data-transition="shutter-right">
           <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading" data-split="scroll">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
           <div className="visit-actions"><a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>

@@ -77,6 +77,16 @@ Keep new client components isolated. The default page is a server component. Add
 
 Before adding any server-dependent behavior, decide whether GitHub Pages remains a required target. Static Pages cannot support server actions, API routes, request headers, cookies, or dynamic authentication.
 
+### Change scroll scenes
+
+1. Read `docs/motion-system.md` completely.
+2. Keep `ScrollChoreography.tsx` as the single motion coordinator.
+3. Preserve readable base CSS without `.motion-ready`.
+4. Use `data-scene` and `data-transition` for section-level behavior.
+5. Put desktop-only pins inside `gsap.matchMedia()` and animate descendants rather than the pinned element.
+6. Check forward and reverse entrances, desktop pin release, mobile natural flow, reduced motion, and horizontal overflow.
+7. Run the full normal and Pages validation matrix.
+
 ## Asset handling
 
 - Keep project assets under `public/images/`.

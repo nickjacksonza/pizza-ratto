@@ -52,7 +52,7 @@ Typography principles:
 
 ## Texture and imperfection
 
-The active texture is a subtle fixed CSS paper/noise layer on `body::before`. The original `public/images/hero-paper-texture.png` remains in the asset archive but is not rendered by the current split hero.
+The global texture is a subtle fixed CSS paper/noise layer on `body::before`. The split hero also renders `public/images/hero-paper-texture.png` through an asset-prefixed CSS custom property so its opaque artwork and red copy panel sit on one continuous paper surface.
 
 Imperfection is created through:
 
@@ -72,7 +72,7 @@ The hero deliberately separates concerns in a full-height split composition:
 - `hero-logo-mascot.png` contains the Pizza Ratto wordmark and complete mascot/scooter illustration.
 - The main promise is live HTML in a red editorial panel so it remains responsive and accessible.
 - Phone, hours, location, opening stamp, and WhatsApp CTA are live HTML.
-- Pink paper, checkerboards, and the original artwork occupy one shared full-height poster.
+- The matching peach paper texture, checkerboards, and original artwork occupy one shared full-height poster; the same texture sits beneath the red copy layer so the opaque illustration never reads as a separate rectangle.
 - Checkerboard bands span the full viewport width.
 
 The full logo, helmet, pizza slice, Vespa, and both wheels must remain visible. The CTA uses the rounded, hard-shadow button language shared across the redesign.
@@ -88,7 +88,9 @@ The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its
 
 The pulled panel reuses the approved venue-table photograph with a red editorial composition, pink display copy, an orange `PULLING UP` badge, a checker road and a short tow line that expands as the scene catches Remi. It replaces the previously unused red tail of the pinned section; it is decorative and hidden in the reduced-motion fallback.
 
-The same client component applies masked SplitText entrances to major headings, scroll-scrubbed full-viewport translations and directional child entrances to marked sections, image parallax, a scrubbed menu marquee and staggered gallery/card motion. Left and right panels begin just beyond the viewport (`±102%`) so their directional arrival is unmistakable instead of reading as a local reveal. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
+The same client component treats every major story section as a viewport-scale scene. The manifesto uses a skewed paper slide, the menu portal an iris, ingredients a two-sided split, the character view a three-column assembly, the gallery a rising deck, and the visit view a right-hand shutter. Left and right scenes begin just beyond the viewport (`±102%`) so their arrival is unmistakable instead of reading as a local reveal. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Fixed chrome remains outside the transformed smooth-content wrapper.
+
+The desktop pizza menu is a second pinned view. Vertical scroll translates a twelve-card horizontal rail while the nested menu stage stays fixed. The rail distance is measured at refresh time and the pinned stage itself is never animated. Below `760px`, `gsap.matchMedia()` removes the pin and returns the cards to their two-column reading order.
 
 The `PIZZA` title deliberately uses visible overflow plus top and bottom padding; do not reintroduce an overflow mask on the full word. Character masks belong on the individual SplitText entrance wrappers only. `Hot` is generated as real Vara paths with a heavier rounded stroke and a small red print-registration shadow.
 
@@ -96,26 +98,28 @@ Core motion initializes before the optional Vara font fetch completes. The font 
 
 ## Section rhythm
 
-The regular content sections remain compact; the road scene is the one deliberate long-scroll exception:
+The page uses a sequence of deliberate full-view scenes:
 
 - hero height: approximately one viewport on desktop, content-height on mobile;
 - road scene: `280svh` desktop and `235svh` below `760px`;
+- story, portal, coffee/dolci, ingredients, characters and visit: at least `100svh`;
+- pizza menu: one pinned desktop viewport with scroll length derived from the horizontal rail; natural document flow below `760px`;
 - global section padding: up to `7.5rem` for major editorial pauses;
-- ingredients section: `720px` minimum on desktop;
+- ingredients section: one viewport minimum on desktop;
 - character artwork: `620px` minimum on desktop;
-- gallery stack: fluid `620px`–`940px` stage on desktop and `710px`–`850px` on narrow screens.
+- gallery stack: fluid `560px`–`760px` stage on desktop and `710px`–`850px` on narrow screens.
 
 Do not reintroduce large empty vertical bands unless the content requires them.
 
 ## Menu composition
 
-Pizza uses a strict three-column desktop grid and two-column mobile grid. The menu portal uses circular cutouts with grey outlines and red offset shadows; the full menu switches to equal rectangular photography with hard grey borders. Labels begin below the images with positive spacing.
+Pizza uses a horizontal twelve-card rail in the enhanced desktop view and a strict two-column mobile grid. Without motion JavaScript or under reduced motion, it falls back to the complete three-column desktop grid. The menu portal uses circular cutouts with grey outlines and red offset shadows; the full menu switches to equal rectangular photography with hard grey borders. Labels begin below the images with positive spacing.
 
 Eight cards use enhanced owner-supplied photography and four use generated concept photography. The placeholder component remains as a deliberate fallback for future menu additions without a photo.
 
 Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards.
 
-The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones. Card transforms are disabled at every breakpoint to protect image baselines and label clearance. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
+The expanded pizza menu contains twelve photo cards. Normal/reduced-motion desktop uses four rows of three; enhanced desktop scrolls one rail; phones use six rows of two. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
 
 The Rat Hole gallery uses a bounded editorial header followed by a four-card stack. The room, Vespa table, feast and lemon-dessert photographs enter from different sides and settle into a deliberately overlapping collage with hard borders, orange shadows and small rotations. Narrow screens preserve the overlap with controlled absolute positions instead of flattening the photographs into a generic vertical list.
 
