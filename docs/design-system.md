@@ -88,7 +88,7 @@ The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its
 
 The pulled panel reuses the approved venue-table photograph with a red editorial composition, pink display copy, an orange `PULLING UP` badge, a checker road and a short tow line that expands as the scene catches Remi. It replaces the previously unused red tail of the pinned section; it is decorative and hidden in the reduced-motion fallback.
 
-The same client component treats every major story section as a viewport-scale scene. Palette-colored curtains bridge the chapters: they clear left or right, collapse as an iris, split from the centre, or skew like a paper shutter while the incoming composition assembles behind them. On large desktop viewports the story, menu portal, ingredients, character, social and visit chapters then lock at the top of the viewport and spend scroll progress on a bespoke internal sequence before releasing the next chapter. Ingredients change crop and color, the character panels squeeze around Remi, the portal pizzas orbit, the social cards deal into a mural, and the visit actions assemble in order. Shutters straighten and finish at `±120%`, which prevents a diagonal wedge lingering beside tall scenes. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles nearby anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Long anchor jumps use a fixed red route card with checker, wheel and speed-line details; the document position changes only while that card fully covers the viewport, so locked timelines never appear to fast-forward. Fixed chrome and the route card remain outside the transformed smooth-content wrapper.
+The same client component treats every major story section as a viewport-scale scene. Palette-colored curtains bridge the chapters: they clear left or right, collapse as an iris, split from the centre, or skew like a paper shutter while the incoming composition assembles behind them. On large desktop viewports the story, menu portal, ingredients, character, social and visit chapters then lock at the top of the viewport and spend scroll progress on a bespoke internal sequence before releasing the next chapter. Ingredients change crop and color, the Meet Remi poster disintegrates its mascot into canvas fragments, the portal pizzas orbit, the social cards deal into a mural, and the visit actions assemble in order. Shutters straighten and finish at `±120%`, which prevents a diagonal wedge lingering beside tall scenes. ScrollSmoother supplies native-scroll-backed interpolation and restrained lag effects, ScrollToPlugin handles nearby anchor navigation, and Observer hides or restores the fixed header according to scroll intent. Long anchor jumps use a fixed red route card with checker, wheel and speed-line details; the document position changes only while that card fully covers the viewport, so locked timelines never appear to fast-forward. Fixed chrome and the route card remain outside the transformed smooth-content wrapper.
 
 The pizza menu stays in natural reading order: four rows of three on desktop and six rows of two below `760px`. GSAP alternates whole rows from the left and right as they approach the viewport, while the oversized `PIZZA` marquee travels horizontally on its own scroll range. The menu never pins or becomes a horizontal carousel.
 
@@ -108,7 +108,7 @@ The page uses a sequence of deliberate full-view scenes:
 - pizza menu: natural document flow at every size, with four desktop rows of three and six mobile rows of two;
 - global section padding: up to `7.5rem` for major editorial pauses;
 - ingredients section: one viewport minimum on desktop;
-- character artwork: `620px` minimum on desktop;
+- Meet Remi poster artwork: up to `620px` wide inside the locked desktop composition, with a complete natural-flow poster on smaller screens;
 - social collage: one pinned desktop poster; `780px`–`870px` of controlled collage space below `1001px`.
 
 Do not reintroduce large empty vertical bands unless the content requires them.
@@ -124,7 +124,7 @@ Eight cards use enhanced owner-supplied photography and four use generated conce
 The coffee/dolci board now hands off to a compact horizontal owner-media strip rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. The Figma and dated owner archive cards are intentionally not rendered.
 
 - Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
-- On large desktop screens all seven videos remain in one static line while the chapter is visible. The chapter locks only to perform its exit: a blurred, thresholded field of exact-red drops descends over the strip, merges into a liquid sheet and briefly introduces the next chapter before the pin releases. On smaller or shorter screens the videos remain horizontally scrollable and snap-assisted and the gooey overlay is omitted.
+- On large desktop screens all seven videos remain in one static line while the chapter is visible. The chapter locks only to perform its exit: eleven overlapping, unevenly stretched exact-red lobes pass through a stronger blur/threshold field, merge into a liquid sheet and briefly introduce the next chapter before the pin releases. On smaller or shorter screens the videos remain horizontally scrollable and snap-assisted and the gooey overlay is omitted.
 - Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
 - The counter lock is presentation-only; it must never spread to the pizza or coffee/dolci menus.
 
@@ -153,7 +153,7 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 - hero artwork and CTA panel become one vertical reading sequence;
 - pizza grid becomes two columns;
 - social cards keep a compact, controlled collage with smaller overlaps and a fixed follow action;
-- the character panels become a single-column sequence.
+- the Meet Remi poster becomes a single-column static composition with no fragment generation.
 
 ### At or below 520px
 
@@ -183,7 +183,7 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 - Its standard loop duration is 14 seconds. If the copy length changes, visually recheck the perceived speed instead of changing the duration blindly.
 - The top announcement remains static and centered when it fits. At phone widths it switches to two identical 18-second runs so the complete business message remains legible without compression or clipping. Reduced-motion mode disables that loop and wraps one copy instead.
 - The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
-- Remi's generated portrait source has asymmetric blank canvas around the visible drawing and is active in both the road and character scenes. The road scene uses a bounded overflow crop plus `mix-blend-mode: multiply`; the character scene optically centres the same source with a slight left correction. Keep the helmet, pizza, complete scooter and both wheels inside both visible crops.
+- Remi's generated portrait source has asymmetric blank canvas around the visible drawing and is active in both the road and character scenes. The road scene uses a bounded overflow crop plus `mix-blend-mode: multiply`; the character poster overlays either the source or its aligned temporary canvas layers without changing the crop. Keep the helmet, pizza, complete scooter and both wheels inside both visible compositions.
 - The ticker stops under `prefers-reduced-motion: reduce`.
 - The road scene becomes static, every handwriting stroke is shown, section wipes are disabled, and marked parallax elements return to their natural position under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.

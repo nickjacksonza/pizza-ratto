@@ -277,8 +277,8 @@ export default function Home() {
               <svg className="counter-gooey-defs" width="0" height="0" focusable="false">
                 <defs>
                   <filter id="counter-gooey-filter" x="-20%" y="-20%" width="140%" height="170%" colorInterpolationFilters="sRGB">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
-                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -12" result="goo" />
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="21" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 32 -14" result="goo" />
                   </filter>
                 </defs>
               </svg>
@@ -291,6 +291,10 @@ export default function Home() {
                 <span className="counter-gooey-drop counter-gooey-drop-5" />
                 <span className="counter-gooey-drop counter-gooey-drop-6" />
                 <span className="counter-gooey-drop counter-gooey-drop-7" />
+                <span className="counter-gooey-drop counter-gooey-drop-8" />
+                <span className="counter-gooey-drop counter-gooey-drop-9" />
+                <span className="counter-gooey-drop counter-gooey-drop-10" />
+                <span className="counter-gooey-drop counter-gooey-drop-11" />
               </div>
               <strong className="counter-gooey-copy">NEXT / BUILT DIFFERENT</strong>
             </div>
@@ -303,16 +307,30 @@ export default function Home() {
           <div className="ingredient-copy section-pad"><img className="ingredient-chef-hat" src={asset("/images/brand/chef-hat.webp")} alt="" aria-hidden="true" /><p className="section-number">03 / BUILT DIFFERENT</p><h2 id="ingredients-title" className="spaced-heading" data-split="scroll">Proper ingredients.<br /><em>Questionable mascot.</em></h2><p>Our dough is stretched by hand and fired with intent. Italian mozzarella comes from Puglia. Our meat toppings are halal and sourced from Mubarak Food Emporium.</p><p className="scribble">No shortcuts. No sad crusts.</p></div>
         </section>
 
-        <section className="characters section-pad" data-scene="characters" data-transition="columns" data-lock-chapter="characters" data-lock-scroll="1.15">
+        <section className="remi-story section-pad" aria-labelledby="remi-title" data-scene="characters" data-transition="remi-poster" data-lock-chapter="characters" data-lock-scroll="1.8">
           <span className="scene-curtain" aria-hidden="true" />
           <span className="chapter-progress" aria-hidden="true"><i /></span>
-          <div className="character-copy">
-            <span className="sticker">RAT #01</span>
-            <h2 data-split="scroll">Meet Remi.</h2>
-            <p>Our resident rat and patron saint of good decisions made near a pizza oven. You’ll find him around the room, including a mural painted by local artist Buffy.</p>
-          </div>
-          <div className="character-art" data-parallax="34"><img src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn Remi riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="lazy" /></div>
-          <div className="bertha-note"><span className="sticker">FIRE #01</span><h3>Big Bertha.</h3><p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p></div>
+          <span className="remi-backdrop-word" aria-hidden="true">RATTO</span>
+          <header className="remi-story-heading">
+            <p className="section-number">MEET THE MASCOT / RAT #01</p>
+            <h2 id="remi-title" data-split="scroll">Meet<br /><em>Remi.</em></h2>
+            <p>Resident rat. Patron saint of good decisions made near a pizza oven. Around the room, his mural was painted by local artist Buffy.</p>
+          </header>
+          <figure className="remi-disintegration" data-remi-disintegration>
+            <span className="remi-sun" aria-hidden="true" />
+            <span className="remi-checker" aria-hidden="true" />
+            <div className="remi-disintegration-media">
+              <img className="remi-disintegration-source" data-remi-source src={asset("/images/ratto-vespa-red.png")} alt="Hand-drawn Remi riding a bright red Vespa while eating pepperoni pizza" width={1096} height={1435} loading="eager" decoding="async" />
+              <div className="remi-fragments" data-remi-fragments aria-hidden="true" />
+            </div>
+            <figcaption>Approach with pizza. He startles easily.</figcaption>
+          </figure>
+          <aside className="remi-bertha-card">
+            <span>FIRE #01</span>
+            <strong>Big Bertha.</strong>
+            <p>The wood-fired heart of the operation. Hot, loud and not remotely interested in your schedule.</p>
+          </aside>
+          <div className="remi-vanish-copy" aria-hidden="true"><span>POOF.</span><strong>Gone for pizza.</strong></div>
         </section>
 
         <section className="social-showcase section-pad" aria-labelledby="social-title" data-social-showcase data-scene="social" data-transition="deck" data-lock-chapter="social" data-lock-scroll="1.75">

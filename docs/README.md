@@ -10,7 +10,7 @@ This folder explains the current product, its design logic, implementation, and 
 - OpenAI Sites project retained as an optional second deployment target.
 - Menu, business details, structured metadata, mobile navigation, motion fallbacks, and ordering links are implemented.
 - The menu uses a deliberate twelve-card grid: eight enhanced owner photographs and four generated concept photographs. Six specials remain provisional pending owner approval.
-- The July owner/Figma handoff is integrated through the authentic header wordmark, menu illustrations and a static seven-video counter strip; the strip holds in place before an exact-red gooey transition carries the page into the next chapter, while the owner Remi mural remains archived and the earlier generated Remi art is restored in the character scene.
+- The July owner/Figma handoff is integrated through the authentic header wordmark, menu illustrations and a static seven-video counter strip; the strip holds in place before an eleven-lobe exact-red gooey transition carries the page into the next chapter. Meet Remi is now a dedicated poster scene whose restored generated artwork disintegrates into optimized canvas fragments on large desktop, while mobile and reduced-motion layouts remain static.
 - No database, CMS, cart, analytics, user accounts, or custom domain.
 
 ## Documentation map

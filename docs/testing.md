@@ -29,7 +29,7 @@ npm run build:pages
 - title and primary content;
 - menu output and price formatting;
 - all twelve pizza cards, their photographs, and provisional-item notes;
-- the static seven-video owner-media strip, branded wordmark, inline pizza/cup/ice-cream morph marks, gooey red transition and restored generated Remi art;
+- the static seven-video owner-media strip, branded wordmark, inline pizza/cup/ice-cream morph marks, eleven-lobe gooey red transition, reimagined Meet Remi poster and restored generated Remi art;
 - WhatsApp, phone, and Uber Eats destinations;
 - Restaurant JSON-LD;
 - absence of starter-preview remnants;
@@ -82,7 +82,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
 - nearby About, Menu and Visit links animate to the correct section through ScrollToPlugin; long jumps show the fixed red route card, change position only while fully covered, land with the correct hash and focus, and never visibly fast-forward intermediate pins; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
-- the story, portal, pizza, coffee/dolci, ingredients, character, social and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, columns and deck transitions;
+- the story, portal, pizza, coffee/dolci, ingredients, character, social and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, Remi-poster and deck transitions;
 - at widths of at least `1001px` and heights of at least `720px`, story, portal, ingredients, character, social and visit pin at `top top`, spend scroll on their internal choreography, then release without a document jump;
 - each pinned narrative stage fills its progress rail from top to bottom, remains reversible when scrolling upward, and never animates the pin container itself;
 - at `1000px` wide, below `720px` high, and under reduced motion, no narrative pin spacers are created and all content stays in semantic natural flow;
@@ -98,6 +98,8 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - all twelve pizza photographs load without fallback placeholders;
 - section labels are readable;
 - Remi art is not cropped;
+- on a large desktop, the Meet Remi source is replaced by 42 aligned fragment canvases, disintegrates progressively during the character lock, reconstructs on reverse scroll, and reveals `Gone for pizza` without flashing a blank frame;
+- at `1000px` wide, below `720px` high, with reduced motion, or when canvas setup fails, the Meet Remi source remains whole and no fragment layer is required;
 - the moving Remi asset blends into the orange background without a visible white rectangle;
 - the visit title, address block and action stack share one aligned top edge after the entrance completes; the WhatsApp, Uber Eats and call buttons retain their DOM order and equal spacing;
 

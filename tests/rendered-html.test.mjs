@@ -31,7 +31,10 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /Tramonto/);
   assert.match(html, /Twelve rides\. One very hot oven\./);
   assert.match(html, /Fresh proof\./);
-  assert.match(html, /Big Bertha, up close/);
+  assert.match(html, /Meet[\s\S]*Remi\./);
+  assert.match(html, /Big Bertha\./);
+  assert.match(html, /data-remi-disintegration/);
+  assert.match(html, /Gone for pizza\./);
   assert.match(html, /\/videos\/owner-2026\/oven-close\.mp4/);
   assert.match(html, /\/images\/brand\/pizza-ratto-wordmark\.svg/);
   assert.match(html, /\/images\/brand\/red-ice-cream\.svg/);
@@ -71,6 +74,8 @@ test("centralises business and menu content and keeps fake links out", async () 
   const motion = await readFile(new URL("../components/ScrollChoreography.tsx", import.meta.url), "utf8");
   assert.match(motion, /gsap\/MorphSVGPlugin/);
   assert.match(motion, /morphSVG:/);
+  assert.match(motion, /layerCount = 42/);
+  assert.match(motion, /remi-fragment-canvas/);
   assert.doesNotMatch(page, /className="text-link" href=\{business\.instagramUrl\}/);
   assert.match(page, /dynamic = "force-static"/);
   assert.match(page, /asset\("\/images\//);

@@ -67,7 +67,7 @@ See `content-todo.md` for facts that remain unverified.
 | `public/og.png` | 1731×909 | Social card and original visual reference | Supplied/generated poster composition |
 | `public/images/hero-logo-mascot.png` | 1698×926 | Hero wordmark and complete rat/Vespa illustration | Generated extraction from the flyer visual; project-critical |
 | `public/images/hero-paper-texture.png` | 1698×926 | Continuous hero paper surface | Generated background-only paper texture derived from the hero visual; rendered behind the opaque hero composite and beneath the red copy panel to remove visible seams |
-| `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza; white canvas is visually blended with section colors in CSS |
+| `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi poster/disintegration source | Generated edit: red scooter, white helmet, pepperoni pizza; the character scene draws a temporary downsampled canvas copy on capable large screens while preserving this image as its semantic and fallback source |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
 | `public/images/interior.webp` | 291×510 | Ratto Social Club room card | Supplied venue photo, actively rendered in the `Never pizza solo.` collage |
 | `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |

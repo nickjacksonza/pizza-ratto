@@ -46,6 +46,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
     let motionObserver: MotionObserver | undefined;
     const splitInstances: SplitInstance[] = [];
     const anchorCleanups: Array<() => void> = [];
+    const generatedRemiCanvases: HTMLCanvasElement[] = [];
 
     const setupMotion = async () => {
       const [gsapModule, scrollTriggerModule, scrollSmootherModule, scrollToModule, observerModule, splitTextModule, drawSvgModule, morphSvgModule, varaModule] = await Promise.all([
@@ -128,6 +129,59 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       }
 
       document.documentElement.classList.add("motion-ready");
+
+      const remiFigure = document.querySelector<HTMLElement>("[data-remi-disintegration]");
+      const remiSource = remiFigure?.querySelector<HTMLImageElement>("[data-remi-source]");
+      const remiFragmentsHost = remiFigure?.querySelector<HTMLElement>("[data-remi-fragments]");
+      const supportsRemiDisintegration = window.matchMedia("(min-width: 1001px) and (min-height: 720px)").matches;
+
+      if (supportsRemiDisintegration && remiFigure && remiSource && remiFragmentsHost) {
+        try {
+          if (!remiSource.complete || !remiSource.naturalWidth) await remiSource.decode();
+          if (disposed) return;
+
+          const layerCount = 42;
+          const repeatCount = 2;
+          const width = 380;
+          const height = Math.round(width * remiSource.naturalHeight / remiSource.naturalWidth);
+          const sourceCanvas = document.createElement("canvas");
+          sourceCanvas.width = width;
+          sourceCanvas.height = height;
+          const sourceContext = sourceCanvas.getContext("2d", { willReadFrequently: true });
+          if (!sourceContext) throw new Error("Canvas is unavailable");
+          sourceContext.drawImage(remiSource, 0, 0, width, height);
+          const sourcePixels = sourceContext.getImageData(0, 0, width, height);
+          const layerPixels = Array.from({ length: layerCount }, () => sourceContext.createImageData(width, height));
+
+          for (let x = 0; x < width; x += 1) {
+            for (let y = 0; y < height; y += 1) {
+              const pixelIndex = (y * width + x) * 4;
+              if (sourcePixels.data[pixelIndex + 3] === 0) continue;
+              for (let repeat = 0; repeat < repeatCount; repeat += 1) {
+                const biasedLayer = Math.floor((layerCount * (Math.random() + (2 * x) / width)) / 3);
+                const layer = layerPixels[Math.min(layerCount - 1, biasedLayer)].data;
+                layer[pixelIndex] = sourcePixels.data[pixelIndex];
+                layer[pixelIndex + 1] = sourcePixels.data[pixelIndex + 1];
+                layer[pixelIndex + 2] = sourcePixels.data[pixelIndex + 2];
+                layer[pixelIndex + 3] = sourcePixels.data[pixelIndex + 3];
+              }
+            }
+          }
+
+          layerPixels.forEach((pixels) => {
+            const canvas = document.createElement("canvas");
+            canvas.className = "remi-fragment-canvas";
+            canvas.width = width;
+            canvas.height = height;
+            canvas.getContext("2d")?.putImageData(pixels, 0, 0);
+            remiFragmentsHost.appendChild(canvas);
+            generatedRemiCanvases.push(canvas);
+          });
+          remiFigure.classList.add("has-remi-fragments");
+        } catch {
+          remiFigure.classList.remove("has-remi-fragments");
+        }
+      }
 
       ScrollTrigger.config({ ignoreMobileResize: true });
       smoothScroller = ScrollSmoother.create({
@@ -341,6 +395,19 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
               .from(columns[0], { xPercent: -105, rotation: -2, duration: .92, ease: "power3.inOut" }, .02)
               .from(columns[1], { yPercent: 105, scale: .9, duration: 1, ease: "power3.inOut" }, .05)
               .from(columns[2], { xPercent: 105, rotation: 2, duration: .92, ease: "power3.inOut" }, .08);
+            return;
+          }
+
+          if (transition === "remi-poster") {
+            const heading = scene.querySelector<HTMLElement>(".remi-story-heading");
+            const figure = scene.querySelector<HTMLElement>(".remi-disintegration");
+            const card = scene.querySelector<HTMLElement>(".remi-bertha-card");
+            sceneTimeline
+              .to(curtain, { xPercent: -88, skewX: 5, duration: .76, ease: "power3.inOut" }, 0)
+              .to(curtain, { xPercent: -120, skewX: 0, duration: .24, ease: "power2.out" }, .76);
+            if (heading) sceneTimeline.from(heading, { xPercent: -45, rotation: -1.5, opacity: 0, duration: .78, ease: "power3.out" }, .1);
+            if (figure) sceneTimeline.from(figure, { xPercent: 40, rotation: 5, scale: .88, opacity: 0, duration: .82, ease: "back.out(1.15)" }, .12);
+            if (card) sceneTimeline.from(card, { yPercent: 80, rotation: -8, opacity: 0, duration: .56, ease: "back.out(1.35)" }, .28);
             return;
           }
 
@@ -665,19 +732,21 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 if (!gooeySurface) break;
                 timeline.set(gooeySurface, { yPercent: -155 }, 0);
                 timeline.to(cards, { opacity: .72, scale: .985, duration: .16, ease: "power2.in" }, .44);
-                timeline.to(gooeySurface, { yPercent: 0, duration: .48, ease: "power1.inOut" }, .46);
+                timeline.to(gooeySurface, { yPercent: 0, xPercent: 1.5, duration: .5, ease: "power1.inOut" }, .46);
                 gooeyDrops.forEach((drop, index) => {
                   timeline.fromTo(drop, {
-                    scaleX: index % 2 ? .68 : 1.14,
-                    scaleY: index % 3 === 0 ? .62 : 1.22,
-                    xPercent: index % 2 ? -18 : 14,
+                    scaleX: index % 2 ? .56 : 1.22,
+                    scaleY: index % 3 === 0 ? .46 : 1.34,
+                    xPercent: index % 2 ? -24 : 18,
+                    rotation: index % 2 ? -3 : 3,
                   }, {
-                    scaleX: index % 2 ? 1.16 : .82,
-                    scaleY: index % 3 === 0 ? 1.28 : .76,
-                    xPercent: index % 2 ? 12 : -16,
-                    duration: .48,
+                    scaleX: index % 2 ? 1.24 : .76,
+                    scaleY: index % 3 === 0 ? 1.42 : .68,
+                    xPercent: index % 2 ? 16 : -20,
+                    rotation: index % 2 ? 2 : -2,
+                    duration: .5,
                     ease: "sine.inOut",
-                  }, .46 + index * .008);
+                  }, .45 + index * .006);
                 });
                 if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .16, ease: "power2.out" }, .8);
                 break;
@@ -695,14 +764,32 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 break;
               }
               case "characters": {
-                const art = chapter.querySelector<HTMLElement>(".character-art img");
-                const left = chapter.querySelector<HTMLElement>(".character-copy");
-                const right = chapter.querySelector<HTMLElement>(".bertha-note");
-                timeline
-                  .to(art, { xPercent: 5, rotation: 2.5, scale: 1.08, duration: .75, ease: "power1.inOut" }, .06)
-                  .to(left, { xPercent: 5, duration: .45, ease: "power2.inOut" }, .28)
-                  .to(right, { xPercent: -6, rotation: -.6, duration: .45, ease: "power2.inOut" }, .34)
-                  .to(chapter.querySelectorAll(".sticker"), { rotation: (index: number) => index ? 7 : -7, scale: 1.12, stagger: .08, duration: .28, ease: "back.out(1.6)" }, .55);
+                const heading = chapter.querySelector<HTMLElement>(".remi-story-heading");
+                const figure = chapter.querySelector<HTMLElement>(".remi-disintegration");
+                const card = chapter.querySelector<HTMLElement>(".remi-bertha-card");
+                const backdrop = chapter.querySelector<HTMLElement>(".remi-backdrop-word");
+                const vanishCopy = chapter.querySelector<HTMLElement>(".remi-vanish-copy");
+                const fragments = gsap.utils.toArray<HTMLCanvasElement>(".remi-fragment-canvas", chapter);
+                if (backdrop) timeline.to(backdrop, { xPercent: -8, rotation: -5, duration: .8, ease: "power1.inOut" }, .04);
+                if (heading) timeline.to(heading, { xPercent: -5, rotation: -.5, duration: .56, ease: "power2.inOut" }, .08);
+                if (fragments.length) {
+                  fragments.forEach((fragment, index) => {
+                    const phase = (index + 1) * 1.73;
+                    timeline.to(fragment, {
+                      x: 100 + 150 * Math.sin(phase),
+                      y: 115 * Math.cos(phase * .86),
+                      rotation: 30 * Math.sin(phase * 1.2),
+                      scale: .82 + (index % 5) * .025,
+                      opacity: 0,
+                      duration: .44,
+                      ease: "power2.in",
+                    }, .22 + (index / fragments.length) * .36);
+                  });
+                } else if (figure) {
+                  timeline.to(figure, { xPercent: 18, rotation: 4, scale: .92, opacity: .08, duration: .5, ease: "power2.in" }, .24);
+                }
+                if (vanishCopy) timeline.to(vanishCopy, { opacity: 1, scale: 1.04, rotation: 1, duration: .24, ease: "back.out(1.5)" }, .62);
+                if (card) timeline.to(card, { xPercent: -4, rotation: 1.5, duration: .34, ease: "power2.inOut" }, .7);
                 break;
               }
               case "social": {
@@ -1011,6 +1098,8 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       responsiveMotion?.revert();
       gsapContext?.revert();
       smoothScroller?.kill();
+      generatedRemiCanvases.forEach((canvas) => canvas.remove());
+      document.querySelector<HTMLElement>("[data-remi-disintegration]")?.classList.remove("has-remi-fragments");
       document.documentElement.classList.remove("motion-ready");
       word.replaceChildren();
       socialWord?.replaceChildren();
