@@ -69,7 +69,7 @@ See `content-todo.md` for facts that remain unverified.
 | `public/images/hero-paper-texture.png` | 1698×926 | Archived hero background, not currently rendered | Generated background-only paper texture derived from the hero visual |
 | `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi artwork | Generated edit: red scooter, white helmet, pepperoni pizza; white canvas is visually blended with section colors in CSS |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
-| `public/images/interior.webp` | 291×510 | Legacy venue gallery | Supplied photo, retained but no longer rendered |
+| `public/images/interior.webp` | 291×510 | Rat Hole room card | Supplied venue photo, actively rendered in the animated gallery stack |
 | `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |
 | `public/images/menu-coffee.webp` | 381×510 | Reference menu board | Supplied photo, currently not rendered |
 | `public/images/menu-dolci.webp` | 377×510 | Reference menu board | Supplied photo, currently not rendered |
@@ -77,6 +77,7 @@ See `content-todo.md` for facts that remain unverified.
 | `public/images/pizza-primavera.webp` | 455×510 | Legacy Primavera crop | Supplied photo, retained but no longer rendered |
 | `public/images/pizza-arcobaleno.webp` | 469×510 | Legacy Arcobaleno crop | Supplied photo, retained but no longer rendered |
 | `public/images/pizza-rally.webp` | 481×510 | Legacy Rally crop | Supplied photo, retained but no longer rendered |
+| `public/fonts/vara/satisfy.json` | 27KB | Stroke geometry for the animated `Hot` word | Bundled from Vara 1.4.0's Satisfy font data; upstream license reference is documented in the Vara package |
 
 ### July 2026 owner photography
 
@@ -126,6 +127,10 @@ Surrounding menu text, checkerboards, pizza photography, phone number, and order
 ### Hero paper texture
 
 A background-only raster was generated from the flyer paper aesthetic. Its prompt requested a warm dusty blush vintage paper with quiet fibres, mottling, light speckle, no focal point, and no text, mascot, food, checkerboard, or shapes.
+
+### Handwritten `Hot` font data
+
+`public/fonts/vara/satisfy.json` is a repository-local copy of the Satisfy single-line data shipped with Vara 1.4.0. It allows the static export to generate real letter strokes without a CDN request. The source package points to the Google Fonts Satisfy license record. Do not replace this file without updating both the dependency and this provenance note.
 
 ### Meet Remi artwork
 

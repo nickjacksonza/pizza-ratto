@@ -74,9 +74,11 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - checkerboards full width;
 - footnote above lower checkerboard;
 - hero and later sections not excessively tall;
-- `Hot / PIZZA` writes and reveals in sequence, then Remi crosses the complete viewport before the section ends;
+- `Hot` draws as individual strokes rather than a rectangular reveal, `PIZZA` letters arrive separately, then Remi crosses the complete viewport before the section ends;
+- Remi's body visibly bobs and pitches while its shadow stays grounded;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
-- floating menu pizzas and gallery images move subtly without exposing empty image edges;
+- major sections wipe in from alternating directions without exposing non-palette color flashes;
+- floating menu pizzas and gallery cards enter from different directions without exposing empty image edges;
 - pizza labels align with photographs and prices;
 - all twelve pizza photographs load without fallback placeholders;
 - section labels are readable;
@@ -99,7 +101,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - Remi enters from the left, remains fully recognizable mid-route, and exits to the right without creating horizontal scroll.
 - pizza images in each mobile row share the same top edge;
 - pizza labels start below their images with no overlap;
-- all mobile collage transforms resolve to `none`.
+- the mobile gallery keeps its intended overlap without horizontal scroll or unreadable cropping.
 - all twelve pizza photographs load without broken-image indicators.
 
 ## Accessibility checklist
@@ -117,7 +119,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - Confirm the icon-only Instagram footer link has an accessible name.
 - Confirm the redundant Instagram text action is absent from section 05 while the footer icon remains.
 - Confirm Remi's helmet and both Vespa wheels remain visible at desktop and phone widths.
-- Confirm reduced motion converts the road scene to a static composition and removes parallax/marquee motion.
+- Confirm reduced motion converts the road scene to a static composition, shows the complete `Hot` lettering, and removes parallax, wipe, split-text and marquee motion.
 - Maintain one semantic `h1` and logical section headings.
 
 ## Performance checklist

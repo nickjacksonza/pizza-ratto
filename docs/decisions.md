@@ -78,9 +78,9 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 **Context:** This is a content and ordering site, not an application dashboard. The identity is already visually dense.
 
-**Decision:** Keep the main page static/server-rendered and use client behavior only where interaction requires it, currently the mobile menu. Respect reduced-motion preferences.
+**Decision:** Keep the main page static/server-rendered and confine client behavior to the mobile menu and one coordinated motion component. Respect reduced-motion preferences.
 
-**Consequence:** Prefer HTML/CSS solutions for presentation. New client dependencies need a concrete user benefit.
+**Consequence:** Prefer HTML/CSS for static presentation. Motion dependencies are acceptable only when they provide a concrete authored effect and retain a complete reduced-motion fallback.
 
 ## 011 — Make the ticker a duplicated continuous track
 
@@ -116,6 +116,8 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 015 — Bound the Rat Hole editorial header
 
+> Superseded for the photograph layout by decision 018; the compact header and shared divider remain.
+
 **Context:** A tall photograph spanning all gallery rows was allowed to influence an automatic first row. The title and slogan consequently sat at opposite edges of a large empty rectangle, weakening proximity and visual hierarchy.
 
 **Decision:** Give the first two gallery columns a fixed-height editorial header containing both the section title and slogan, separated from the photographs by a shared rule. Keep the venue image isolated in the third column and let the two food images form the lower collage.
@@ -132,8 +134,18 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 
 ## 017 — Concentrate motion in a scroll-driven Remi road scene
 
+> Superseded for the animation runtime by decision 018; the palette, pacing and single focal road scene remain.
+
 **Context:** The site needed the section pacing, word-reveal drama and horizontal vehicle movement of the supplied food-site reference without losing Pizza Ratto's flyer identity or static-export compatibility.
 
 **Decision:** Use the approved `#FF8513`, `#CC2832`, `#FFC0C1` and `#373737` palette; reorganize the homepage into strong full-bleed color scenes; and add one native, dependency-free client component that turns scroll progress into CSS variables for a pinned `Hot / PIZZA` reveal and Remi's Vespa travel. Use the same component to apply small parallax offsets to selected photography.
 
 **Consequence:** Motion has a clear focal point, works on GitHub Pages, and retains a complete reduced-motion fallback. Future animation should extend this progress system rather than introduce a second competing motion runtime.
+
+## 018 — Match the reference with one GSAP motion system
+
+**Context:** The first road scene used native scroll math and clip-path reveals. Review showed that the `Hot` word looked uncovered rather than written, headings lacked the reference's character-level entrances, Remi moved too mechanically, and the gallery did not have the layered store-photo choreography seen in the supplied recording.
+
+**Decision:** Inspect the reference site's public theme bundle and follow its verified animation model: GSAP timelines, ScrollTrigger scrubbing and SplitText character treatment. Use GSAP 3.13 with DrawSVG for Pizza Ratto, plus Vara 1.4 with local Satisfy stroke data to generate the actual handwritten word. Keep Remi as the supplied raster but animate its outer travel separately from an inner suspension timeline. Rebuild the Rat Hole as four overlapping cards entering from different directions. Do not add Swiper because the gallery is editorial rather than an interactive carousel, and do not fake a frame-by-frame Remi sprite without a real approved frame set.
+
+**Consequence:** Drawing, type, panels, parallax, vehicle motion and the gallery now share one timeline grammar. The page remains statically exportable, loads no animation assets from a CDN, and disables the entire choreography under reduced motion.

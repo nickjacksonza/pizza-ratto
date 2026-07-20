@@ -8,7 +8,7 @@ The current architecture favors:
 
 - static output;
 - centralized content;
-- minimal client JavaScript;
+- focused client JavaScript for navigation and authored motion;
 - no backend dependency;
 - dual build compatibility for GitHub Pages and OpenAI Sites.
 
@@ -24,7 +24,7 @@ app/layout.tsx
         └── components/BrandIcon.tsx (presentational service icons)
 ```
 
-`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and a requestAnimationFrame-throttled scroll choreography. `ScrollChoreography.tsx` writes CSS custom properties for the pinned word/title/Remi sequence and for marked parallax images; it introduces no application state, network calls, or dependency. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
+`app/page.tsx` is statically rendered. Client behavior is isolated to the open/closed mobile navigation and the motion system in `ScrollChoreography.tsx`. That component dynamically loads GSAP 3.13, ScrollTrigger, SplitText and DrawSVG, then coordinates the pinned road scene, headline entrances, directional clip-path wipes, parallax and gallery stacking. Vara generates the actual `Hot` handwriting strokes from a local font-data file; no runtime CDN or third-party API is required. `BrandIcon.tsx` renders server-safe WhatsApp and Instagram marks and introduces no runtime state.
 
 ## Rendering model
 
@@ -74,7 +74,7 @@ The page is composed in this order:
 7. `02 / THE IMPORTANT BIT` floating-photo menu portal and full menu
 8. `03 / BUILT DIFFERENT` split ingredient story
 9. Remi and Big Bertha character section
-10. `04 / INSIDE` parallax gallery
+10. `04 / INSIDE` overlapping venue and food collage
 11. `05 / FIND THE FIRE` visit and order section
 12. Footer
 13. Mobile fixed ordering bar

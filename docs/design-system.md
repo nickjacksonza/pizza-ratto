@@ -79,14 +79,14 @@ The full logo, helmet, pizza slice, Vespa, and both wheels must remain visible. 
 
 ## Scroll choreography
 
-The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its inner stage stays pinned while vertical scroll drives four phases:
+The orange `Hot / PIZZA` sequence is intentionally taller than one viewport. Its inner stage stays pinned while a GSAP/ScrollTrigger timeline drives four phases:
 
-1. the italic `Hot` word is revealed left-to-right;
-2. the oversized `PIZZA` title rises into place;
-3. Remi travels from off-screen left to off-screen right;
+1. Vara creates real handwriting strokes and DrawSVG progressively draws `Hot`;
+2. SplitText brings the oversized `PIZZA` letters in independently with back easing;
+3. Remi travels from off-screen left to off-screen right while a nested body timeline adds suspension bob, pitch and speed-line motion;
 4. the orange stage lifts to expose a red color wipe before the ticker.
 
-`components/ScrollChoreography.tsx` computes one normalized progress value and writes CSS custom properties. It also supplies restrained, viewport-relative offsets to elements marked with `data-parallax`. Do not replace this with an animation dependency unless there is a measurable need.
+The same client component applies masked SplitText entrances to major headings, scroll-scrubbed clip-path wipes to marked sections, image parallax and staggered gallery/card motion. The reference implementation was verified to use GSAP, ScrollTrigger, SplitText, MorphSVG and Swiper; Pizza Ratto uses the matching GSAP timeline model but keeps its static-export-safe markup and local assets.
 
 Reduced-motion mode turns the pinned sequence into a static composition, disables marquees, and removes parallax transforms.
 
@@ -99,7 +99,7 @@ The regular content sections remain compact; the road scene is the one deliberat
 - global section padding: up to `7.5rem` for major editorial pauses;
 - ingredients section: `720px` minimum on desktop;
 - character artwork: `620px` minimum on desktop;
-- gallery fixed rows: `230px`, `240px`, and `220px` on desktop.
+- gallery stack: fluid `620px`–`940px` stage on desktop and `710px`–`850px` on narrow screens.
 
 Do not reintroduce large empty vertical bands unless the content requires them.
 
@@ -113,7 +113,7 @@ Coffee and dolci use structured lists in orange and pink split panels rather tha
 
 The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones. Card transforms are disabled at every breakpoint to protect image baselines and label clearance. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
 
-The Rat Hole gallery uses a bounded 230px editorial header across its first two columns. The title and short description share a common baseline and divider, while the brownie and complete lemon dessert form the lower collage and the venue photograph anchors the right edge. On narrow screens, the header becomes one compact stack and every photograph uses the full content width with explicit minimum heights.
+The Rat Hole gallery uses a bounded editorial header followed by a four-card stack. The room, Vespa table, feast and lemon-dessert photographs enter from different sides and settle into a deliberately overlapping collage with hard borders, orange shadows and small rotations. Narrow screens preserve the overlap with controlled absolute positions instead of flattening the photographs into a generic vertical list.
 
 ## Responsive behavior
 
@@ -130,7 +130,7 @@ The Rat Hole gallery uses a bounded 230px editorial header across its first two 
 - mobile navigation appears;
 - hero artwork and CTA panel become one vertical reading sequence;
 - pizza grid becomes two columns;
-- gallery removes secondary decorative content;
+- gallery keeps a compact, controlled collage with smaller overlaps;
 - the character panels become a single-column sequence.
 
 ### At or below 520px
@@ -163,7 +163,7 @@ The Rat Hole gallery uses a bounded 230px editorial header across its first two 
 - The three long editorial headings in sections 01, 03, and 05 use the targeted `.spaced-heading` word spacing. Do not apply it globally to every condensed heading.
 - Remi's portrait source has asymmetric blank canvas around the visible drawing. The road scene uses a bounded overflow crop plus `mix-blend-mode: multiply`; the character scene optically centers the source with a slight left correction. Keep the helmet, pizza, complete scooter and both wheels inside the visible crop.
 - The ticker stops under `prefers-reduced-motion: reduce`.
-- The road scene becomes static and all marked parallax elements return to their natural position under `prefers-reduced-motion: reduce`.
+- The road scene becomes static, every handwriting stroke is shown, section wipes are disabled, and marked parallax elements return to their natural position under `prefers-reduced-motion: reduce`.
 - Images require descriptive, content-specific alt text.
 - The live hero promise supplies the single visible semantic `h1`; the artwork remains a descriptive image.
 

@@ -23,9 +23,9 @@ Create a focused, mobile-first storefront that turns the Pizza Ratto flyer aesth
 ## Technical shape
 
 - React + TypeScript through the Next-compatible vinext App Router
-- Mostly server-rendered/static markup; client JavaScript is limited to the mobile menu
+- Mostly server-rendered/static markup; client JavaScript is limited to the mobile menu and one coordinated motion component
 - Business facts and menu items in typed central data files
-- No backend, database, CMS, cart or animation framework
+- No backend, database, CMS or cart; GSAP and Vara are used only for the authored scroll choreography
 - Native image markup for compatibility with the GitHub Pages static target
 - A dual-build strategy for OpenAI Sites/Cloudflare and GitHub Pages
 
