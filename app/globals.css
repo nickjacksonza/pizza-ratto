@@ -601,7 +601,7 @@ footer p { margin: 0; font-size: .76rem; }
   .motion-ready .counter-tape-media { border-width: 2px; box-shadow: 5px 5px 0 var(--red); }
   .motion-ready .counter-gooey-transition { position: absolute; inset: 0; z-index: 50; display: block; overflow: hidden; pointer-events: none; }
   .motion-ready .counter-gooey-defs { position: absolute; }
-  .motion-ready .counter-gooey-surface { position: absolute; inset: 0; filter: url("#counter-gooey-filter"); will-change: transform; }
+  .motion-ready .counter-gooey-surface { position: absolute; inset: 0 -4vw; filter: url("#counter-gooey-filter"); will-change: transform; }
   .motion-ready .counter-gooey-sheet { position: absolute; inset: 0; display: block; background: var(--red); }
   .motion-ready .counter-gooey-drop { position: absolute; top: calc(100% - 8px); display: block; background: var(--red); border-radius: 0 0 42% 58% / 0 0 68% 54%; transform-origin: 50% 0; will-change: transform; }
   .motion-ready .counter-gooey-drop-1 { left: -4%; width: 24%; height: 18%; }

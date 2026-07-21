@@ -734,9 +734,9 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 const gooeyDisplacement = chapter.querySelector<SVGElement>(".counter-gooey-displacement");
                 if (!gooeySurface) break;
                 timeline.set(gooeySurface, { yPercent: -155 }, 0);
-                timeline.to(gooeySurface, { yPercent: 0, xPercent: 1.5, duration: .5, ease: "power1.inOut" }, .46);
-                if (gooeyNoise) timeline.to(gooeyNoise, { attr: { baseFrequency: "0.008 0.018" }, duration: .5, ease: "sine.inOut" }, .46);
-                if (gooeyDisplacement) timeline.to(gooeyDisplacement, { attr: { scale: 34 }, duration: .5, ease: "sine.inOut" }, .46);
+                timeline.to(gooeySurface, { yPercent: 0, xPercent: 0, duration: .46, ease: "power1.inOut" }, .18);
+                if (gooeyNoise) timeline.to(gooeyNoise, { attr: { baseFrequency: "0.008 0.018" }, duration: .46, ease: "sine.inOut" }, .18);
+                if (gooeyDisplacement) timeline.to(gooeyDisplacement, { attr: { scale: 34 }, duration: .46, ease: "sine.inOut" }, .18);
                 gooeyDrops.forEach((drop, index) => {
                   timeline.fromTo(drop, {
                     scaleX: index % 2 ? .56 : 1.22,
@@ -748,13 +748,13 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                     scaleY: index % 3 === 0 ? 1.42 : .68,
                     xPercent: index % 2 ? 16 : -20,
                     rotation: index % 2 ? 2 : -2,
-                    duration: .5,
+                    duration: .46,
                     ease: "sine.inOut",
-                  }, .45 + index * .006);
+                  }, .17 + index * .006);
                 });
                 const foreground = [header, ...cards].filter((item): item is HTMLElement => Boolean(item));
-                timeline.to(foreground, { opacity: 0, yPercent: -4, duration: .14, ease: "power2.in" }, .79);
-                if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .14, ease: "power2.out" }, .84);
+                timeline.to(foreground, { opacity: 0, yPercent: -4, duration: .12, ease: "power2.in" }, .66);
+                if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .14, ease: "power2.out" }, .73);
                 break;
               }
               case "ingredients": {

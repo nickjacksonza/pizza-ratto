@@ -117,7 +117,7 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - sticky bar highlights WhatsApp and respects the bottom safe area;
 - sticky bar does not cover footer content;
 - counter-tape horizontal overflow stays inside its own reel rather than widening the page;
-- the Fresh Proof liquid starts fully clear of the heading, supplied Pizza Ratto banner and footage, then one connected red sheet with an irregular displaced boundary deliberately covers all three during the locked exit;
+- the Fresh Proof liquid starts fully clear of the heading, supplied Pizza Ratto banner and footage, begins descending early in the pinned timeline, spans beyond both viewport edges without a grey seam, then deliberately covers all three during the locked exit;
 - reduced motion swaps every moving counter tape for its poster frame;
 - touch targets are at least 44px;
 - page has no horizontal scroll.

@@ -303,3 +303,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Preserve the deployed stacking order with the liquid above both header and reel, but restore its fully off-screen `-155%` starting position so the heading and supplied banner remain clear until the takeover begins. Move and reduce the payoff into the open centre-left field. Keep the RATTO word at a fixed in-bounds baseline and remove its horizontal drift from the pinned timeline.
 
 **Consequence:** The liquid remains an assertive whole-section takeover without premature overlap or permanent foreground labels, while the character poster preserves a clear Big Bertha frame, a readable payoff and the complete background word throughout the scroll lock.
+
+## 037 — Overscan and accelerate the liquid takeover
+
+**Context:** Once the deployed stacking order was restored, the transition's small horizontal sway exposed a grey strip along the left viewport edge. Its `-155%` starting position also left too much pinned scroll between the clean reel and the first visible drip.
+
+**Decision:** Extend the liquid surface `4vw` beyond both horizontal edges and remove its lateral translation. Move the descent, displacement and lobe animation from the middle of the timeline to progress `.18`, completing the sheet takeover earlier and advancing the final copy accordingly.
+
+**Consequence:** The red sheet covers the complete viewport at every takeover frame, while the reel still receives a short unobstructed hold before the goop arrives with substantially less scrolling.
