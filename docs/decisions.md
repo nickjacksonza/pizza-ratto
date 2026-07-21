@@ -311,3 +311,27 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Extend the liquid surface `4vw` beyond both horizontal edges and remove its lateral translation. Move the descent, displacement and lobe animation from the middle of the timeline to progress `.18`, completing the sheet takeover earlier and advancing the final copy accordingly.
 
 **Consequence:** The red sheet covers the complete viewport at every takeover frame, while the reel still receives a short unobstructed hold before the goop arrives with substantially less scrolling.
+
+## 038 — Share one MorphSVG path between canvas and SVG
+
+**Context:** The GreenSock Canvas Morphing reference demonstrates that MorphSVG can expose its normalized raw path to a custom renderer while continuing to update the source SVG. The site already used canvas for Remi and SVG morphing for menu marks, but the two techniques did not yet meet in one authored moment.
+
+**Decision:** Extend the Fresh Proof payoff with a live SVG path and a `394 × 437` canvas. Morph the SVG from a round ink shape into the supplied pizza silhouette, pass every intermediate raw path to a dedicated canvas drawing callback, and present the two results as contrasting flyer-style stamps around the existing next-chapter copy. Reveal red topping details on the SVG after the shared silhouette settles.
+
+**Consequence:** Canvas and SVG now visibly share one reversible GSAP morph without a duplicate timing loop, external rendering library or raster screenshot. The payoff gains a premium technical flourish while remaining recognizably Pizza Ratto.
+
+## 039 — Treat mobile as a natural-flow touch experience
+
+**Context:** A focused pass at `360×800`, `390×844`, `430×932` and `768×1024` found no page overflow or runtime errors, but exposed a clipped portal heading, undersized inline/header targets, an awkward tablet hero wrap and footer controls sitting beneath the fixed phone order bar.
+
+**Decision:** Constrain the portal display type on phones, keep `street‑corner` together while scaling the tablet hero promise, give all phone and tablet header actions a minimum `44px` target, and reserve the sticky bar plus safe area inside the mobile footer. Preserve the existing responsive motion boundary: the scooter and local entrances remain scroll-reactive, while locks, liquid takeover, canvas/SVG payoff and Remi fragment generation stay desktop-only. Fresh Proof remains a contained horizontal swipe reel below the desktop breakpoint.
+
+**Consequence:** The complete page stays within the viewport from narrow phones through tablets, footer actions remain reachable, touch targets meet the project minimum, and expressive motion survives where it helps without trapping or obscuring mobile content.
+
+## 040 — Centre the phone road exit and separate the mobile character poster
+
+**Context:** Phone screenshots exposed two problems missed by the broad responsive pass. The road heading inherited the desktop `18%` lateral exit, making the handwritten `Hot` appear far to the right before fading. Meet Remi also stacked its oven, caption card, checker, oversized RATTO backdrop and mascot in one overlapping cluster.
+
+**Decision:** Keep the road heading centred while it fades at `760px` and below, retaining the lateral exit only on wider screens. Reflow the mobile character poster into an introduction, a self-contained Big Bertha diptych with its card in normal flow, and a separate centred Remi figure. Remove the checker and background word on small phones while preserving them in the authored desktop composition.
+
+**Consequence:** The phone road animation remains visually centred throughout its handoff, and the character section keeps both Big Bertha and Remi prominent without sacrificing legibility or cropping the scooter.

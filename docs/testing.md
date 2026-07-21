@@ -115,18 +115,20 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - all twelve menu cards remain in normal two-column document flow, with alternating row entrances that settle precisely onto the CSS grid;
 - long headings wrap without horizontal scrolling;
 - sticky bar highlights WhatsApp and respects the bottom safe area;
-- sticky bar does not cover footer content;
+- sticky bar does not cover the footer copyright or Instagram action at maximum scroll;
 - counter-tape horizontal overflow stays inside its own reel rather than widening the page;
-- the Fresh Proof liquid starts fully clear of the heading, supplied Pizza Ratto banner and footage, begins descending early in the pinned timeline, spans beyond both viewport edges without a grey seam, then deliberately covers all three during the locked exit;
+- the Fresh Proof desktop liquid and canvas/SVG payoff stay disabled at phone and tablet widths; the heading, supplied Pizza Ratto banner and swipe reel remain unobstructed in normal flow;
 - reduced motion swaps every moving counter tape for its poster frame;
-- touch targets are at least 44px;
+- touch targets are at least 44px, including the hero/visit phone links and the 768px desktop-style header;
 - page has no horizontal scroll.
 - `PIZZA` remains fully visible above and below at 390px without adding horizontal overflow.
+- the complete handwritten `Hot` stays centred over `PIZZA` through its phone exit and never shifts beyond the right viewport edge;
 - Remi enters from the left, remains fully recognizable mid-route, and exits to the right without creating horizontal scroll.
 - the red pulled scene remains visually connected to Remi during the handoff, settles edge-to-edge, and does not hide behind the mobile order bar;
 - pizza images in each mobile row share the same top edge;
 - pizza labels start below their images with no overlap;
 - the mobile social collage keeps its intended overlap without horizontal scroll or unreadable cropping, and its follow button stays fixed rather than chasing touch input.
+- Meet Remi reads as three separate mobile beats—intro, Big Bertha, mascot—with no collision between the oven card, scooter, caption, checker or background word;
 - all twelve pizza photographs load without broken-image indicators.
 
 ## Accessibility checklist

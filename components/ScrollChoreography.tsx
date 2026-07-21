@@ -732,7 +732,36 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 const gooeyCopy = chapter.querySelector<HTMLElement>(".counter-gooey-copy");
                 const gooeyNoise = chapter.querySelector<SVGElement>(".counter-gooey-noise");
                 const gooeyDisplacement = chapter.querySelector<SVGElement>(".counter-gooey-displacement");
+                const morphCanvas = chapter.querySelector<HTMLCanvasElement>(".counter-morph-canvas");
+                const morphPath = chapter.querySelector<SVGPathElement>("[data-counter-morph-path]");
+                const morphTarget = chapter.querySelector<SVGPathElement>("[data-counter-morph-target]");
+                const morphDetails = chapter.querySelector<SVGGElement>("[data-counter-morph-details]");
                 if (!gooeySurface) break;
+                const morphContext = morphCanvas?.getContext("2d");
+                const drawCanvasPath = (rawPath: number[][]) => {
+                  if (!morphCanvas || !morphContext) return;
+                  morphContext.clearRect(0, 0, morphCanvas.width, morphCanvas.height);
+                  morphContext.save();
+                  morphContext.fillStyle = "#fff4df";
+                  morphContext.strokeStyle = "#373737";
+                  morphContext.lineWidth = 5;
+                  morphContext.lineJoin = "round";
+                  morphContext.shadowColor = "#f98519";
+                  morphContext.shadowOffsetX = 9;
+                  morphContext.shadowOffsetY = 9;
+                  morphContext.beginPath();
+                  rawPath.forEach((segment) => {
+                    morphContext.moveTo(segment[0], segment[1]);
+                    for (let point = 2; point < segment.length; point += 6) {
+                      morphContext.bezierCurveTo(segment[point], segment[point + 1], segment[point + 2], segment[point + 3], segment[point + 4], segment[point + 5]);
+                    }
+                    morphContext.closePath();
+                  });
+                  morphContext.fill();
+                  morphContext.stroke();
+                  morphContext.restore();
+                };
+                if (morphPath && morphContext) drawCanvasPath(MorphSVGPlugin.getRawPath(morphPath) as unknown as number[][]);
                 timeline.set(gooeySurface, { yPercent: -155 }, 0);
                 timeline.to(gooeySurface, { yPercent: 0, xPercent: 0, duration: .46, ease: "power1.inOut" }, .18);
                 if (gooeyNoise) timeline.to(gooeyNoise, { attr: { baseFrequency: "0.008 0.018" }, duration: .46, ease: "sine.inOut" }, .18);
@@ -755,6 +784,14 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 const foreground = [header, ...cards].filter((item): item is HTMLElement => Boolean(item));
                 timeline.to(foreground, { opacity: 0, yPercent: -4, duration: .12, ease: "power2.in" }, .66);
                 if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .14, ease: "power2.out" }, .73);
+                if (morphPath && morphTarget) {
+                  timeline.to(morphPath, {
+                    morphSVG: { shape: morphTarget, shapeIndex: "auto", render: drawCanvasPath },
+                    duration: .22,
+                    ease: "power2.inOut",
+                  }, .74);
+                }
+                if (morphDetails) timeline.to(morphDetails, { opacity: 1, scale: 1, duration: .12, ease: "back.out(1.6)" }, .87);
                 break;
               }
               case "ingredients": {
@@ -975,7 +1012,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
             ease: "power2.inOut",
           }, 0.35)
           .to([driveHeading, driveKicker, driveNote], {
-            xPercent: 18,
+            xPercent: () => window.innerWidth <= 760 ? 0 : 18,
             opacity: 0,
             duration: 0.23,
             stagger: 0.018,

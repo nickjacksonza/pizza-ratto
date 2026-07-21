@@ -143,7 +143,7 @@ export default function Home() {
           </div>
           <div className="hero-copy" data-hero-copy>
             <p className="hero-eyebrow">Wood-fired · Salt River · Cape Town</p>
-            <h1 data-split="load">Pizza with<br /><span className="hero-accent">street-corner attitude.</span></h1>
+            <h1 data-split="load">Pizza with<br /><span className="hero-accent">street‑corner attitude.</span></h1>
             <p>Hand-stretched, fired hot and ready for collection.</p>
             <div className="hero-actions">
               <a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order on WhatsApp</a>
@@ -294,7 +294,22 @@ export default function Home() {
                 <span className="counter-gooey-drop counter-gooey-drop-6" />
                 <span className="counter-gooey-drop counter-gooey-drop-7" />
               </div>
-              <strong className="counter-gooey-copy">NEXT / BUILT DIFFERENT</strong>
+              <div className="counter-gooey-copy">
+                <canvas className="counter-morph-canvas" width="394" height="437" aria-hidden="true" />
+                <strong>NEXT / BUILT DIFFERENT</strong>
+                <svg className="counter-morph-svg" viewBox="0 0 394 437" fill="none" aria-hidden="true">
+                  <path data-counter-morph-path d="M197 76C272.111 76 333 136.889 333 212C333 287.111 272.111 348 197 348C121.889 348 61 287.111 61 212C61 136.889 121.889 76 197 76Z" fill="currentColor" />
+                  <path data-counter-morph-target d="M346.846 250.21L38.8834 422.856C23.3305 432.189 3.11074 439.966 0 435.3C0 435.3 3.11074 419.746 4.6661 410.414L57.5486 54.2344C53.9192 51.642 45.1049 44.9018 38.8834 38.6807C31.1066 30.9042 26.4405 13.7944 52.8817 4.46219C79.323 -4.87002 158.647 -3.31465 253.524 46.4571C348.402 96.2289 377.954 173.997 390.397 209.771C402.84 245.544 379.509 250.21 367.066 250.21H346.846Z" />
+                  <g data-counter-morph-details>
+                    <circle cx="113.542" cy="163.104" r="46.6611" />
+                    <circle cx="157.094" cy="262.655" r="31.1074" />
+                    <circle cx="250.399" cy="234.658" r="40.4396" />
+                    <circle cx="60.6359" cy="352.866" r="24.8859" />
+                    <path d="M150.434 316.506L110.892 327.017" />
+                    <path d="M85.6118 235.512L76.5511 275.411" />
+                  </g>
+                </svg>
+              </div>
             </div>
         </section>
 

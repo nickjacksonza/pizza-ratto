@@ -125,6 +125,7 @@ The coffee/dolci board now hands off to a compact horizontal owner-media strip r
 
 - Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
 - On large desktop screens all seven videos remain in one static line while the chapter is visible. The chapter locks only to perform its exit: the exact-red sheet begins fully above the scene, starts descending shortly after the pin engages, then seven restrained lobes pass through an animated fractal displacement plus blur/threshold field over the heading, supplied Pizza Ratto banner and footage together. The liquid surface overscans both viewport edges so filtering and motion cannot reveal a grey seam. On smaller or shorter screens the videos remain horizontally scrollable and snap-assisted and the gooey overlay is omitted.
+- Once the sheet completes its takeover, the payoff is framed by two synchronized pizza marks: a rough cream canvas stamp with grey keyline and orange offset, and a crisp cream SVG with red toppings. Both morph from the same round ink shape into the supplied pizza silhouette, keeping the result rooted in the flyer language rather than reading as a generic technology demo.
 - Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
 - The counter lock is presentation-only; it must never spread to the pizza or coffee/dolci menus.
 
@@ -140,7 +141,7 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 
 ### At or below 1000px
 
-- hero CTA column narrows;
+- hero CTA column narrows, and the display promise scales down enough to keep `street‑corner` intact at the tablet breakpoint;
 - manifesto becomes two columns;
 - characters and visit sections simplify.
 - narrative chapter locks turn off and the social collage becomes a tall natural-flow composition.
@@ -153,12 +154,12 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 - hero artwork and CTA panel become one vertical reading sequence;
 - pizza grid becomes two columns;
 - social cards keep a compact, controlled collage with smaller overlaps and a fixed follow action;
-- the Meet Remi poster becomes a single-column static composition with no fragment generation; Big Bertha's two fire frames remain prominent without overwhelming the poster and the Remi cutout overlaps them without a white rectangle.
+- the Meet Remi poster becomes a single-column static composition with no fragment generation; the introduction, Big Bertha feature/card and Remi cutout form three separate vertical beats instead of overlapping. On small phones the oversized RATTO backdrop and checker accent are removed so the oven copy and complete scooter stay legible.
 
 ### At or below 520px
 
 - the fixed quick-order bar appears;
-- body receives bottom safe-area spacing;
+- body and footer reserve the sticky bar plus bottom safe-area spacing, so the final copyright and Instagram action remain reachable;
 - section padding tightens;
 - headings scale down and allow emergency wrapping;
 - pizza descriptions and prices stack for readability;
@@ -176,7 +177,7 @@ The `Never pizza solo.` Ratto Social Club view uses a large editorial heading fo
 
 - Skip link becomes visible on focus.
 - All interactive elements receive a high-contrast focus ring.
-- Buttons are at least 48px high; mobile menu is 46px; sticky actions are 64px.
+- Buttons are at least 48px high; header links, inline phone actions and tablet navigation are at least 44px; the mobile menu is 46px; sticky actions are 64px.
 - Mobile safe-area insets are respected.
 - WhatsApp actions include a recognizable brand mark without replacing their visible text; the footer Instagram control is icon-only with an accessible label.
 - The ticker uses two identical long text runs so one enters from the right while the other exits left. Keep both runs identical: the `translateX(-50%)` loop depends on equal widths.

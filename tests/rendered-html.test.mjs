@@ -74,12 +74,15 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(page, /BrandIcon name="instagram"/);
   assert.match(page, /className="spaced-heading"/);
   assert.match(page, /data-morph-icon/);
+  assert.match(page, /counter-morph-canvas/);
+  assert.match(page, /data-counter-morph-path/);
   assert.match(page, /MorphBrandMark name="pizza"/);
   assert.match(page, /red-cup\.svg/);
   assert.match(page, /red-ice-cream\.svg/);
   const motion = await readFile(new URL("../components/ScrollChoreography.tsx", import.meta.url), "utf8");
   assert.match(motion, /gsap\/MorphSVGPlugin/);
   assert.match(motion, /morphSVG:/);
+  assert.match(motion, /drawCanvasPath/);
   assert.match(motion, /fragmentCount = 75/);
   assert.match(motion, /repeatCount = 3/);
   assert.match(motion, /remi-fragment-canvas/);
