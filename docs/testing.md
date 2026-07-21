@@ -82,13 +82,13 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - the pulled photograph, `FIRE / TIME / TOMATOES` copy, badge and checker road remain contained at desktop width, 390px and narrower;
 - nearby About, Menu and Visit links animate to the correct section through ScrollToPlugin; long jumps show the fixed red route card, change position only while fully covered, land with the correct hash and focus, and never visibly fast-forward intermediate pins; scrolling down hides the header and scrolling up restores it;
 - the road-scene color wipe reaches the ticker without a white or broken-image flash;
-- the story, portal, pizza, coffee/dolci, ingredients, character, social and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, Remi-poster and deck transitions;
+- the story, portal, pizza, Caffè/Bevande/Dolci, ingredients, character, social and visit scenes each occupy a deliberate view and use their documented paper, iris, shutter, split, Remi-poster and deck transitions;
 - at widths of at least `1001px` and heights of at least `720px`, story, portal, ingredients, character, social and visit pin at `top top`, spend scroll on their internal choreography, then release without a document jump;
 - each pinned narrative stage fills its progress rail from top to bottom, remains reversible when scrolling upward, and never animates the pin container itself;
 - at `1000px` wide, below `720px` high, and under reduced motion, no narrative pin spacers are created and all content stays in semantic natural flow;
 - palette-colored curtains fully cover incoming chapters, then clear left, right, centrally, or as an iris without exposing browser background or remaining over content at the end of their range;
 - the pizza menu remains a four-row, three-column grid; rows alternately enter from the left and right without changing DOM reading order, colliding, or creating horizontal overflow;
-- Coffee and Dolci headers and rows begin only when their own category top reaches the viewport; in the stacked layout Dolci must still be at its untouched start state while Coffee occupies the screen;
+- Caffè, Bevande and Dolci headers and rows begin only when their own category top reaches the viewport; in the stacked layout later categories must still be at their untouched start state while Caffè occupies the screen;
 - the hero illustration, surrounding surface and red copy panel share continuous paper grain without a pink strip or darker image rectangle;
 - floating menu pizzas and social cards enter from different directions without exposing empty image edges;
 - the `Never pizza solo.` mural uses only the approved palette, the single-red-ink `Ratto` paths draw one clean pen stroke at a time without dotted concurrent fragments or a duplicate shadow word, all four cards settle into a deliberate collage, and the Instagram badge trails a precise desktop pointer before returning to centre on pointer leave;
@@ -111,6 +111,8 @@ The second and third checks should return no invalid unprefixed runtime dependen
 - announcement text loops continuously without a blank gap, clipping or compressed lettering;
 - hero art preserves its aspect ratio;
 - phone number does not overflow at 390px and below;
+- the fixed order bar presents WhatsApp, Call and Uber Eats as three unobstructed 64px targets, with no duplicate Menu action;
+- hero WhatsApp, Uber Eats and phone actions remain grouped and readable without horizontal overflow;
 - pizza names, prices, descriptions, and notes remain readable in two columns;
 - all twelve menu cards remain in normal two-column document flow, with alternating row entrances that settle precisely onto the CSS grid;
 - long headings wrap without horizontal scrolling;

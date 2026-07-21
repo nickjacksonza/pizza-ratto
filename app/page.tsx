@@ -4,7 +4,7 @@ import { BrandIcon } from "../components/BrandIcon";
 import { MobileNavigation } from "../components/MobileNavigation";
 import { ScrollChoreography } from "../components/ScrollChoreography";
 import { business } from "../data/business";
-import { menu, zar } from "../data/menu";
+import { menu, zar, type MenuItem } from "../data/menu";
 
 export const dynamic = "force-static";
 
@@ -39,6 +39,25 @@ const counterTapes = [
   { src: "/videos/owner-2026/box-lettering.mp4", poster: "/images/owner-2026/video-stills/box-lettering.webp", label: "Boxes, signed by hand" },
   { src: "/videos/owner-2026/counter-sweep.mp4", poster: "/images/owner-2026/video-stills/counter-sweep.webp", label: "Counter chaos" },
 ];
+
+const groupMenuItemsByPrice = (items: MenuItem[]) => Array.from(
+  items.reduce((groups, item) => {
+    const label = item.priceGroup ?? "Other";
+    groups.set(label, [...(groups.get(label) ?? []), item]);
+    return groups;
+  }, new Map<string, MenuItem[]>()),
+);
+
+function BeverageMark({ className }: { className: string }) {
+  return (
+    <svg className={className} viewBox="0 0 72 88" fill="none" aria-hidden="true">
+      <path d="M17 10h38l-5 61c-.4 4.8-4.4 8.5-9.2 8.5h-9.6c-4.8 0-8.8-3.7-9.2-8.5L17 10Z" fill="#CC2832" />
+      <path d="M23 31h26l-3.1 38.3a5.2 5.2 0 0 1-5.2 4.7h-9.4a5.2 5.2 0 0 1-5.2-4.7L23 31Z" fill="#FFF4DF" />
+      <path d="m42 31 9-22" stroke="#373737" strokeWidth="6" strokeLinecap="round" />
+      <path d="M14 10h44" stroke="#373737" strokeWidth="5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 function MorphBrandMark({ name, className }: { name: "pizza" | "coffee" | "dolci"; className: string }) {
   if (name === "pizza") {
@@ -143,11 +162,14 @@ export default function Home() {
           </div>
           <div className="hero-copy" data-hero-copy>
             <p className="hero-eyebrow">Wood-fired · Salt River · Cape Town</p>
-            <h1 data-split="load">Pizza with<br /><span className="hero-accent">street‑corner attitude.</span></h1>
+            <h1 data-split="load">Pizza with<br /><span className="hero-accent">street‑corner<br />attitude.</span></h1>
             <p>Hand-stretched, fired hot and ready for collection.</p>
             <div className="hero-actions">
-              <a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order on WhatsApp</a>
-              <a className="hero-phone" href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a>
+              <div className="hero-order-buttons">
+                <a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />Order on WhatsApp</a>
+                <a className="button hero-uber-action" href={business.uberEatsUrl} target="_blank" rel="noreferrer"><BrandIcon name="ubereats" />Uber Eats</a>
+              </div>
+              <a className="hero-phone" href={`tel:${business.phoneInternational}`}><BrandIcon name="call" />{business.phoneDisplay}</a>
             </div>
           </div>
           <aside className="hero-stamp smooth-float" aria-label="Opening hours">
@@ -236,21 +258,37 @@ export default function Home() {
 
           <div className="small-menu-view section-pad" data-scene="small-menu" data-transition="cards-up">
             <span className="scene-curtain" aria-hidden="true" />
-            <p className="section-number">02 / COFFEE &amp; DOLCI</p>
+            <p className="section-number">02 / CAFFÈ · BEVANDE · DOLCI</p>
             <div className="small-menu-grid">
-              {sideMenu.map((category) => (
-                <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
-                  <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span className="category-mark"><MorphBrandMark name={category.id === "coffee" ? "coffee" : "dolci"} className="category-icon" /><small>{category.id === "coffee" ? "HOT / COLD" : "SAVE ROOM"}</small></span></header>
-                  <ul>
-                    {category.items.map((item) => (
-                      <li key={item.name}>
-                        <div><b>{item.name}</b>{item.description && <p>{item.description}</p>}{item.note && <small>{item.note}</small>}</div>
-                        <strong>{Array.isArray(item.price) ? item.price.map((price) => <span key={price.label}>{price.label} {zar(price.price)}</span>) : zar(item.price)}</strong>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
+              {sideMenu.map((category) => {
+                const categoryMark = category.id === "caffe"
+                  ? <MorphBrandMark name="coffee" className="category-icon" />
+                  : category.id === "bevande"
+                    ? <BeverageMark className="category-icon beverage-icon" />
+                    : <MorphBrandMark name="dolci" className="category-icon" />;
+                const categoryLabel = category.id === "caffe" ? "ESPRESSO / LATTE" : category.id === "bevande" ? "DRINKS" : "SAVE ROOM";
+
+                return (
+                  <section className={`menu-category menu-${category.id}`} key={category.id} aria-labelledby={`${category.id}-heading`}>
+                    <header><div><p>{category.kicker}</p><h3 id={`${category.id}-heading`}>{category.name}</h3></div><span className="category-mark">{categoryMark}<small>{categoryLabel}</small></span></header>
+                    <div className="menu-price-groups">
+                      {groupMenuItemsByPrice(category.items).map(([priceGroup, items]) => (
+                        <div className="menu-price-group" key={priceGroup}>
+                          <h4>{priceGroup}</h4>
+                          <ul>
+                            {items.map((item) => (
+                              <li key={item.name}>
+                                <div><b>{item.name}</b>{item.description && <p>{item.description}</p>}{item.note && <small>{item.note}</small>}</div>
+                                <strong>{Array.isArray(item.price) ? item.price.map((price) => <span key={price.label}>{price.label} {zar(price.price)}</span>) : zar(item.price)}</strong>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -361,7 +399,7 @@ export default function Home() {
             <span className="social-mural-tail" />
           </div>
           <header className="social-heading">
-            <div><p className="section-number">04 / RATTO SOCIAL CLUB</p><p className="social-kicker">Inside the rat hole. Out in the wild.</p></div>
+            <div><p className="section-number">04 / RATTO SOCIAL CLUB</p><p className="social-kicker">Taking a break from the rat race. Out in the wild.</p></div>
             <h2 id="social-title" data-split="scroll">Never pizza solo.</h2>
             <p>Follow the daily damage, fresh pies and questionable decisions.</p>
           </header>
@@ -382,7 +420,7 @@ export default function Home() {
           <span className="chapter-progress" aria-hidden="true"><i /></span>
           <div><p className="section-number">05 / FIND THE FIRE</p><h2 className="spaced-heading" data-split="scroll">Salt River.<br />Come say ciao.</h2><p className="visit-intro">Fresh from the oven. Straight to your face — collection only.</p></div>
           <dl><div><dt>Where</dt><dd>{business.location}<small>{business.deliveryNote}</small></dd></div><div><dt>When</dt><dd>{business.hours}</dd></div><div><dt>Call / WhatsApp</dt><dd><a href={`tel:${business.phoneInternational}`}>{business.phoneDisplay}</a></dd></div></dl>
-          <div className="visit-actions"><a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer">Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}>Call the shop</a></div>
+          <div className="visit-actions"><a className="button brand-action" href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp an order ↗</a><a className="button button-outline" href={business.uberEatsUrl} target="_blank" rel="noreferrer"><BrandIcon name="ubereats" />Order on Uber Eats ↗</a><a className="button button-outline" href={`tel:${business.phoneInternational}`}><BrandIcon name="call" />Call the shop</a></div>
         </section>
           </main>
 
@@ -395,7 +433,7 @@ export default function Home() {
           </footer>
         </div>
       </div>
-      <nav className="mobile-order-bar" aria-label="Quick order actions"><a href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp</a><a href={`tel:${business.phoneInternational}`}>Call</a><a href="#menu">Menu</a></nav>
+      <nav className="mobile-order-bar" aria-label="Quick order actions"><a href={business.whatsappUrl}><BrandIcon name="whatsapp" />WhatsApp</a><a href={`tel:${business.phoneInternational}`}><BrandIcon name="call" />Call</a><a href={business.uberEatsUrl} target="_blank" rel="noreferrer"><BrandIcon name="ubereats" />Uber Eats</a></nav>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd).replace(/</g, "\\u003c") }} />
     </>
   );

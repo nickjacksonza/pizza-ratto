@@ -343,3 +343,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Track the latest normalized canvas path and add a reversible canvas detail-progress tween alongside the SVG detail reveal. Draw the four supplied pepperoni circles and two accent strokes in brand red after the silhouette settles.
 
 **Consequence:** Both marks now finish as complete pizzas with synchronized toppings while retaining distinct canvas and SVG print treatments.
+
+## 042 — Make ordering explicit and separate the drinks taxonomy
+
+**Context:** Pre-revamp review found that the hero ordering routes felt scattered, the phone bar duplicated Menu navigation, and the combined coffee list obscured the requested Caffè, drinks and sweets structure. The owner has not yet supplied a complete cold-drink or alcohol inventory.
+
+**Decision:** Keep WhatsApp as the primary order route, place Uber Eats beside it in the hero, retain phone immediately below, and make the mobile fixed bar WhatsApp / Call / Uber Eats with matching service marks. Rename Coffee to Caffè, introduce Bevande using only already-confirmed Tea, Hot Chocolate and Chai, keep Dolci separate, and group these panels by displayed price. Record cold drinks and alcohol as owner-confirmation work rather than placeholder products.
+
+**Consequence:** Ordering routes are visible at the main decision points, the mobile bar is conversion-focused, and the menu taxonomy can accept a confirmed beverage catalogue later without misrepresenting current stock or prices.

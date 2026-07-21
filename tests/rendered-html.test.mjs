@@ -30,6 +30,9 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /Verde/);
   assert.match(html, /Tramonto/);
   assert.match(html, /Twelve rides\. One very hot oven\./);
+  assert.match(html, /Caffè/);
+  assert.match(html, /Bevande/);
+  assert.match(html, /R15 \/ R20/);
   assert.match(html, /Fresh proof\./);
   assert.match(html, /Meet[\s\S]*Remi\./);
   assert.match(html, /Big Bertha\./);
@@ -71,6 +74,8 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(page, /ticker-track/);
   assert.match(page, /ticker-copy/);
   assert.match(page, /BrandIcon name="whatsapp"/);
+  assert.match(page, /BrandIcon name="call"/);
+  assert.match(page, /BrandIcon name="ubereats"/);
   assert.match(page, /BrandIcon name="instagram"/);
   assert.match(page, /className="spaced-heading"/);
   assert.match(page, /data-morph-icon/);
@@ -92,7 +97,12 @@ test("centralises business and menu content and keeps fake links out", async () 
   assert.match(business, /\+27825250380/);
   assert.match(business, /ubereats\.com\/za\/store\/pizza-ratto/);
   assert.match(menu, /Arcobaleno/);
+  assert.match(menu, /id: "caffe"/);
+  assert.match(menu, /id: "bevande"/);
+  assert.match(menu, /priceGroup: "R30"/);
   assert.match(menu, /New special · confirm availability/);
+  assert.match(page, /className="mobile-order-bar"[\s\S]*business\.uberEatsUrl/);
+  assert.doesNotMatch(page, /className="mobile-order-bar"[^\n]*href="#menu"/);
   assert.doesNotMatch(page, /href=["']#["']/);
   assert.doesNotMatch(page + business, /google\.com\/maps/);
 });

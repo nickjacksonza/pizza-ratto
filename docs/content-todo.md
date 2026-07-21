@@ -25,6 +25,8 @@ These values were derived from the supplied flyer and owner-provided links. Reco
 - Whether the R10 decaf listing is an add-on rather than a standalone item.
 - Gelato flavour/topping structure and whether it changes.
 - What the Limoncello listing represents and whether age-related wording is required.
+- Complete Bevande inventory: cold drinks, alcoholic drinks, serving sizes, prices and current availability.
+- Whether Limoncello belongs under Bevande rather than Dolci once the drinks list is confirmed.
 - Whether only meat toppings are halal and whether any certification exists.
 - Whether imported mozzarella from Puglia remains accurate.
 - Whether Mubarak Food Emporium should be named publicly.

@@ -2,12 +2,13 @@ export type MenuItem = {
   name: string;
   description?: string;
   price: number | { label: string; price: number }[];
+  priceGroup?: string;
   note?: string;
   featured?: boolean;
 };
 
 export type MenuCategory = {
-  id: "pizza" | "coffee" | "dolci";
+  id: "pizza" | "caffe" | "bevande" | "dolci";
   name: string;
   kicker: string;
   items: MenuItem[];
@@ -34,22 +35,29 @@ export const menu: MenuCategory[] = [
     ],
   },
   {
-    id: "coffee",
-    name: "Coffee",
+    id: "caffe",
+    name: "Caffè",
     kicker: "For before, after, or instead of sensible decisions.",
     items: [
-      { name: "Espresso", price: [{ label: "Single", price: 15 }, { label: "Double", price: 20 }] },
-      { name: "Americano", price: 30 },
-      { name: "Cappuccino", price: 30 },
-      { name: "Flat White", price: 30 },
-      { name: "Latte", price: 35 },
-      { name: "Mocha", price: 40 },
-      { name: "Hot Chocolate", price: 35 },
-      { name: "Chai", price: 35 },
-      { name: "Cortado", price: 35 },
-      { name: "Iced Coffee", price: 40 },
-      { name: "Decaf", price: 10, note: "Board listing — please confirm whether this is an add-on." },
-      { name: "Tea", price: 15 },
+      { name: "Espresso", price: [{ label: "Single", price: 15 }, { label: "Double", price: 20 }], priceGroup: "R15 / R20" },
+      { name: "Decaf", price: 10, priceGroup: "R10", note: "Board listing — please confirm whether this is an add-on." },
+      { name: "Americano", price: 30, priceGroup: "R30" },
+      { name: "Cappuccino", price: 30, priceGroup: "R30" },
+      { name: "Flat White", price: 30, priceGroup: "R30" },
+      { name: "Latte", price: 35, priceGroup: "R35" },
+      { name: "Cortado", price: 35, priceGroup: "R35" },
+      { name: "Mocha", price: 40, priceGroup: "R40" },
+      { name: "Iced Coffee", price: 40, priceGroup: "R40" },
+    ],
+  },
+  {
+    id: "bevande",
+    name: "Bevande",
+    kicker: "Beyond coffee. Still worth a stop.",
+    items: [
+      { name: "Tea", price: 15, priceGroup: "R15" },
+      { name: "Hot Chocolate", price: 35, priceGroup: "R35" },
+      { name: "Chai", price: 35, priceGroup: "R35" },
     ],
   },
   {
@@ -57,9 +65,9 @@ export const menu: MenuCategory[] = [
     name: "Dolci",
     kicker: "Something sweet. No speech required.",
     items: [
-      { name: "Crema Dulce", price: 40 },
-      { name: "Gelato", description: "Nut Biscoff · Vanilla hot honey · Berries", price: 45 },
-      { name: "Limoncello", price: 65 },
+      { name: "Crema Dulce", price: 40, priceGroup: "R40" },
+      { name: "Gelato", description: "Nut Biscoff · Vanilla hot honey · Berries", price: 45, priceGroup: "R45" },
+      { name: "Limoncello", price: 65, priceGroup: "R65" },
     ],
   },
 ];

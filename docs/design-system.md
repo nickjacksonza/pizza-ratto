@@ -104,7 +104,7 @@ The page uses a sequence of deliberate full-view scenes:
 - road scene: `280svh` desktop and `235svh` below `760px`;
 - story, portal, ingredients, characters, social and visit: exactly one stage-height while desktop motion is active, with pin spacing supplying their internal scroll budget;
 - the same chapters: content-height or at least `100svh` when pins are not active;
-- coffee/dolci: natural document flow at every size;
+- Caffè/Bevande/Dolci: natural document flow at every size;
 - pizza menu: natural document flow at every size, with four desktop rows of three and six mobile rows of two;
 - global section padding: up to `7.5rem` for major editorial pauses;
 - ingredients section: one viewport minimum on desktop;
@@ -121,17 +121,19 @@ Eight cards use enhanced owner-supplied photography and four use generated conce
 
 ## Counter tapes
 
-The coffee/dolci board now hands off to a compact horizontal owner-media strip rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. The Figma and dated owner archive cards are intentionally not rendered.
+The Caffè/Bevande/Dolci board now hands off to a compact horizontal owner-media strip rather than another tall grid. Seven short, muted portrait videos document the oven, pass, espresso, doughnuts and hand-lettered boxes. The Figma and dated owner archive cards are intentionally not rendered.
 
 - Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
 - On large desktop screens all seven videos remain in one static line while the chapter is visible. The chapter locks only to perform its exit: the exact-red sheet begins fully above the scene, starts descending shortly after the pin engages, then seven restrained lobes pass through an animated fractal displacement plus blur/threshold field over the heading, supplied Pizza Ratto banner and footage together. The liquid surface overscans both viewport edges so filtering and motion cannot reveal a grey seam. On smaller or shorter screens the videos remain horizontally scrollable and snap-assisted and the gooey overlay is omitted.
 - Once the sheet completes its takeover, the payoff is framed by two synchronized complete pizza marks: a rough cream canvas stamp with grey keyline and orange offset, and a crisp cream SVG. Both morph from the same round ink shape into the supplied pizza silhouette, then reveal matching red pepperoni and accent details so neither reads as an unfinished blank slice.
 - Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
-- The counter lock is presentation-only; it must never spread to the pizza or coffee/dolci menus.
+- The counter lock is presentation-only; it must never spread to the pizza or Caffè/Bevande/Dolci menus.
 
 Figma-derived red pizza, cup and ice-cream marks punctuate the menu headers. Each mark occupies a dedicated header slot with its label beneath it rather than hanging outside a circular badge. Their exact supplied paths are rendered inline so MorphSVG can scrub each main silhouette from a compact ink shape into the finished mark; toppings, steam, cup details and cone arrive in a short secondary beat. Reduced motion renders the completed vectors without an intermediate state. The supplied stacked wordmark is the primary header mark; the black pizza-slice outline and wide banner remain supporting brand assets. The counter banner is recoloured directly in its SVG paths: red letterforms keep contrasting interior counters, avoiding both the earlier green filter and the solid silhouettes produced by a CSS mask.
 
-Coffee and dolci use structured lists in orange and pink split panels rather than photographed menu boards. The board's curtain and label may enter together, but each category owns a separate `top 90%` ScrollTrigger for its header and rows. In the stacked layout this prevents Dolci from completing while only Coffee is on screen.
+Caffè, Bevande and Dolci use price-grouped structured lists in orange, cream and pink panels rather than photographed menu boards. The board's curtain and label may enter together, but each category owns a separate `top 90%` ScrollTrigger for its header and rows. In the stacked layout this prevents later panels from completing while only Caffè is on screen.
+
+The hero conversion block keeps the ordering routes together: WhatsApp is primary, Uber Eats is secondary, and the phone link sits directly beneath them. On phones the fixed bottom bar repeats WhatsApp, Call and Uber Eats with service icons; it is an ordering surface, not a second menu navigation.
 
 The expanded pizza menu contains twelve photo cards: four rows of three on desktop and six rows of two on phones, in both enhanced and reduced-motion modes. Provisional specials use a small red confirmation label beneath their ingredient descriptions.
 

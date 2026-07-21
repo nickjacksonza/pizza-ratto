@@ -12,7 +12,7 @@ Create a focused, mobile-first storefront that turns the Pizza Ratto flyer aesth
 - Flyer-derived hero with separated logo/mascot artwork, live copy and integrated order CTA
 - Full-viewport checkerboard framing and poster footnote
 - Short manifesto and house rules
-- Structured HTML pizza, coffee and dolci menu
+- Structured HTML Pizza, Caffè, Bevande and Dolci menu
 - Enhanced owner-supplied pizza photography for every current menu card
 - Ingredient story
 - Meet Remi and Big Bertha section

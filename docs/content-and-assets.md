@@ -29,15 +29,16 @@ The prefilled WhatsApp message is stored in `data/business.ts`.
 
 ## Menu model
 
-The menu contains three categories:
+The menu contains four categories:
 
 - Pizza
-- Coffee
+- Caffè
+- Bevande
 - Dolci
 
-The pizza menu currently contains Bianca & Dip, Primavera, Veloce, Sprint, Arcobaleno, and Rally.
+The pizza menu contains twelve cards. The smaller board separates espresso-led drinks into Caffè, confirmed non-coffee drinks into Bevande, and sweets into Dolci. The complete cold-drink and alcohol inventory remains an owner-confirmation task; do not invent it.
 
-Prices should remain numbers in `data/menu.ts`; `zar()` formats them for display. Multi-option prices use labelled objects.
+Prices should remain numbers in `data/menu.ts`; `zar()` formats them for display. Multi-option prices use labelled objects. `priceGroup` controls the visible price bands in the Caffè, Bevande and Dolci panels.
 
 ## Editorial copy
 
@@ -190,7 +191,7 @@ If an item name changes in `data/menu.ts`, update the photo mapping in the same 
 - Decorative CSS shapes and checkerboards should remain hidden from assistive technology.
 - Intentional placeholders use `role="img"` with an accessible label.
 
-Brand service icons are code-native interface marks in `components/BrandIcon.tsx`, not content imagery. They inherit the surrounding text color. The icon-only Instagram footer link must retain its explicit accessible label.
+Brand service icons are code-native interface marks in `components/BrandIcon.tsx`, not content imagery. WhatsApp, phone, Uber Eats and Instagram marks inherit the surrounding text color. The icon-only Instagram footer link must retain its explicit accessible label.
 
 ## Asset-path rules
 
