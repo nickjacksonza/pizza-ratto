@@ -738,8 +738,11 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                 const morphDetails = chapter.querySelector<SVGGElement>("[data-counter-morph-details]");
                 if (!gooeySurface) break;
                 const morphContext = morphCanvas?.getContext("2d");
+                const canvasDetails = { progress: 0 };
+                let latestCanvasPath: number[][] = [];
                 const drawCanvasPath = (rawPath: number[][]) => {
                   if (!morphCanvas || !morphContext) return;
+                  latestCanvasPath = rawPath;
                   morphContext.clearRect(0, 0, morphCanvas.width, morphCanvas.height);
                   morphContext.save();
                   morphContext.fillStyle = "#fff4df";
@@ -759,6 +762,30 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                   });
                   morphContext.fill();
                   morphContext.stroke();
+                  morphContext.restore();
+                  if (canvasDetails.progress <= 0) return;
+                  morphContext.save();
+                  morphContext.globalAlpha = canvasDetails.progress;
+                  morphContext.fillStyle = "#cc2832";
+                  [
+                    [113.542, 163.104, 46.6611],
+                    [157.094, 262.655, 31.1074],
+                    [250.399, 234.658, 40.4396],
+                    [60.6359, 352.866, 24.8859],
+                  ].forEach(([x, y, radius]) => {
+                    morphContext.beginPath();
+                    morphContext.arc(x, y, radius, 0, Math.PI * 2);
+                    morphContext.fill();
+                  });
+                  morphContext.strokeStyle = "#cc2832";
+                  morphContext.lineWidth = 12.8908;
+                  morphContext.lineCap = "round";
+                  [[150.434, 316.506, 110.892, 327.017], [85.6118, 235.512, 76.5511, 275.411]].forEach(([x1, y1, x2, y2]) => {
+                    morphContext.beginPath();
+                    morphContext.moveTo(x1, y1);
+                    morphContext.lineTo(x2, y2);
+                    morphContext.stroke();
+                  });
                   morphContext.restore();
                 };
                 if (morphPath && morphContext) drawCanvasPath(MorphSVGPlugin.getRawPath(morphPath) as unknown as number[][]);
@@ -792,6 +819,14 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                   }, .74);
                 }
                 if (morphDetails) timeline.to(morphDetails, { opacity: 1, scale: 1, duration: .12, ease: "back.out(1.6)" }, .87);
+                if (morphCanvas && morphContext) {
+                  timeline.to(canvasDetails, {
+                    progress: 1,
+                    duration: .12,
+                    ease: "power2.out",
+                    onUpdate: () => drawCanvasPath(latestCanvasPath),
+                  }, .87);
+                }
                 break;
               }
               case "ingredients": {

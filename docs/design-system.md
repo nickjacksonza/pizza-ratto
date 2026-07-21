@@ -125,7 +125,7 @@ The coffee/dolci board now hands off to a compact horizontal owner-media strip r
 
 - Cards use warm cream borders, red offset shadows and restrained one-degree rotations.
 - On large desktop screens all seven videos remain in one static line while the chapter is visible. The chapter locks only to perform its exit: the exact-red sheet begins fully above the scene, starts descending shortly after the pin engages, then seven restrained lobes pass through an animated fractal displacement plus blur/threshold field over the heading, supplied Pizza Ratto banner and footage together. The liquid surface overscans both viewport edges so filtering and motion cannot reveal a grey seam. On smaller or shorter screens the videos remain horizontally scrollable and snap-assisted and the gooey overlay is omitted.
-- Once the sheet completes its takeover, the payoff is framed by two synchronized pizza marks: a rough cream canvas stamp with grey keyline and orange offset, and a crisp cream SVG with red toppings. Both morph from the same round ink shape into the supplied pizza silhouette, keeping the result rooted in the flyer language rather than reading as a generic technology demo.
+- Once the sheet completes its takeover, the payoff is framed by two synchronized complete pizza marks: a rough cream canvas stamp with grey keyline and orange offset, and a crisp cream SVG. Both morph from the same round ink shape into the supplied pizza silhouette, then reveal matching red pepperoni and accent details so neither reads as an unfinished blank slice.
 - Video poster frames are always present. Under reduced motion the loops are hidden and the same frames remain visible.
 - The counter lock is presentation-only; it must never spread to the pizza or coffee/dolci menus.
 

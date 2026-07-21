@@ -335,3 +335,11 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Keep the road heading centred while it fades at `760px` and below, retaining the lateral exit only on wider screens. Reflow the mobile character poster into an introduction, a self-contained Big Bertha diptych with its card in normal flow, and a separate centred Remi figure. Remove the checker and background word on small phones while preserving them in the authored desktop composition.
 
 **Consequence:** The phone road animation remains visually centred throughout its handoff, and the character section keeps both Big Bertha and Remi prominent without sacrificing legibility or cropping the scooter.
+
+## 041 — Complete both Fresh Proof pizza marks
+
+**Context:** The synchronized Fresh Proof payoff correctly morphed both silhouettes, but only the right-hand SVG revealed its pepperoni. The left canvas therefore finished as an empty cream slice despite sharing the same source artwork.
+
+**Decision:** Track the latest normalized canvas path and add a reversible canvas detail-progress tween alongside the SVG detail reveal. Draw the four supplied pepperoni circles and two accent strokes in brand red after the silhouette settles.
+
+**Consequence:** Both marks now finish as complete pizzas with synchronized toppings while retaining distinct canvas and SVG print treatments.
