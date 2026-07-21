@@ -46,7 +46,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
     let motionObserver: MotionObserver | undefined;
     const splitInstances: SplitInstance[] = [];
     const anchorCleanups: Array<() => void> = [];
-    const generatedRemiCanvases: HTMLCanvasElement[] = [];
+    const generatedRemiFragments: HTMLCanvasElement[] = [];
 
     const setupMotion = async () => {
       const [gsapModule, scrollTriggerModule, scrollSmootherModule, scrollToModule, observerModule, splitTextModule, drawSvgModule, morphSvgModule, varaModule] = await Promise.all([
@@ -130,56 +130,54 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
 
       document.documentElement.classList.add("motion-ready");
 
-      const remiFigure = document.querySelector<HTMLElement>("[data-remi-disintegration]");
-      const remiSource = remiFigure?.querySelector<HTMLImageElement>("[data-remi-source]");
-      const remiFragmentsHost = remiFigure?.querySelector<HTMLElement>("[data-remi-fragments]");
+      const remiChapter = document.querySelector<HTMLElement>("[data-lock-chapter='characters']");
+      const remiSource = remiChapter?.querySelector<HTMLImageElement>(".remi-disintegration-source");
+      const remiFragmentsHost = remiChapter?.querySelector<HTMLElement>("[data-remi-fragments]");
       const supportsRemiDisintegration = window.matchMedia("(min-width: 1001px) and (min-height: 720px)").matches;
 
-      if (supportsRemiDisintegration && remiFigure && remiSource && remiFragmentsHost) {
+      if (supportsRemiDisintegration && remiSource && remiFragmentsHost) {
         try {
-          if (!remiSource.complete || !remiSource.naturalWidth) await remiSource.decode();
-          if (disposed) return;
+          await remiSource.decode();
+          const fragmentCount = 75;
+          const repeatCount = 3;
+          const workingWidth = 380;
+          const workingHeight = Math.round(workingWidth * remiFragmentsHost.clientHeight / remiFragmentsHost.clientWidth);
+          const capture = document.createElement("canvas");
+          capture.width = workingWidth;
+          capture.height = workingHeight;
+          const captureContext = capture.getContext("2d", { willReadFrequently: true });
+          if (!captureContext) throw new Error("Canvas context unavailable");
+          const drawnHeight = workingWidth * remiSource.naturalHeight / remiSource.naturalWidth;
+          captureContext.drawImage(remiSource, 0, workingHeight * -.13, workingWidth, drawnHeight);
+          const sourceData = captureContext.getImageData(0, 0, workingWidth, workingHeight);
+          const fragmentData = Array.from({ length: fragmentCount }, () => captureContext.createImageData(workingWidth, workingHeight));
 
-          const layerCount = 42;
-          const repeatCount = 2;
-          const width = 380;
-          const height = Math.round(width * remiSource.naturalHeight / remiSource.naturalWidth);
-          const sourceCanvas = document.createElement("canvas");
-          sourceCanvas.width = width;
-          sourceCanvas.height = height;
-          const sourceContext = sourceCanvas.getContext("2d", { willReadFrequently: true });
-          if (!sourceContext) throw new Error("Canvas is unavailable");
-          sourceContext.drawImage(remiSource, 0, 0, width, height);
-          const sourcePixels = sourceContext.getImageData(0, 0, width, height);
-          const layerPixels = Array.from({ length: layerCount }, () => sourceContext.createImageData(width, height));
-
-          for (let x = 0; x < width; x += 1) {
-            for (let y = 0; y < height; y += 1) {
-              const pixelIndex = (y * width + x) * 4;
-              if (sourcePixels.data[pixelIndex + 3] === 0) continue;
+          for (let x = 0; x < workingWidth; x += 1) {
+            for (let y = 0; y < workingHeight; y += 1) {
+              const pixelIndex = (x + y * workingWidth) * 4;
+              if (sourceData.data[pixelIndex + 3] === 0) continue;
               for (let repeat = 0; repeat < repeatCount; repeat += 1) {
-                const biasedLayer = Math.floor((layerCount * (Math.random() + (2 * x) / width)) / 3);
-                const layer = layerPixels[Math.min(layerCount - 1, biasedLayer)].data;
-                layer[pixelIndex] = sourcePixels.data[pixelIndex];
-                layer[pixelIndex + 1] = sourcePixels.data[pixelIndex + 1];
-                layer[pixelIndex + 2] = sourcePixels.data[pixelIndex + 2];
-                layer[pixelIndex + 3] = sourcePixels.data[pixelIndex + 3];
+                const dataIndex = Math.min(fragmentCount - 1, Math.floor(fragmentCount * (Math.random() + 2 * x / workingWidth) / 3));
+                for (let channel = 0; channel < 4; channel += 1) {
+                  fragmentData[dataIndex].data[pixelIndex + channel] = sourceData.data[pixelIndex + channel];
+                }
               }
             }
           }
 
-          layerPixels.forEach((pixels) => {
-            const canvas = document.createElement("canvas");
-            canvas.className = "remi-fragment-canvas";
-            canvas.width = width;
-            canvas.height = height;
-            canvas.getContext("2d")?.putImageData(pixels, 0, 0);
-            remiFragmentsHost.appendChild(canvas);
-            generatedRemiCanvases.push(canvas);
+          fragmentData.forEach((data) => {
+            const fragment = document.createElement("canvas");
+            fragment.width = workingWidth;
+            fragment.height = workingHeight;
+            fragment.className = "remi-fragment-canvas";
+            fragment.setAttribute("aria-hidden", "true");
+            fragment.getContext("2d")?.putImageData(data, 0, 0);
+            remiFragmentsHost.appendChild(fragment);
+            generatedRemiFragments.push(fragment);
           });
-          remiFigure.classList.add("has-remi-fragments");
         } catch {
-          remiFigure.classList.remove("has-remi-fragments");
+          generatedRemiFragments.forEach((fragment) => fragment.remove());
+          generatedRemiFragments.length = 0;
         }
       }
 
@@ -400,14 +398,16 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
 
           if (transition === "remi-poster") {
             const heading = scene.querySelector<HTMLElement>(".remi-story-heading");
+            const oven = scene.querySelector<HTMLElement>(".remi-bertha-feature");
             const figure = scene.querySelector<HTMLElement>(".remi-disintegration");
             const card = scene.querySelector<HTMLElement>(".remi-bertha-card");
             sceneTimeline
               .to(curtain, { xPercent: -88, skewX: 5, duration: .76, ease: "power3.inOut" }, 0)
               .to(curtain, { xPercent: -120, skewX: 0, duration: .24, ease: "power2.out" }, .76);
             if (heading) sceneTimeline.from(heading, { xPercent: -45, rotation: -1.5, opacity: 0, duration: .78, ease: "power3.out" }, .1);
-            if (figure) sceneTimeline.from(figure, { xPercent: 40, rotation: 5, scale: .88, opacity: 0, duration: .82, ease: "back.out(1.15)" }, .12);
-            if (card) sceneTimeline.from(card, { yPercent: 80, rotation: -8, opacity: 0, duration: .56, ease: "back.out(1.35)" }, .28);
+            if (oven) sceneTimeline.from(oven, { xPercent: 48, rotation: 5, scale: .9, opacity: 0, duration: .88, ease: "power3.out" }, .1);
+            if (figure) sceneTimeline.from(figure, { xPercent: 48, yPercent: 24, rotation: 5, scale: .78, opacity: 0, duration: .76, ease: "back.out(1.18)" }, .2);
+            if (card) sceneTimeline.from(card, { yPercent: 80, rotation: -8, opacity: 0, duration: .56, ease: "back.out(1.35)" }, .34);
             return;
           }
 
@@ -726,13 +726,17 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
               }
               case "counter-tapes": {
                 const cards = gsap.utils.toArray<HTMLElement>(".counter-tape", chapter);
+                const header = chapter.querySelector<HTMLElement>(".counter-tapes-header");
                 const gooeySurface = chapter.querySelector<HTMLElement>(".counter-gooey-surface");
                 const gooeyDrops = gsap.utils.toArray<HTMLElement>(".counter-gooey-drop", chapter);
                 const gooeyCopy = chapter.querySelector<HTMLElement>(".counter-gooey-copy");
+                const gooeyNoise = chapter.querySelector<SVGElement>(".counter-gooey-noise");
+                const gooeyDisplacement = chapter.querySelector<SVGElement>(".counter-gooey-displacement");
                 if (!gooeySurface) break;
                 timeline.set(gooeySurface, { yPercent: -155 }, 0);
-                timeline.to(cards, { opacity: .72, scale: .985, duration: .16, ease: "power2.in" }, .44);
                 timeline.to(gooeySurface, { yPercent: 0, xPercent: 1.5, duration: .5, ease: "power1.inOut" }, .46);
+                if (gooeyNoise) timeline.to(gooeyNoise, { attr: { baseFrequency: "0.008 0.018" }, duration: .5, ease: "sine.inOut" }, .46);
+                if (gooeyDisplacement) timeline.to(gooeyDisplacement, { attr: { scale: 34 }, duration: .5, ease: "sine.inOut" }, .46);
                 gooeyDrops.forEach((drop, index) => {
                   timeline.fromTo(drop, {
                     scaleX: index % 2 ? .56 : 1.22,
@@ -748,7 +752,9 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
                     ease: "sine.inOut",
                   }, .45 + index * .006);
                 });
-                if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .16, ease: "power2.out" }, .8);
+                const foreground = [header, ...cards].filter((item): item is HTMLElement => Boolean(item));
+                timeline.to(foreground, { opacity: 0, yPercent: -4, duration: .14, ease: "power2.in" }, .79);
+                if (gooeyCopy) timeline.to(gooeyCopy, { opacity: 1, scale: 1.04, duration: .14, ease: "power2.out" }, .84);
                 break;
               }
               case "ingredients": {
@@ -766,30 +772,37 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
               case "characters": {
                 const heading = chapter.querySelector<HTMLElement>(".remi-story-heading");
                 const figure = chapter.querySelector<HTMLElement>(".remi-disintegration");
-                const card = chapter.querySelector<HTMLElement>(".remi-bertha-card");
+                const oven = chapter.querySelector<HTMLElement>(".remi-bertha-feature");
+                const ovenImages = chapter.querySelectorAll<HTMLElement>(".remi-bertha-images img");
                 const backdrop = chapter.querySelector<HTMLElement>(".remi-backdrop-word");
                 const vanishCopy = chapter.querySelector<HTMLElement>(".remi-vanish-copy");
+                const source = chapter.querySelector<HTMLElement>(".remi-disintegration-source");
+                const fragmentHost = chapter.querySelector<HTMLElement>("[data-remi-fragments]");
                 const fragments = gsap.utils.toArray<HTMLCanvasElement>(".remi-fragment-canvas", chapter);
-                if (backdrop) timeline.to(backdrop, { xPercent: -8, rotation: -5, duration: .8, ease: "power1.inOut" }, .04);
+                if (backdrop) timeline.to(backdrop, { xPercent: 0, rotation: -2, duration: .8, ease: "power1.inOut" }, .04);
                 if (heading) timeline.to(heading, { xPercent: -5, rotation: -.5, duration: .56, ease: "power2.inOut" }, .08);
-                if (fragments.length) {
+                if (ovenImages.length) timeline.to(ovenImages, { scale: 1.06, stagger: .04, duration: .62, ease: "power1.inOut" }, .04);
+                if (oven) timeline.to(oven, { rotation: -.6, duration: .72, ease: "power2.inOut" }, .08);
+                if (fragments.length && fragmentHost) {
+                  timeline.set(fragmentHost, { opacity: 0 }, 0);
+                  timeline.set(fragmentHost, { opacity: 1 }, .2);
+                  if (source) timeline.set(source, { visibility: "hidden" }, .2);
                   fragments.forEach((fragment, index) => {
-                    const phase = (index + 1) * 1.73;
+                    const randomAngle = (Math.random() - .5) * 2 * Math.PI;
+                    const randomRotation = 30 * (Math.random() - .5);
                     timeline.to(fragment, {
-                      x: 100 + 150 * Math.sin(phase),
-                      y: 115 * Math.cos(phase * .86),
-                      rotation: 30 * Math.sin(phase * 1.2),
-                      scale: .82 + (index % 5) * .025,
+                      x: 40 * Math.sin(randomAngle),
+                      y: 40 * Math.cos(randomAngle),
+                      rotation: randomRotation,
                       opacity: 0,
-                      duration: .44,
-                      ease: "power2.in",
-                    }, .22 + (index / fragments.length) * .36);
+                      duration: .34,
+                      ease: "none",
+                    }, .2 + (index / fragments.length) * .38);
                   });
-                } else if (figure) {
-                  timeline.to(figure, { xPercent: 18, rotation: 4, scale: .92, opacity: .08, duration: .5, ease: "power2.in" }, .24);
+                } else {
+                  if (source ?? figure) timeline.to(source ?? figure, { xPercent: 16, rotation: 2, opacity: 0, duration: .5, ease: "power2.in" }, .24);
                 }
-                if (vanishCopy) timeline.to(vanishCopy, { opacity: 1, scale: 1.04, rotation: 1, duration: .24, ease: "back.out(1.5)" }, .62);
-                if (card) timeline.to(card, { xPercent: -4, rotation: 1.5, duration: .34, ease: "power2.inOut" }, .7);
+                if (vanishCopy) timeline.to(vanishCopy, { opacity: 1, scale: 1.04, rotation: 1, duration: .2, ease: "back.out(1.5)" }, .79);
                 break;
               }
               case "social": {
@@ -1098,8 +1111,7 @@ export function ScrollChoreography({ remiSrc, pullImageSrc, varaFontSrc }: Scrol
       responsiveMotion?.revert();
       gsapContext?.revert();
       smoothScroller?.kill();
-      generatedRemiCanvases.forEach((canvas) => canvas.remove());
-      document.querySelector<HTMLElement>("[data-remi-disintegration]")?.classList.remove("has-remi-fragments");
+      generatedRemiFragments.forEach((fragment) => fragment.remove());
       document.documentElement.classList.remove("motion-ready");
       word.replaceChildren();
       socialWord?.replaceChildren();

@@ -34,6 +34,8 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /Meet[\s\S]*Remi\./);
   assert.match(html, /Big Bertha\./);
   assert.match(html, /data-remi-disintegration/);
+  assert.match(html, /data-remi-fragments/);
+  assert.match(html, /\/images\/ratto-vespa-cutout\.png/);
   assert.match(html, /Gone for pizza\./);
   assert.match(html, /\/videos\/owner-2026\/oven-close\.mp4/);
   assert.match(html, /\/images\/brand\/pizza-ratto-wordmark\.svg/);
@@ -41,7 +43,11 @@ test("server-renders the Pizza Ratto homepage and metadata", async () => {
   assert.match(html, /data-lock-chapter="counter-tapes"/);
   assert.match(html, /data-transition="counter-static"/);
   assert.match(html, /id="counter-gooey-filter"/);
+  assert.match(html, /counter-gooey-noise/);
   assert.match(html, /NEXT \/ BUILT DIFFERENT/);
+  assert.match(html, /FIRE #01 \/ HEART OF THE HOUSE/);
+  assert.match(html, /pizza baking beside the flames inside Pizza Ratto/);
+  assert.match(html, /\/images\/owner-2026\/video-stills\/oven-flames\.webp/);
   assert.doesNotMatch(html, /\/images\/owner-2026\/dessert-brownie\.webp/);
   assert.doesNotMatch(html, /From the Figma drawer|Owner archive \/ dates on artwork/);
   assert.doesNotMatch(html, /pizza-placeholder/);
@@ -74,7 +80,8 @@ test("centralises business and menu content and keeps fake links out", async () 
   const motion = await readFile(new URL("../components/ScrollChoreography.tsx", import.meta.url), "utf8");
   assert.match(motion, /gsap\/MorphSVGPlugin/);
   assert.match(motion, /morphSVG:/);
-  assert.match(motion, /layerCount = 42/);
+  assert.match(motion, /fragmentCount = 75/);
+  assert.match(motion, /repeatCount = 3/);
   assert.match(motion, /remi-fragment-canvas/);
   assert.doesNotMatch(page, /className="text-link" href=\{business\.instagramUrl\}/);
   assert.match(page, /dynamic = "force-static"/);

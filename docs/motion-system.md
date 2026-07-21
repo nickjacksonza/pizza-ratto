@@ -37,7 +37,7 @@ The fixed announcement, header, and mobile order bar remain outside `#smooth-wra
 
 1. Load the animation modules and construct Vara.
 2. Check `prefers-reduced-motion`. In reduced motion, show the complete `Hot` paths and stop without creating ScrollSmoother or ScrollTriggers.
-3. Add `.motion-ready`. On large desktop only, decode the local Remi image and build its optimized canvas fragment layers before the locked character timeline is attached.
+3. Add `.motion-ready`. On large desktop only, clone the transparent Remi image into irregular clipped slices before the locked character timeline is attached.
 4. Initialize ScrollSmoother. General scene motion must not wait for Vara's JSON callback.
 5. Create section, heading, parallax, menu, locked-chapter, social, navigation, and Remi timelines inside one GSAP context.
 6. Await both Vara instances separately, configure the generated `Hot` and `Ratto` SVG paths, and attach their independent responsive DrawSVG ScrollTriggers.
@@ -57,9 +57,9 @@ Scene identity is declared in `app/page.tsx` with `data-scene` and `data-transit
 | 02 / The important bit | `[data-scene="menu-portal"]` | `iris` + locked orbit | A cream curtain collapses into a central circle; the desktop view pins while pizza cutouts fly in, the ring expands and the CTA kicks upward. |
 | Pizza menu | `[data-scene="pizza-menu"]` | `shutter-left` + mark morph | A pink shutter clears to the right, then the three-column menu rows alternately enter from the left and right. The supplied pizza silhouette morphs from a compact ink shape before its toppings and crust details appear. |
 | Coffee and dolci | `[data-scene="small-menu"]` | `cards-up` + local category triggers + mark morphs | A red shutter clears right with the label; Coffee and Dolci then reveal independently only when each category reaches the viewport. Their supplied cup and ice-cream silhouettes morph into place with delayed detail reveals. |
-| Counter tapes | `[data-scene="counter-tapes"]` | `counter-static` + locked gooey exit | A pink paper shutter clears left, leaving seven videos static in one line. During the latter half of the large-desktop pin, exact-red blurred drops merge into a liquid sheet that covers the view and introduces `BUILT DIFFERENT` before release. Smaller and reduced-motion layouts remain native and swipeable without the overlay. |
+| Counter tapes | `[data-scene="counter-tapes"]` | `counter-static` + locked gooey exit | A pink paper shutter clears left, leaving seven videos static in one line. The exact-red surface begins at `-155%`, fully clear of the editorial header. During the latter half of the large-desktop pin, seven restrained lobes move over the heading, supplied banner and footage together through animated fractal displacement, blur and alpha thresholding, then `BUILT DIFFERENT` appears before release. Smaller and reduced-motion layouts remain native and swipeable without the overlay. |
 | 03 / Built different | `[data-scene="ingredients"]` | `split` + locked material change | A cream curtain splits from its centre; the desktop stage then pins while the photograph pushes in, the crop bends and the copy surface changes from red to grey. |
-| Meet Remi / Big Bertha | `[data-scene="characters"]` | `remi-poster` + locked disintegration | A red curtain exits left as a cream-and-orange mascot poster assembles. On large desktop, 42 sparse canvas layers progressively disperse Remi from left to right, revealing `Gone for pizza`; mobile, short and reduced-motion views keep the complete static poster. |
+| Meet Remi / Big Bertha | `[data-scene="characters"]` | `remi-poster` + locked disintegration | A red curtain exits left as a cream poster assembles with Remi, fully visible oversized RATTO type and a compact two-frame Big Bertha feature. On large desktop, 75 pixel-distributed canvas layers disperse Remi alone, revealing `Gone for pizza` in the open centre-left field without covering the oven; mobile, short and reduced-motion views keep the complete static poster. |
 | 04 / Ratto Social Club | `[data-scene="social"]` | `deck` + locked collage | A grey diagonal shutter exits right; red Vara paths draw the background `Ratto`, four venue/food cards deal in from four directions over an abstract brand mural, then drift while the Instagram badge becomes interactive. |
 | 05 / Find the fire | `[data-scene="visit"]` | `shutter-right` + locked action reveal | A pink shutter exits left; the desktop stage pins while visit rows and order actions reveal laterally from one shared top-aligned grid row. |
 
@@ -104,9 +104,11 @@ Keep the pin trigger on the stable section container and animate only descendant
 
 ## Remi disintegration
 
-The Meet Remi effect adapts the biased pixel-layer idea from dev_loop's [GSAP ScrollTrigger disintegration demo](https://codepen.io/dev_loop/pen/mdVWRMv). The implementation deliberately draws the already loaded local image into a `380px` working canvas rather than taking an `html2canvas` screenshot. Every visible source pixel is assigned twice across 42 layers, with its likely layer biased by horizontal position, so the scooter breaks apart progressively rather than dissolving as a uniform rectangle.
+The Meet Remi effect follows dev_loop's [GSAP ScrollTrigger disintegration demo](https://codepen.io/dev_loop/pen/mdVWRMv). At the large-desktop breakpoint, the runtime draws the transparent Remi image into a `380px` working canvas, creates 75 empty canvases, and assigns each visible pixel to three layers. The layer index uses the demo's `(random + 2x / width) / 3` bias, so Remi dissolves progressively from left to right while the heading, RATTO backdrop, checker, caption and Big Bertha remain stable.
 
-The generated canvases exactly overlay the semantic source image. GSAP disperses them with deterministic phase-based translation, rotation, scale and opacity while the character chapter is pinned; reverse scrolling reconstructs the image. Canvases are created only at the large-desktop lock breakpoint and removed during effect cleanup. If image decoding or the canvas API fails, the source image remains visible and the same timeline uses a simple poster fade. Do not hide the source until every layer has been appended.
+The oversized RATTO word remains inside the poster's safe bounds for the full pinned timeline. The payoff copy occupies the negative space between the editorial introduction and Big Bertha rather than crossing the oven media.
+
+GSAP gives every canvas the demo's independent random direction, modest `40px` drift, random rotation and index-based delay while the character chapter is pinned; reverse scrolling reconstructs Remi. The semantic original remains present until every canvas is ready, then swaps atomically at the start of the breakup. Generated canvases are removed during cleanup. Smaller, short, reduced-motion and canvas-failure layouts use the original complete poster and a simple mascot fade fallback.
 
 ## Social-club cursor interaction
 
@@ -130,11 +132,11 @@ The hero image must use normal blending and no color filter. `mix-blend-mode: mu
 
 ## Responsive and reduced motion behavior
 
-- Large desktop (`>=1001px` and `>=720px` high): ScrollSmoother, scene curtains, pinned narrative chapters with internal scrubbed timelines, canvas Remi disintegration, cursor-follow social CTA, and a natural-flow three-column pizza grid.
+- Large desktop (`>=1001px` and `>=720px` high): ScrollSmoother, scene curtains, pinned narrative chapters with internal scrubbed timelines, mascot-only Remi slice disintegration, cursor-follow social CTA, and a natural-flow three-column pizza grid.
 - Tablet/short desktop (`<=1000px` wide or `<720px` high): no narrative pins; short normal-flow portal/social entrances preserve the story without trapping readable content.
 - Tablet/phone (`<=760px`): short touch smoothing, scene curtains, a natural-flow two-column pizza grid with alternating lateral row entrances, and stacked layouts.
 - Phone (`<=520px`): full-height portal, compact typography, sticky order bar, and normal-flow content long enough to remain legible.
-- Reduced motion: no ScrollSmoother, pinning, parallax, marquee, scene transforms, pulled red Remi panel, or fragment canvases. The complete static content remains in DOM order.
+- Reduced motion: no ScrollSmoother, pinning, parallax, marquee, scene transforms, pulled red Remi panel, or generated Remi canvases. The complete static content remains in DOM order.
 
 The `motion-ready` class is progressive enhancement. Base CSS must remain readable before JavaScript runs and when it fails. Curtains are hidden in base and reduced-motion CSS; the menu is always a normal grid.
 

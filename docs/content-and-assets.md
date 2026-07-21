@@ -67,7 +67,8 @@ See `content-todo.md` for facts that remain unverified.
 | `public/og.png` | 1731×909 | Social card and original visual reference | Supplied/generated poster composition |
 | `public/images/hero-logo-mascot.png` | 1698×926 | Hero wordmark and complete rat/Vespa illustration | Generated extraction from the flyer visual; project-critical |
 | `public/images/hero-paper-texture.png` | 1698×926 | Continuous hero paper surface | Generated background-only paper texture derived from the hero visual; rendered behind the opaque hero composite and beneath the red copy panel to remove visible seams |
-| `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi and Meet Remi poster/disintegration source | Generated edit: red scooter, white helmet, pepperoni pizza; the character scene draws a temporary downsampled canvas copy on capable large screens while preserving this image as its semantic and fallback source |
+| `public/images/ratto-vespa-red.png` | 1096×1435 | Scroll-driving Remi source and source reference for the character cutout | Generated edit: red scooter, white helmet, pepperoni pizza; the road scene retains its bounded upper crop and multiply blending |
+| `public/images/ratto-vespa-cutout.png` | 1096×1436 | Transparent Meet Remi poster cutout | Imagegen background-extraction edit of the established rat-on-red-Vespa artwork, generated on a flat green key and converted locally to alpha; used only in the character poster so no paper rectangle sits over the cream texture |
 | `public/images/pizza-ratto-logo-art.png` | 1283×1279 | Icon/logo art | Transparent PNG |
 | `public/images/interior.webp` | 291×510 | Ratto Social Club room card | Supplied venue photo, actively rendered in the `Never pizza solo.` collage |
 | `public/images/menu-pizza.webp` | 376×510 | Original pizza menu board | Supplied photo, retained but no longer rendered |
@@ -117,7 +118,7 @@ The second July handoff added one owner mural photograph, seven WhatsApp video c
 | `public/images/owner-2026/backgammon-tournament.webp` | Retained, unrendered owner archive | WebP derivative of the owner-supplied poster; removed from the counter reel after review |
 | `public/images/owner-2026/dessert-brownie.webp` | Retained owner dessert photography | Owner-supplied chocolate-cake photograph; no longer rendered in the counter section after the static-strip revision |
 | `public/videos/owner-2026/*.mp4` | Seven-card counter reel | Muted H.264 derivatives of the supplied WhatsApp clips, resized to 480px wide and moved to fast-start layout |
-| `public/images/owner-2026/video-stills/*.webp` | Video poster and reduced-motion frames | WebP still extracted from each matching owner video |
+| `public/images/owner-2026/video-stills/*.webp` | Video poster and reduced-motion frames | WebP still extracted from each matching owner video; `oven-close.webp` and `oven-flames.webp` form the compact Big Bertha diptych in the Meet Remi poster |
 
 Counter video filenames are `oven-close`, `oven-flames`, `pizza-pass`, `espresso-pull`, `sugar-doughnuts`, `box-lettering` and `counter-sweep`. Their visible captions describe only what is shown and do not add menu availability or pricing claims.
 

@@ -263,3 +263,43 @@ This is a lightweight architectural decision log. Add new entries when a choice 
 **Decision:** Recompose Meet Remi as one cream poster with oversized background type, an orange circular field, checker texture, a compact Big Bertha card and a hidden `Gone for pizza` payoff. On large desktop, draw the local Remi source into a `380px` working canvas, distribute visible pixels twice across 42 horizontally biased layers, and let the existing GSAP/ScrollTrigger lock disperse those layers with deterministic translations and rotations. Keep the semantic image whole on smaller, short, reduced-motion and canvas-failure paths. Increase the Fresh Proof wipe from seven to eleven overlapping lobes, strengthen its SVG threshold and give each lobe more irregular stretch and sway.
 
 **Consequence:** Meet Remi now has its own narrative reveal without introducing `html2canvas`, WebGL, a second motion runtime or a new network asset. The desktop effect remains reversible and bounded in memory, cleanup removes every generated canvas, and all fallbacks preserve a complete readable poster. The Fresh Proof transition remains exact red but reads as a more organic liquid boundary.
+
+## 032 — Make Big Bertha dominant and remove Remi's paper rectangle
+
+**Context:** Visual review of the new character poster showed that the source image's large white canvas still read as a pasted rectangle. It also gave Remi more visual weight than Big Bertha even though the oven is central to the restaurant's culture. A second review of the goo reference showed that its fluid character comes from continuous noise displacement, not simply blurred circular drops.
+
+**Decision:** Reuse the towing scene's tight upper crop for the character artwork and clear near-white pixels from the temporary canvas copy before building fragment layers. Make `oven-close.webp` a near-full-height photographic field, overlay the Big Bertha title directly on it, and reduce Remi to an overlapping mascot cutout. Extend the Fresh Proof SVG filter with animated fractal noise displacement before blur and thresholding, move the red sheet closer to the viewport at the start of the wipe, and add small mergeable drops beneath the eleven main lobes.
+
+**Consequence:** Remi now reads as the same established scooter artwork without a white box, Big Bertha owns the section's visual hierarchy, and the red transition produces broad waves, narrow drips and changing liquid contours much closer to the supplied CodePen while retaining the existing CSS/SVG implementation and fallbacks.
+
+## 033 — Balance Big Bertha, disintegrate the whole poster and protect the footage
+
+**Context:** Desktop review showed that the near-full-height oven frame was enlarged beyond its useful resolution and overwhelmed the Remi composition. The character-only disintegration made the effect feel detached from the section, while the liquid overlay's deep lobes and satellite drops obscured the Fresh Proof videos before the intended handoff.
+
+**Decision:** Replace the single oversized oven frame with a compact two-frame diptych using the existing `oven-close` and `oven-flames` owner stills. Preserve Remi as a multiply-blended cutout in front. Replace the bitmap-only canvas breakup with 30 irregular clipped DOM slices containing the complete visible poster—backdrop type, heading, Big Bertha and Remi—then disperse those slices as one composition. Reduce the Fresh Proof transition to seven restrained lobes, remove satellite drops, lower displacement, and stack the liquid behind the heading and cards until those foreground elements deliberately fade at the final takeover.
+
+**Consequence:** Big Bertha remains culturally prominent without becoming a low-resolution wall, the disintegration now reads as a true section transition, and the Fresh Proof footage stays clean and readable throughout the liquid's approach. The implementation remains reversible, static-export compatible and free of new rendering dependencies.
+
+## 034 — Return the motion focus to Remi and overlay the liquid
+
+**Context:** Review of the whole-poster breakup found that it pulled too much attention from the stable character composition. The oversized RATTO backdrop was also clipped by its negative bottom offset, and the liquid transition felt more expressive when it travelled across the Fresh Proof footage.
+
+**Decision:** Keep the heading, RATTO lettering, Big Bertha diptych, checker and caption stable while cloning only the transparent Remi image into 30 clipped horizontal slices. Move the RATTO baseline fully inside the scene. Restore the Fresh Proof goo layer above the header and cards while retaining the cleaner seven-lobe silhouette and restrained displacement.
+
+**Consequence:** The disintegration has a clear subject again, the background typography reads as an intentional complete word, and the counter transition regains the bolder liquid takeover requested in review.
+
+## 035 — Match the referenced pixel-disintegration model
+
+**Context:** The mascot-only horizontal clip layers preserved the requested scope but still did not reproduce the supplied dev_loop CodePen. The reference's character comes from pixels being distributed across many sparse canvases, not from slicing the source into contiguous bands.
+
+**Decision:** Replace the 30 CSS-clipped image clones with the reference model: render Remi into a `380px` working canvas, create 75 sparse canvas layers, assign every visible pixel three times using the reference's horizontal probability bias, and animate each layer with a delayed random `40px` drift, random rotation and fade. Keep this limited to large desktop and preserve the source-image fallback everywhere else.
+
+**Consequence:** Remi now dissolves as a cloud of progressively delayed image particles rather than a stack of strips, closely matching the supplied example without adding `html2canvas`, WebGL or another runtime dependency.
+
+## 036 — Delay the liquid without changing the stacking order
+
+**Context:** Desktop review showed that the Fresh Proof liquid's longest drips crossed both the section heading and the supplied Pizza Ratto banner before the intended takeover. The labels should still be covered once the exit animation advances. In the character lock, the `Gone for pizza` payoff crossed Big Bertha and the oversized RATTO backdrop could still drift beyond the poster edge.
+
+**Decision:** Preserve the deployed stacking order with the liquid above both header and reel, but restore its fully off-screen `-155%` starting position so the heading and supplied banner remain clear until the takeover begins. Move and reduce the payoff into the open centre-left field. Keep the RATTO word at a fixed in-bounds baseline and remove its horizontal drift from the pinned timeline.
+
+**Consequence:** The liquid remains an assertive whole-section takeover without premature overlap or permanent foreground labels, while the character poster preserves a clear Big Bertha frame, a readable payoff and the complete background word throughout the scroll lock.
