@@ -1,0 +1,31 @@
+---
+title: Deli | Hot Honey, Spice Blends & Limoncello | Pizza Ratto
+description: Take the fire home. Pizza Ratto deli in Salt River, Cape Town: hot honey, chilli sauce, spice blends, lemon spritzer syrup and limoncello. Ask on WhatsApp.
+kind: deli
+crumb: Deli
+---
+<section class="pr-sec pr-grain pr-cream pr-crop" aria-labelledby="page-title">
+  <p class="pr-crumbs"><a href="./">Home</a> / Deli</p>
+  <div class="pr-page-head">
+    <div>
+      <p class="pr-secnum"><span>From the counter · Take the fire home</span></p>
+      <h1 id="page-title">Deli</h1>
+    </div>
+    <div>
+      <p class="pr-lead">Hot honey, chilli sauce, spice blends and limoncello. Pick them up with your pizza, or message us on WhatsApp.</p>
+      <div class="pr-row">{{ btn_whatsapp_red }}</div>
+    </div>
+  </div>
+  <ul class="pr-pizza-grid pr-page-grid">
+{{ deli_cards }}
+  </ul>
+</section>
+<section class="pr-sec pr-red pr-crop pr-cta" aria-labelledby="cta-title">
+  <p class="pr-secnum" style="color:var(--ratto-pink)"><span>Find the fire</span></p>
+  <h2 id="cta-title" style="font-size:clamp(2.4rem,7vw,7rem);color:var(--paper-cream)">Salt River.<br><span style="color:var(--ratto-pink)">Come say ciao.</span></h2>
+  <p class="pr-lead" style="color:var(--paper-cream)">{{ address }}<br>{{ hours }}</p>
+  <div class="pr-row">
+    <a class="pr-btn pr-btn-cream pr-ink" href="{{ whatsapp }}" target="_blank" rel="noopener">{{ icon_whatsapp }}WhatsApp us ↗</a>
+    <a class="pr-btn pr-btn-hot pr-ink" href="tel:{{ phone_intl }}">{{ icon_call }}{{ phone }}</a>
+  </div>
+</section>

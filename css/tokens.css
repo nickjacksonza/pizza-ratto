@@ -1,0 +1,134 @@
+/* Design tokens copied verbatim from the Claude Design handoff (prototype/design-system/tokens), except fonts.css paths and the unused --paper-texture var. */
+:root{
+/* Core palette (owner-approved) */
+--ratto-red:#CA000C;
+--ratto-brown:#421212;
+--hot-orange:#FF8513;
+--ratto-pink:#FFC0C1;
+--paper-cream:#F5F0E6;
+--ink-black:#000000;
+--white:#FFFFFF;
+/* Supporting values found in the Figma brand kit */
+--wordmark-red:#901010;
+--deep-red:#9A0000;
+--brick-red:#9D211A;
+--oxblood:#B61818;
+--peach-paper:#FFF1E3;
+--paper-blush:#F5D2C7;
+--tricolore-green:#076B16;
+--basil-green:var(--tricolore-green);
+--light-grey:#D9D9D9;
+/* Website legacy values (pizza-ratto repo, app/globals.css) */
+--site-red:#CC2832;
+--site-grey:#373737;
+--site-cream:#FFF4DF;
+--site-white:#FFFAF2;
+
+/* Restrained pairings: every design uses 2-3 dominant colours from ONE pairing */
+--pair-classic-bg:var(--paper-cream);--pair-classic-1:var(--ratto-red);--pair-classic-2:var(--ratto-brown);
+--pair-sunset-bg:var(--hot-orange);--pair-sunset-1:var(--ratto-brown);--pair-sunset-2:var(--paper-cream);
+--pair-rosa-bg:var(--ratto-pink);--pair-rosa-1:var(--ratto-red);--pair-rosa-2:var(--ratto-brown);
+--pair-notte-bg:var(--ratto-brown);--pair-notte-1:var(--hot-orange);--pair-notte-2:var(--paper-cream);
+--pair-rosso-bg:var(--ratto-red);--pair-rosso-1:var(--paper-cream);--pair-rosso-2:var(--ratto-pink);
+
+/* Semantic aliases */
+--surface-page:var(--paper-cream);
+--surface-ink:var(--ratto-brown);
+--surface-hot:var(--hot-orange);
+--surface-pink:var(--ratto-pink);
+--surface-red:var(--ratto-red);
+--surface-card:var(--paper-cream);
+--surface-stencil:var(--white);
+--text-primary:var(--ratto-brown);
+--text-on-dark:var(--paper-cream);
+--text-accent:var(--ratto-red);
+--text-headline:var(--ratto-red);
+--text-stencil:var(--ink-black);
+--text-price:var(--ratto-red);
+--border-ink:var(--ratto-brown);
+--rule-dashed:rgba(66,18,18,.66);
+--focus-ring:var(--ratto-pink);
+--action-primary:var(--ratto-red);
+--action-primary-hover:var(--hot-orange);
+--action-hot:var(--hot-orange);
+--action-dark:var(--ratto-brown);
+}
+:root{
+/* Families */
+--font-headline:"Heathfield","Century Gothic",sans-serif;
+--font-display:"Shrikhand",Georgia,serif;
+--font-body:"Headland One",Georgia,serif;
+
+/* Headline (Avant Garde bold, tight, sentence/lowercase) */
+--type-mega:clamp(4.5rem,10vw,10rem);
+--type-h1:clamp(3.2rem,6.4vw,6.5rem);
+--type-h2:clamp(2.6rem,4.8vw,4.75rem);
+--type-h3:clamp(1.9rem,3vw,2.75rem);
+--type-h4:1.5rem;
+--track-headline:-.035em;/* @kind other */
+--lh-headline:.92;/* @kind other */
+/* Display (Cooper): pizza names, prices, quotes, ticker */
+--type-display-xl:clamp(3rem,6vw,6rem);
+--type-display-l:clamp(2rem,3.4vw,3.25rem);
+--type-display-m:1.75rem;
+--type-display-s:1.25rem;
+--lh-display:1;/* @kind other */
+/* Body / labels (Futura) */
+--type-lead:clamp(1.15rem,1.6vw,1.45rem);
+--type-body:1.0625rem;
+--type-small:.9rem;
+--type-label:.78rem;
+--type-micro:.68rem;
+--lh-body:1.5;/* @kind other */
+--track-label:.16em;/* @kind other */
+--track-button:.1em;/* @kind other */
+/* Figma signage sizes (print, verbatim — now set in --font-headline / --font-display) */
+--type-print-phone:165.175px;--type-print-signage:82.174px;--type-print-pizza:65px;--type-print-description:40px;--type-print-tag:31.988px;
+
+/* Semantic */
+--text-headline-font:var(--font-headline);
+--text-display-font:var(--font-display);
+--text-body-font:var(--font-body);
+}
+.pr-headline{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--track-headline);line-height:var(--lh-headline)}
+.pr-display{font-family:var(--font-display);font-weight:400;line-height:var(--lh-display)}
+.pr-label{font-family:var(--font-body);font-size:var(--type-label);font-weight:600;letter-spacing:var(--track-label);text-transform:uppercase}
+.pr-body{font-family:var(--font-body);font-size:var(--type-body);line-height:var(--lh-body)}
+:root{
+--space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.5rem;--space-6:2rem;--space-7:3rem;--space-8:4.5rem;--space-9:7rem;
+--section-pad-y:clamp(4rem,8vw,8rem);
+--section-pad-x:clamp(1.25rem,5vw,5rem);
+--grid-max:1320px;/* @kind spacing */
+--header-height:72px;--announcement-height:32px;
+--checker-size:28px;
+--tap-min:44px;--button-min:48px;
+
+--radius-0:0;--radius-sm:6px;--radius-card:18px;--radius-pill:999px;--radius-circle:50%;
+--radius-arch:999px 999px 0 0;
+
+--rule-hair:1px;--rule:1.5px;--rule-bold:3px;
+
+/* Shadows: flat by default. Hard offset shadow is the one "underground" accent. */
+--shadow-none:none;
+--shadow-print:6px 6px 0 var(--ratto-brown);
+--shadow-print-red:6px 6px 0 var(--ratto-red);
+
+--tilt-sm:-2deg;/* @kind other */--tilt-md:-4deg;/* @kind other */--tilt-stamp:8deg;/* @kind other */
+
+--ease-out:cubic-bezier(.2,.7,.2,1);/* @kind other */
+--dur-fast:.15s;/* @kind other */--dur-base:.25s;/* @kind other */--dur-slow:.45s;/* @kind other */
+}
+:root{
+--checker-ink:repeating-conic-gradient(var(--ratto-brown) 0 25%,var(--paper-cream) 0 50%) 0/var(--checker-size) var(--checker-size);/* @kind other */
+--checker-hot:repeating-conic-gradient(var(--ratto-red) 0 25%,var(--paper-cream) 0 50%) 0/var(--checker-size) var(--checker-size);/* @kind other */
+--checker-stencil:repeating-conic-gradient(var(--ink-black) 0 25%,var(--white) 0 50%) 0/var(--checker-size) var(--checker-size);/* @kind other */
+/* Subtle paper grain: an overlay, never artificial distress */
+--paper-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .26 0 0 0 0 .07 0 0 0 0 .07 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");/* @kind other */
+--paper-grain-opacity:.14;/* @kind other */
+}
+.pr-grain{position:relative;isolation:isolate}
+.pr-grain::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:var(--paper-grain);opacity:var(--paper-grain-opacity);mix-blend-mode:multiply;z-index:1}
+/* Fonts: WOFF2 files in fonts/. Single-weight faces declared across 100-900 so browsers never fake bold. Heathfield is subset to Latin. */
+@font-face{font-family:"Heathfield";src:url("../fonts/heathfield-latin.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Shrikhand";src:url("../fonts/shrikhand-latin.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Headland One";src:url("../fonts/headland-one-latin.woff2") format("woff2");font-weight:100 900;font-display:swap}

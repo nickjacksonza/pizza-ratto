@@ -1,0 +1,38 @@
+{
+  "currency": "ZAR",
+  "currency_symbol": "R",
+  "sections": [
+    {
+      "id": "deli",
+      "title": "Deli",
+      "groups": [
+        {
+          "id": "deli-items",
+          "title": null,
+          "items": [
+            { "id": "hot-honey", "image": "images/deli/hot-honey.webp", "name": "Hot Honey", "price": 125, "available": true },
+            { "id": "chilli-sauce", "image": "images/deli/chilli-sauce.webp", "name": "Chilli Sauce", "price": 55, "available": true },
+            { "id": "lemon-spritzer-syrup", "image": "images/deli/lemon-spritzer-syrup.webp", "name": "Lemon Spritzer Syrup", "price": 75, "available": true },
+            { "id": "limoncello", "image": "images/deli/limoncello.webp", "name": "Limoncello", "price": 225, "available": true },
+            {
+              "id": "golden-spice-blend",
+              "image": "images/deli/golden-spice-blend.webp",
+              "name": "Golden Spice Blend",
+              "brand": "Stay Golden",
+              "price": 125,
+              "available": true
+            },
+            {
+              "id": "chai-spice-blend",
+              "image": "images/deli/chai-spice-blend.webp",
+              "name": "Chai Spice Blend",
+              "brand": "Stay Golden",
+              "price": 125,
+              "available": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
