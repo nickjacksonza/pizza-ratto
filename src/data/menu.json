@@ -1,0 +1,204 @@
+{
+  "currency": "ZAR",
+  "currency_symbol": "R",
+  "sections": [
+    {
+      "id": "pizza",
+      "title": "Pizza",
+      "groups": [
+        {
+          "id": "pizzas",
+          "title": null,
+          "items": [
+            {
+              "id": "bianca",
+              "image": "images/pizza/bianca.webp",
+              "name": "Bianca",
+              "price": 85,
+              "description": "EVOO, Sea Salt & fresh Rosemary served with a Cucumber & Mint Dip",
+              "available": true
+            },
+            {
+              "id": "primavera",
+              "image": "images/pizza/primavera.webp",
+              "name": "Primavera",
+              "price": 115,
+              "description": "Tomato Base, Fior de Latte & Fresh Basil",
+              "available": true
+            },
+            {
+              "id": "veloce",
+              "image": "images/pizza/veloce.webp",
+              "name": "Velocé",
+              "price": 135,
+              "description": "Tomato Base, Fior de Latte, Seville Orange Butternut, Caramelised Onions, local Feta & Sunflower Seeds",
+              "available": true
+            },
+            {
+              "id": "faro-basso",
+              "image": "images/pizza/faro-basso.webp",
+              "name": "Faro Basso",
+              "price": 145,
+              "description": "Cream Cheese Base, Fior de Latte, Cherry Tomatoes, Yellow Peppers, Mint & a squeeze of Lemon",
+              "available": true
+            },
+            {
+              "id": "sprint",
+              "image": "images/pizza/sprint.webp",
+              "name": "Sprint",
+              "price": 165,
+              "description": "Tomato Base, Fior de Latte, Caramelised Onions, Salami & Hot Honey",
+              "available": true
+            },
+            {
+              "id": "arcobaleno",
+              "image": "images/pizza/arcobaleno.webp",
+              "name": "Arcobaleno",
+              "price": 195,
+              "description": "Tomato Base, Fior de Latte, Salami, Wild Mushrooms, local Feta & fresh Rocket",
+              "available": true
+            },
+            {
+              "id": "siluro",
+              "image": "images/pizza/siluro.webp",
+              "name": "Siluro",
+              "price": 185,
+              "description": "Cream Cheese Base, Fior de Latte, Smoked Chicken, Wild Mushrooms, Garlic & fresh French Chives",
+              "available": true
+            },
+            {
+              "id": "rally",
+              "image": "images/pizza/rally.webp",
+              "name": "Rally",
+              "price": 185,
+              "description": "BBQ Glaze Base, Fior de Latte, Smoked Chicken, Wild Mushrooms & creamy Avo",
+              "available": true
+            }
+          ]
+        },
+        {
+          "id": "extra-toppings",
+          "title": "Extra Toppings",
+          "note": "Priced each",
+          "items": [
+            { "id": "extra-salami", "image": null, "name": "Salami", "price": 15, "available": true },
+            { "id": "extra-smoked-chicken", "image": null, "name": "Smoked Chicken", "price": 15, "available": true },
+            { "id": "extra-fior-de-latte", "image": null, "name": "Fior de Latte", "price": 15, "available": true },
+            { "id": "extra-local-feta", "image": null, "name": "Local Feta", "price": 15, "available": true },
+
+            { "id": "extra-butternut", "image": null, "name": "Butternut", "price": 12, "available": true },
+            { "id": "extra-mushrooms", "image": null, "name": "Mushrooms", "price": 12, "available": true },
+            { "id": "extra-yellow-peppers", "image": null, "name": "Yellow Peppers", "price": 12, "available": true },
+            { "id": "extra-avo", "image": null, "name": "Avo", "price": 12, "available": true },
+
+            { "id": "extra-hot-honey", "image": null, "name": "Hot Honey", "price": 10, "available": true },
+            { "id": "extra-rat-sauce", "image": null, "name": "Rat Sauce", "price": 10, "available": true },
+            { "id": "extra-bbq-glaze", "image": null, "name": "BBQ Glaze", "price": 10, "available": true },
+            { "id": "extra-cream-cheese", "image": null, "name": "Cream Cheese", "price": 10, "available": true },
+
+            { "id": "extra-cherry-tomatoes", "image": null, "name": "Cherry Tomatoes", "price": 8, "available": true },
+            { "id": "extra-basil", "image": null, "name": "Basil", "price": 8, "available": true },
+            { "id": "extra-rocket", "image": null, "name": "Rocket", "price": 8, "available": true },
+            { "id": "extra-mint", "image": null, "name": "Mint", "price": 8, "available": true },
+            { "id": "extra-chives", "image": null, "name": "Chives", "price": 8, "available": true },
+            { "id": "extra-chilli", "image": null, "name": "Chilli", "price": 8, "available": true },
+            { "id": "extra-garlic", "image": null, "name": "Garlic", "price": 8, "available": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drinks",
+      "title": "Drinks",
+      "groups": [
+        {
+          "id": "caffe",
+          "title": "Caffè",
+          "items": [
+            {
+              "id": "espresso",
+              "image": "images/drinks/espresso.webp",
+              "name": "Espresso",
+              "variants": [
+                { "name": "Single", "price": 20 },
+                { "name": "Double", "price": 30 }
+              ],
+              "available": true
+            },
+            { "id": "americano", "image": "images/drinks/americano.webp", "name": "Americano", "price": 32, "available": true },
+            { "id": "cappuccino", "image": "images/drinks/cappuccino.webp", "name": "Cappuccino", "price": 32, "available": true },
+            { "id": "flat-white", "image": "images/drinks/flat-white.webp", "name": "Flat White", "price": 32, "available": true },
+            { "id": "latte", "image": "images/drinks/latte.webp", "name": "Latte", "price": 36, "available": true },
+            { "id": "cortado", "image": "images/drinks/cortado.webp", "name": "Cortado", "price": 36, "available": true },
+            { "id": "hot-chocolate", "image": "images/drinks/hot-chocolate.webp", "name": "Hot Chocolate", "price": 36, "available": true },
+            { "id": "chai", "image": "images/drinks/chai.webp", "name": "Chai", "price": 36, "available": true },
+            { "id": "mocha", "image": "images/drinks/mocha.webp", "name": "Mocha", "price": 45, "available": true },
+            { "id": "iced-coffee", "image": "images/drinks/iced-coffee.webp", "name": "Iced Coffee", "price": 45, "available": true }
+          ]
+        },
+        {
+          "id": "cold-drinks",
+          "title": "Cold Drinks",
+          "items": [
+            {
+              "id": "lemon-spritzer",
+              "image": "images/drinks/lemon-spritzer.webp",
+              "name": "Our Signature Lemon Spritzer",
+              "price": 45,
+              "description": "The BEST!",
+              "available": true
+            },
+            {
+              "id": "san-pellegrino",
+              "image": "images/drinks/san-pellegrino.webp",
+              "name": "San Pellegrino",
+              "price": 20,
+              "options": ["Blood Orange", "Pomegranate", "Pomelo", "Peach"],
+              "available": true
+            },
+            { "id": "dry-lemon", "image": "images/drinks/dry-lemon.webp", "name": "Dry Lemon", "price": 20, "available": true },
+            { "id": "soda-water", "image": "images/drinks/soda-water.webp", "name": "Soda Water", "price": 20, "available": true },
+            {
+              "id": "bashews",
+              "image": "images/drinks/bashews.webp",
+              "name": "Bashews",
+              "price": 18,
+              "options": ["Cola", "Orange", "Cream Soda", "Iron Brew", "Passionfruit"],
+              "available": true
+            },
+            {
+              "id": "table-mountain-water",
+              "image": "images/drinks/table-mountain-water.webp",
+              "name": "Table Mountain Water",
+              "price": 18,
+              "size": "500ml",
+              "options": ["Still", "Sparkling"],
+              "available": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "title": "Desserts",
+      "groups": [
+        {
+          "id": "desserts-list",
+          "title": null,
+          "items": [
+            { "id": "brownies", "image": "images/desserts/brownies.webp", "name": "Brownies", "price": 35, "available": true },
+            {
+              "id": "gelato",
+              "image": "images/desserts/gelato.webp",
+              "name": "Gelato",
+              "price": 45,
+              "options": ["Vanilla Hot Honey", "Nuts & Biscoff", "Winter Berries"],
+              "available": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

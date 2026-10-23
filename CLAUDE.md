@@ -1,0 +1,28 @@
+# Pizza Ratto
+
+Static site for a wood-fired pizza shop in Salt River, Cape Town. Custom Python generator, no npm.
+Modelled on `wellness-by-physiatry` (same `src/` + `docs/` layout, same head/schema approach).
+
+## Build
+
+    python3 build.py                       # renders src/ -> docs/ (standard library only)
+    python3 tools/check.py                 # post-build checks: JSON-LD, one h1, img sizes, links
+    cd docs && python3 -m http.server 3056 # preview
+
+Assets come from the design handoff zip. Pillow and fonttools are not on the host, so run the asset tool in Docker:
+
+    docker run --rm -v "$PWD":/app -w /app python:3.12-slim sh -c \
+      'pip install -q pillow fonttools brotli && python tools/optimize_images.py'
+
+## Rules
+
+- `docs/` is generated **and** git-tracked. Rebuild and commit it with every `src/`, `css/`, `js/` change.
+- Business details live in `src/data/site.json` (domain, phone, address, hours, links, nav, slides, reel).
+  The menu comes from `src/data/menu.json`, `deli.json`, `merchandise.json` (copies of `site-references/for-sale/`).
+  Read the JSON; don't invent field names. Skip `available: false`. Price text: `price`, else `price_label`.
+- Pizza cards use `images/pizza/<id>.webp` only when that exact file exists; otherwise the "photo coming hot"
+  tile shows and `build.py` lists the gap. Never put another pizza's photo on an item.
+- Each page's JSON-LD is generated in `build.py` (`graph()`): `Restaurant` + `WebSite` + `WebPage` linked by `@id`,
+  plus a full `Menu` tree on the home page and an `ItemList` of `Product`s on deli and merchandise. Change data, not the schema.
+- `ga4_id` in `site.json` is empty on purpose. The consent + gtag block renders only when it is set.
+- Design tokens in `css/tokens.css` are copied verbatim from the handoff. Keep `css/styles.css` on `var(--*)`.

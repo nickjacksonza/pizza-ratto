@@ -1,0 +1,160 @@
+{
+  "name": "Pizza Ratto",
+  "domain": "https://pizzaratto.com",
+  "tagline": "Italian soul. Street-corner attitude.",
+  "locale": "en-ZA",
+  "theme_color": "#F5F0E6",
+  "og_image": "images/og.jpg",
+  "ga4_id": "",
+  "phone_display": "082 525 0380",
+  "phone_intl": "+27825250380",
+  "whatsapp": "https://wa.me/27825250380?text=Hi%20Pizza%20Ratto%2C%20I%E2%80%99d%20like%20to%20place%20an%20order.",
+  "whatsapp_number": "27825250380",
+  "uber_eats": "https://www.ubereats.com/za/store/pizza-ratto/c2X95IU_SWaBTX_qeHpCng",
+  "instagram": "https://www.instagram.com/pizza_ratto/",
+  "instagram_handle": "@pizza_ratto",
+  "address": {
+    "street": "20 Brickfield Road",
+    "locality": "Salt River",
+    "region": "Western Cape",
+    "city": "Cape Town",
+    "country": "ZA"
+  },
+  "hours_text": "Monday–Saturday, 10:00–18:00",
+  "hours": {
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "10:00",
+    "closes": "18:00"
+  },
+  "cuisine": [
+    "Pizza",
+    "Italian"
+  ],
+  "announcement": [
+    "Made fresh. Taken seriously by no one.",
+    "Wood-fired in Salt River",
+    "Mon–Sat 10:00–18:00"
+  ],
+  "ticker": "ITALIAN SOUL ★ STREET-CORNER ATTITUDE ★ PIZZA, DONE PROPERLY ★ ",
+  "nav": [
+    {
+      "label": "About",
+      "href": "#story",
+      "id": "story"
+    },
+    {
+      "label": "Menu",
+      "href": "#menu",
+      "id": "menu"
+    },
+    {
+      "label": "Deli",
+      "href": "deli.html",
+      "id": "deli"
+    },
+    {
+      "label": "Merch",
+      "href": "merchandise.html",
+      "id": "merch"
+    },
+    {
+      "label": "Visit",
+      "href": "#visit",
+      "id": "visit"
+    }
+  ],
+  "image_alts": {
+    "bianca": "Rosemary flatbread with bowls of fresh dip and olive oil",
+    "primavera": "Tomato and mozzarella pizza finished with fresh basil",
+    "veloce": "Pizza with roasted butternut, feta, onions and sunflower seeds",
+    "sprint": "Pizza with salami, caramelised onions, mozzarella and hot honey",
+    "arcobaleno": "Pizza with salami, mushrooms, feta and fresh rocket",
+    "rally": "Pizza with smoked chicken, mushrooms and avocado"
+  },
+  "side_cards": [
+    {
+      "group": "caffe",
+      "section": "drinks",
+      "name": "Caffè",
+      "tone": "orange",
+      "mark": "red-cup",
+      "kicker": "For before, after, or instead of sensible decisions."
+    },
+    {
+      "group": "cold-drinks",
+      "section": "drinks",
+      "name": "Cold Drinks",
+      "tone": "cream",
+      "mark": null,
+      "kicker": "Beyond coffee. Still worth a stop."
+    },
+    {
+      "group": "desserts-list",
+      "section": "desserts",
+      "name": "Dolci",
+      "tone": "pink",
+      "mark": "red-ice-cream",
+      "kicker": "Something sweet. No speech required."
+    }
+  ],
+  "slides": [
+    {
+      "img": "oven-flames",
+      "alt": "Flames inside Pizza Ratto's wood-fired oven, Big Bertha",
+      "label": "Fire #01 · Heart of the house",
+      "title": "Big Bertha.",
+      "body": "The wood-fired heart of the operation. Every pizza meets the flame here."
+    },
+    {
+      "img": "pizza-pass",
+      "alt": "A fresh pizza coming out of the oven onto the pass",
+      "label": "Fire #02 · Oven to pass",
+      "title": "Straight out.",
+      "body": "Fired, cut and boxed while it still has something to say."
+    },
+    {
+      "img": "espresso-pull",
+      "alt": "Espresso pulling into a cup at the Pizza Ratto counter",
+      "label": "Fire #03 · Caffè",
+      "title": "Then coffee.",
+      "body": "For before, after, or instead of sensible decisions."
+    }
+  ],
+  "tapes": [
+    {
+      "vid": "oven-close",
+      "label": "Big Bertha, up close"
+    },
+    {
+      "vid": "oven-flames",
+      "label": "The fire stays ready"
+    },
+    {
+      "vid": "pizza-pass",
+      "label": "From oven to pass"
+    },
+    {
+      "vid": "espresso-pull",
+      "label": "Espresso pulling"
+    },
+    {
+      "vid": "sugar-doughnuts",
+      "label": "Sugar doughnuts"
+    },
+    {
+      "vid": "box-lettering",
+      "label": "Boxes, signed by hand"
+    },
+    {
+      "vid": "counter-sweep",
+      "label": "Counter chaos"
+    }
+  ]
+}
