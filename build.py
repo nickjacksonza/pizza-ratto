@@ -436,7 +436,7 @@ def render(name, meta, body, partials):
         "css_v": VERSIONS["css"], "js_v": VERSIONS["js"],
         "hero_preload": f'<link rel="preload" as="image" href="{rel}images/hero/pizza-ratto-logo.webp" type="image/webp" fetchpriority="high">' if on_home else "",
         "analytics": analytics(),
-        "jsonld": json.dumps(graph(page), ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"),
+        "jsonld": json.dumps(graph(page), ensure_ascii=False, indent=2).replace("</", "<\\/"),
         "nav": nav_html({"deli": "deli", "merchandise": "merch"}.get(name), on_home),
         "logo_href": "#top" if on_home else "./",
         "home": "" if on_home else "./",
