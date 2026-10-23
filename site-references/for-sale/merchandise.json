@@ -1,0 +1,26 @@
+{
+  "currency": "ZAR",
+  "currency_symbol": "R",
+  "sections": [
+    {
+      "id": "merchandise",
+      "title": "Merchandise",
+      "groups": [
+        {
+          "id": "merchandise-items",
+          "title": null,
+          "items": [
+            { "id": "helmet-keyrings", "image": "images/merchandise/helmet-keyrings.webp", "name": "Helmet Keyrings", "price": 100, "available": true },
+            { "id": "jackets", "image": "images/merchandise/jackets.webp", "name": "Jackets", "price": null, "price_label": "Varies", "available": true },
+            { "id": "helmets", "image": "images/merchandise/helmets.webp", "name": "Helmets", "price": null, "price_label": "Varies", "available": true },
+            { "id": "vespa-inspired-decor", "image": "images/merchandise/vespa-inspired-decor.webp", "name": "Vespa Inspired Decor", "price": null, "price_label": "POA", "available": true },
+            { "id": "stickers", "image": "images/merchandise/stickers.webp", "name": "Stickers", "price": null, "price_label": "Varies", "available": true },
+            { "id": "pins", "image": "images/merchandise/pins.webp", "name": "Pins", "price": null, "price_label": "Varies", "available": true },
+            { "id": "vespa-key-covers", "image": "images/merchandise/vespa-key-covers.webp", "name": "Vespa Key Covers", "price": 150, "available": true },
+            { "id": "leather-vespa-toolkits", "image": "images/merchandise/leather-vespa-toolkits.webp", "name": "Leather Vespa Toolkits", "price": null, "price_label": "POA", "available": true }
+          ]
+        }
+      ]
+    }
+  ]
+}

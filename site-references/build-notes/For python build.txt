@@ -1,0 +1,3 @@
+For python build.py:
+price = item.get("price")
+text = f"{symbol}{price}" if price is not None else item.get("price_label", "")
