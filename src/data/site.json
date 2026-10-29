@@ -20,7 +20,7 @@
     "city": "Cape Town",
     "country": "ZA"
   },
-  "hours_text": "Monday–Saturday, 10:00–18:00",
+  "hours_text": "Monday–Saturday, 12:00–21:00. Closed Sunday",
   "hours": {
     "days": [
       "Monday",
@@ -30,8 +30,8 @@
       "Friday",
       "Saturday"
     ],
-    "opens": "10:00",
-    "closes": "18:00"
+    "opens": "12:00",
+    "closes": "21:00"
   },
   "cuisine": [
     "Pizza",
@@ -40,7 +40,7 @@
   "announcement": [
     "Made fresh. Taken seriously by no one.",
     "Wood-fired in Salt River",
-    "Mon–Sat 10:00–18:00"
+    "Mon–Sat 12:00–21:00"
   ],
   "ticker": "ITALIAN SOUL ★ STREET-CORNER ATTITUDE ★ PIZZA, DONE PROPERLY ★ ",
   "nav": [
@@ -83,7 +83,7 @@
       "group": "caffe",
       "section": "drinks",
       "name": "Caffè",
-      "tone": "orange",
+      "tone": "cream",
       "mark": "red-cup",
       "kicker": "For before, after, or instead of sensible decisions."
     },
@@ -102,29 +102,6 @@
       "tone": "pink",
       "mark": "red-ice-cream",
       "kicker": "Something sweet. No speech required."
-    }
-  ],
-  "slides": [
-    {
-      "img": "oven-flames",
-      "alt": "Flames inside Pizza Ratto's wood-fired oven, Big Bertha",
-      "label": "Fire #01 · Heart of the house",
-      "title": "Big Bertha.",
-      "body": "The wood-fired heart of the operation. Every pizza meets the flame here."
-    },
-    {
-      "img": "pizza-pass",
-      "alt": "A fresh pizza coming out of the oven onto the pass",
-      "label": "Fire #02 · Oven to pass",
-      "title": "Straight out.",
-      "body": "Fired, cut and boxed while it still has something to say."
-    },
-    {
-      "img": "espresso-pull",
-      "alt": "Espresso pulling into a cup at the Pizza Ratto counter",
-      "label": "Fire #03 · Caffè",
-      "title": "Then coffee.",
-      "body": "For before, after, or instead of sensible decisions."
     }
   ],
   "tapes": [
@@ -155,6 +132,63 @@
     {
       "vid": "counter-sweep",
       "label": "Counter chaos"
+    }
+  ],
+  "house": [
+    {
+      "img": "images/mascot/ratto-vespa-cutout.webp",
+      "w": 900,
+      "h": 1179,
+      "fit": "mascot",
+      "alt": "Hand-drawn Remi the rat riding a bright red Vespa while eating pepperoni pizza",
+      "label": "Resident #01",
+      "title": "Remi.",
+      "body": "The rat mascot. Patron saint of good decisions made near a pizza oven. His mural on the wall was painted by local artist Buffy."
+    },
+    {
+      "img": "images/stills/oven-flames.webp",
+      "w": 480,
+      "h": 854,
+      "alt": "Flames and glowing embers inside Pizza Ratto's wood-fired oven, Big Bertha",
+      "label": "Resident #02",
+      "title": "Big Bertha.",
+      "body": "The wood-fired oven and the heart of the house. Every pizza meets her flame."
+    },
+    {
+      "img": "images/stills/espresso-pull.webp",
+      "w": 480,
+      "h": 860,
+      "alt": "Espresso pulling from the coffee machine into a yellow cup at the Pizza Ratto counter",
+      "label": "Resident #03",
+      "title": "Ari.",
+      "body": "The coffee machine. For before, after, or instead of sensible decisions."
+    }
+  ],
+  "events": {
+    "label": "Nights at the Ratto",
+    "title": "Regular nights.",
+    "title_alt": "Special ones.",
+    "intro": "The oven is not only for dinner. We host regular nights and the odd special event, with Woodstock Backgammon Club among the regulars.",
+    "items": [
+      {
+        "tag": "Regular nights",
+        "name": "Woodstock Backgammon Club",
+        "body": "Boards out, pizza on the table. Come to play, or come to watch and eat."
+      },
+      {
+        "tag": "Special events",
+        "name": "One-off nights",
+        "body": "Now and then something is worth a bigger fire. We announce them as they happen."
+      }
+    ],
+    "sticker": "Follow our socials for dates."
+  },
+  "socials": [
+    {
+      "name": "Instagram",
+      "handle": "@pizza_ratto",
+      "url": "https://www.instagram.com/pizza_ratto/",
+      "note": "Daily damage, fresh pies and event nights."
     }
   ]
 }
