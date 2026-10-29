@@ -293,15 +293,16 @@ def catalogue_cards(data, rel):
 
 # ---------------------------------------------------------------- schema
 
+def schema_pizzas():
+    """Available pizzas only. The structured data covers pizzas, not drinks, desserts or toppings."""
+    return available(find_group(MENU, "pizza", "pizzas")["items"])
+
+
 def price_range():
-    """R<min>–R<max> across pizzas, drinks and desserts (extra toppings excluded: they are add-ons)."""
+    """R<min>–R<max> across the pizzas (the only priced items in the structured data)."""
     prices = []
-    for s in MENU["sections"]:
-        for g in s["groups"]:
-            if g["id"] == "extra-toppings":
-                continue
-            for it in available(g["items"]):
-                prices += [v["price"] for v in it.get("variants", [])] or ([it["price"]] if it.get("price") is not None else [])
+    for it in schema_pizzas():
+        prices += [v["price"] for v in it.get("variants", [])] or ([it["price"]] if it.get("price") is not None else [])
     sym = MENU["currency_symbol"]
     return f"{sym}{min(prices)}–{sym}{max(prices)}"
 
@@ -322,21 +323,12 @@ def menu_item(it, cur, local=True):
 
 
 def menu_node():
+    """Schema Menu with the pizzas only. The visible menu on the page is unchanged."""
     cur = MENU["currency"]
-    sections = []
-    for s in MENU["sections"]:
-        subs = []
-        for g in s["groups"]:
-            items = [menu_item(i, cur) for i in available(g["items"])]
-            if not items:
-                continue
-            subs.append({"@type": "MenuSection", "name": g["title"] or s["title"], "hasMenuItem": items})
-        # A section with one untitled group collapses to that group's items.
-        if len(subs) == 1 and not s["groups"][0]["title"]:
-            sections.append({"@type": "MenuSection", "name": s["title"], "hasMenuItem": subs[0]["hasMenuItem"]})
-        else:
-            sections.append({"@type": "MenuSection", "name": s["title"], "hasMenuSection": subs})
-    return {"@type": "Menu", "@id": f"{DOMAIN}/#menu", "name": f"{site['name']} menu", "inLanguage": site["locale"], "hasMenuSection": sections}
+    section = next(x for x in MENU["sections"] if x["id"] == "pizza")
+    items = [menu_item(i, cur) for i in schema_pizzas()]
+    return {"@type": "Menu", "@id": f"{DOMAIN}/#menu", "name": f"{site['name']} menu", "inLanguage": site["locale"],
+            "hasMenuSection": [{"@type": "MenuSection", "name": section["title"], "hasMenuItem": items}]}
 
 
 def graph(page):
