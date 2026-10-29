@@ -30,35 +30,6 @@
     ["story", "menu", "visit"].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
   }
 
-  /* 3. House slider: fade, wrap-around, no autoplay */
-  function slider() {
-    var root = $(".pr-slider");
-    if (!root) return;
-    var slides = $$(".pr-slide", root), dots = $$(".pr-dot", root), i = 0;
-    function go(n) {
-      i = (n + slides.length) % slides.length;
-      slides.forEach(function (s, k) {
-        s.classList.toggle("is-on", k === i);
-        if (k === i) s.removeAttribute("aria-hidden"); else s.setAttribute("aria-hidden", "true");
-      });
-      dots.forEach(function (d, k) { d.setAttribute("aria-pressed", k === i ? "true" : "false"); });
-    }
-    $$(".pr-slide-btn", root).forEach(function (b) { b.addEventListener("click", function () { go(i + Number(b.dataset.dir)); }); });
-    dots.forEach(function (d, k) { d.addEventListener("click", function () { go(k); }); });
-  }
-
-  /* 4. Contact form: opens WhatsApp with the message pre-filled. No backend. */
-  function form() {
-    var f = $(".pr-form");
-    if (!f) return;
-    f.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var d = new FormData(f), phone = (d.get("phone") || "").toString().trim();
-      var msg = "Hi Pizza Ratto, it's " + d.get("name") + (phone ? " (" + phone + ")" : "") + ". " + d.get("message");
-      window.open("https://wa.me/" + f.dataset.wa + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
-    });
-  }
-
   /* 5. Reel videos play only while on screen. Reduced motion: poster only. */
   function reel() {
     var vids = $$(".pr-tape video");
@@ -121,5 +92,5 @@
     }).catch(function () {});
   }
 
-  chrome(); activeNav(); slider(); form(); reel(); handwriting();
+  chrome(); activeNav(); reel(); handwriting();
 })();
