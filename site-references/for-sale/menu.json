@@ -51,7 +51,7 @@
               "available": true
             },
             {
-              "id": "arcobaleno",
+              "id": "arco-baleno",
               "image": "images/pizza/arcobaleno.webp",
               "name": "Arcobaleno",
               "price": 195,
@@ -152,7 +152,7 @@
               "id": "san-pellegrino",
               "image": "images/drinks/san-pellegrino.webp",
               "name": "San Pellegrino",
-              "price": 20,
+              "price": 45,
               "options": ["Blood Orange", "Pomegranate", "Pomelo", "Peach"],
               "available": true
             },
@@ -170,7 +170,7 @@
               "id": "table-mountain-water",
               "image": "images/drinks/table-mountain-water.webp",
               "name": "Table Mountain Water",
-              "price": 18,
+              "price": 20,
               "size": "500ml",
               "options": ["Still", "Sparkling"],
               "available": true
