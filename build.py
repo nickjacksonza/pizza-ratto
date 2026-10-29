@@ -4,8 +4,8 @@
 Run: python3 build.py   (standard library only)
 
 Reads src/pages/*.html (front-matter + body), wraps them in src/partials/, fills {{ placeholders }} from
-src/data/site.json, the front-matter, and HTML the script generates from the owner's JSON (menu.json,
-deli.json, merchandise.json), then writes plain static HTML to docs/. Paths are relative so the site works
+src/data/site.json, the front-matter, and HTML the script generates from the owner's JSON in
+site-references/for-sale/ (menu.json, deli.json, merchandise.json, the single source), then writes plain static HTML to docs/. Paths are relative so the site works
 at a sub-path as well as at the domain root. Prints every menu image that is missing on disk; those cards
 render the branded fallback tile instead of a broken image.
 """
@@ -29,9 +29,10 @@ STATIC_DIRS = ["js", "images", "fonts", "videos"]
 CSS_BUNDLE = ["css/tokens.css", "css/styles.css"]
 
 site = json.loads((SRC / "data" / "site.json").read_text(encoding="utf-8"))
-MENU = json.loads((SRC / "data" / "menu.json").read_text(encoding="utf-8"))
-DELI = json.loads((SRC / "data" / "deli.json").read_text(encoding="utf-8"))
-MERCH = json.loads((SRC / "data" / "merchandise.json").read_text(encoding="utf-8"))
+FOR_SALE = ROOT / "site-references" / "for-sale"  # the owner's menu, deli and merchandise JSON (single source)
+MENU = json.loads((FOR_SALE / "menu.json").read_text(encoding="utf-8"))
+DELI = json.loads((FOR_SALE / "deli.json").read_text(encoding="utf-8"))
+MERCH = json.loads((FOR_SALE / "merchandise.json").read_text(encoding="utf-8"))
 
 DOMAIN = site["domain"].rstrip("/")
 MISSING = []  # image paths named in the JSON that are not on disk
@@ -259,15 +260,22 @@ def socials():
     )
 
 
+def tape(t, rel, num):
+    """One short video. Poster is set by js/scripts.js only near the viewport; it plays only while on screen."""
+    return (
+        f'<figure class="pr-tape"><video muted loop playsinline preload="none" disablePictureInPicture width="720" height="1280" '
+        f'data-poster="{rel}images/stills/{t["vid"]}.webp" aria-hidden="true"><source src="{rel}videos/{t["vid"]}.mp4" type="video/mp4"></video>'
+        f'<figcaption><b>{esc(num)}</b>{esc(t["label"])}</figcaption></figure>'
+    )
+
+
 def reel(rel):
-    out = []
-    for i, t in enumerate(site["tapes"], 1):
-        out.append(
-            f'<figure class="pr-tape"><video muted loop playsinline preload="none" disablePictureInPicture width="720" height="1280" '
-            f'data-poster="{rel}images/stills/{t["vid"]}.webp" aria-hidden="true"><source src="{rel}videos/{t["vid"]}.mp4" type="video/mp4"></video>'
-            f'<figcaption><b>{i:02d}</b>{esc(t["label"])}</figcaption></figure>'
-        )
-    return "\n".join(out)
+    return "\n".join(tape(t, rel, f"{i:02d}") for i, t in enumerate(site["tapes"], 1))
+
+
+def side_tapes(rel):
+    """Short videos shown under the caffè, drinks and dolci cards."""
+    return "\n".join(tape(t, rel, t["tag"]) for t in site.get("side_tapes", []))
 
 
 def catalogue_cards(data, rel):
@@ -450,6 +458,12 @@ def analytics():
     )
 
 
+def site_verification():
+    """Google Search Console ownership tag. Empty until google_site_verification is set in site.json."""
+    code = site.get("google_site_verification")
+    return f'<meta name="google-site-verification" content="{esc(code)}">' if code else ""
+
+
 def consent_banner():
     if not site.get("ga4_id"):
         return ""
@@ -500,7 +514,7 @@ def render(name, meta, body, partials, modified):
         "css": CSS_INLINE[0].replace("../", rel), "js_v": VERSIONS["js"],
         "hero_srcset": hero_srcset, "hero_sizes": HERO_SIZES,
         "hero_preload": f'<link rel="preload" as="image" href="{rel}images/hero/hero-paper-texture.webp" type="image/webp" fetchpriority="high">\n<link rel="preload" as="image" href="{rel}images/hero/pizza-ratto-logo.webp" imagesrcset="{hero_srcset}" imagesizes="{HERO_SIZES}" type="image/webp" fetchpriority="high">' if on_home else "",
-        "analytics": analytics(), "consent_banner": consent_banner(), "cookie_button": cookie_button(),
+        "analytics": analytics(), "site_verification": site_verification(), "consent_banner": consent_banner(), "cookie_button": cookie_button(),
         "jsonld": json.dumps(graph(page), ensure_ascii=False, indent=2).replace("</", "<\\/"),
         "nav": nav_html({"deli": "deli", "merchandise": "merch"}.get(name), on_home),
         "logo_href": "#top" if on_home else "./",
@@ -515,7 +529,7 @@ def render(name, meta, body, partials, modified):
         "btn_whatsapp_red": button("Order on WhatsApp", site["whatsapp"], "", "whatsapp"),
         "btn_uber": button("Uber Eats", site["uber_eats"], "street", "ubereats"),
         "pizza_cards": pizza_cards(rel), "pizza_count_word": words(len(available(find_group(MENU, "pizza", "pizzas")["items"]))),
-        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "events": events(), "socials": socials(), "reel": reel(rel),
+        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "events": events(), "socials": socials(), "reel": reel(rel), "tape_count": f'{len(site["tapes"]):02d}', "side_tapes": side_tapes(rel),
         "deli_cards": catalogue_cards(DELI, rel), "merch_cards": catalogue_cards(MERCH, rel),
         "ticker": esc(site["ticker"] * 4), "ev_label": esc(site["events"]["label"]), "ev_title": esc(site["events"]["title"]), "ev_title_alt": esc(site["events"]["title_alt"]), "ev_intro": esc(site["events"]["intro"]), "ev_sticker": esc(site["events"]["sticker"]), "wa_number": site["whatsapp_number"], "year": "2026",
         **{k: v for k, v in meta.items()},

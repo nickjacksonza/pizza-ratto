@@ -122,16 +122,17 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-toppings dt{font-family:var(--font-display);font-size:1.25rem;color:var(--ratto-red);line-height:1.2}
 .pr-toppings dd{margin:0;font-size:.95rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
 .pr-halal-m{display:none}
-.pr-halal{position:relative;flex:none;width:84px;height:84px}
-.pr-halal div{position:absolute;left:4px;top:4px;width:76px;height:76px;border-radius:50%;background:var(--paper-cream);box-shadow:inset 0 0 0 2.5px var(--ratto-brown);display:grid;place-items:center;text-align:center}
-.pr-halal span{font-weight:900;font-size:9px;line-height:1.1;letter-spacing:.02em;text-transform:uppercase;padding:0 10px}
+.pr-halal{flex:none;width:84px;height:84px}
 
 /* Sides */
 .pr-brown .pr-secnum{color:var(--hot-orange)}
 .pr-sides h2{font-size:clamp(2.8rem,6.4vw,6.6rem);color:var(--ratto-pink);margin-bottom:2.8rem}
 .pr-side-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;align-items:start}
 .pr-cat{height:100%;padding:clamp(1.6rem,3vw,2.6rem);color:var(--ratto-brown);border-radius:var(--radius-card);box-shadow:6px 6px 0 var(--hot-orange)}
-.pr-cat-cream{background:var(--paper-cream)}.pr-cat-pink{background:var(--ratto-pink)}
+.pr-cat-cream{background:var(--paper-cream)}
+/* Orange card: red text fails contrast on hot orange, so headings and prices go brown (the "sunset" pairing). */
+.pr-cat-orange{background:var(--hot-orange);box-shadow:6px 6px 0 var(--ratto-pink)}.pr-cat.pr-cat-orange h3,.pr-cat-orange .pr-cat-group>span{color:var(--ratto-brown)}
+.pr-cat-pink{background:var(--ratto-pink);box-shadow:6px 6px 0 var(--paper-cream)}
 .pr-cat header{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;padding-bottom:1rem;border-bottom:1.5px solid var(--ratto-brown)}
 .pr-cat h3{color:var(--ratto-red);font-size:clamp(2.2rem,3.4vw,3.2rem)}
 .pr-cat header p{margin:.55rem 0 0;font-size:.9rem;line-height:1.35}
@@ -190,6 +191,8 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-tape video{display:block;width:100%;height:100%;object-fit:cover}
 .pr-tape figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;gap:.7rem;align-items:baseline;padding:.9rem 1rem;background:var(--ratto-brown);color:var(--paper-cream);font:600 .72rem/1.2 var(--font-body);letter-spacing:.14em;text-transform:uppercase}
 .pr-tape figcaption b{font:400 1rem/1 var(--font-display);color:var(--hot-orange);letter-spacing:0}
+.pr-side-tapes{display:grid;grid-template-columns:repeat(2,minmax(0,240px));gap:1.4rem;margin-top:2.4rem}
+.pr-side-tapes figcaption{flex-wrap:wrap}
 
 /* Visit */
 .pr-visit{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(2rem,5vw,5rem);align-items:start}
