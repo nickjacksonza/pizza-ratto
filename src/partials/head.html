@@ -1,6 +1,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>{{ title }}</title>
 <meta name="description" content="{{ description }}">
 <meta name="robots" content="{{ robots }}">
@@ -21,10 +22,12 @@
 <meta name="twitter:description" content="{{ description }}">
 <meta name="twitter:image" content="{{ og_image }}">
 <link rel="icon" href="{{ root }}images/brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ root }}images/brand/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" href="{{ root }}fonts/heathfield-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="{{ root }}fonts/headland-one-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="{{ root }}fonts/shrikhand-latin.woff2" crossorigin>
 {{ hero_preload }}
-<link rel="stylesheet" href="{{ root }}css/site.css?v={{ css_v }}">
+<style>{{ css }}</style>
 {{ analytics }}
 <script type="application/ld+json">{{ jsonld }}</script>
 </head>

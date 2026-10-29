@@ -24,5 +24,7 @@ Assets come from the design handoff zip. Pillow and fonttools are not on the hos
   tile shows and `build.py` lists the gap. Never put another pizza's photo on an item.
 - Each page's JSON-LD is generated in `build.py` (`graph()`): `Restaurant` + `WebSite` + `WebPage` linked by `@id`,
   plus a full `Menu` tree on the home page and an `ItemList` of `Product`s on deli and merchandise. Change data, not the schema.
-- `ga4_id` in `site.json` is empty on purpose. The consent + gtag block renders only when it is set.
+- `ga4_id` in `site.json` is `G-LSQ5R505H6`. The consent defaults, gtag loader, cookie banner and footer "Cookie settings" button render only when it is set. `gtag.js` loads on first interaction (or 8 s after load).
+- `build.py` minifies CSS and `js/scripts.js` (`tools/minify.py`) and writes `sitemap.xml` with `lastmod` from each page's last git commit. Edit `css/` and `js/`, never `docs/`.
+- Card and hero images get `srcset` from `-<w>w.webp` variants on disk. Regenerate with `tools/make_responsive_images.py` (Docker, like `optimize_images.py`).
 - Design tokens in `css/tokens.css` are copied verbatim from the handoff. Keep `css/styles.css` on `var(--*)`.
