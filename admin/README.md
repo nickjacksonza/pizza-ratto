@@ -1,8 +1,8 @@
 # Menu editor (admin/)
 
 A small password-protected web app for the shop owner. It edits `site-references/for-sale/menu.json`,
-`deli.json` and `merchandise.json` from a phone, checks that the site still builds, and commits the JSON to GitHub `main`.
-The Pages workflow (`.github/workflows/pages.yml`) then builds `docs/` and deploys it, so a save goes live in a few minutes.
+`deli.json` and `merchandise.json` from a phone, checks that the site still builds, and commits the JSON and the rebuilt `docs/` to GitHub `main` in one commit.
+GitHub Pages serves `main` `/docs`, so a save goes live in a few minutes.
 It runs in Docker on the VPS (`/docker/pizza-ratto-admin/`). It is not part of the built site: `build.py` only copies
 `js`, `images`, `fonts` and `videos` into `docs/`.
 
@@ -22,8 +22,8 @@ Python standard library only. Files:
 3. Applies the owner's changes (update fields, add, delete, reorder) to the fresh files. Fields the editor does not know about are kept.
 4. Writes the JSON, then runs `python3 build.py` and `python3 tools/check.py` locally as a pre-flight. If either fails,
    nothing is committed and the owner sees the error in plain words (check.py also confirms every price appears on the page).
-5. Throws away the local `docs/` output and commits only the changed JSON files as "Menu update via editor: ...",
-   then pushes to `$TARGET_BRANCH`. `docs/` is never committed by the editor: the Pages workflow builds its own.
+5. Commits the changed JSON files and the rebuilt `docs/` (including `docs/CNAME`) together as "Menu update via editor: ...",
+   then pushes to `$TARGET_BRANCH`.
    If GitHub rejects the push, it refetches, reapplies the same changes and tries once more.
    With `DRY_RUN=1` it commits inside the container only and never pushes.
 
@@ -44,9 +44,10 @@ Sections and groups can't be added or renamed here, because `build.py` and `site
 
 ## Before you go live
 
-Merge PR #8 (`main-catch-up`, which adds the Pages workflow and the price check) to `main` first, then this PR (`menu-editor-v2`).
-Until #8 is on `main`, saves to `main` would not be built or deployed, so the editor refuses to load or save
-while `.github/workflows/pages.yml` is missing on the target branch.
+Merge PR #8 (`main-catch-up`, which adds `docs/CNAME`, the `rebuild-docs.yml` workflow and the price check) to `main` first,
+then the editor PR. The editor no longer needs a workflow on the target branch, because it commits `docs/` itself.
+The `rebuild-docs.yml` workflow still matters for edits made directly on GitHub; after an editor save it finds `docs/`
+already current and commits nothing.
 
 Prices are whole rand (the site prints the number as is). `main` has no branch protection (private repo on a free plan),
 so the token's pushes are not blocked. If protection is ever added, the editor's pushes will be refused.
@@ -57,9 +58,9 @@ and lets callers forge `X-Real-Ip`.
 
 ## Setup steps
 
-1. **Check GitHub Pages.** In github.com/nickjacksonza/pizza-ratto, go to Settings, then Pages.
-   Source must be "GitHub Actions" (it was on 2026-10-29). After PR #8 is merged, the Actions tab should show
-   "Deploy GitHub Pages" succeeding on `main`. Add the custom domain on the Pages screen if you want one.
+1. **Set up GitHub Pages.** In github.com/nickjacksonza/pizza-ratto, go to Settings, then Pages.
+   Source "Deploy from a branch", branch `main`, folder `/docs`. Custom domain `pizzaratto.com`. Tick Enforce HTTPS
+   once GitHub allows it (after DNS is set). `docs/CNAME` already holds the domain.
 2. **Create the token.** github.com, Settings, Developer settings, Personal access tokens, Fine-grained tokens, Generate new token.
    - Name: `pizza-ratto-menu-editor`. Expiration: your choice (a calendar reminder to renew it helps).
    - Resource owner: `nickjacksonza`. Repository access: Only select repositories, `nickjacksonza/pizza-ratto`.
@@ -88,7 +89,7 @@ and lets callers forge `X-Real-Ip`.
    - `ADMIN_PATH=` the output of `openssl rand -hex 16`.
    - `GITHUB_TOKEN=` the token from step 2.
    - `GIT_USER_NAME=` and `GIT_USER_EMAIL=` the name and email the commits should carry (your GitHub noreply address is fine).
-   - `TARGET_BRANCH=main`. `SITE_URL=` the live site address (custom domain, or `https://nickjacksonza.github.io/pizza-ratto/`).
+   - `TARGET_BRANCH=main`. `SITE_URL=` the live site address (`https://pizzaratto.com`).
    - Keep `DRY_RUN=1` for the first test.
 7. **Pick the hostname.** Choose a name such as `menu.<your-domain>` and set `ADMIN_HOST=` to it.
    Point a DNS A record for that name at this VPS. Traefik gets the certificate from Let's Encrypt.

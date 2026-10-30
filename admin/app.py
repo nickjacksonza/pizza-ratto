@@ -3,8 +3,8 @@
 
 The owner edits menu.json, deli.json and merchandise.json in the browser. "Save and publish" applies the
 changes to the app's own clone of the repo, runs build.py and tools/check.py there as a pre-flight (a failure
-blocks the save), then commits and pushes only the changed JSON to TARGET_BRANCH. The repo's Pages workflow
-(.github/workflows/pages.yml) rebuilds docs/ from that JSON and deploys it.
+blocks the save), then commits the changed JSON and the rebuilt docs/ together in one commit and pushes it to
+TARGET_BRANCH. GitHub Pages serves main /docs, so that push is the deploy.
 
     python3 app.py               # run the server (settings come from env vars, see admin/README.md)
     python3 app.py hash          # print an ADMIN_PASSWORD_HASH for a password typed at the prompt
@@ -235,10 +235,6 @@ def read_docs():
             docs[key] = json.loads(raws[key])
     if "menu" not in docs:
         raise StepError(f"{FOR_SALE}/menu.json is missing on branch {TARGET}. Has the menu PR been merged yet?")
-    if not (REPO / ".github" / "workflows" / "pages.yml").is_file():
-        # Without the Pages workflow a pushed JSON change would never be built or deployed.
-        raise StepError(f"Branch {TARGET} has no .github/workflows/pages.yml yet, so saves would not reach the live site. "
-                        "Merge PR #8 (main-catch-up) first.")
     return docs, raws
 
 
@@ -268,7 +264,7 @@ def build_and_check():
 
 
 def apply_and_commit(ops):
-    """sync -> apply ops -> write JSON -> pre-flight build + check -> commit the JSON only. Returns (sha, notes, warnings) or (None, ...) if nothing changed."""
+    """sync -> apply ops -> write JSON -> pre-flight build + check -> commit the JSON plus the rebuilt docs/. Returns (sha, notes, warnings) or (None, ...) if nothing changed."""
     sync()
     docs, raws = read_docs()
     changed, notes = menu_ops.apply_ops(docs, ops)
@@ -281,9 +277,8 @@ def apply_and_commit(ops):
     if not paths:
         return None, notes, []
     warnings = build_and_check()
-    git("checkout", "--quiet", "--", "docs", check=False)  # the pre-flight build output is not committed; the Pages workflow builds its own
-    git("clean", "-ffdq", "--", "docs", check=False)
-    git("add", "--", *paths)
+    # The pre-flight build wrote docs/. Commit it with the JSON: GitHub Pages serves main /docs, so docs/ must match the JSON.
+    git("add", "--all", "--", *paths, "docs")
     if git("diff", "--cached", "--quiet", check=False).returncode == 0:
         return None, notes, warnings
     summary = "; ".join(notes[:3]) + (f" and {len(notes) - 3} more" if len(notes) > 3 else "")
