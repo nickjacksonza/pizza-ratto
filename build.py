@@ -594,6 +594,8 @@ Address: {a['street']}, {a['locality']}, {a['city']}. Hours: {site['hours_text']
 - [Merchandise]({DOMAIN}/merchandise.html): helmet keyrings, jackets, stickers, pins and Vespa-inspired gear
 """
     (OUT / "llms.txt").write_text(llms, encoding="utf-8")
+    # GitHub Pages custom domain (deploy from branch reads docs/CNAME); taken from site.json, never hard-coded
+    (OUT / "CNAME").write_text(urllib.parse.urlparse(DOMAIN).netloc + "\n", encoding="utf-8")
     if MISSING:
         print(f"\n{len(set(MISSING))} menu images named in the JSON are not on disk (fallback tile shown):")
         for m in sorted(set(MISSING)):

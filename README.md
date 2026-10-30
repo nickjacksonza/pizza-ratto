@@ -9,4 +9,8 @@ Static site for [Pizza Ratto](https://pizzaratto.com), Salt River, Cape Town. Se
 
 ## Deploy
 
-`.github/workflows/pages.yml` builds the site (`python3 build.py`, then `python3 tools/check.py`) and deploys `docs/` to GitHub Pages on every push to `main`. Merging a PR, or editing `site-references/for-sale/menu.json` on `main`, goes live within a minute or two. Prices are always read from `site-references/for-sale/`; the check step fails if a price is missing from the built page.
+GitHub Pages serves the site from branch `main`, folder `/docs`, on the custom domain pizzaratto.com (same as wellness-by-physiatry). `build.py` writes `docs/CNAME` from `src/data/site.json`.
+
+- `docs/` must stay committed and current. After changing source, run `python3 build.py` and `python3 tools/check.py`, then commit `docs/` too.
+- `.github/workflows/rebuild-docs.yml` rebuilds `docs/` when source files change on `main`, so edits made on GitHub (such as `site-references/for-sale/menu.json`) still reach the live site. The check step fails if a price is missing from the built page, and then nothing is pushed.
+- Merging to `main` is a live deploy.
