@@ -87,13 +87,17 @@ out = io.BytesIO()
 canvas.save(out, "JPEG", quality=85, optimize=True)
 write("images/og.jpg", out.getvalue())
 
-# Fonts. Heathfield is 1.7 MB as OTF: subset to Basic Latin + Latin-1 + common punctuation, WOFF2.
+# Fonts. Heathfield is 1.7 MB as OTF: subset to Basic ASCII + the accented and punctuation characters the site uses, WOFF2 (about 160 KB;
+# adding the whole Latin-1 block more than doubles it). Add a code point here if new copy needs one.
 opts = subset.Options()
 opts.flavor = "woff2"
-opts.layout_features = ["*"]
+opts.layout_features = ["kern"]  # liga/ccmp/locl pull in hundreds of alternate glyphs (392 KB vs 158 KB)
+opts.hinting = False
+opts.desubroutinize = True
+opts.name_IDs = [1, 2]
 f = TTFont(str(ROOT / "site-references/fonts/Heathfield-515nV.otf"))
 sub = subset.Subsetter(opts)
-sub.populate(unicodes=list(range(0x20, 0x7F)) + list(range(0xA0, 0x100)) + [0x2013, 0x2014, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2026, 0x2011, 0x2605])
+sub.populate(unicodes=list(range(0x20, 0x7F)) + [0xA9, 0xB7, 0xE8, 0xE9, 0xC8, 0xC9, 0x2011, 0x2013, 0x2014, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2026, 0x2605])
 sub.subset(f)
 f.flavor = "woff2"
 buf = io.BytesIO()
