@@ -5,13 +5,36 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* Cookie consent (Google Consent Mode v2). Analytics stays denied until the visitor accepts. */
+  function consent() {
+    var banner = $("#consent-banner");
+    if (!banner) return;
+    var KEY = "consent_choice";
+    var get = function () { var m = document.cookie.match("(?:^|; )" + KEY + "=([^;]*)"); return m ? decodeURIComponent(m[1]) : null; };
+    var apply = function (choice) {
+      var v = choice === "accepted" ? "granted" : "denied";
+      if (typeof window.gtag === "function") window.gtag("consent", "update", { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+    };
+    var stored = get();
+    if (stored) apply(stored); else banner.hidden = false;
+    var choose = function (choice) {
+      document.cookie = KEY + "=" + encodeURIComponent(choice) + ";path=/;max-age=31536000;SameSite=Lax";
+      apply(choice);
+      banner.hidden = true;
+    };
+    var yes = $("#consent-accept"), no = $("#consent-decline"), again = $("#cookie-settings");
+    if (yes) yes.addEventListener("click", function () { choose("accepted"); });
+    if (no) no.addEventListener("click", function () { choose("declined"); });
+    if (again) again.addEventListener("click", function () { banner.hidden = false; yes && yes.focus(); });
+  }
+
   /* 1. Sticky chrome height -> --chrome-h */
   function chrome() {
     var top = $(".pr-top");
     if (!top) return;
     var set = function () { document.documentElement.style.setProperty("--chrome-h", top.offsetHeight + "px"); };
-    set();
-    window.addEventListener("resize", set);
+    if ("ResizeObserver" in window) new ResizeObserver(set).observe(top); // fires after layout: no forced reflow
+    else { set(); window.addEventListener("resize", set); }
   }
 
   /* 2. Active nav link follows the section in view (home page only) */
@@ -33,6 +56,14 @@
   /* 5. Reel videos play only while on screen. Reduced motion: poster only. */
   function reel() {
     var vids = $$(".pr-tape video");
+    // Posters load only when a tape is near the viewport, so they never compete with the hero.
+    var setPoster = function (v) { if (v.dataset.poster) { v.poster = v.dataset.poster; v.removeAttribute("data-poster"); } };
+    if ("IntersectionObserver" in window) {
+      var pio = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { setPoster(e.target); pio.unobserve(e.target); } });
+      }, { rootMargin: "600px 0px" });
+      vids.forEach(function (v) { pio.observe(v); });
+    } else vids.forEach(setPoster);
     if (!vids.length || reduce || !("IntersectionObserver" in window)) return;
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -86,11 +117,11 @@
         draw(Math.max(0, Math.min(1, (innerHeight * 0.95 - r.top) / (innerHeight * 0.5))));
       }
       function on() { if (!raf) raf = requestAnimationFrame(upd); }
-      upd();
+      on();
       window.addEventListener("scroll", on, { passive: true });
       window.addEventListener("resize", on);
     }).catch(function () {});
   }
 
-  chrome(); activeNav(); reel(); handwriting();
+  consent(); chrome(); activeNav(); reel(); handwriting();
 })();

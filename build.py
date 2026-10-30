@@ -4,8 +4,8 @@
 Run: python3 build.py   (standard library only)
 
 Reads src/pages/*.html (front-matter + body), wraps them in src/partials/, fills {{ placeholders }} from
-src/data/site.json, the front-matter, and HTML the script generates from the owner's JSON (menu.json,
-deli.json, merchandise.json), then writes plain static HTML to docs/. Paths are relative so the site works
+src/data/site.json, the front-matter, and HTML the script generates from the owner's JSON in
+site-references/for-sale/ (menu.json, deli.json, merchandise.json, the single source), then writes plain static HTML to docs/. Paths are relative so the site works
 at a sub-path as well as at the domain root. Prints every menu image that is missing on disk; those cards
 render the branded fallback tile instead of a broken image.
 """
@@ -16,6 +16,9 @@ import json
 import re
 import shutil
 import struct
+import subprocess
+import sys
+import datetime
 import urllib.parse
 from pathlib import Path
 
@@ -26,13 +29,20 @@ STATIC_DIRS = ["js", "images", "fonts", "videos"]
 CSS_BUNDLE = ["css/tokens.css", "css/styles.css"]
 
 site = json.loads((SRC / "data" / "site.json").read_text(encoding="utf-8"))
-MENU = json.loads((SRC / "data" / "menu.json").read_text(encoding="utf-8"))
-DELI = json.loads((SRC / "data" / "deli.json").read_text(encoding="utf-8"))
-MERCH = json.loads((SRC / "data" / "merchandise.json").read_text(encoding="utf-8"))
+FOR_SALE = ROOT / "site-references" / "for-sale"  # the owner's menu, deli and merchandise JSON (single source)
+MENU = json.loads((FOR_SALE / "menu.json").read_text(encoding="utf-8"))
+DELI = json.loads((FOR_SALE / "deli.json").read_text(encoding="utf-8"))
+MERCH = json.loads((FOR_SALE / "merchandise.json").read_text(encoding="utf-8"))
 
 DOMAIN = site["domain"].rstrip("/")
+FOOTER_CONTACT = """<div><h2><span lang="la">Ubi</span><small>Where</small></h2><address>{{ address }}</address></div>
+<div><h2><span lang="la">Quando</span><small>When</small></h2><p>{{ hours }}</p></div>
+<div><h2><span lang="la">Voca</span><small>Call / WhatsApp</small></h2><p class="pr-footer-phone"><a href="tel:{{ phone_intl }}">{{ phone }}</a></p></div>"""
 MISSING = []  # image paths named in the JSON that are not on disk
 VERSIONS = {}
+CSS_INLINE = []  # the minified stylesheet, filled by build()
+sys.path.insert(0, str(ROOT / "tools"))
+from minify import minify_css, minify_js  # noqa: E402
 
 
 def esc(s):
@@ -81,19 +91,35 @@ def image_size(path):
     return None
 
 
-def img(path, alt, rel, cls="", lazy=True, eager=False, size=None):
+def srcset(path, rel, widths):
+    """srcset string from <name>-<w>w.webp files that exist on disk (see tools/make_responsive_images.py)."""
+    stem = path.rsplit(".", 1)[0]
+    full = image_size(path)
+    parts = [f"{rel}{stem}-{w}w.webp {w}w" for w in widths if (ROOT / f"{stem}-{w}w.webp").exists()]
+    if parts and full:
+        parts.append(f"{rel}{path} {full[0]}w")
+    return ", ".join(parts)
+
+
+CARD_SIZES = "(max-width: 760px) 45vw, 380px"
+HERO_SIZES = "(max-width: 900px) 100vw, 56vw"
+
+
+def img(path, alt, rel, cls="", lazy=True, eager=False, size=None, widths=(), sizes=""):
     w, h = size or image_size(path) or (0, 0)
     dim = f' width="{w}" height="{h}"' if w else ""
     attrs = ' fetchpriority="high" decoding="async"' if eager else (' loading="lazy" decoding="async"' if lazy else ' decoding="async"')
     c = f' class="{cls}"' if cls else ""
-    return f'<img{c} src="{rel}{path}" alt="{esc(alt)}"{dim}{attrs}>'
+    ss = srcset(path, rel, widths) if widths else ""
+    sz = f' srcset="{ss}" sizes="{sizes}"' if ss else ""
+    return f'<img{c} src="{rel}{path}"{sz} alt="{esc(alt)}"{dim}{attrs}>'
 
 
 def card_img(item, alt, rel, first=False):
     """Circular photo, or the branded 'photo coming hot' tile when the file is missing."""
     path = item.get("image")
     if path and (ROOT / path).exists():
-        return f'<div class="pr-card-img">{img(path, alt, rel, lazy=not first)}</div>'
+        return f'<div class="pr-card-img">{img(path, alt, rel, lazy=not first, widths=(400,), sizes=CARD_SIZES)}</div>'
     if path:
         MISSING.append(path)
     return '<div class="pr-card-img is-empty"><span>photo<br>coming hot</span></div>'
@@ -144,7 +170,7 @@ def pizza_cards(rel):
         alt = site["image_alts"].get(it["id"], f"{it['name']} pizza from Pizza Ratto")
         note = f'<small>{esc(it["note"])}</small>' if it.get("note") else ""
         out.append(
-            f'<li><div class="pr-card">{card_img(it, alt, rel, first=n < 3)}<div>'
+            f'<li><div class="pr-card">{card_img(it, alt, rel, first=False)}<div>'
             f'<div class="pr-card-top"><b>{esc(it["name"])}</b><strong>{esc(money(it, sym))}</strong></div>'
             f'<p>{esc(it.get("description", ""))}</p>{note}</div></div></li>'
         )
@@ -237,15 +263,22 @@ def socials():
     )
 
 
+def tape(t, rel, num):
+    """One short video. Poster is set by js/scripts.js only near the viewport; it plays only while on screen."""
+    return (
+        f'<figure class="pr-tape"><video muted loop playsinline preload="none" disablePictureInPicture width="720" height="1280" '
+        f'data-poster="{rel}images/stills/{t["vid"]}.webp" aria-hidden="true"><source src="{rel}videos/{t["vid"]}.mp4" type="video/mp4"></video>'
+        f'<figcaption><b>{esc(num)}</b>{esc(t["label"])}</figcaption></figure>'
+    )
+
+
 def reel(rel):
-    out = []
-    for i, t in enumerate(site["tapes"], 1):
-        out.append(
-            f'<figure class="pr-tape"><video muted loop playsinline preload="none" disablePictureInPicture width="720" height="1280" '
-            f'poster="{rel}images/stills/{t["vid"]}.webp" aria-hidden="true"><source src="{rel}videos/{t["vid"]}.mp4" type="video/mp4"></video>'
-            f'<figcaption><b>{i:02d}</b>{esc(t["label"])}</figcaption></figure>'
-        )
-    return "\n".join(out)
+    return "\n".join(tape(t, rel, f"{i:02d}") for i, t in enumerate(site["tapes"], 1))
+
+
+def side_tapes(rel):
+    """Short videos shown under the caffè, drinks and dolci cards."""
+    return "\n".join(tape(t, rel, t["tag"]) for t in site.get("side_tapes", []))
 
 
 def catalogue_cards(data, rel):
@@ -255,7 +288,7 @@ def catalogue_cards(data, rel):
     for n, it in enumerate(items):
         brand = f'<span class="pr-card-brand">{esc(it["brand"])}</span>' if it.get("brand") else ""
         out.append(
-            f'<li><div class="pr-card">{card_img(it, it["name"], rel, first=n < 3)}<div>'
+            f'<li><div class="pr-card">{card_img(it, it["name"], rel, first=False)}<div>'
             f'<div class="pr-card-top"><b>{esc(it["name"])}</b><strong>{esc(money(it, sym))}</strong></div>{brand}</div></div></li>'
         )
     return "\n".join(out)
@@ -263,15 +296,16 @@ def catalogue_cards(data, rel):
 
 # ---------------------------------------------------------------- schema
 
+def schema_pizzas():
+    """Available pizzas only. The structured data covers pizzas, not drinks, desserts or toppings."""
+    return available(find_group(MENU, "pizza", "pizzas")["items"])
+
+
 def price_range():
-    """R<min>–R<max> across pizzas, drinks and desserts (extra toppings excluded: they are add-ons)."""
+    """R<min>–R<max> across the pizzas (the only priced items in the structured data)."""
     prices = []
-    for s in MENU["sections"]:
-        for g in s["groups"]:
-            if g["id"] == "extra-toppings":
-                continue
-            for it in available(g["items"]):
-                prices += [v["price"] for v in it.get("variants", [])] or ([it["price"]] if it.get("price") is not None else [])
+    for it in schema_pizzas():
+        prices += [v["price"] for v in it.get("variants", [])] or ([it["price"]] if it.get("price") is not None else [])
     sym = MENU["currency_symbol"]
     return f"{sym}{min(prices)}–{sym}{max(prices)}"
 
@@ -292,21 +326,12 @@ def menu_item(it, cur, local=True):
 
 
 def menu_node():
+    """Schema Menu with the pizzas only. The visible menu on the page is unchanged."""
     cur = MENU["currency"]
-    sections = []
-    for s in MENU["sections"]:
-        subs = []
-        for g in s["groups"]:
-            items = [menu_item(i, cur) for i in available(g["items"])]
-            if not items:
-                continue
-            subs.append({"@type": "MenuSection", "name": g["title"] or s["title"], "hasMenuItem": items})
-        # A section with one untitled group collapses to that group's items.
-        if len(subs) == 1 and not s["groups"][0]["title"]:
-            sections.append({"@type": "MenuSection", "name": s["title"], "hasMenuItem": subs[0]["hasMenuItem"]})
-        else:
-            sections.append({"@type": "MenuSection", "name": s["title"], "hasMenuSection": subs})
-    return {"@type": "Menu", "@id": f"{DOMAIN}/#menu", "name": f"{site['name']} menu", "inLanguage": site["locale"], "hasMenuSection": sections}
+    section = next(x for x in MENU["sections"] if x["id"] == "pizza")
+    items = [menu_item(i, cur) for i in schema_pizzas()]
+    return {"@type": "Menu", "@id": f"{DOMAIN}/#menu", "name": f"{site['name']} menu", "inLanguage": site["locale"],
+            "hasMenuSection": [{"@type": "MenuSection", "name": section["title"], "hasMenuItem": items}]}
 
 
 def graph(page):
@@ -348,6 +373,7 @@ def graph(page):
         "name": page["title"],
         "description": page["description"],
         "inLanguage": site["locale"],
+        "dateModified": page["modified"],
         "isPartOf": {"@id": f"{DOMAIN}/#website"},
         "about": {"@id": f"{DOMAIN}/#restaurant"},
         "primaryImageOfPage": {"@type": "ImageObject", "url": f"{DOMAIN}/{site['og_image']}", "width": 1200, "height": 630},
@@ -411,24 +437,66 @@ def nav_html(current, on_home):
 
 
 def analytics():
+    """Consent Mode v2 defaults (all denied) inline; gtag.js itself loads on the first scroll, tap or key press
+    (or 8 s after the page loads), so it never competes with the first paint. Empty until ga4_id is set in site.json."""
     gid = site.get("ga4_id")
     if not gid:
         return ""
     return (
         "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
-        "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});</script>"
-        f'<script async src="https://www.googletagmanager.com/gtag/js?id={esc(gid)}"></script>'
-        f"<script>gtag('js',new Date());gtag('config','{esc(gid)}');</script>"
+        "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});"
+        f"gtag('js',new Date());gtag('config','{esc(gid)}');"
+        "var done=0,l=function(){if(done)return;done=1;var s=document.createElement('script');s.async=true;"
+        f"s.src='https://www.googletagmanager.com/gtag/js?id={esc(gid)}';document.head.appendChild(s)}};"
+        "['pointerdown','keydown','scroll','touchstart'].forEach(function(e){addEventListener(e,l,{once:true,passive:true})});"
+        "addEventListener('load',function(){setTimeout(l,8000)});</script>"
     )
 
 
-def render(name, meta, body, partials):
+def site_verification():
+    """Google Search Console ownership tag. Empty until google_site_verification is set in site.json."""
+    code = site.get("google_site_verification")
+    return f'<meta name="google-site-verification" content="{esc(code)}">' if code else ""
+
+
+def consent_banner():
+    if not site.get("ga4_id"):
+        return ""
+    return ('<div class="pr-consent" id="consent-banner" role="region" aria-label="Cookie consent" hidden>'
+            '<p>We use cookies to see how the site is used. No analytics run unless you accept.</p>'
+            '<div class="pr-consent-actions"><button type="button" class="pr-consent-accept" id="consent-accept">Accept</button>'
+            '<button type="button" class="pr-consent-decline" id="consent-decline">Decline</button></div></div>')
+
+
+def cookie_button():
+    if not site.get("ga4_id"):
+        return ""
+    return '<button type="button" class="pr-footer-cookie" id="cookie-settings">Cookie settings</button>'
+
+
+def page_modified(path):
+    """ISO date a page's source last changed: today if uncommitted, else its last commit date."""
+    rel = str(path.relative_to(ROOT))
+    try:
+        dirty = subprocess.run(["git", "status", "--porcelain", "--", rel], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+        if dirty:
+            return datetime.date.today().isoformat()
+        day = subprocess.run(["git", "log", "-1", "--format=%cs", "--", rel], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+        if day:
+            return day
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    return datetime.date.fromtimestamp(path.stat().st_mtime).isoformat()
+
+
+def render(name, meta, body, partials, modified):
     rel = meta.get("root", "")
     on_home = name == "index"
+    hero_srcset = srcset("images/hero/pizza-ratto-logo.webp", rel, (480, 800, 1200))
     canonical = DOMAIN + "/" + ("" if on_home else ("404.html" if name == "404" else f"{name}.html"))
     page = {
         "title": meta["title"], "description": meta["description"], "canonical": canonical,
-        "kind": meta.get("kind", "home" if on_home else "plain"), "crumb": meta.get("crumb", ""),
+        "kind": meta.get("kind", "home" if on_home else "plain"), "crumb": meta.get("crumb", ""), "modified": modified,
     }
     for label, text, lo, hi in (("title", page["title"], 10, 60), ("description", page["description"], 120, 160)):
         if not lo <= len(text) <= hi:
@@ -438,9 +506,10 @@ def render(name, meta, body, partials):
         "name": esc(site["name"]), "domain": DOMAIN, "og_image": f"{DOMAIN}/{site['og_image']}",
         "locale": site["locale"], "og_locale": site["locale"].replace("-", "_"), "theme_color": site["theme_color"],
         "root": rel, "robots": meta.get("robots", "index, follow, max-image-preview:large"),
-        "css_v": VERSIONS["css"], "js_v": VERSIONS["js"],
-        "hero_preload": f'<link rel="preload" as="image" href="{rel}images/hero/pizza-ratto-logo.webp" type="image/webp" fetchpriority="high">' if on_home else "",
-        "analytics": analytics(),
+        "css": CSS_INLINE[0].replace("../", rel), "js_v": VERSIONS["js"],
+        "hero_srcset": hero_srcset, "hero_sizes": HERO_SIZES,
+        "hero_preload": f'<link rel="preload" as="image" href="{rel}images/hero/hero-paper-texture.webp" type="image/webp" fetchpriority="high">\n<link rel="preload" as="image" href="{rel}images/hero/pizza-ratto-logo.webp" imagesrcset="{hero_srcset}" imagesizes="{HERO_SIZES}" type="image/webp" fetchpriority="high">' if on_home else "",
+        "analytics": analytics(), "site_verification": site_verification(), "consent_banner": consent_banner(), "cookie_button": cookie_button(),
         "jsonld": json.dumps(graph(page), ensure_ascii=False, indent=2).replace("</", "<\\/"),
         "nav": nav_html({"deli": "deli", "merchandise": "merch"}.get(name), on_home),
         "logo_href": "#top" if on_home else "./",
@@ -455,12 +524,15 @@ def render(name, meta, body, partials):
         "btn_whatsapp_red": button("Order on WhatsApp", site["whatsapp"], "", "whatsapp"),
         "btn_uber": button("Uber Eats", site["uber_eats"], "street", "ubereats"),
         "pizza_cards": pizza_cards(rel), "pizza_count_word": words(len(available(find_group(MENU, "pizza", "pizzas")["items"]))),
-        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "events": events(), "socials": socials(), "reel": reel(rel),
+        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "events": events(), "socials": socials(), "reel": reel(rel), "tape_count": f'{len(site["tapes"]):02d}', "side_tapes": side_tapes(rel),
         "deli_cards": catalogue_cards(DELI, rel), "merch_cards": catalogue_cards(MERCH, rel),
         "ticker": esc(site["ticker"] * 4), "ev_label": esc(site["events"]["label"]), "ev_title": esc(site["events"]["title"]), "ev_title_alt": esc(site["events"]["title_alt"]), "ev_intro": esc(site["events"]["intro"]), "ev_sticker": esc(site["events"]["sticker"]), "wa_number": site["whatsapp_number"], "year": "2026",
         **{k: v for k, v in meta.items()},
     }
     ctx["h1"] = meta.get("h1", "")
+    # The home page has its own Visit section (Ubi/Quando/Voca), so its footer drops the same three columns.
+    ctx["footer_contact"] = "" if on_home else FOOTER_CONTACT
+    ctx["footer_grid_class"] = " pr-footer-solo" if on_home else ""
 
     def fill(text):
         # Two passes: partials may contain placeholders that expand to more placeholders.
@@ -483,14 +555,14 @@ def build():
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
-    css = "\n".join((ROOT / f).read_text(encoding="utf-8") for f in CSS_BUNDLE)
-    (OUT / "css").mkdir()
-    (OUT / "css" / "site.css").write_text(css, encoding="utf-8")
-    VERSIONS["css"] = asset_version(css.encode())
-    VERSIONS["js"] = asset_version((ROOT / "js" / "scripts.js").read_bytes())
+    css = minify_css("\n".join((ROOT / f).read_text(encoding="utf-8") for f in CSS_BUNDLE))
+    CSS_INLINE.append(css)  # inlined into every page: no render-blocking stylesheet request
+    js = minify_js((ROOT / "js" / "scripts.js").read_text(encoding="utf-8"))
+    VERSIONS["js"] = asset_version(js.encode())
     for d in STATIC_DIRS:
         if (ROOT / d).exists():
             shutil.copytree(ROOT / d, OUT / d)
+    (OUT / "js" / "scripts.js").write_text(js, encoding="utf-8")
     for f in (SRC / "static").iterdir():
         if f.name in ("sitemap.xml", "llms.txt"):
             continue
@@ -499,12 +571,13 @@ def build():
     urls = []
     for p in sorted((SRC / "pages").glob("*.html")):
         meta, body = parse_page(p)
-        (OUT / p.name).write_text(render(p.stem, meta, body, partials), encoding="utf-8")
+        day = page_modified(p)
+        (OUT / p.name).write_text(render(p.stem, meta, body, partials, day), encoding="utf-8")
         if meta.get("robots", "").startswith("noindex"):
             continue
-        urls.append(DOMAIN + "/" + ("" if p.stem == "index" else p.name))
+        urls.append((DOMAIN + "/" + ("" if p.stem == "index" else p.name), day))
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    sm += [f"  <url><loc>{u}</loc></url>" for u in urls]
+    sm += [f"  <url><loc>{u}</loc><lastmod>{d}</lastmod></url>" for u, d in urls]
     sm.append("</urlset>")
     (OUT / "sitemap.xml").write_text("\n".join(sm) + "\n", encoding="utf-8")
     a = site["address"]

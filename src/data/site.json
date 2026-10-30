@@ -5,7 +5,8 @@
   "locale": "en-ZA",
   "theme_color": "#F5F0E6",
   "og_image": "images/og.jpg",
-  "ga4_id": "",
+  "ga4_id": "G-LSQ5R505H6",
+  "google_site_verification": "r_Y90AQ4bUTgq6URAUIPTclQbeQC7S2K6gU4ZSGjoQA",
   "phone_display": "082 525 0380",
   "phone_intl": "+27825250380",
   "whatsapp": "https://wa.me/27825250380?text=Hi%20Pizza%20Ratto%2C%20I%E2%80%99d%20like%20to%20place%20an%20order.",
@@ -75,7 +76,7 @@
     "primavera": "Tomato and mozzarella pizza finished with fresh basil",
     "veloce": "Pizza with roasted butternut, feta, onions and sunflower seeds",
     "sprint": "Pizza with salami, caramelised onions, mozzarella and hot honey",
-    "arcobaleno": "Pizza with salami, mushrooms, feta and fresh rocket",
+    "arco-baleno": "Pizza with salami, mushrooms, feta and fresh rocket",
     "rally": "Pizza with smoked chicken, mushrooms and avocado"
   },
   "side_cards": [
@@ -91,7 +92,7 @@
       "group": "cold-drinks",
       "section": "drinks",
       "name": "Cold Drinks",
-      "tone": "cream",
+      "tone": "orange",
       "mark": null,
       "kicker": "Beyond coffee. Still worth a stop."
     },
@@ -118,20 +119,24 @@
       "label": "From oven to pass"
     },
     {
-      "vid": "espresso-pull",
-      "label": "Espresso pulling"
-    },
-    {
-      "vid": "sugar-doughnuts",
-      "label": "Sugar doughnuts"
-    },
-    {
       "vid": "box-lettering",
       "label": "Boxes, signed by hand"
     },
     {
       "vid": "counter-sweep",
       "label": "Counter chaos"
+    }
+  ],
+  "side_tapes": [
+    {
+      "vid": "espresso-pull",
+      "tag": "Caffè",
+      "label": "Espresso pulling"
+    },
+    {
+      "vid": "sugar-doughnuts",
+      "tag": "Dolci",
+      "label": "Sugar doughnuts"
     }
   ],
   "house": [
