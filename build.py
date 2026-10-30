@@ -35,6 +35,9 @@ DELI = json.loads((FOR_SALE / "deli.json").read_text(encoding="utf-8"))
 MERCH = json.loads((FOR_SALE / "merchandise.json").read_text(encoding="utf-8"))
 
 DOMAIN = site["domain"].rstrip("/")
+FOOTER_CONTACT = """<div><h2><span lang="la">Ubi</span><small>Where</small></h2><address>{{ address }}</address></div>
+<div><h2><span lang="la">Quando</span><small>When</small></h2><p>{{ hours }}</p></div>
+<div><h2><span lang="la">Voca</span><small>Call / WhatsApp</small></h2><p class="pr-footer-phone"><a href="tel:{{ phone_intl }}">{{ phone }}</a></p></div>"""
 MISSING = []  # image paths named in the JSON that are not on disk
 VERSIONS = {}
 CSS_INLINE = []  # the minified stylesheet, filled by build()
@@ -527,6 +530,9 @@ def render(name, meta, body, partials, modified):
         **{k: v for k, v in meta.items()},
     }
     ctx["h1"] = meta.get("h1", "")
+    # The home page has its own Visit section (Ubi/Quando/Voca), so its footer drops the same three columns.
+    ctx["footer_contact"] = "" if on_home else FOOTER_CONTACT
+    ctx["footer_grid_class"] = " pr-footer-solo" if on_home else ""
 
     def fill(text):
         # Two passes: partials may contain placeholders that expand to more placeholders.

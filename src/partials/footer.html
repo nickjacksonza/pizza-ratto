@@ -1,9 +1,7 @@
 <footer class="pr-footer">
-<div class="pr-footer-grid">
+<div class="pr-footer-grid{{ footer_grid_class }}">
 <p class="pr-footer-tag">{{ tagline }}</p>
-<div><h2><span lang="la">Ubi</span><small>Where</small></h2><address>{{ address }}</address></div>
-<div><h2><span lang="la">Quando</span><small>When</small></h2><p>{{ hours }}</p></div>
-<div><h2><span lang="la">Voca</span><small>Call / WhatsApp</small></h2><p class="pr-footer-phone"><a href="tel:{{ phone_intl }}">{{ phone }}</a></p></div>
+{{ footer_contact }}
 </div>
 <div class="pr-footer-bottom">
 <p>© {{ year }} Pizza Ratto · Built with fire, not focus groups.</p>
