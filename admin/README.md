@@ -45,7 +45,15 @@ Sections and groups can't be added or renamed here, because `build.py` and `site
 ## Before you go live
 
 Merge PR #8 (`main-catch-up`, which adds the Pages workflow and the price check) to `main` first, then this PR (`menu-editor-v2`).
-Until #8 is on `main`, saves to `main` would not be built or deployed.
+Until #8 is on `main`, saves to `main` would not be built or deployed, so the editor refuses to load or save
+while `.github/workflows/pages.yml` is missing on the target branch.
+
+Prices are whole rand (the site prints the number as is). `main` has no branch protection (private repo on a free plan),
+so the token's pushes are not blocked. If protection is ever added, the editor's pushes will be refused.
+
+The compose file uses `expose` (no host port at all), so the editor is reachable only through Traefik once
+`traefik.enable=true`. Don't switch it to `ports: - "8080"`: that publishes a random public host port over plain HTTP
+and lets callers forge `X-Real-Ip`.
 
 ## Setup steps
 

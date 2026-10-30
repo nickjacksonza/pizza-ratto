@@ -151,7 +151,7 @@
     return el("label", {}, [label, input]);
   }
   function priceInput(label, value, onchange) {
-    var input = el("input", { type: "text", inputmode: "decimal", pattern: "[0-9]*[.,]?[0-9]*", placeholder: "e.g. 85", oninput: function (e) {
+    var input = el("input", { type: "text", inputmode: "numeric", pattern: "[0-9]*", placeholder: "e.g. 85", oninput: function (e) {
       var v = e.target.value.replace(",", ".").trim();
       var n = v === "" ? null : Number(v);
       e.target.classList.toggle("bad", v !== "" && (isNaN(n) || n < 0));

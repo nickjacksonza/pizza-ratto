@@ -235,6 +235,10 @@ def read_docs():
             docs[key] = json.loads(raws[key])
     if "menu" not in docs:
         raise StepError(f"{FOR_SALE}/menu.json is missing on branch {TARGET}. Has the menu PR been merged yet?")
+    if not (REPO / ".github" / "workflows" / "pages.yml").is_file():
+        # Without the Pages workflow a pushed JSON change would never be built or deployed.
+        raise StepError(f"Branch {TARGET} has no .github/workflows/pages.yml yet, so saves would not reach the live site. "
+                        "Merge PR #8 (main-catch-up) first.")
     return docs, raws
 
 

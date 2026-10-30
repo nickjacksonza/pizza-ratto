@@ -38,12 +38,12 @@ def clean_text(value, field, limit):
 
 
 def clean_price(value, field="Price"):
-    if isinstance(value, bool) or not isinstance(value, (int, float)):
-        raise OpError(f"{field} must be a number, like 85 or 42.50.")
-    if value != value or value < 0 or value > MAX_PRICE:  # NaN or out of range
+    # Whole rand only: the site prints the number as is, so 42.5 would show as "R42.5".
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or value != value or float(value) != int(value):
+        raise OpError(f"{field} must be a whole number of rand, like 85.")
+    if value < 0 or value > MAX_PRICE:
         raise OpError(f"{field} must be between 0 and {MAX_PRICE}.")
-    value = round(float(value), 2)
-    return int(value) if value.is_integer() else value
+    return int(value)
 
 
 def clean_field(key, value):
