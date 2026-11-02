@@ -38,8 +38,8 @@
               "id": "faro-basso",
               "image": "images/pizza/faro-basso.webp",
               "name": "Faro Basso",
-              "price": 145,
-              "description": "Cream Cheese Base, Fior de Latte, Cherry Tomatoes, Yellow Peppers, Mint & a squeeze of Lemon",
+              "price": 185,
+              "description": "Cream Cheese Base, Fior de Latte, Smoked Chicken, Wild Mushrooms, Garlic & fresh French Chives",
               "available": true
             },
             {
@@ -62,8 +62,8 @@
               "id": "siluro",
               "image": "images/pizza/siluro.webp",
               "name": "Siluro",
-              "price": 185,
-              "description": "Cream Cheese Base, Fior de Latte, Smoked Chicken, Wild Mushrooms, Garlic & fresh French Chives",
+              "price": 145,
+              "description": "Cream Cheese Base, Fior de Latte, Cherry Tomatoes, Yellow Peppers, Mint & a squeeze of Lemon",
               "available": true
             },
             {
