@@ -287,3 +287,4 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-footer-cookie{min-height:44px;padding:0;background:none;border:0;color:var(--paper-cream);font:600 .72rem/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}.pr-footer-cookie:hover{color:var(--ratto-pink)}
 html,body{overflow-x:clip}
 @media (max-width:480px){.pr-hero2-stamp{right:2.2rem}}
+@media (max-width:760px){.pr-hero2-art{padding-bottom:4.6rem}.pr-hero2-foot{bottom:1rem;max-width:calc(100% - 11.5rem)}}
