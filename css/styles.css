@@ -106,6 +106,7 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-card-img{width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;background:var(--ratto-pink);display:grid;place-items:center;transition:transform var(--dur-slow) var(--ease-out)}
 .pr-card:hover .pr-card-img{transform:rotate(-6deg)}
 .pr-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+.pr-card-img.is-pizza{background:var(--paper-cream)}
 .pr-card-img.is-empty{background:var(--ratto-red)}
 .pr-card-img.is-empty span{color:var(--paper-cream);font-family:var(--font-display);font-size:1.1rem;text-align:center;line-height:1.05}
 .pr-card-top{display:flex;align-items:baseline;justify-content:space-between;gap:.8rem;padding-bottom:.5rem;border-bottom:1.5px solid var(--ratto-brown)}

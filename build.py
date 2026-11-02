@@ -119,7 +119,8 @@ def card_img(item, alt, rel, first=False):
     """Circular photo, or the branded 'photo coming hot' tile when the file is missing."""
     path = item.get("image")
     if path and (ROOT / path).exists():
-        return f'<div class="pr-card-img">{img(path, alt, rel, lazy=not first, widths=(400,), sizes=CARD_SIZES)}</div>'
+        cls = "pr-card-img is-pizza" if path.startswith("images/pizza/") else "pr-card-img"
+        return f'<div class="{cls}">{img(path, alt, rel, lazy=not first, widths=(400,), sizes=CARD_SIZES)}</div>'
     if path:
         MISSING.append(path)
     return '<div class="pr-card-img is-empty"><span>photo<br>coming hot</span></div>'
