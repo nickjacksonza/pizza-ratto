@@ -134,7 +134,12 @@ ICONS = {
 }
 
 
+PAGE_ROOT = ""  # set per page in render so the hand image path is right
+
+
 def icon(name):
+    if name == "whatsapp":  # the capisce hand replaces the WhatsApp glyph everywhere
+        return f'<img class="pr-btn-gesture" src="{PAGE_ROOT}images/icons/capisce-hand-sm.webp" width="120" height="111" alt="" aria-hidden="true">'
     if name == "instagram":
         return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'
     vb, d = ICONS[name]
@@ -498,6 +503,8 @@ def page_modified(path):
 
 def render(name, meta, body, partials, modified):
     rel = meta.get("root", "")
+    global PAGE_ROOT
+    PAGE_ROOT = rel
     on_home = name == "index"
     hero_srcset = srcset("images/hero/pizza-ratto-logo.webp", rel, (480, 800, 1200))
     canonical = DOMAIN + "/" + ("" if on_home else ("404.html" if name == "404" else f"{name}.html"))
