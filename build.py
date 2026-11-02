@@ -119,7 +119,8 @@ def card_img(item, alt, rel, first=False):
     """Circular photo, or the branded 'photo coming hot' tile when the file is missing."""
     path = item.get("image")
     if path and (ROOT / path).exists():
-        return f'<div class="pr-card-img">{img(path, alt, rel, lazy=not first, widths=(400,), sizes=CARD_SIZES)}</div>'
+        cls = "pr-card-img is-pizza" if path.startswith("images/pizza/") else "pr-card-img"
+        return f'<div class="{cls}">{img(path, alt, rel, lazy=not first, widths=(400,), sizes=CARD_SIZES)}</div>'
     if path:
         MISSING.append(path)
     return '<div class="pr-card-img is-empty"><span>photo<br>coming hot</span></div>'
@@ -134,7 +135,12 @@ ICONS = {
 }
 
 
+PAGE_ROOT = ""  # set per page in render so the hand image path is right
+
+
 def icon(name):
+    if name == "whatsapp":  # the capisce hand replaces the WhatsApp glyph everywhere
+        return f'<img class="pr-btn-gesture" src="{PAGE_ROOT}images/icons/capisce-hand-sm.webp" width="120" height="111" alt="" aria-hidden="true">'
     if name == "instagram":
         return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'
     vb, d = ICONS[name]
@@ -248,16 +254,21 @@ def house(rel):
     return "\n".join(out)
 
 
+def glyph_safe(text):
+    """Heathfield draws logo glyphs for digits and '?'. Set those in the display face instead."""
+    return re.sub(r"(\d+|\?)", r'<span class="pr-num">\1</span>', esc(text))
+
+
 def meet_night():
     m = site["meet_night"]
     rows = "".join(f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in m["rows"])
     return (f'<aside class="pr-meet" aria-label="{esc(m["label"])}"><p class="pr-label">{esc(m["label"])}</p>'
-            f'<h3>{esc(m["heading"])}</h3><dl>{rows}</dl></aside>')
+            f'<h3>{glyph_safe(m["heading"])}</h3><dl>{rows}</dl></aside>')
 
 
 def events():
     return "\n".join(
-        f'<article class="pr-event"><p class="pr-label">{esc(e["tag"])}</p><h3>{esc(e["name"])}</h3><p>{esc(e["body"])}</p></article>'
+        f'<article class="pr-event"><p class="pr-label">{esc(e["tag"])}</p><h3>{glyph_safe(e["name"])}</h3><p>{esc(e["body"])}</p></article>'
         for e in site["events"]["items"]
     )
 
@@ -498,6 +509,8 @@ def page_modified(path):
 
 def render(name, meta, body, partials, modified):
     rel = meta.get("root", "")
+    global PAGE_ROOT
+    PAGE_ROOT = rel
     on_home = name == "index"
     hero_srcset = srcset("images/hero/pizza-ratto-logo.webp", rel, (480, 800, 1200))
     canonical = DOMAIN + "/" + ("" if on_home else ("404.html" if name == "404" else f"{name}.html"))
