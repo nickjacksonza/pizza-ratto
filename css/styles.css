@@ -30,6 +30,7 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-btn{--bg:var(--ratto-red);--fg:var(--paper-cream);--hbg:var(--ratto-brown);--hfg:var(--paper-cream);min-height:52px;padding:.85rem 1.6rem;display:inline-flex;align-items:center;justify-content:center;gap:.55rem;color:var(--fg);background:var(--bg);border:0;border-radius:var(--radius-pill);font-family:var(--font-body);font-size:.86rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;line-height:1;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background var(--dur-fast) ease,color var(--dur-fast) ease,transform var(--dur-fast) ease}
 .pr-btn:hover{color:var(--hfg);background:var(--hbg)}.pr-btn:active{transform:scale(.97)}
 .pr-btn-gesture{height:1.8em;width:auto;flex:none}
+.pr-btn-sm .pr-btn-gesture,.pr-header .pr-btn-gesture{height:1.7em;width:auto}
 .pr-btn svg{width:1.15em;height:1.15em;flex:none}.pr-btn svg.uber{width:1.7em}
 .pr-btn-sm{min-height:40px;padding:.55rem 1.1rem;font-size:.74rem}
 .pr-btn-hot{--bg:var(--hot-orange);--fg:var(--ratto-brown);--hbg:var(--ratto-brown);--hfg:var(--paper-cream)}
@@ -284,3 +285,5 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-consent-decline{background:transparent;color:var(--ratto-brown)}
 @media (max-width:760px){.pr-consent{bottom:calc(64px + 1rem)}}
 .pr-footer-cookie{min-height:44px;padding:0;background:none;border:0;color:var(--paper-cream);font:600 .72rem/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;cursor:pointer}.pr-footer-cookie:hover{color:var(--ratto-pink)}
+html,body{overflow-x:clip}
+@media (max-width:480px){.pr-hero2-stamp{right:2.2rem}}
