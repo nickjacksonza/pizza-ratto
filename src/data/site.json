@@ -85,7 +85,7 @@
       "section": "drinks",
       "name": "Caffè",
       "tone": "cream",
-      "mark": "red-cup",
+      "mark": "icons/coffee-cup-sm.webp",
       "kicker": "For before, after, or instead of sensible decisions."
     },
     {
@@ -93,7 +93,7 @@
       "section": "drinks",
       "name": "Cold Drinks",
       "tone": "orange",
-      "mark": null,
+      "mark": "icons/spritz-glass-sm.webp",
       "kicker": "Beyond coffee. Still worth a stop."
     },
     {
@@ -101,7 +101,7 @@
       "section": "desserts",
       "name": "Dolci",
       "tone": "pink",
-      "mark": "red-ice-cream",
+      "mark": "icons/sundae-sm.webp",
       "kicker": "Something sweet. No speech required."
     }
   ],
@@ -170,23 +170,23 @@
     }
   ],
   "events": {
-    "label": "Nights at the Ratto",
-    "title": "Regular nights.",
-    "title_alt": "Special ones.",
-    "intro": "The oven is not only for dinner. We host regular nights and the odd special event, with Woodstock Backgammon Club among the regulars.",
+    "label": "The club",
+    "title": "The Club.",
+    "title_alt": "Woodstock Backgammon Club.",
+    "intro": "WBGC plays at the Ratto. Boards out, pizza on the table. Come to play, or come to watch and eat.",
     "items": [
       {
-        "tag": "Regular nights",
-        "name": "Woodstock Backgammon Club",
-        "body": "Boards out, pizza on the table. Come to play, or come to watch and eat."
+        "tag": "WBGC",
+        "name": "Regular meet nights",
+        "body": "A relaxed night of backgammon over wood-fired pizza. Come to play, or come to watch and eat."
       },
       {
-        "tag": "Special events",
-        "name": "One-off nights",
-        "body": "Now and then something is worth a bigger fire. We announce them as they happen."
+        "tag": "All levels",
+        "name": "Never played? Perfect.",
+        "body": "Someone will teach you the first game. Boards and dice are provided."
       }
     ],
-    "sticker": "Follow our socials for dates."
+    "sticker": "Next meet night is just below."
   },
   "socials": [
     {
@@ -195,5 +195,32 @@
       "url": "https://www.instagram.com/pizza_ratto/",
       "note": "Daily damage, fresh pies and event nights."
     }
-  ]
+  ],
+  "meet_night": {
+    "label": "Next WBGC meet night",
+    "heading": "Thursday 12 November",
+    "rows": [
+      [
+        "When",
+        "Thursday 12 November 2026"
+      ],
+      [
+        "Time",
+        "18:00–21:00, first game at 18:30"
+      ],
+      [
+        "Where",
+        "Pizza Ratto, Salt River"
+      ],
+      [
+        "Entry",
+        "Free. Pizza is on you."
+      ],
+      [
+        "Bring",
+        "Just yourself. Boards and dice provided."
+      ]
+    ],
+    "note": "Placeholder details. Confirm the date, time and format with the club before publishing."
+  }
 }

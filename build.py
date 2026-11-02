@@ -227,7 +227,7 @@ def side_cards(rel):
                 aside = "".join(f"<small>{esc(b)}</small>" for b in item_aside(it, sym))
                 lis.append(f"<li><b>{esc(it['name'])}{size}</b>{aside}</li>")
             body.append(f'<div class="pr-cat-group"><span>{esc(label)}</span><ul>{"".join(lis)}</ul></div>')
-        mark = img(f"images/brand/{card['mark']}.svg", "", rel, lazy=True, size=(44, 52)) if card["mark"] else ""
+        mark = img(f"images/{card['mark']}" if "." in card["mark"] else f"images/brand/{card['mark']}.svg", "", rel, lazy=True, size=None if "." in card["mark"] else (44, 52)) if card["mark"] else ""
         mark = mark.replace('alt=""', 'alt="" aria-hidden="true"') if mark else ""
         out.append(
             f'<section class="pr-cat pr-cat-{card["tone"]}"><header><div><h3>{esc(card["name"])}</h3>'
@@ -246,6 +246,13 @@ def house(rel):
             f'<h3>{esc(h["title"])}</h3><p class="pr-body">{esc(h["body"])}</p></div></article>'
         )
     return "\n".join(out)
+
+
+def meet_night():
+    m = site["meet_night"]
+    rows = "".join(f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in m["rows"])
+    return (f'<aside class="pr-meet" aria-label="{esc(m["label"])}"><p class="pr-label">{esc(m["label"])}</p>'
+            f'<h3>{esc(m["heading"])}</h3><dl>{rows}</dl></aside>')
 
 
 def events():
@@ -344,7 +351,7 @@ def graph(page):
         "description": site["tagline"] + " Hand-stretched, wood-fired pizza in Salt River, Cape Town.",
         "telephone": site["phone_intl"],
         "image": f"{DOMAIN}/{site['og_image']}",
-        "logo": f"{DOMAIN}/images/hero/pizza-ratto-logo.webp",
+        "logo": f"{DOMAIN}/images/brand/pizza-ratto-logo.webp",
         "servesCuisine": site["cuisine"],
         "priceRange": price_range(),
         "currenciesAccepted": MENU["currency"],
@@ -524,7 +531,7 @@ def render(name, meta, body, partials, modified):
         "btn_whatsapp_red": button("Order on WhatsApp", site["whatsapp"], "", "whatsapp"),
         "btn_uber": button("Uber Eats", site["uber_eats"], "street", "ubereats"),
         "pizza_cards": pizza_cards(rel), "pizza_count_word": words(len(available(find_group(MENU, "pizza", "pizzas")["items"]))),
-        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "events": events(), "socials": socials(), "reel": reel(rel), "tape_count": f'{len(site["tapes"]):02d}', "side_tapes": side_tapes(rel),
+        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "meet_night": meet_night(), "events": events(), "socials": socials(), "reel": reel(rel), "tape_count": f'{len(site["tapes"]):02d}', "side_tapes": side_tapes(rel),
         "deli_cards": catalogue_cards(DELI, rel), "merch_cards": catalogue_cards(MERCH, rel),
         "ticker": esc(site["ticker"] * 4), "ev_label": esc(site["events"]["label"]), "ev_title": esc(site["events"]["title"]), "ev_title_alt": esc(site["events"]["title_alt"]), "ev_intro": esc(site["events"]["intro"]), "ev_sticker": esc(site["events"]["sticker"]), "wa_number": site["whatsapp_number"], "year": "2026",
         **{k: v for k, v in meta.items()},
