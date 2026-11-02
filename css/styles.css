@@ -288,3 +288,4 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 html,body{overflow-x:clip}
 @media (max-width:480px){.pr-hero2-stamp{right:2.2rem}}
 @media (max-width:760px){.pr-hero2-art{padding-bottom:4.6rem}.pr-hero2-foot{bottom:1rem;max-width:calc(100% - 11.5rem)}}
+.pr-events .pr-meet{margin-top:0}.pr-meet .pr-num,.pr-event .pr-num{font-family:var(--font-display);font-weight:400}

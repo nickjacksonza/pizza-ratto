@@ -254,16 +254,21 @@ def house(rel):
     return "\n".join(out)
 
 
+def glyph_safe(text):
+    """Heathfield draws logo glyphs for digits and '?'. Set those in the display face instead."""
+    return re.sub(r"(\d+|\?)", r'<span class="pr-num">\1</span>', esc(text))
+
+
 def meet_night():
     m = site["meet_night"]
     rows = "".join(f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in m["rows"])
     return (f'<aside class="pr-meet" aria-label="{esc(m["label"])}"><p class="pr-label">{esc(m["label"])}</p>'
-            f'<h3>{esc(m["heading"])}</h3><dl>{rows}</dl></aside>')
+            f'<h3>{glyph_safe(m["heading"])}</h3><dl>{rows}</dl></aside>')
 
 
 def events():
     return "\n".join(
-        f'<article class="pr-event"><p class="pr-label">{esc(e["tag"])}</p><h3>{esc(e["name"])}</h3><p>{esc(e["body"])}</p></article>'
+        f'<article class="pr-event"><p class="pr-label">{esc(e["tag"])}</p><h3>{glyph_safe(e["name"])}</h3><p>{esc(e["body"])}</p></article>'
         for e in site["events"]["items"]
     )
 
