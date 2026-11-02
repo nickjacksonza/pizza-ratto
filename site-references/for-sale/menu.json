@@ -21,7 +21,7 @@
             {
               "id": "primavera",
               "image": "images/pizza/primavera.webp",
-              "name": "Primavera",
+              "name": "Prima",
               "price": 115,
               "description": "Tomato Base, Fior de Latte & Fresh Basil",
               "available": true
@@ -53,7 +53,7 @@
             {
               "id": "arco-baleno",
               "image": "images/pizza/arcobaleno.webp",
-              "name": "Arcobaleno",
+              "name": "Arco Baleno",
               "price": 195,
               "description": "Tomato Base, Fior de Latte, Salami, Wild Mushrooms, local Feta & fresh Rocket",
               "available": true
