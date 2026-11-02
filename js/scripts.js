@@ -123,5 +123,20 @@
     }).catch(function () {});
   }
 
-  consent(); chrome(); activeNav(); reel(); handwriting();
+  /* Mobile menu: the hamburger toggles the nav panel under the header. */
+  function burger() {
+    var btn = $(".pr-burger"), header = $(".pr-header");
+    if (!btn || !header) return;
+    var set = function (open) {
+      header.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Close menu" : "Menu");
+    };
+    btn.addEventListener("click", function () { set(btn.getAttribute("aria-expanded") !== "true"); });
+    $$(".pr-nav a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { set(false); btn.focus(); } });
+    window.addEventListener("resize", function () { if (window.innerWidth > 760) set(false); });
+  }
+
+  consent(); chrome(); burger(); activeNav(); reel(); handwriting();
 })();

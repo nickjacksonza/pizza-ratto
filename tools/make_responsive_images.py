@@ -35,11 +35,4 @@ for d in CARD_DIRS:
 for rel, widths in HERO.items():
     variants(ROOT / rel, widths)
 
-# Apple touch icon: the Remi cutout centred on the cream paper colour.
-with Image.open(ROOT / "images/mascot/ratto-vespa-cutout.webp") as m:
-    m = m.convert("RGBA")
-    m.thumbnail((140, 140), Image.Resampling.LANCZOS)
-    icon = Image.new("RGBA", (180, 180), (245, 240, 230, 255))
-    icon.alpha_composite(m, ((180 - m.width) // 2, (180 - m.height) // 2))
-    icon.convert("RGB").save(ROOT / "images/brand/apple-touch-icon.png", optimize=True)
-    print("wrote apple-touch-icon.png")
+# Apple touch icon and favicons are now the gesture-hand artwork, supplied as files in images/brand/ (not generated here).

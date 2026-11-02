@@ -7,7 +7,7 @@ kind: home
   <div class="pr-checker pr-checker-ink" aria-hidden="true"></div>
   <div class="pr-hero2-grid">
     <div class="pr-hero2-art">
-      <img src="{{ root }}images/hero/pizza-ratto-logo.webp" srcset="{{ hero_srcset }}" sizes="{{ hero_sizes }}" width="1981" height="1330" alt="Pizza Ratto hand-painted logo beside Remi the rat riding a Vespa" fetchpriority="high" decoding="async">
+      <img src="{{ root }}images/hero/pizza-ratto-logo.webp" srcset="{{ hero_srcset }}" sizes="{{ hero_sizes }}" width="1838" height="1234" alt="Pizza Ratto: Remi the rat on a Vespa, eating a slice. Great pizza. Questionable influence." fetchpriority="high" decoding="async">
       <p class="pr-hero2-foot">Good pizza · questionable influence · zero fuss</p>
     </div>
     <div class="pr-hero2-copy">
@@ -48,7 +48,7 @@ kind: home
         <span aria-hidden="true">pizza</span>
       </h2>
     </div>
-    <div class="pr-fire"><img src="{{ root }}images/brand/red-pizza-slice.svg" width="64" height="71" alt="" aria-hidden="true"><span>Wood-fired<br>by Big Bertha</span></div>
+    <div class="pr-fire"><img src="{{ root }}images/icons/pizza-slice-sm.webp" width="64" height="55" alt="" aria-hidden="true"><span>Wood-fired<br>by Big Bertha</span></div>
   </div>
   <ul class="pr-pizza-grid" style="margin-top:3rem">
 {{ pizza_cards }}
@@ -84,21 +84,20 @@ kind: home
 </section>
 
 <section id="house" class="pr-sec pr-orange" aria-labelledby="house-title">
-  <p class="pr-secnum"><b>04</b><i aria-hidden="true"></i><span>The house</span></p>
-  <h2 id="house-title" class="pr-house-title">Meet the<br>residents.</h2>
+  <p class="pr-secnum"><b>04</b><i aria-hidden="true"></i><span>The characters of the Rat Pack</span></p>
+  <h2 id="house-title" class="pr-house-title">Meet the<br>Rat Pack.</h2>
   <div class="pr-house">
 {{ house }}
   </div>
+{{ meet_night }}
 </section>
 
-<section id="socials" class="pr-sec pr-brown pr-crop pr-social" aria-labelledby="social-title">
+<section id="socials" class="pr-sec pr-brown pr-crop pr-social" aria-label="Ratto Socials">
   <div class="pr-social-head">
     <div>
       <p class="pr-secnum"><b>05</b><i aria-hidden="true"></i><span>Ratto Socials</span></p>
-      <h2 id="social-title">Never pizza <span>solo.</span></h2>
-    </div>
+          </div>
     <div>
-      <p class="pr-body" style="margin-top:0">Follow the daily damage, fresh pies and questionable decisions.</p>
       <ul class="pr-accounts" aria-label="Pizza Ratto social media accounts">
 {{ socials }}
       </ul>
@@ -126,7 +125,7 @@ kind: home
       <div class="pr-dl-row"><dt><span lang="la">Voca</span><small>Call / WhatsApp</small></dt><dd><a href="tel:{{ phone_intl }}">{{ phone }}</a></dd></div>
     </dl>
     <div class="pr-row">
-      <a class="pr-btn pr-btn-cream pr-ink" href="{{ whatsapp }}" target="_blank" rel="noopener">{{ icon_whatsapp }}WhatsApp an order ↗</a>
+      <a class="pr-btn pr-btn-cream pr-ink" href="{{ whatsapp }}" target="_blank" rel="noopener">{{ icon_whatsapp }}<img class="pr-btn-gesture" src="{{ root }}images/icons/capisce-hand-sm.webp" width="120" height="111" alt="" aria-hidden="true">WhatsApp an order ↗</a>
       <a class="pr-btn pr-btn-hot pr-ink" href="{{ uber }}" target="_blank" rel="noopener">{{ icon_uber }}Order on Uber Eats ↗</a>
     </div>
   </div>
