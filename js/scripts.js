@@ -123,19 +123,51 @@
     }).catch(function () {});
   }
 
-  /* Mobile menu: the hamburger toggles the nav panel under the header. */
+  /* Mobile menu: full-screen overlay. iOS Safari ignores overflow:hidden on body, so the page is pinned with
+     position:fixed and the scroll position is restored on close. Focus is trapped while open. */
   function burger() {
-    var btn = $(".pr-burger"), header = $(".pr-header");
-    if (!btn || !header) return;
-    var set = function (open) {
+    var btn = $(".pr-burger"), header = $(".pr-header"), nav = $("#pr-nav");
+    if (!btn || !header || !nav) return;
+    var root = document.documentElement, body = document.body, saved = 0, locked = false;
+    var mq = window.matchMedia("(min-width: 761px)");
+    var lock = function () {
+      if (locked) return;
+      saved = window.pageYOffset || root.scrollTop || 0;
+      body.style.cssText += ";position:fixed;top:" + (-saved) + "px;left:0;right:0;width:100%";
+      locked = true;
+    };
+    var unlock = function () {
+      if (!locked) return;
+      body.style.position = ""; body.style.top = ""; body.style.left = ""; body.style.right = ""; body.style.width = "";
+      locked = false;
+      var prev = root.style.scrollBehavior; root.style.scrollBehavior = "auto";
+      window.scrollTo(0, saved);
+      root.style.scrollBehavior = prev;
+    };
+    var isOpen = function () { return header.classList.contains("is-open"); };
+    var set = function (open, returnFocus) {
+      if (open === isOpen()) return;
       header.classList.toggle("is-open", open);
+      root.classList.toggle("pr-menu-open", open);
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       btn.setAttribute("aria-label", open ? "Close menu" : "Menu");
+      if (open) { lock(); var first = nav.querySelector("a"); if (first) first.focus({ preventScroll: true }); }
+      else { unlock(); if (returnFocus) btn.focus({ preventScroll: true }); }
     };
-    btn.addEventListener("click", function () { set(btn.getAttribute("aria-expanded") !== "true"); });
-    $$(".pr-nav a").forEach(function (a) { a.addEventListener("click", function () { set(false); }); });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { set(false); btn.focus(); } });
-    window.addEventListener("resize", function () { if (window.innerWidth > 760) set(false); });
+    btn.addEventListener("click", function () { set(!isOpen(), true); });
+    $$("#pr-nav a").forEach(function (a) { a.addEventListener("click", function () { set(false, false); }); });
+    document.addEventListener("keydown", function (e) {
+      if (!isOpen()) return;
+      if (e.key === "Escape") { set(false, true); return; }
+      if (e.key !== "Tab") return;
+      var f = [btn].concat($$("#pr-nav a")).filter(function (el) { return el.offsetParent !== null || el === btn; });
+      var i = f.indexOf(document.activeElement);
+      if (e.shiftKey && (i <= 0)) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && (i === f.length - 1 || i < 0)) { e.preventDefault(); f[0].focus(); }
+    });
+    var closeOnWide = function () { if (mq.matches) set(false, false); };
+    if (mq.addEventListener) mq.addEventListener("change", closeOnWide); else mq.addListener(closeOnWide);
+    window.addEventListener("pageshow", function () { set(false, false); });
   }
 
   consent(); chrome(); burger(); activeNav(); reel(); handwriting();
