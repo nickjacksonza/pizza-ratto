@@ -2,7 +2,12 @@
 <div class="pr-announce" role="note">{{ announce }}</div>
 <header class="pr-header">
 <a href="{{ logo_href }}" aria-label="Pizza Ratto home"><img src="{{ root }}images/brand/pizza-ratto-logo.webp" width="60" height="48" alt=""></a>
-<nav class="pr-nav" id="pr-nav" aria-label="Main">{{ nav }}</nav>
+<nav class="pr-nav" id="pr-nav" aria-label="Main">{{ nav }}
+<div class="pr-nav-extra">
+<a class="pr-btn pr-btn-lg" href="{{ whatsapp }}" target="_blank" rel="noopener">{{ icon_whatsapp }}Order on WhatsApp</a>
+<div class="pr-nav-row"><a class="pr-btn pr-btn-cream pr-ink" href="tel:{{ phone_intl }}">{{ icon_call }}Call</a><a class="pr-btn pr-btn-cream pr-ink" href="{{ uber }}" target="_blank" rel="noopener">{{ icon_uber }}Uber Eats</a></div>
+<p class="pr-nav-meta">{{ hours }}<br>{{ address }}</p>
+</div></nav>
 <a class="pr-btn pr-btn-sm" href="{{ whatsapp }}" target="_blank" rel="noopener">{{ icon_whatsapp }}Order now</a>
 <button type="button" class="pr-burger" aria-label="Menu" aria-expanded="false" aria-controls="pr-nav"><span aria-hidden="true"></span></button>
 </header>
