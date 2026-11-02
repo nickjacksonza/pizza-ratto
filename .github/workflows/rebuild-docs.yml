@@ -1,0 +1,55 @@
+name: Rebuild docs
+
+# The site is served by GitHub Pages from branch main, folder /docs (no Pages workflow).
+# docs/ is generated and committed. When someone edits source files on GitHub (for example
+# site-references/for-sale/menu.json), this job rebuilds docs/ and commits it back to main.
+# The push uses GITHUB_TOKEN, so it does not start this workflow again. GitHub also does not start a
+# Pages build for commits pushed with GITHUB_TOKEN, so the last step requests one through the Pages API.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site-references/**"
+      - "src/**"
+      - "css/**"
+      - "js/**"
+      - "images/**"
+      - "fonts/**"
+      - "build.py"
+      - "tools/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: rebuild-docs
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # build.py reads each page's last commit date for lastmod and dateModified
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python3 build.py
+      - run: python3 tools/check.py # a failure stops the job before anything is pushed
+      - name: Commit rebuilt docs
+        run: |
+          if [ -z "$(git status --porcelain docs)" ]; then
+            echo "docs/ is already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          git commit -m "Rebuild docs"
+          git push origin HEAD:main
+          gh api --method POST "/repos/$GITHUB_REPOSITORY/pages/builds"
+        env:
+          GH_TOKEN: ${{ github.token }}

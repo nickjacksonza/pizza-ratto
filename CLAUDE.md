@@ -16,14 +16,18 @@ Assets come from the design handoff zip. Pillow and fonttools are not on the hos
 
 ## Deploy
 
-`.github/workflows/pages.yml` is the deploy path. On every push to `main` (and manual `workflow_dispatch`) it runs
-`build.py` and `tools/check.py` (full git history, for `lastmod`), then publishes `docs/` to GitHub Pages.
-**Merging to `main`, or editing `site-references/for-sale/menu.json` on `main`, deploys live.** Only Nick merges.
-Pages source must be "GitHub Actions". `tools/check.py` fails the run if any available item's price text is missing from the built page.
+Served by GitHub Pages "Deploy from a branch": `main`, folder `/docs`, custom domain `pizzaratto.com`, Enforce HTTPS. Same setup as `wellness-by-physiatry`.
+`build.py` writes `docs/CNAME` from the domain in `src/data/site.json`.
+**Merging to `main` is a live deploy.** Only Nick merges.
+
+- `docs/` must stay committed and current. Run `python3 build.py` and `python3 tools/check.py`, then commit `docs/` with the source change.
+- `.github/workflows/rebuild-docs.yml` covers edits made on GitHub (for example Nick editing `site-references/for-sale/menu.json`). On a push to `main` that touches source paths it runs `build.py` and `tools/check.py`, and if `docs/` changed it commits "Rebuild docs" as github-actions[bot] and requests a Pages build. If `check.py` fails, nothing is pushed.
+- GitHub does not start a Pages build for commits pushed with `GITHUB_TOKEN`, so the workflow's last step calls the Pages build API.
+- `tools/check.py` fails if any available item's price text is missing from the built page. Prices always come from `site-references/for-sale/`.
 
 ## Rules
 
-- `docs/` is generated **and** git-tracked (for the dev preview and review diffs). Rebuild and commit it with every `src/`, `css/`, `js/` change. The workflow rebuilds it, so the live site never depends on the committed copy.
+- `docs/` is generated **and** git-tracked (for the dev preview and review diffs). Rebuild and commit it with every `src/`, `css/`, `js/` or `site-references/` change: the live site is whatever is committed in `docs/`.
 - Business details live in `src/data/site.json` (domain, phone, address, hours, links, nav, side cards, `tapes` reel,
   `side_tapes` under the drinks cards, `google_site_verification`).
 - `site-references/for-sale/menu.json`, `deli.json`, `merchandise.json` are the **single source** for items and prices.
