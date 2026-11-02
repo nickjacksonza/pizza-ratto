@@ -310,3 +310,4 @@ html,body{overflow-x:clip}
 }
 @media (max-width:760px) and (max-height:620px){.pr-nav>a{font-size:clamp(1.8rem,9vw,2.4rem);padding:.35rem 0}.pr-nav-extra{padding-top:1rem}}
 @media (prefers-reduced-motion:reduce){.pr-nav,.pr-nav>a,.pr-nav-extra{transition:none!important;transform:none!important}}
+@media (max-width:760px){.pr-pizza-grid .pr-card-top{flex-wrap:wrap;align-items:baseline;row-gap:.25rem}.pr-pizza-grid .pr-card-top b{flex:1 1 100%;overflow-wrap:normal;word-break:normal;hyphens:none;font-size:clamp(1.3rem,6.2vw,1.8rem);line-height:1.05}.pr-pizza-grid .pr-card-top strong{flex:none;font-size:1.25rem}}

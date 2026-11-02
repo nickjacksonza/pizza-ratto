@@ -21,7 +21,7 @@
             {
               "id": "primavera",
               "image": "images/pizza/primavera.webp",
-              "name": "Prima",
+              "name": "Primavera",
               "price": 115,
               "description": "Tomato Base, Fior de Latte & Fresh Basil",
               "available": true
