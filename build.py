@@ -143,6 +143,8 @@ def icon(name):
         return f'<img class="pr-btn-gesture" src="{PAGE_ROOT}images/icons/capisce-hand-sm.webp" width="120" height="111" alt="" aria-hidden="true">'
     if name == "instagram":
         return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>'
+    if name == "ubereats":  # supplied black Uber Eats badge
+        return f'<img class="uber" src="{PAGE_ROOT}images/brand/uber-eats.webp" width="96" height="96" alt="" aria-hidden="true">'
     vb, d = ICONS[name]
     cls = ' class="uber"' if name == "ubereats" else ""
     return f'<svg{cls} viewBox="{vb}" fill="currentColor" aria-hidden="true" focusable="false"><path d="{d}"/></svg>'

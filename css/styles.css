@@ -31,7 +31,7 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-btn:hover{color:var(--hfg);background:var(--hbg)}.pr-btn:active{transform:scale(.97)}
 .pr-btn-gesture{height:1.8em;width:auto;flex:none}
 .pr-btn-sm .pr-btn-gesture,.pr-header .pr-btn-gesture{height:1.7em;width:auto}
-.pr-btn svg{width:1.15em;height:1.15em;flex:none}.pr-btn svg.uber{width:1.7em}
+.pr-btn svg{width:1.15em;height:1.15em;flex:none}.pr-btn img.uber{width:2.1em;height:2.1em;margin:-.3em 0;flex:none;border-radius:50%}
 .pr-btn-sm{min-height:40px;padding:.55rem 1.1rem;font-size:.74rem}
 .pr-btn-hot{--bg:var(--hot-orange);--fg:var(--ratto-brown);--hbg:var(--ratto-brown);--hfg:var(--paper-cream)}
 .pr-btn-cream{--bg:var(--paper-cream);--fg:var(--ratto-brown);--hbg:var(--ratto-pink);--hfg:var(--ratto-brown)}
@@ -232,7 +232,7 @@ h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--t
 .pr-mobile-bar{display:none}
 .pr-mobile-bar{grid-template-columns:1.3fr 1fr 1fr;font-family:var(--font-body)}
 .pr-mobile-bar a{min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.3rem;text-decoration:none;font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
-.pr-mobile-bar svg{width:20px;height:20px}.pr-mobile-bar svg.uber{width:27px;height:18px}
+.pr-mobile-bar svg{width:20px;height:20px}.pr-mobile-bar img.uber{width:30px;height:30px;border-radius:50%}
 .pr-mobile-bar a:nth-child(1){color:var(--paper-cream);background:var(--ratto-red)}.pr-mobile-bar a:nth-child(2){color:var(--ratto-brown);background:var(--hot-orange)}.pr-mobile-bar a:nth-child(3){color:var(--paper-cream);background:var(--ratto-brown)}
 
 /* Deli and merchandise pages */
