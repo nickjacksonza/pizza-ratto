@@ -43,3 +43,5 @@ Served by GitHub Pages "Deploy from a branch": `main`, folder `/docs`, custom do
 - `build.py` minifies CSS and `js/scripts.js` (`tools/minify.py`) and writes `sitemap.xml` with `lastmod` from each page's last git commit. Edit `css/` and `js/`, never `docs/`.
 - Card and hero images get `srcset` from `-<w>w.webp` variants on disk. Regenerate with `tools/make_responsive_images.py` (Docker, like `optimize_images.py`).
 - Design tokens in `css/tokens.css` are copied verbatim from the handoff. Keep `css/styles.css` on `var(--*)`.
+- `editor/` is the owner's menu editor (static, served at `/editor/`, set-up in README). `editor/editor-lib.js` holds the same rules and JSON layout as `admin/menu_ops.py` and `admin/jsonfmt.py`: change both together and run `node tools/test_editor.js`. Never commit a token; `editor/sealed.json` holds only the encrypted copy.
+

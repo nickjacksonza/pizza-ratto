@@ -25,7 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 OUT = ROOT / "docs"
-STATIC_DIRS = ["js", "images", "fonts", "videos"]
+STATIC_DIRS = ["js", "images", "fonts", "videos", "editor"]  # editor/ = owner's menu editor, served at /editor/
 CSS_BUNDLE = ["css/tokens.css", "css/styles.css"]
 
 site = json.loads((SRC / "data" / "site.json").read_text(encoding="utf-8"))
@@ -585,6 +585,7 @@ def build():
         if (ROOT / d).exists():
             shutil.copytree(ROOT / d, OUT / d)
     (OUT / "js" / "scripts.js").write_text(js, encoding="utf-8")
+    shutil.copy2(ROOT / "css" / "tokens.css", OUT / "editor" / "tokens.css")  # editor styles use the site's colours and fonts
     for f in (SRC / "static").iterdir():
         if f.name in ("sitemap.xml", "llms.txt"):
             continue
