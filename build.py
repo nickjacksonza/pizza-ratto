@@ -195,7 +195,11 @@ def toppings_list():
         f'<div><dt>{sym}{p}</dt><dd>{esc(" · ".join(names))}</dd></div>'
         for p, names in sorted(tiers.items(), reverse=True)
     )
-    return f'<div class="pr-toppings"><span class="pr-sticker">{esc(g["title"])} · {esc(g["note"])}</span><dl>{rows}</dl></div>'
+    notes = "".join(  # a topping's description shows as a short note under the list (e.g. Rat Sauce)
+        f'<p class="pr-toppings-note"><b>{esc(it["name"])}.</b> {esc(it["description"])}</p>'
+        for it in available(g["items"]) if it.get("description")
+    )
+    return f'<div class="pr-toppings"><span class="pr-sticker">{esc(g["title"])} · {esc(g["note"])}</span><dl>{rows}</dl>{notes}</div>'
 
 
 def item_aside(it, sym):
