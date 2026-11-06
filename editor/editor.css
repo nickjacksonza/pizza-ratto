@@ -71,3 +71,12 @@ dialog .row{justify-content:flex-end}
 .setup{max-width:520px}
 .setup ol{padding-left:20px;font-size:.9rem}
 [hidden]{display:none!important}
+.photo{display:flex;gap:12px;align-items:center}
+.photo img,.photo .nophoto{flex:none;width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid var(--ratto-brown,#421212)}
+.photo .nophoto{display:grid;place-items:center;font-size:.75rem;text-transform:uppercase;background:var(--paper-blush,#F5D2C7)}
+.photo .hint{margin:0 0 6px}
+.photo label.btn{display:inline-flex;align-items:center;font-size:.78rem}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.card{background:var(--white,#fff);border:2px solid var(--ratto-brown,#421212);border-radius:14px;margin:0 0 10px}
+.crow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto;gap:8px;align-items:center}
+@media (max-width:520px){.crow{grid-template-columns:minmax(0,1fr) auto}.crow>input:nth-child(2){grid-column:1/-1;grid-row:2}}

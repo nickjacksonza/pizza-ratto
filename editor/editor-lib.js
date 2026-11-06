@@ -259,7 +259,7 @@
         seen[it.id] = true;
       });
     });
-    return { changed: Object.keys(changed), notes: notes };
+    return { changed: Object.keys(changed), notes: notes, ids: tempIds };
   }
 
   // ---------------------------------------------------------------- JSON writer
@@ -315,7 +315,45 @@
 
   function dumps(data, blanks) { return write(data, 0, false, blanks || {}) + "\n"; }
 
-  var lib = { FILES: FILES, LABELS: LABELS, TEXT_LIMITS: TEXT_LIMITS, OpError: OpError, applyOps: applyOps,
+  // ---------------------------------------------------------------- club night (src/data/site.json, meet_night)
+  // The owner edits the heading and the label/value rows. Other keys in meet_night and site.json are kept.
+
+  var CLUB_LIMITS = { heading: 60, label: 20, value: 120, rows: 8 };
+
+  function cleanClub(club) {
+    if (!club || typeof club !== "object" || !Array.isArray(club.rows)) throw new OpError("Bad club night format.");
+    var heading = cleanText(club.heading || "", "Club night heading", CLUB_LIMITS.heading);
+    if (!heading) throw new OpError("The club night needs a heading, such as the date.");
+    if (!club.rows.length) throw new OpError("The club night needs at least one detail line.");
+    if (club.rows.length > CLUB_LIMITS.rows) throw new OpError("The club night can have at most " + CLUB_LIMITS.rows + " detail lines.");
+    var rows = club.rows.map(function (r) {
+      if (!Array.isArray(r) || r.length !== 2) throw new OpError("Bad club night format.");
+      var k = cleanText(r[0] || "", "Detail name", CLUB_LIMITS.label), v = cleanText(r[1] || "", "Detail", CLUB_LIMITS.value);
+      if (!k || !v) throw new OpError("Every club night line needs a name (like Time) and a detail.");
+      return [k, v];
+    });
+    return { heading: heading, rows: rows };
+  }
+
+  // Apply the owner's club night to a parsed site.json in place. Returns plain-words notes ([] when nothing changed).
+  function applyClub(site, club) {
+    var m = site.meet_night;
+    if (!m) throw new OpError("The club night section is missing from the site data.");
+    var c = cleanClub(club), notes = [];
+    if (m.heading !== c.heading) notes.push("club night heading: " + c.heading);
+    var before = {};
+    (m.rows || []).forEach(function (r) { before[r[0]] = r[1]; });
+    c.rows.forEach(function (r) { if (before[r[0]] !== r[1]) notes.push("club night " + r[0] + ": " + r[1]); });
+    var now = c.rows.map(function (r) { return r[0]; });
+    Object.keys(before).forEach(function (k) { if (now.indexOf(k) < 0) notes.push("club night: removed " + k); });
+    if (!notes.length && !same(m.rows, c.rows)) notes.push("club night: new order");
+    m.heading = c.heading; m.rows = c.rows;
+    return notes;
+  }
+
+  function dumpsSite(site) { return JSON.stringify(site, null, 2) + "\n"; }
+
+  var lib = { FILES: FILES, applyClub: applyClub, dumpsSite: dumpsSite, CLUB_LIMITS: CLUB_LIMITS, LABELS: LABELS, TEXT_LIMITS: TEXT_LIMITS, OpError: OpError, applyOps: applyOps,
               dumps: dumps, blankAfterIds: blankAfterIds, slugify: slugify };
   if (typeof module !== "undefined" && module.exports) module.exports = lib;
   else root.EditorLib = lib;

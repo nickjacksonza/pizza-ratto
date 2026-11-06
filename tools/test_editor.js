@@ -46,3 +46,17 @@ for (const b of bad) {
     (e) => { console.log("rejected as expected:", e.message); return e instanceof lib.OpError; });
 }
 console.log("all ok;", res.notes);
+
+// Club night: site.json is plain 2-space JSON, and only the heading and rows change.
+const siteRaw = fs.readFileSync(path.join(__dirname, "..", "src", "data", "site.json"), "utf8");
+assert.strictEqual(lib.dumpsSite(JSON.parse(siteRaw)), siteRaw, "site.json does not round-trip");
+const site = JSON.parse(siteRaw);
+const rows = site.meet_night.rows.map((r) => r.slice());
+rows[0][1] = "Thursday 26 November 2026";
+const clubNotes = lib.applyClub(site, { heading: "Thursday 26 November", rows });
+assert.deepStrictEqual(clubNotes, ["club night heading: Thursday 26 November", "club night When: Thursday 26 November 2026"]);
+assert.strictEqual(site.meet_night.label, JSON.parse(siteRaw).meet_night.label);
+for (const badClub of [{ heading: "", rows }, { heading: "x", rows: [] }, { heading: "x", rows: [["Time", "<b>"]] }, { heading: "x", rows: [["", "y"]] }]) {
+  assert.throws(() => lib.applyClub(JSON.parse(siteRaw), badClub), (e) => e instanceof lib.OpError);
+}
+console.log("club ok;", clubNotes);
