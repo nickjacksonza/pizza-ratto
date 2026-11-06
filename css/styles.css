@@ -7,7 +7,7 @@ body{margin:0;background:var(--paper-cream);color:var(--ratto-brown);font-family
 a{color:var(--ratto-red)}a:hover{color:var(--ratto-brown)}
 img{max-width:100%;height:auto}
 h1,h2,h3{font-family:var(--font-headline);font-weight:700;letter-spacing:var(--track-headline);line-height:var(--lh-headline);margin:0;text-wrap:balance}
-.pr-skip{position:absolute;left:1rem;top:-4rem;z-index:50;padding:.8rem 1.2rem;background:var(--ratto-brown);color:var(--paper-cream);border-radius:999px;font-weight:600}.pr-skip:focus{top:1rem}
+
 .pr-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 :focus-visible{outline:3px solid var(--ratto-red);outline-offset:3px}
 .pr-brown :focus-visible,.pr-red :focus-visible,.pr-hero2-copy :focus-visible,.pr-footer :focus-visible{outline-color:var(--ratto-pink)}

@@ -563,7 +563,7 @@ def render(name, meta, body, partials, modified):
         return text
 
     ctx["body"] = fill(body)
-    doc = "<!doctype html>\n<html lang=\"{{ locale }}\">\n{{ head }}\n<body id=\"top\">\n<a class=\"pr-skip\" href=\"#main\">Skip to content</a>\n{{ header }}\n<main id=\"main\" tabindex=\"-1\">\n{{ body }}\n</main>\n{{ footer }}\n{{ mobilebar }}\n<script src=\"{{ root }}js/scripts.js?v={{ js_v }}\" defer></script>\n</body>\n</html>\n"
+    doc = "<!doctype html>\n<html lang=\"{{ locale }}\">\n{{ head }}\n<body id=\"top\">\n{{ header }}\n<main id=\"main\" tabindex=\"-1\">\n{{ body }}\n</main>\n{{ footer }}\n{{ mobilebar }}\n<script src=\"{{ root }}js/scripts.js?v={{ js_v }}\" defer></script>\n</body>\n</html>\n"
     for key in ("head", "header", "footer", "mobilebar"):
         ctx[key] = fill(partials[key])
     out = fill(doc)
