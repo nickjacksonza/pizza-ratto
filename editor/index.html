@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.github.com; form-action 'none'; base-uri 'none'">
+<title>Pizza Ratto menu editor</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="editor.css">
+</head>
+<body>
+<main id="login" class="login">
+  <h1>Pizza Ratto<small>menu editor</small></h1>
+  <form id="login-form">
+    <p id="login-msg" class="msg msg-err" role="alert" hidden></p>
+    <label>Password<input id="password" type="password" autocomplete="current-password" required autofocus></label>
+    <button class="btn btn-primary" type="submit">Sign in</button>
+  </form>
+</main>
+
+<main id="setup" class="login setup" hidden>
+  <h1>Pizza Ratto<small>menu editor set-up</small></h1>
+  <ol>
+    <li>On GitHub, create a fine-grained token for the <b>nickjacksonza/pizza-ratto</b> repository only, with Contents: Read and write, and Actions: Read-only.</li>
+    <li>Paste it here and choose the owner's password: at least 16 characters (four or five random words work well).</li>
+    <li>The page encrypts the token with the password and saves only the encrypted copy to the repo. The token itself is never stored.</li>
+  </ol>
+  <form id="setup-form">
+    <p id="setup-msg" class="msg" role="status" hidden></p>
+    <label>GitHub token<input id="setup-token" type="password" autocomplete="off" required></label>
+    <label>Owner's password<input id="setup-pw" type="password" autocomplete="new-password" required></label>
+    <label>Password again<input id="setup-pw2" type="password" autocomplete="new-password" required></label>
+    <button class="btn btn-primary" type="submit">Encrypt and save</button>
+  </form>
+</main>
+
+<div id="editor" hidden>
+  <header class="top"><h1>Pizza Ratto <small>menu editor</small></h1><button id="signout" class="link" type="button">Sign out</button></header>
+  <div id="status" class="status" aria-live="polite"></div>
+  <nav id="tabs" class="tabs" role="tablist"></nav>
+  <main id="app"></main>
+  <div id="bar" class="bar" hidden><span id="count"></span><button id="discard" class="btn" type="button">Discard</button><button id="save" class="btn btn-primary" type="button">Save and publish</button></div>
+  <dialog id="confirm"><form method="dialog"><h2>Ready to publish</h2><ul id="confirm-list"></ul>
+    <p class="hint" id="confirm-note"></p>
+    <div class="row"><button class="btn" value="cancel">Cancel</button><button class="btn btn-primary" value="ok">Publish now</button></div></form></dialog>
+</div>
+<script src="editor-lib.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

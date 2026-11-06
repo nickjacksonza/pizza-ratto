@@ -17,6 +17,7 @@ on:
       - "fonts/**"
       - "build.py"
       - "tools/**"
+      - "editor/**"
   workflow_dispatch:
 
 permissions:
