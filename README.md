@@ -21,7 +21,8 @@ A static page for the owner to edit items and prices from a phone. It needs no s
 
 - The owner signs in with a password. The password decrypts a GitHub token stored encrypted in `editor/sealed.json` (PBKDF2-SHA256, 1,000,000 rounds, then AES-GCM). The repo and site are public, so anyone can download that file and guess passwords offline: use a long password (16 characters minimum, enforced).
 - A save fetches the latest JSON from `main`, applies the changes with the same rules as before (`editor/editor-lib.js`, ported from `admin/menu_ops.py` and `admin/jsonfmt.py`), and commits the changed files in one commit. The `rebuild-docs.yml` workflow then rebuilds and checks the site. The page follows that run and says "Published" or "the website was not updated".
-- `?branch=<name>` points the editor at another branch for a test that doesn't go live (the workflow only runs on `main`).
+- `?branch=<name>` points the editor at another branch for a test that doesn't go live (the workflow only runs on `main`). The branch must already exist. The password check always uses the live site's `sealed.json`, so set-up has to be done on `main` first.
+- Use the `https://` address. Over plain http the browser hides the encryption functions and the page says it can't run.
 - Tests: `node tools/test_editor.js` (round-trips the three JSON files and checks the rules).
 
 ### Set-up (Nick, once, and again when the token expires)
