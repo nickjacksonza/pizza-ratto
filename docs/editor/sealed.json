@@ -1,0 +1,8 @@
+{
+  "v": 1,
+  "kdf": "PBKDF2-SHA256",
+  "iterations": 1000000,
+  "salt": "U0vu0XuHXBGtxbXHw/whPQ==",
+  "iv": "k0I7NA1of/Uja7X/",
+  "ciphertext": "tkjm9XtgwnQTzQGROLhyxGaJqWFKM0BdWpmVlEeRG/BCQKWLx0kgG2U/o02LMTimrD81L1bqc+sDMm4ucVsOg3AXxaF0uztMG3nMqVtK5WOqM07RvKK1N8FGZaliuCWQeK8Xequ/cBm/58904A=="
+}
