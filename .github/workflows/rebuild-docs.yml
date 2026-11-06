@@ -18,6 +18,7 @@ on:
       - "build.py"
       - "tools/**"
       - "editor/**"
+      - "uploads/**"
   workflow_dispatch:
 
 permissions:
@@ -38,17 +39,24 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Process photo uploads from the menu editor
+        run: |
+          if [ -d uploads ] && [ -n "$(find uploads -type f ! -name '.*' -print -quit)" ]; then
+            pip install -q "pillow>=10,<12"
+            python3 tools/process_uploads.py
+          fi
       - run: python3 build.py
       - run: python3 tools/check.py # a failure stops the job before anything is pushed
       - name: Commit rebuilt docs
         run: |
-          if [ -z "$(git status --porcelain docs)" ]; then
+          if [ -z "$(git status --porcelain docs images uploads)" ]; then
             echo "docs/ is already current"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs
+          git add -A docs images
+          git add -A uploads 2>/dev/null || true # processed uploads are deleted; the folder may never have existed
           git commit -m "Rebuild docs"
           git push origin HEAD:main
           # Before Pages is switched on (Settings, Pages) this request gets a 403. The docs commit above is what matters,

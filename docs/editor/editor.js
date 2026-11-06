@@ -16,7 +16,8 @@
   var LIMITS = L.TEXT_LIMITS;
 
   var token = null;
-  var state = { base: null, work: null, raw: null, photos: {}, tab: "menu", open: {}, head: null, busy: false, tmpN: 0 };
+  var state = { base: null, work: null, raw: null, paths: {}, uploads: {}, club: null, clubBase: null, tab: "menu", open: {}, head: null, busy: false, tmpN: 0 };
+  var SITE_JSON = "src/data/site.json";
   var $ = function (id) { return document.getElementById(id); };
   var app = $("app"), tabs = $("tabs"), bar = $("bar"), statusEl = $("status");
 
@@ -98,6 +99,7 @@
     if (e instanceof L.OpError) return e.message;
     if (e instanceof ApiError) {
       if (e.status === 401) return "GitHub refused the saved access key. It may have expired: ask Nick for a new one.";
+      if (e.status === 403 && /rate limit/i.test(e.message)) return "GitHub has had too many requests from this connection. Wait a while (up to an hour) and try again.";
       if (e.status === 403 || e.status === 404) return "GitHub refused access (" + e.message + "). The access key may be missing a permission: ask Nick.";
       if (e.status === 0) return e.message;
       return "GitHub said: " + e.message;
@@ -116,35 +118,29 @@
         var paths = {};
         tree.tree.forEach(function (t) { paths[t.path] = t.sha; });
         var keys = Object.keys(L.FILES);
-        return Promise.all(keys.map(function (k) {
-          var blob = paths[DIR + L.FILES[k]];
-          if (!blob) throw new ApiError(404, DIR + L.FILES[k] + " is missing", "");
-          return gh("GET", "/git/blobs/" + blob);
+        var want = keys.map(function (k) { return DIR + L.FILES[k]; }).concat([SITE_JSON]);
+        return Promise.all(want.map(function (pth) {
+          if (!paths[pth]) throw new ApiError(404, pth + " is missing", "");
+          return gh("GET", "/git/blobs/" + paths[pth]);
         })).then(function (blobs) {
           var raw = {}, docs = {};
           keys.forEach(function (k, i) { raw[k] = decodeBlob(blobs[i].content); docs[k] = JSON.parse(raw[k]); });
-          return { sha: sha, tree: tree.sha, raw: raw, docs: docs, paths: paths };
+          var site = JSON.parse(decodeBlob(blobs[keys.length].content));
+          return { sha: sha, tree: tree.sha, raw: raw, docs: docs, site: site, paths: paths };
         });
       });
     });
   }
 
-  function photoMap(docs, paths) {
-    var out = {};
-    Object.keys(docs).forEach(function (k) {
-      out[k] = {};
-      docs[k].sections.forEach(function (s) { s.groups.forEach(function (g) { g.items.forEach(function (it) {
-        out[k][it.id] = !!(it.image && paths[it.image]);
-      }); }); });
-    });
-    return out;
+  // Tree entries: text file {path, content}, uploaded blob {path, sha}, deletion {path, sha: null}.
+  function entry(f) {
+    var e = { path: f.path, mode: "100644", type: "blob" };
+    if ("content" in f) e.content = f.content; else e.sha = f.sha;
+    return e;
   }
-
   // One commit with every changed file, then move the branch to it (no force: a concurrent edit makes this fail and we retry).
   function commitFiles(head, files, message) {
-    return gh("POST", "/git/trees", { base_tree: head.tree, tree: files.map(function (f) {
-      return { path: f.path, mode: "100644", type: "blob", content: f.content };
-    }) }).then(function (t) {
+    return gh("POST", "/git/trees", { base_tree: head.tree, tree: files.map(entry) }).then(function (t) {
       return gh("POST", "/git/commits", { message: message, tree: t.sha, parents: [head.sha] });
     }).then(function (c) {
       return gh("PATCH", "/git/refs/heads/" + encodeURIComponent(BRANCH), { sha: c.sha, force: false }).then(function () { return c; });
@@ -212,7 +208,9 @@
     return fetchHead().then(function (h) {
       state.head = h; state.raw = h.raw; state.base = {}; state.work = {};
       Object.keys(h.docs).forEach(function (k) { state.base[k] = h.docs[k]; state.work[k] = clone(h.docs[k]); });
-      state.photos = photoMap(h.docs, h.paths);
+      state.paths = h.paths; state.uploads = {};
+      state.clubBase = { heading: h.site.meet_night.heading, rows: clone(h.site.meet_night.rows) };
+      state.club = clone(state.clubBase);
       render();
     }).catch(function (e) { app.textContent = ""; showStatus("err", "Couldn't load the menu", [plainError(e)], e && e.body); });
   }
@@ -277,8 +275,31 @@
     state.work[o.file].sections.forEach(function (s) { s.groups.forEach(function (g) { g.items.forEach(function (it) { if (it.id === o.id) cur = it; }); }); });
     return lab + ": " + (cur ? cur.name : o.id) + " (" + Object.keys(o.set).map(function (k) { return k.replace("_", " "); }).join(", ") + ")";
   }
+  // ------------------------------------------------------------ photos and club night changes
+  function folderOf(g, it) {
+    var img = it.image;
+    if (!img && it._tmp) g.items.some(function (x) { if (typeof x.image === "string") { img = x.image; return true; } return false; });
+    var m = typeof img === "string" && /^images\/([a-z0-9-]+)\//.exec(img);
+    return m ? m[1] : null;
+  }
+  function photoChanges() {
+    var out = [];
+    Object.keys(state.work).forEach(function (fk) {
+      state.work[fk].sections.forEach(function (s) { s.groups.forEach(function (g) { g.items.forEach(function (it) {
+        var u = state.uploads[fk + "|" + key(it)];
+        if (u) out.push({ fk: fk, it: it, folder: folderOf(g, it), u: u });
+      }); }); });
+    });
+    return out;
+  }
+  function clubChanged() { return state.club && JSON.stringify(state.club) !== JSON.stringify(state.clubBase); }
+  function changeCount() { return ops().length + photoChanges().length + (clubChanged() ? 1 : 0); }
+  function describePhoto(c) {
+    return L.LABELS[c.fk] + ": " + (c.u.remove ? "remove photo of " : "new photo for ") + (c.it.name || "new item");
+  }
+
   function updateBar() {
-    var n = ops().length;
+    var n = changeCount();
     bar.hidden = n === 0;
     $("count").textContent = n === 1 ? "1 change" : n + " changes";
   }
@@ -363,12 +384,8 @@
     var avail = el("input", { type: "checkbox", role: "switch", onchange: function (e) { it.available = e.target.checked; refreshSummary(); } });
     avail.checked = it.available !== false;
     body.appendChild(el("label", { class: "switch" }, [avail, el("span", { text: "On the menu (untick to hide it from the site without deleting it)" })]));
-    if (!it._tmp) {
-      var photo = state.photos[fk] && state.photos[fk][it.id];
-      body.appendChild(el("p", { class: "hint", text: photo ? "Has a photo." : (it.image ? "No photo yet: the site shows a 'photo coming hot' tile." : "") }));
-    } else {
-      body.appendChild(el("p", { class: "hint", text: "New items show a 'photo coming hot' tile until a photo is added to the site." }));
-    }
+    var folder = folderOf(g, it);
+    if (folder) body.appendChild(photoBox(fk, it, folder));
     var items = g.items;
     body.appendChild(el("div", { class: "row actions" }, [
       el("button", { type: "button", class: "btn small", text: "↑ Up", disabled: idx === 0, onclick: function () { move(items, idx, -1, fk + k); } }),
@@ -384,6 +401,77 @@
     if (state.open[fk + k]) det.open = true;
     return det;
   }
+  // Photo: shows the current or chosen picture, with Change / Remove. The browser crops it square and shrinks it;
+  // GitHub turns it into the site's WebP files when it rebuilds (tools/process_uploads.py).
+  function photoBox(fk, it, folder) {
+    var pk = fk + "|" + key(it), u = state.uploads[pk];
+    var has = !it._tmp && it.image && state.paths[it.image];
+    var small = has && it.image.replace(/\.webp$/, "-400w.webp");
+    var src = u && !u.remove ? u.url : (has && !(u && u.remove) ? "../" + (state.paths[small] ? small : it.image) : null);
+    var box = el("div", { class: "photo" });
+    box.appendChild(src ? el("img", { src: src, alt: "", width: 96, height: 96 }) : el("div", { class: "nophoto", text: "no photo" }));
+    var text = u && u.remove ? "The photo will be removed when you publish."
+      : u ? "New photo, ready to publish." + (u.small ? " It is quite small, so it may look soft." : "")
+      : has ? "Shown on the site, cropped to a circle." : "No photo yet: the site shows a 'photo coming hot' tile.";
+    var input = el("input", { type: "file", accept: "image/*", class: "visually-hidden", onchange: function (e) {
+      var file = e.target.files && e.target.files[0];
+      if (!file) return;
+      prepPhoto(file).then(function (p) {
+        if (u && u.url) URL.revokeObjectURL(u.url);
+        state.uploads[pk] = p; state.open[fk + key(it)] = true; render();
+      }, function () { showStatus("err", "Couldn't use that photo", ["Choose a JPEG or PNG photo."]); });
+    } });
+    var btns = [el("label", { class: "btn small" }, [input, has || u ? "Change photo" : "Add photo"])];
+    if (u) btns.push(el("button", { type: "button", class: "btn small", text: "Undo", onclick: function () {
+      if (u.url) URL.revokeObjectURL(u.url);
+      delete state.uploads[pk]; state.open[fk + key(it)] = true; render();
+    } }));
+    else if (has) btns.push(el("button", { type: "button", class: "btn small danger", text: "Remove photo", onclick: function () {
+      state.uploads[pk] = { remove: true }; state.open[fk + key(it)] = true; render();
+    } }));
+    box.appendChild(el("div", {}, [el("p", { class: "hint", text: text }), el("div", { class: "row" }, btns)]));
+    return box;
+  }
+  var PHOTO_PX = 1080;
+  function prepPhoto(file) {
+    return createImageBitmap(file).then(function (bmp) {
+      var side = Math.min(bmp.width, bmp.height), out = Math.min(PHOTO_PX, side);
+      var c = document.createElement("canvas"); c.width = out; c.height = out;
+      var ctx = c.getContext("2d");
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, out, out);
+      if (bmp.close) bmp.close();
+      return new Promise(function (res, rej) { c.toBlob(function (b) { b ? res(b) : rej(new Error("encode")); }, "image/jpeg", 0.88); })
+        .then(function (blob) {
+          return blob.arrayBuffer().then(function (buf) { return { b64: b64(buf), url: URL.createObjectURL(blob), small: out < 600 }; });
+        });
+    });
+  }
+
+  // ------------------------------------------------------------ club night tab
+  function renderClub() {
+    var c = state.club;
+    var sec = el("section", { class: "sec" }, [el("h2", { text: "Club night" }),
+      el("p", { class: "hint", text: "The next Woodstock Backgammon Club meet night, shown in the Club section of the home page." })]);
+    var heading = el("input", { type: "text", maxlength: L.CLUB_LIMITS.heading, oninput: function (e) { c.heading = e.target.value; updateBar(); } });
+    heading.value = c.heading;
+    sec.appendChild(el("div", { class: "fields card" }, [el("label", {}, ["Heading (usually the date)", heading])]));
+    var list = el("div", { class: "fields card" });
+    c.rows.forEach(function (r, i) {
+      var k = el("input", { type: "text", maxlength: L.CLUB_LIMITS.label, "aria-label": "Detail name", oninput: function (e) { r[0] = e.target.value; updateBar(); } });
+      var v = el("input", { type: "text", maxlength: L.CLUB_LIMITS.value, "aria-label": "Detail", oninput: function (e) { r[1] = e.target.value; updateBar(); } });
+      k.value = r[0]; v.value = r[1];
+      list.appendChild(el("div", { class: "crow" }, [k, v, el("div", { class: "row" }, [
+        el("button", { type: "button", class: "btn small", text: "↑", "aria-label": "Move up", disabled: i === 0, onclick: function () { var t = c.rows[i - 1]; c.rows[i - 1] = r; c.rows[i] = t; render(); } }),
+        el("button", { type: "button", class: "btn small danger", text: "✕", "aria-label": "Remove line", disabled: c.rows.length === 1, onclick: function () { c.rows.splice(i, 1); render(); } })
+      ])]));
+    });
+    if (c.rows.length < L.CLUB_LIMITS.rows) list.appendChild(el("button", { type: "button", class: "btn add", text: "+ Add a line", onclick: function () { c.rows.push(["", ""]); render(); } }));
+    sec.appendChild(el("h3", { text: "Details (name, then detail)" }));
+    sec.appendChild(list);
+    app.appendChild(sec);
+  }
+
   function move(items, idx, d, openKey) {
     var t = items[idx]; items[idx] = items[idx + d]; items[idx + d] = t;
     state.open[openKey] = true; render();
@@ -396,10 +484,13 @@
       tabs.appendChild(el("button", { type: "button", role: "tab", "aria-selected": fk === state.tab ? "true" : "false", class: "tab",
         text: L.LABELS[fk], onclick: function () { state.tab = fk; render(); } }));
     });
+    tabs.appendChild(el("button", { type: "button", role: "tab", "aria-selected": state.tab === "club" ? "true" : "false", class: "tab",
+      text: "Club night", onclick: function () { state.tab = "club"; render(); } }));
     app.textContent = "";
     var note = "Showing the latest saved version (" + state.head.sha.slice(0, 7) + ").";
     if (!LIVE) note += " Test branch " + BRANCH + ": saves here don't change the live site.";
     app.appendChild(el("p", { class: "hint", text: note }));
+    if (state.tab === "club") { renderClub(); updateBar(); return; }
     state.work[state.tab].sections.forEach(function (s) {
       var sec = el("section", { class: "sec" }, [el("h2", { text: s.title || s.id })]);
       s.groups.forEach(function (g) {
@@ -425,37 +516,68 @@
   $("discard").addEventListener("click", function () {
     if (!confirm("Throw away all unsaved changes?")) return;
     Object.keys(state.base).forEach(function (k) { state.work[k] = clone(state.base[k]); });
+    Object.keys(state.uploads).forEach(function (k) { if (state.uploads[k].url) URL.revokeObjectURL(state.uploads[k].url); });
+    state.uploads = {}; state.club = clone(state.clubBase);
     state.open = {}; render();
   });
   $("signout").addEventListener("click", function () {
-    if (state.work && ops().length && !confirm("You have unsaved changes. Sign out anyway?")) return;
+    if (state.work && changeCount() && !confirm("You have unsaved changes. Sign out anyway?")) return;
     token = null; state.work = null; location.reload();
   });
   var dialog = $("confirm");
   $("save").addEventListener("click", function () {
-    var list = ops();
-    if (!list.length || state.busy) return;
-    try { L.applyOps(clone(state.base), clone(list)); } // catch mistakes before the dialog
-    catch (e) { showStatus("err", "Not saved yet", [plainError(e)]); return; }
+    var list = ops(), photos = photoChanges(), club = clubChanged();
+    if (!(list.length || photos.length || club) || state.busy) return;
+    try { // catch mistakes before the dialog
+      if (list.length) L.applyOps(clone(state.base), clone(list));
+      if (club) L.applyClub({ meet_night: clone(state.clubBase) }, clone(state.club));
+    } catch (e) { showStatus("err", "Not saved yet", [plainError(e)]); return; }
     var ul = $("confirm-list"); ul.textContent = "";
     list.forEach(function (o) { ul.appendChild(el("li", { text: describe(o) })); });
+    photos.forEach(function (c) { ul.appendChild(el("li", { text: describePhoto(c) })); });
+    if (club) ul.appendChild(el("li", { text: "Club night details" }));
     $("confirm-note").textContent = LIVE ? "This updates the live website. It takes a few minutes to show." : "Test branch: the live site doesn't change.";
-    if (dialog.showModal) dialog.showModal(); else if (confirm("Publish these changes?")) doSave(list);
+    if (dialog.showModal) dialog.showModal(); else if (confirm("Publish these changes?")) doSave();
   });
-  dialog.addEventListener("close", function () { if (dialog.returnValue === "ok") doSave(ops()); });
+  dialog.addEventListener("close", function () { if (dialog.returnValue === "ok") doSave(); });
 
   // Fetch the latest files, apply the changes, commit. If someone else saved in between, try once more on top of theirs.
-  function publish(list, attempt) {
+  function publish(job, attempt) {
     return fetchHead().then(function (head) {
-      var docs = head.docs;
-      var res = L.applyOps(docs, clone(list));
-      var files = res.changed.map(function (k) {
-        return { path: DIR + L.FILES[k], content: L.dumps(docs[k], L.blankAfterIds(head.raw[k])) };
+      var docs = head.docs, files = [], notes = [], ids = {};
+      if (job.list.length) {
+        var res = L.applyOps(docs, clone(job.list));
+        ids = res.ids; notes = notes.concat(res.notes);
+        res.changed.forEach(function (k) { files.push({ path: DIR + L.FILES[k], content: L.dumps(docs[k], L.blankAfterIds(head.raw[k])) }); });
+      }
+      if (job.club) {
+        var cn = L.applyClub(head.site, clone(job.club));
+        if (cn.length) { notes = notes.concat(cn); files.push({ path: SITE_JSON, content: L.dumpsSite(head.site) }); }
+      }
+      var uploads = [];
+      job.photos.forEach(function (c) {
+        var id = c.it._tmp ? ids[c.it._tmp] : c.it.id;
+        if (!id || !c.folder) return;
+        var name = c.it.name || id;
+        if (c.u.remove) {
+          ["images/" + c.folder + "/" + id + ".webp", "images/" + c.folder + "/" + id + "-400w.webp"].forEach(function (pth) {
+            if (head.paths[pth]) files.push({ path: pth, sha: null });
+          });
+          notes.push("removed the photo of " + name);
+        } else {
+          uploads.push({ path: "uploads/" + c.folder + "/" + id + ".jpg", b64: c.u.b64 });
+          notes.push("new photo for " + name);
+        }
       });
-      var summary = res.notes.slice(0, 6).join("; ") + (res.notes.length > 6 ? "; +" + (res.notes.length - 6) + " more" : "");
-      return commitFiles(head, files, "Menu update via editor: " + summary).then(function (c) { return { commit: c, notes: res.notes }; });
+      if (!files.length && !uploads.length) throw new L.OpError("There are no changes to publish.");
+      return Promise.all(uploads.map(function (u) {
+        return gh("POST", "/git/blobs", { content: u.b64, encoding: "base64" }).then(function (b) { files.push({ path: u.path, sha: b.sha }); });
+      })).then(function () {
+        var summary = notes.slice(0, 6).join("; ") + (notes.length > 6 ? "; +" + (notes.length - 6) + " more" : "");
+        return commitFiles(head, files, "Menu update via editor: " + summary);
+      }).then(function (c) { return { commit: c, notes: notes }; });
     }).catch(function (e) {
-      if (attempt < 2 && e instanceof ApiError && e.status === 422) return publish(list, attempt + 1);
+      if (attempt < 2 && e instanceof ApiError && e.status === 422) return publish(job, attempt + 1);
       throw e;
     });
   }
@@ -474,12 +596,13 @@
     return sleep(4000).then(poll);
   }
 
-  function doSave(list) {
+  function doSave() {
+    var job = { list: ops(), photos: photoChanges(), club: clubChanged() ? clone(state.club) : null };
     state.busy = true;
     var btn = $("save");
     btn.disabled = true; btn.textContent = "Publishing…";
     showStatus("info", "Publishing…", ["Saving your changes to GitHub. Keep this page open."]);
-    publish(list, 0).then(function (r) {
+    publish(job, 0).then(function (r) {
       var lines = r.notes.map(function (n) { return "• " + n; });
       var commitUrl = r.commit.html_url;
       if (!LIVE) {
@@ -493,7 +616,7 @@
           showStatus("ok", "Published", ["The site is rebuilt. The live page shows the change within a minute or two (refresh it)."].concat(lines),
             null, [["Open the live site", SITE_URL], ["See the change on GitHub", commitUrl]]);
         } else if (run && run.status === "completed") {
-          showStatus("err", "Saved, but the website was not updated", ["Your changes are saved, but the site check failed, so the live site still shows the old menu. Ask Nick to look at it."],
+          showStatus("err", "Saved, but the website was not updated", ["Your changes are saved, but the site check failed, so the live site still shows the old version. Ask Nick to look at it."],
             null, [["See what went wrong", run.html_url]]);
         } else {
           showStatus("ok", "Saved", ["Your changes are saved. The live site updates within a few minutes."].concat(lines),
@@ -508,7 +631,7 @@
     }).then(function () { state.busy = false; btn.disabled = false; btn.textContent = "Save and publish"; });
   }
 
-  window.addEventListener("beforeunload", function (e) { if (state.work && ops().length && !state.busy) { e.preventDefault(); e.returnValue = ""; } });
+  window.addEventListener("beforeunload", function (e) { if (state.work && changeCount() && !state.busy) { e.preventDefault(); e.returnValue = ""; } });
 
   if (!window.crypto || !crypto.subtle) {
     $("login-msg").hidden = false; $("login-msg").textContent = "This browser can't run the editor. Use an up-to-date Chrome, Safari or Firefox.";
