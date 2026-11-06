@@ -514,7 +514,7 @@ def render(name, meta, body, partials, modified):
     global PAGE_ROOT
     PAGE_ROOT = rel
     on_home = name == "index"
-    hero_srcset = srcset("images/hero/pizza-ratto-logo.webp", rel, (480, 800, 1200))
+    hero_srcset = srcset("images/hero/pizza-ratto-wall.webp", rel, (480, 800))
     canonical = DOMAIN + "/" + ("" if on_home else ("404.html" if name == "404" else f"{name}.html"))
     page = {
         "title": meta["title"], "description": meta["description"], "canonical": canonical,
@@ -530,7 +530,7 @@ def render(name, meta, body, partials, modified):
         "root": rel, "robots": meta.get("robots", "index, follow, max-image-preview:large"),
         "css": CSS_INLINE[0].replace("../", rel), "js_v": VERSIONS["js"],
         "hero_srcset": hero_srcset, "hero_sizes": HERO_SIZES,
-        "hero_preload": f'<link rel="preload" as="image" href="{rel}images/hero/hero-paper-texture.webp" type="image/webp" fetchpriority="high">\n<link rel="preload" as="image" href="{rel}images/hero/pizza-ratto-logo.webp" imagesrcset="{hero_srcset}" imagesizes="{HERO_SIZES}" type="image/webp" fetchpriority="high">' if on_home else "",
+        "hero_preload": f'<link rel="preload" as="image" href="{rel}images/hero/hero-paper-texture.webp" type="image/webp" fetchpriority="high">\n<link rel="preload" as="image" href="{rel}images/hero/pizza-ratto-wall.webp" imagesrcset="{hero_srcset}" imagesizes="{HERO_SIZES}" type="image/webp" fetchpriority="high">' if on_home else "",
         "analytics": analytics(), "site_verification": site_verification(), "consent_banner": consent_banner(), "cookie_button": cookie_button(),
         "jsonld": json.dumps(graph(page), ensure_ascii=False, indent=2).replace("</", "<\\/"),
         "nav": nav_html({"deli": "deli", "merchandise": "merch"}.get(name), on_home),

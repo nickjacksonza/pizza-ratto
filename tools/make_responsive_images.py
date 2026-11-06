@@ -12,7 +12,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 CARD_DIRS = ["pizza", "deli", "merchandise", "drinks", "desserts"]  # shown at 180-380 CSS px
 CARD_W = [400]
-HERO = {"images/hero/pizza-ratto-logo.webp": [480, 800, 1200]}
+HERO = {"images/hero/pizza-ratto-wall.webp": [480, 800]}
 QUALITY = 80
 
 
