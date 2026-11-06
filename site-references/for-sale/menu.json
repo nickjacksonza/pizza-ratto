@@ -92,7 +92,14 @@
             { "id": "extra-avo", "image": null, "name": "Avo", "price": 12, "available": true },
 
             { "id": "extra-hot-honey", "image": null, "name": "Hot Honey", "price": 10, "available": true },
-            { "id": "extra-rat-sauce", "image": null, "name": "Rat Sauce", "price": 10, "available": true },
+            {
+              "id": "extra-rat-sauce",
+              "image": null,
+              "name": "Rat Sauce",
+              "price": 10,
+              "description": "The Rat Sauce? That’s our house-made secret weapon. A little tang, a little smokiness, and the best thing for a Neapolitan crust. Don't be scared of the name 😅 Just worry about the bad influence it’s going to have on your diet 🫶🏼",
+              "available": true
+            },
             { "id": "extra-bbq-glaze", "image": null, "name": "BBQ Glaze", "price": 10, "available": true },
             { "id": "extra-cream-cheese", "image": null, "name": "Cream Cheese", "price": 10, "available": true },
 
