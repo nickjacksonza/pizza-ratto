@@ -1,5 +1,5 @@
 // Run: node tools/test_editor.js
-// Round-trips the for-sale JSON through the editor's writer and checks its rules (mirrors admin/test_jsonfmt.py).
+// Round-trips the for-sale JSON through the editor's writer and checks its rules.
 "use strict";
 const fs = require("fs");
 const path = require("path");
