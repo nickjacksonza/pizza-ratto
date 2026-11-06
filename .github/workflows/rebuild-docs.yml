@@ -51,6 +51,8 @@ jobs:
           git add docs
           git commit -m "Rebuild docs"
           git push origin HEAD:main
-          gh api --method POST "/repos/$GITHUB_REPOSITORY/pages/builds"
+          # Before Pages is switched on (Settings, Pages) this request gets a 403. The docs commit above is what matters,
+          # so warn instead of failing the run (the menu editor reads a failed run as "website not updated").
+          gh api --method POST "/repos/$GITHUB_REPOSITORY/pages/builds" || echo "::warning::Pages build request failed. Is GitHub Pages switched on for main /docs?"
         env:
           GH_TOKEN: ${{ github.token }}

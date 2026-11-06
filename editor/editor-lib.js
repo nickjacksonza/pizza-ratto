@@ -1,5 +1,4 @@
 // Pizza Ratto menu editor: rules and JSON writer. No DOM here, so tools/test_editor.js can run it in Node.
-// Ported from admin/menu_ops.py and admin/jsonfmt.py. Keep the two in step if either changes.
 (function (root) {
   "use strict";
 
