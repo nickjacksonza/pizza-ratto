@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write smaller WebP width variants (<name>-<w>w.webp) next to the originals for srcset, plus the Apple touch icon.
 
-Needs Pillow; run in Docker like optimize_images.py:
+Needs Pillow; run it in Docker:
   docker run --rm -v "$PWD":/app -w /app python:3.12-slim sh -c 'pip install -q pillow && python tools/make_responsive_images.py'
 
 build.py reads the variants from disk, so re-run this after the originals change.
