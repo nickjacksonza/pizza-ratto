@@ -9,10 +9,11 @@ Modelled on `wellness-by-physiatry` (same `src/` + `docs/` layout, same head/sch
     python3 tools/check.py                 # post-build checks: JSON-LD, one h1, img sizes, links
     cd docs && python3 -m http.server 3056 # preview
 
-Assets come from the design handoff zip. Pillow and fonttools are not on the host, so run the asset tool in Docker:
+`README.md` is written for visitors who find the repo from the site. Keep it short and public-facing; dev rules go here.
+Pillow is not on the host, so run image tools in Docker:
 
     docker run --rm -v "$PWD":/app -w /app python:3.12-slim sh -c \
-      'pip install -q pillow fonttools brotli && python tools/optimize_images.py'
+      'pip install -q pillow && python tools/make_responsive_images.py'
 
 ## Deploy
 
@@ -41,7 +42,7 @@ Served by GitHub Pages "Deploy from a branch": `main`, folder `/docs`, custom do
 - `google_site_verification` in `site.json` renders the Search Console `<meta>` in every page head, only when set.
 - `ga4_id` in `site.json` is `G-LSQ5R505H6`. The consent defaults, gtag loader, cookie banner and footer "Cookie settings" button render only when it is set. `gtag.js` loads on first interaction (or 8 s after load).
 - `build.py` minifies CSS and `js/scripts.js` (`tools/minify.py`) and writes `sitemap.xml` with `lastmod` from each page's last git commit. Edit `css/` and `js/`, never `docs/`.
-- Card and hero images get `srcset` from `-<w>w.webp` variants on disk. Regenerate with `tools/make_responsive_images.py` (Docker, like `optimize_images.py`).
-- Design tokens in `css/tokens.css` are copied verbatim from the handoff. Keep `css/styles.css` on `var(--*)`.
-- `editor/` is the owner's menu editor (static, served at `/editor/`, set-up in README). `editor/editor-lib.js` holds the editing rules and the JSON writer that keeps the files' layout: run `node tools/test_editor.js` after changing it. Never commit a token; `editor/sealed.json` holds only the encrypted copy.
+- Card and hero images get `srcset` from `-<w>w.webp` variants on disk. Regenerate with `tools/make_responsive_images.py` (Docker, see Build).
+- Design tokens in `css/tokens.css` came verbatim from the design handoff. Keep `css/styles.css` on `var(--*)`.
+- `editor/` is the owner's menu editor (static, served at `/editor/`; its `#setup` screen lists the token steps). Keep it out of README. Photos it uploads land in `uploads/` and `tools/process_uploads.py` turns them into `images/<folder>/<id>.webp` in the workflow. `editor/editor-lib.js` holds the editing rules and the JSON writer that keeps the files' layout: run `node tools/test_editor.js` after changing it. Never commit a token; `editor/sealed.json` holds only the encrypted copy.
 
