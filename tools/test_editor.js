@@ -30,7 +30,7 @@ assert.strictEqual(JSON.stringify(pizzas[0]), JSON.stringify({ id: "calzone-spec
 assert.strictEqual(d.menu.sections[0].groups[1].items.slice(-1)[0].id, "extra-olives");
 assert.ok(!pizzas.some((i) => i.id === "rally"));
 const jackets = d.merchandise.sections[0].groups[0].items[1];
-assert.strictEqual(JSON.stringify(jackets), JSON.stringify({ id: "jackets", image: "images/merchandise/jackets.webp", name: "Jackets", price: 900, available: true }));
+assert.strictEqual(JSON.stringify(jackets), JSON.stringify({ id: "jackets", image: "images/merchandise/jackets.webp", name: "Vintage Jackets", price: 900, description: "Old school cool. No expiration date. Hand-picked vintage jackets with stories stitched into every seam. They've been places. Now it's your turn.", available: true }));
 assert.deepStrictEqual(res.changed.sort(), ["menu", "merchandise"]);
 
 // The written file must still parse and keep the extra-topping blank lines.
