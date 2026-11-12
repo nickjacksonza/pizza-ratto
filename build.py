@@ -310,10 +310,12 @@ def catalogue_cards(data, rel):
     items = available(data["sections"][0]["groups"][0]["items"])
     out = []
     for n, it in enumerate(items):
-        brand = f'<span class="pr-card-brand">{esc(it["brand"])}</span>' if it.get("brand") else ""
+        tag = " · ".join(esc(it[k]) for k in ("brand", "size") if it.get(k))
+        brand = f'<span class="pr-card-brand">{tag}</span>' if tag else ""
+        desc = f'<p>{esc(it["description"])}</p>' if it.get("description") else ""
         out.append(
             f'<li><div class="pr-card">{card_img(it, it["name"], rel, first=False)}<div>'
-            f'<div class="pr-card-top"><b>{esc(it["name"])}</b><strong>{esc(money(it, sym))}</strong></div>{brand}</div></div></li>'
+            f'<div class="pr-card-top"><b>{esc(it["name"])}</b><strong>{esc(money(it, sym))}</strong></div>{brand}{desc}</div></div></li>'
         )
     return "\n".join(out)
 

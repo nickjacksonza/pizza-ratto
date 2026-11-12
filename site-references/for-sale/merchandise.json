@@ -10,14 +10,85 @@
           "id": "merchandise-items",
           "title": null,
           "items": [
-            { "id": "helmet-keyrings", "image": "images/merchandise/helmet-keyrings.webp", "name": "Helmet Keyrings", "price": 100, "available": true },
-            { "id": "jackets", "image": "images/merchandise/jackets.webp", "name": "Jackets", "price": null, "price_label": "Varies", "available": true },
-            { "id": "helmets", "image": "images/merchandise/helmets.webp", "name": "Helmets", "price": null, "price_label": "Varies", "available": true },
-            { "id": "vespa-inspired-decor", "image": "images/merchandise/vespa-inspired-decor.webp", "name": "Vespa Inspired Decor", "price": null, "price_label": "POA", "available": true },
-            { "id": "stickers", "image": "images/merchandise/stickers.webp", "name": "Stickers", "price": null, "price_label": "Varies", "available": true },
-            { "id": "pins", "image": "images/merchandise/pins.webp", "name": "Pins", "price": null, "price_label": "Varies", "available": true },
-            { "id": "vespa-key-covers", "image": "images/merchandise/vespa-key-covers.webp", "name": "Vespa Key Covers", "price": 150, "available": true },
-            { "id": "leather-vespa-toolkits", "image": "images/merchandise/leather-vespa-toolkits.webp", "name": "Leather Vespa Toolkits", "price": null, "price_label": "POA", "available": true }
+            {
+              "id": "helmet-keyrings",
+              "image": "images/merchandise/helmet-keyrings.webp",
+              "name": "Mini Helmet Keyrings",
+              "price": 100,
+              "description": "Big personality. Tiny helmet. A pocket-sized tribute to two wheels, open roads and questionable decisions. No licence required.",
+              "available": true
+            },
+            {
+              "id": "jackets",
+              "image": "images/merchandise/jackets.webp",
+              "name": "Vintage Jackets",
+              "price": null,
+              "price_label": "Varies",
+              "description": "Old school cool. No expiration date. Hand-picked vintage jackets with stories stitched into every seam. They've been places. Now it's your turn.",
+              "available": true
+            },
+            {
+              "id": "helmets",
+              "image": "images/merchandise/helmets.webp",
+              "name": "Retro Open-Face Helmets",
+              "price": null,
+              "price_label": "Varies",
+              "description": "Yesterday's looks. Today's protection. Brand-new helmets with old-school Italian swagger. Because looking cool never goes out of style. Neither does keeping your head.",
+              "available": true
+            },
+            {
+              "id": "vespa-inspired-decor",
+              "image": "images/merchandise/vespa-inspired-decor.webp",
+              "name": "Vespa-Inspired Décor",
+              "price": null,
+              "price_label": "POA",
+              "description": "Who said scooter parts belong in the garage? From engine casing lamps to quirky desk mirrors, we've turned two-wheeled nostalgia into conversation starters. La dolce vita, with a little engine grease.",
+              "available": true
+            },
+            {
+              "id": "stickers",
+              "image": "images/merchandise/stickers.webp",
+              "name": "Retro Stickers",
+              "price": null,
+              "price_label": "Varies",
+              "description": "Stick it to the ordinary. Vintage-inspired graphics celebrating the golden age of scooters, speed and Italian attitude. Your laptop, helmet or toolbox could use a little rebellion.",
+              "available": true
+            },
+            {
+              "id": "badges",
+              "image": "images/merchandise/badges.webp",
+              "name": "Fabric Badges",
+              "price": null,
+              "price_label": "Varies",
+              "description": "Wear your loyalties on your sleeve. Vespa culture, Vestoration pride and a little old-school attitude, stitched and ready to make something ordinary look legendary.",
+              "available": true
+            },
+            {
+              "id": "pins",
+              "image": "images/merchandise/pins.webp",
+              "name": "Vintage Lapel Pins",
+              "price": null,
+              "price_label": "Varies",
+              "description": "Small pins. Serious swagger. Straight out of the swinging '60s and rebellious '70s. Pin one on and let the nostalgia do the talking.",
+              "available": true
+            },
+            {
+              "id": "vespa-key-covers",
+              "image": "images/merchandise/vespa-key-covers.webp",
+              "name": "Vespa Key Covers",
+              "price": 150,
+              "description": "Even your keys deserve a wardrobe upgrade. Retro attitude for your modern Vespa. Because life's too short for boring accessories.",
+              "available": true
+            },
+            {
+              "id": "leather-vespa-toolkits",
+              "image": "images/merchandise/leather-vespa-toolkits.webp",
+              "name": "Handmade Leather Toolkits",
+              "price": null,
+              "price_label": "POA",
+              "description": "Beautifully handmade from genuine leather, with room for the tools that matter. For those rare occasions when your Vespa decides the journey needs an unexpected coffee break. Ride prepared. Arrive eventually.",
+              "available": true
+            }
           ]
         }
       ]
