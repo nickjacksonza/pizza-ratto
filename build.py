@@ -265,18 +265,37 @@ def glyph_safe(text):
     return re.sub(r"(\d+|\?)", r'<span class="pr-num">\1</span>', esc(text))
 
 
-def meet_night():
+def meet_night(rel):
     m = site["meet_night"]
+    photo = club_photo(m, rel)
     rows = "".join(f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in m["rows"])
-    return (f'<aside class="pr-meet" aria-label="{esc(m["label"])}"><p class="pr-label">{esc(m["label"])}</p>'
-            f'<h3>{glyph_safe(m["heading"])}</h3><dl>{rows}</dl></aside>')
+    return (f'<aside class="pr-meet{" has-photo" if photo else ""}" aria-label="{esc(m["label"])}">{photo}<div><p class="pr-label">{esc(m["label"])}</p>'
+            f'<h3>{glyph_safe(m["heading"])}</h3><dl>{rows}</dl></div></aside>')
 
 
-def events():
-    return "\n".join(
-        f'<article class="pr-event"><p class="pr-label">{esc(e["tag"])}</p><h3>{glyph_safe(e["name"])}</h3><p>{esc(e["body"])}</p></article>'
-        for e in site["events"]["items"]
-    )
+def club_photo(obj, rel):
+    """Optional photo for a club box: obj["image"] (+ obj["image_alt"]), shown only when the file exists."""
+    path = obj.get("image")
+    if not path:
+        return ""
+    if not (ROOT / path).exists():
+        MISSING.append(path)
+        return ""
+    return f'<figure class="pr-club-photo">{img(path, obj.get("image_alt", ""), rel, widths=(400,), sizes="150px")}</figure>'
+
+
+def events(rel):
+    out = []
+    for e in site["events"]["items"]:
+        photo = club_photo(e, rel)
+        body = f'<div><p class="pr-label">{esc(e["tag"])}</p><h3>{glyph_safe(e["name"])}</h3><p>{esc(e["body"])}</p></div>'
+        out.append(f'<article class="pr-event{" has-photo" if photo else ""}">{photo}{body}</article>')
+    return "\n".join(out)
+
+
+def club_logo(rel):
+    ev = site["events"]
+    return img(ev["logo"], ev["logo_alt"], rel, cls="pr-wbgc-logo") if ev.get("logo") else ""
 
 
 def socials():
@@ -552,7 +571,7 @@ def render(name, meta, body, partials, modified):
         "btn_whatsapp_red": button("Order on WhatsApp", site["whatsapp"], "", "whatsapp"),
         "btn_uber": button("Uber Eats", site["uber_eats"], "street", "ubereats"),
         "pizza_cards": pizza_cards(rel), "pizza_count_word": words(len(available(find_group(MENU, "pizza", "pizzas")["items"]))),
-        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "meet_night": meet_night(), "events": events(), "socials": socials(), "reel": reel(rel), "tape_count": f'{len(site["tapes"]):02d}', "side_tapes": side_tapes(rel),
+        "toppings": toppings_list(), "side_cards": side_cards(rel), "house": house(rel), "meet_night": meet_night(rel), "events": events(rel), "ev_logo": club_logo(rel), "socials": socials(), "reel": reel(rel), "tape_count": f'{len(site["tapes"]):02d}', "side_tapes": side_tapes(rel),
         "deli_cards": catalogue_cards(DELI, rel), "merch_cards": catalogue_cards(MERCH, rel),
         "ticker": esc(site["ticker"] * 4), "ev_label": esc(site["events"]["label"]), "ev_title": esc(site["events"]["title"]), "ev_title_alt": esc(site["events"]["title_alt"]), "ev_intro": esc(site["events"]["intro"]), "ev_sticker": esc(site["events"]["sticker"]), "wa_number": site["whatsapp_number"], "year": "2026",
         **{k: v for k, v in meta.items()},
