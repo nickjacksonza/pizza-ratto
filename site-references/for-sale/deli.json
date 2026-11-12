@@ -10,16 +10,40 @@
           "id": "deli-items",
           "title": null,
           "items": [
-            { "id": "hot-honey", "image": "images/deli/hot-honey.webp", "name": "Hot Honey", "price": 125, "available": true },
-            { "id": "chilli-sauce", "image": "images/deli/chilli-sauce.webp", "name": "Chilli Sauce", "price": 55, "available": true },
-            { "id": "lemon-spritzer-syrup", "image": "images/deli/lemon-spritzer-syrup.webp", "name": "Lemon Spritzer Syrup", "price": 75, "available": true },
-            { "id": "limoncello", "image": "images/deli/limoncello.webp", "name": "Limoncello", "price": 225, "available": true },
             {
-              "id": "golden-spice-blend",
-              "image": "images/deli/golden-spice-blend.webp",
-              "name": "Golden Spice Blend",
-              "brand": "Stay Golden",
+              "id": "lemon-spritzer-syrup",
+              "image": "images/deli/lemon-spritzer-syrup.webp",
+              "name": "Lemon Spritzer Syrup",
+              "price": 75,
+              "description": "A little sunshine with a serious Italian attitude. Sweet, zesty and dangerously refreshing. Just add soda water, ice, a lemon slice and some crushed mint. Heaven.",
+              "size": "250ml",
+              "available": true
+            },
+            {
+              "id": "hot-honey",
+              "image": "images/deli/hot-honey.webp",
+              "name": "Hot Honey",
               "price": 125,
+              "description": "Sweet at first. Trouble afterwards. Our signature hot honey brings the perfect balance of sticky sweetness and cheeky heat. Drizzle irresponsibly.",
+              "size": "260ml",
+              "available": true
+            },
+            {
+              "id": "limoncello",
+              "image": "images/deli/limoncello.webp",
+              "name": "Limoncello",
+              "price": 225,
+              "description": "Italian sunshine, bottled with a little bad behaviour. Sweet, citrusy and unapologetically zesty. Best served ice-cold, preferably with good company and questionable stories.",
+              "size": "250ml",
+              "available": true
+            },
+            {
+              "id": "chilli-sauce",
+              "image": "images/deli/chilli-sauce.webp",
+              "name": "Chilli Sauce",
+              "price": 55,
+              "description": "Small bottle. Big mouth. A fiery little troublemaker that brings heat to everything it touches. You've been warned.",
+              "size": "125ml",
               "available": true
             },
             {
@@ -28,6 +52,18 @@
               "name": "Chai Spice Blend",
               "brand": "Stay Golden",
               "price": 125,
+              "description": "Warm, fragrant and full of character. A beautifully spiced little hug with an Italian-sized personality. Stir, sip and slow down.",
+              "size": "100g",
+              "available": true
+            },
+            {
+              "id": "golden-spice-blend",
+              "image": "images/deli/golden-spice-blend.webp",
+              "name": "Golden Spice Blend",
+              "brand": "Stay Golden",
+              "price": 125,
+              "description": "Golden goodness with a spicy little swagger. A warming blend of aromatic spices that turns your everyday cup into a golden moment. Stay golden, Rat Pack.",
+              "size": "110g",
               "available": true
             }
           ]
