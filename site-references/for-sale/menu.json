@@ -59,19 +59,19 @@
               "available": true
             },
             {
-              "id": "rally",
-              "image": "images/pizza/rally.webp",
-              "name": "Rally",
-              "price": 185,
-              "description": "BBQ Glaze Base, Fior de Latte, Smoked Chicken, Wild Mushrooms & creamy Avo",
-              "available": true
-            },
-            {
               "id": "arco-baleno",
               "image": "images/pizza/arcobaleno.webp",
               "name": "Arco Baleno",
-              "price": 195,
+              "price": 185,
               "description": "Tomato Base, Fior de Latte, Salami, Wild Mushrooms, local Feta & fresh Rocket",
+              "available": true
+            },
+            {
+              "id": "rally",
+              "image": "images/pizza/rally.webp",
+              "name": "Rally",
+              "price": 195,
+              "description": "BBQ Glaze Base, Fior de Latte, Smoked Chicken, Wild Mushrooms & creamy Avo",
               "available": true
             }
           ]
