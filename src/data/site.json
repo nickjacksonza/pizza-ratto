@@ -180,12 +180,15 @@
       {
         "tag": "WBGC",
         "name": "Regular meet nights",
-        "body": "A relaxed night of backgammon over wood-fired pizza. Come to play, or come to watch and eat."
+        "body": "A relaxed night of backgammon over wood-fired pizza. Come to play, or come to watch and eat.",
+        "image": "images/photos/backgammon.webp",
+        "image_alt": "Two players at a backgammon board under the rat mural, with another board set up in the foreground"
       },
       {
         "tag": "All levels",
         "name": "Never played? Perfect.",
-        "body": "Someone will teach you the first game. Boards and dice are provided."
+        "body": "Someone will teach you the first game. Boards and dice are provided.",
+        "video": "backgammon-play"
       }
     ],
     "sticker": "Next meet night is right here."

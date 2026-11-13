@@ -274,14 +274,22 @@ def meet_night(rel):
 
 
 def club_photo(obj, rel):
-    """Optional photo for a club box: obj["image"] (+ obj["image_alt"]), shown only when the file exists."""
+    """Optional photo or video for a club box, shown only when the file exists.
+    obj["video"] = name in videos/ (poster: images/stills/<name>.webp); else obj["image"] (+ obj["image_alt"])."""
+    vid = obj.get("video")
+    if vid:
+        if not (ROOT / f"videos/{vid}.mp4").exists():
+            MISSING.append(f"videos/{vid}.mp4")
+            return ""
+        return (f'<figure class="pr-club-photo pr-club-video"><video muted loop playsinline preload="none" disablePictureInPicture width="480" height="854" '
+                f'data-poster="{rel}images/stills/{vid}.webp" aria-hidden="true"><source src="{rel}videos/{vid}.mp4" type="video/mp4"></video></figure>')
     path = obj.get("image")
     if not path:
         return ""
     if not (ROOT / path).exists():
         MISSING.append(path)
         return ""
-    return f'<figure class="pr-club-photo">{img(path, obj.get("image_alt", ""), rel, widths=(400,), sizes="150px")}</figure>'
+    return f'<figure class="pr-club-photo">{img(path, obj.get("image_alt", ""), rel, widths=(400,), sizes="(max-width: 520px) 70vw, 220px")}</figure>'
 
 
 def events(rel):

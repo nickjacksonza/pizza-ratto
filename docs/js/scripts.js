@@ -46,7 +46,7 @@ else a.removeAttribute("aria-current");
 ["story","menu","visit"].forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
 }
 function reel(){
-var vids=$$(".pr-tape video");
+var vids=$$(".pr-tape video, .pr-club-video video");
 var setPoster=function(v){if(v.dataset.poster){v.poster=v.dataset.poster;v.removeAttribute("data-poster");}};
 if("IntersectionObserver"in window){
 var pio=new IntersectionObserver(function(es){
