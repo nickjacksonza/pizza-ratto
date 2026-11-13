@@ -315,7 +315,17 @@ html,body{overflow-x:clip}
 @media (max-width:760px){.pr-pizza-grid .pr-card-top{flex-wrap:wrap;align-items:baseline;row-gap:.25rem}.pr-pizza-grid .pr-card-top b{flex:1 1 100%;overflow-wrap:normal;word-break:normal;hyphens:none;font-size:clamp(1.3rem,6.2vw,1.8rem);line-height:1.05}.pr-pizza-grid .pr-card-top strong{flex:none;font-size:1.25rem}}
 
 .pr-wbgc-logo{display:block;width:min(100%,260px);height:auto;aspect-ratio:1;margin:1.8rem 0 1.4rem;border-radius:50%;box-shadow:6px 6px 0 var(--ratto-brown);transform:rotate(-4deg)}
-.pr-event.has-photo,.pr-meet.has-photo{display:grid;grid-template-columns:clamp(96px,24%,160px) minmax(0,1fr);gap:clamp(1rem,2.5vw,1.8rem);align-items:center}
-.pr-club-photo{margin:0;aspect-ratio:1;border-radius:50%;overflow:hidden;background:var(--ratto-pink)}
-.pr-club-photo img{width:100%;height:100%;object-fit:cover;display:block}
-@media (max-width:520px){.pr-event.has-photo,.pr-meet.has-photo{grid-template-columns:minmax(0,1fr)}.pr-club-photo{width:120px}}
+.pr-event.has-photo,.pr-meet.has-photo{display:grid;grid-template-columns:clamp(120px,36%,220px) minmax(0,1fr);gap:clamp(1rem,2.5vw,1.8rem);align-items:center}
+.pr-club-photo{margin:0;aspect-ratio:4/5;border-radius:var(--radius-card);overflow:hidden;background:var(--ratto-pink);border:3px solid var(--ratto-brown)}
+.pr-club-photo img,.pr-club-photo video{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:520px){.pr-event.has-photo,.pr-meet.has-photo{grid-template-columns:minmax(0,1fr)}.pr-club-photo{width:100%;max-width:280px}}
+
+/* 01 story: venue photo behind a brown wash so the cream text stays readable */
+.pr-story{--wash:66,18,18;background:linear-gradient(90deg,rgba(var(--wash),.9) 0%,rgba(var(--wash),.78) 55%,rgba(var(--wash),.5) 100%),var(--ratto-brown) url(../images/photos/venue.webp) center/cover;color:var(--paper-cream)}
+.pr-story h2{color:var(--paper-cream);text-shadow:0 2px 18px rgba(var(--wash),.6)}
+.pr-story .pr-secnum{color:var(--hot-orange)}
+.pr-story .pr-lead{text-shadow:0 1px 10px rgba(var(--wash),.8)}
+.pr-story :focus-visible{outline-color:var(--ratto-pink)}
+.pr-story .pr-rules{background:var(--hot-orange);color:var(--ratto-brown);box-shadow:6px 6px 0 var(--paper-cream)}
+.pr-story .pr-rules b{color:var(--ratto-brown)}
+@media (max-width:1000px){.pr-story{background:linear-gradient(rgba(var(--wash),.82),rgba(var(--wash),.82)),var(--ratto-brown) url(../images/photos/venue-800w.webp) center/cover}}
