@@ -55,7 +55,7 @@
 
   /* 5. Reel videos play only while on screen. Reduced motion: poster only. */
   function reel() {
-    var vids = $$(".pr-tape video");
+    var vids = $$(".pr-tape video, .pr-club-video video");
     // Posters load only when a tape is near the viewport, so they never compete with the hero.
     var setPoster = function (v) { if (v.dataset.poster) { v.poster = v.dataset.poster; v.removeAttribute("data-poster"); } };
     if ("IntersectionObserver" in window) {
