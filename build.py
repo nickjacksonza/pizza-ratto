@@ -440,13 +440,16 @@ def graph(page):
         cur = data["currency"]
         products = []
         for it in available(data["sections"][0]["groups"][0]["items"]):
+            # Google needs offers, review or aggregateRating on every Product.
+            # Items with no numeric price ("Varies") stay on the page but out of the schema.
+            if it.get("price") is None:
+                continue
             p = {"@type": "Product", "name": it["name"]}
             if it.get("brand"):
                 p["brand"] = {"@type": "Brand", "name": it["brand"]}
             if it.get("image") and (ROOT / it["image"]).exists():
                 p["image"] = f"{DOMAIN}/{it['image']}"
-            if it.get("price") is not None:
-                p["offers"] = {"@type": "Offer", "price": str(it["price"]), "priceCurrency": cur, "seller": {"@id": f"{DOMAIN}/#restaurant"}}
+            p["offers"] = {"@type": "Offer", "price": str(it["price"]), "priceCurrency": cur, "seller": {"@id": f"{DOMAIN}/#restaurant"}}
             products.append(p)
         webpage["mainEntity"] = {"@type": "ItemList", "numberOfItems": len(products), "itemListElement": [{"@type": "ListItem", "position": i, "item": p} for i, p in enumerate(products, 1)]}
         nodes.append({
