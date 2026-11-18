@@ -451,7 +451,13 @@ def graph(page):
                 p["brand"] = {"@type": "Brand", "name": it["brand"]}
             if it.get("image") and (ROOT / it["image"]).exists():
                 p["image"] = f"{DOMAIN}/{it['image']}"
-            p["offers"] = {"@type": "Offer", "price": str(it["price"]), "priceCurrency": cur, "availability": "https://schema.org/InStock", "seller": {"@id": f"{DOMAIN}/#restaurant"}}
+            offer = {"@type": "Offer", "price": str(it["price"]), "priceCurrency": cur, "availability": "https://schema.org/InStock", "seller": {"@id": f"{DOMAIN}/#restaurant"}}
+            # Collection only, no delivery.
+            offer["shippingDetails"] = {"@type": "OfferShippingDetails", "doNotShip": True, "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "ZA"}}
+            # Deli items are food: no returns. Merchandise policy not stated, so none is declared.
+            if kind == "deli":
+                offer["hasMerchantReturnPolicy"] = {"@type": "MerchantReturnPolicy", "applicableCountry": "ZA", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"}
+            p["offers"] = offer
             products.append(p)
         webpage["mainEntity"] = {"@type": "ItemList", "numberOfItems": len(products), "itemListElement": [{"@type": "ListItem", "position": i, "item": p} for i, p in enumerate(products, 1)]}
         nodes.append({
