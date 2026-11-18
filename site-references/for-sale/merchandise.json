@@ -14,6 +14,7 @@
               "id": "helmet-keyrings",
               "image": "images/merchandise/helmet-keyrings.webp",
               "name": "Mini Helmet Keyrings",
+              "brand": "Vespa",
               "price": 100,
               "description": "Big personality. Tiny helmet. A pocket-sized tribute to two wheels, open roads and questionable decisions. No licence required.",
               "available": true
@@ -76,6 +77,7 @@
               "id": "vespa-key-covers",
               "image": "images/merchandise/vespa-key-covers.webp",
               "name": "Vespa Key Covers",
+              "brand": "Vespa",
               "price": 150,
               "description": "Even your keys deserve a wardrobe upgrade. Retro attitude for your modern Vespa. Because life's too short for boring accessories.",
               "available": true
